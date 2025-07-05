@@ -5,13 +5,13 @@ description: Learn how to translate Starlight configuration strings and enable m
 
 ## Overview
 
-The JSON configuration translation feature enables you to translate structured configuration strings for Astro Starlight and other applications. This is particularly useful for creating **multi-lingual site titles**, navigation labels, and other configuration text.
+The JSON configuration translation feature enables you to translate structured configuration strings for Astro Starlight and other applications. This creates a **nested locale structure** where each translatable string contains multiple language versions in a single file, making it perfect for **multi-lingual site titles**, navigation labels, and other configuration text.
 
 ## How It Works
 
 1. **Extract translatable strings** into a JSON file
 2. **Run the translator** on the JSON file  
-3. **Import and use** translated configurations in your code
+3. **Import and use** the nested locale structure in your code
 
 ## Quick Start
 
@@ -46,39 +46,85 @@ Include the JSON file in your translation workflow:
     starlight_dir: docs
 ```
 
-This will generate translated versions:
-- `config-strings.fr.json`
-- `config-strings.es.json` 
-- `config-strings.de.json`
+This will transform your JSON file into a nested locale structure:
+
+```json title="config-strings.json (after translation)"
+{
+  "title": {
+    "en": "My Documentation Site",
+    "fr": "Mon Site de Documentation", 
+    "es": "Mi Sitio de Documentación",
+    "de": "Meine Dokumentationsseite"
+  },
+  "description": {
+    "en": "A comprehensive guide to our project",
+    "fr": "Un guide complet de notre projet",
+    "es": "Una guía completa de nuestro proyecto", 
+    "de": "Ein umfassender Leitfaden für unser Projekt"
+  },
+  "sidebar": {
+    "reference": {
+      "en": "Reference",
+      "fr": "Référence",
+      "es": "Referencia",
+      "de": "Referenz"
+    },
+    "guides": {
+      "en": "Guides", 
+      "fr": "Guides",
+      "es": "Guías",
+      "de": "Leitfäden"
+    },
+    "examples": {
+      "en": "Examples",
+      "fr": "Exemples", 
+      "es": "Ejemplos",
+      "de": "Beispiele"
+    }
+  },
+  "hero": {
+    "tagline": {
+      "en": "Build amazing docs with ease",
+      "fr": "Créez de superbes docs facilement",
+      "es": "Crea documentos increíbles con facilidad",
+      "de": "Erstelle mühelos fantastische Docs"
+    }
+  }
+}
+```
 
 ### Step 3: Use in Starlight Configuration
 
-Import and use the translations in your `astro.config.mjs`:
+Import and use the nested translations in your `astro.config.mjs`:
 
 ```javascript title="astro.config.mjs"
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
-// Import translation files
+// Import the single translation file with nested locale structure
 import configStrings from "./config-strings.json" with { type: "json" };
-import configStringsFr from "./config-strings.fr.json" with { type: "json" };
-import configStringsEs from "./config-strings.es.json" with { type: "json" };
 
-// Helper function for localized strings
-function getLocalizedString(key, locale = 'en') {
-  const translations = {
-    en: configStrings,
-    fr: configStringsFr,
-    es: configStringsEs,
-  };
+// Helper function to get localized string from nested structure
+function getLocalizedString(keyPath, locale = 'en') {
+  const keys = keyPath.split('.');
+  let value = configStrings;
   
-  // Support nested keys like "sidebar.reference"
-  const getValue = (obj, path) => {
-    return path.split('.').reduce((current, key) => current?.[key], obj);
-  };
+  // Navigate through the nested structure
+  for (const key of keys) {
+    if (value && typeof value === 'object' && key in value) {
+      value = value[key];
+    } else {
+      return null;
+    }
+  }
   
-  return getValue(translations[locale], key) || getValue(configStrings, key);
+  // If we have a locale object, return the requested locale or fallback to English
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    return value[locale] || value['en'] || null;
+  }
+  
+  return value;
 }
 
 export default defineConfig({
@@ -86,16 +132,18 @@ export default defineConfig({
     starlight({
       // Multi-lingual site title! 🎉
       title: {
-        root: getLocalizedString('title', 'en'),
+        en: getLocalizedString('title', 'en'),
         fr: getLocalizedString('title', 'fr'),
         es: getLocalizedString('title', 'es'),
+        de: getLocalizedString('title', 'de'),
       },
       
-      defaultLocale: "root",
+      defaultLocale: "en",
       locales: {
-        root: { label: "English", lang: "en" },
+        en: { label: "English", lang: "en" },
         fr: { label: "Français", lang: "fr" },
         es: { label: "Español", lang: "es" },
+        de: { label: "Deutsch", lang: "de" },
       },
       
       sidebar: [
@@ -112,6 +160,14 @@ export default defineConfig({
   ],
 });
 ```
+
+## Benefits of Nested Structure
+
+✅ **Single file import** - No need to import separate files per language  
+✅ **Type safety** - Better IntelliSense and error checking  
+✅ **Easy maintenance** - All translations for a key are in one place  
+✅ **Automatic fallbacks** - Missing translations fall back to English  
+✅ **Version control friendly** - See all translation changes in one diff
 
 ## Supported File Types
 
@@ -143,20 +199,29 @@ The translator now accepts these file types:
   "title": "Continuous Translation",
   "API_VERSION": "v1.0",  // Not translated (constant)
   "nav": {
-    "home": "Home",       // Translated
-    "docs": "Documentation" // Translated
+    "home": "Home",       // Will be translated
+    "docs": "Documentation" // Will be translated
   }
 }
 ```
 
-**Output** (`config-strings.fr.json`):
+**Output** (same file, after translation):
 ```json
 {
-  "title": "Traduction Continue",
-  "API_VERSION": "v1.0",
+  "title": {
+    "en": "Continuous Translation",
+    "fr": "Traduction Continue"
+  },
+  "API_VERSION": "v1.0",  // Unchanged (constant)
   "nav": {
-    "home": "Accueil",
-    "docs": "Documentation"
+    "home": {
+      "en": "Home",
+      "fr": "Accueil"
+    },
+    "docs": {
+      "en": "Documentation",
+      "fr": "Documentation"
+    }
   }
 }
 ```
@@ -230,43 +295,48 @@ Don't mix translatable text with configuration values:
 
 ## Advanced Usage
 
-### Dynamic Locale Loading
+### Multiple Language Addition
 
-For larger applications, load translations dynamically:
+You can run the translator multiple times to add more languages:
 
-```javascript
-async function loadTranslations(locale) {
-  try {
-    const module = await import(`./config-strings.${locale}.json`, {
-      with: { type: "json" }
-    });
-    return module.default;
-  } catch {
-    // Fallback to English
-    return (await import('./config-strings.json', {
-      with: { type: "json" }
-    })).default;
-  }
-}
+```bash
+# First run: Add French
+genaiscript run translator config-strings.json -x lang=fr
+
+# Second run: Add Spanish  
+genaiscript run translator config-strings.json -x lang=es
+
+# Third run: Add German
+genaiscript run translator config-strings.json -x lang=de
 ```
+
+Each run will add the new language to the existing nested structure.
 
 ### Type Safety with TypeScript
 
-Define types for your configuration:
+Define types for your nested configuration:
 
 ```typescript
+interface LocalizedString {
+  en: string;
+  fr?: string;
+  es?: string;
+  de?: string;
+  [locale: string]: string | undefined;
+}
+
 interface ConfigStrings {
-  title: string;
-  description: string;
+  title: LocalizedString;
+  description: LocalizedString;
   sidebar: {
-    reference: string;
-    guides: string;
+    reference: LocalizedString;
+    guides: LocalizedString;
   };
 }
 
 const configStrings: ConfigStrings = {
-  // ... your strings
+  // ... your nested strings
 };
 ```
 
-This feature opens up powerful possibilities for creating truly multilingual Starlight documentation sites! 🌍
+This feature opens up powerful possibilities for creating truly multilingual Starlight documentation sites with a clean, maintainable structure! 🌍

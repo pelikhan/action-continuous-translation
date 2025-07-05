@@ -191,65 +191,94 @@ Provide only the translation, no explanations or quotes.`;
   return obj;
 };
 
-// Simpler JSON translation that works directly with strings
-const translateJsonObjectSimple = async (
-  obj: any, 
-  translationCache: Record<string, string>, 
-  lang: string, 
-  to: string,
-  translationModel: string
-): Promise<any> => {
+// Convert flat JSON structure to nested locale structure
+const convertToNestedStructure = async (obj: any, sourceLanguage: string): Promise<any> => {
   if (typeof obj === 'string') {
-    // Check cache first using the string as key
-    if (translationCache[obj]) {
-      return translationCache[obj];
-    }
-    
-    // If string is translatable, translate it
-    if (obj.length > 2 && obj.trim() && !/^[A-Z_][A-Z0-9_]*$/i.test(obj)) {
-      try {
-        const result = await runPrompt(
-          async (ctx) => {
-            ctx.$`Translate the following text from English to ${lang}:
-
-"${obj}"
-
-Provide only the translation, no explanations or quotes.`;
-          },
-          { 
-            label: `translate config string to ${to}`, 
-            cache: true,
-            model: translationModel,
-            responseType: "text"
-          }
-        );
-        
-        if (result?.text && result.text.trim()) {
-          const translatedText = result.text.trim().replace(/^["']|["']$/g, '');
-          translationCache[obj] = translatedText;
-          return translatedText;
-        }
-      } catch (error) {
-        console.warn(`Translation failed for "${obj}":`, error);
-      }
-    }
-    
-    return obj;
+    // Convert string to nested structure with source language
+    return {
+      [sourceLanguage]: obj
+    };
   } else if (Array.isArray(obj)) {
+    // For arrays, convert each element
     const results = [];
     for (const item of obj) {
-      results.push(await translateJsonObjectSimple(item, translationCache, lang, to, translationModel));
+      results.push(await convertToNestedStructure(item, sourceLanguage));
     }
     return results;
   } else if (obj !== null && typeof obj === 'object') {
     const result: any = {};
     for (const [key, value] of Object.entries(obj)) {
-      result[key] = await translateJsonObjectSimple(value, translationCache, lang, to, translationModel);
+      result[key] = await convertToNestedStructure(value, sourceLanguage);
     }
     return result;
   }
   
   return obj;
+};
+
+// Add a new language to an existing nested structure
+const addLanguageToNestedStructure = async (
+  nestedObj: any,
+  targetLanguage: string,
+  translationCache: Record<string, string>,
+  lang: string,
+  translationModel: string
+): Promise<void> => {
+  if (typeof nestedObj === 'object' && nestedObj !== null && !Array.isArray(nestedObj)) {
+    // Check if this is a locale object (has language keys like 'en', 'fr', etc.)
+    const keys = Object.keys(nestedObj);
+    const isLocaleObject = keys.some(key => /^[a-z]{2}(-[a-z]{2,3})?$/i.test(key));
+    
+    if (isLocaleObject) {
+      // This is a locale object, add translation for target language
+      // Get the source text from any existing language (preferably 'en')
+      const sourceText = nestedObj['en'] || nestedObj[Object.keys(nestedObj)[0]];
+      
+      if (typeof sourceText === 'string' && sourceText.trim()) {
+        // Check cache first
+        if (translationCache[sourceText]) {
+          nestedObj[targetLanguage] = translationCache[sourceText];
+        } else if (sourceText.length > 2 && !/^[A-Z_][A-Z0-9_]*$/i.test(sourceText)) {
+          // Translate the text
+          try {
+            const result = await runPrompt(
+              async (ctx) => {
+                ctx.$`Translate the following text from English to ${lang}:
+
+"${sourceText}"
+
+Provide only the translation, no explanations or quotes.`;
+              },
+              { 
+                label: `translate config string to ${targetLanguage}`, 
+                cache: true,
+                model: translationModel,
+                responseType: "text"
+              }
+            );
+            
+            if (result?.text && result.text.trim()) {
+              const translatedText = result.text.trim().replace(/^["']|["']$/g, '');
+              translationCache[sourceText] = translatedText;
+              nestedObj[targetLanguage] = translatedText;
+            }
+          } catch (error) {
+            console.warn(`Translation failed for "${sourceText}":`, error);
+          }
+        }
+      }
+    } else {
+      // This is a regular object, recurse into its properties
+      for (const [key, value] of Object.entries(nestedObj)) {
+        await addLanguageToNestedStructure(value, targetLanguage, translationCache, lang, translationModel);
+      }
+    }
+  } else if (Array.isArray(nestedObj)) {
+    // For arrays, recurse into each element
+    for (const item of nestedObj) {
+      await addLanguageToNestedStructure(item, targetLanguage, translationCache, lang, translationModel);
+    }
+  }
 };
 
 export default async function main() {
@@ -347,25 +376,46 @@ export default async function main() {
       const isJson = /\.json$/i.test(filename);
       
       if (isJson) {
-        // Handle JSON configuration files
+        // Handle JSON configuration files with nested locale structure
         try {
-          const translationFn = path.changeext(filename, `.${to.toLowerCase()}.json`);
-          dbg(`JSON translation %s`, translationFn);
+          // For JSON files, we'll create a nested structure in the same file
+          // Read existing file content to check if it already has nested structure
+          let jsonContent = JSON.parse(file.content);
+          let nestedJson: any = {};
           
-          // JSON translation mode - use simpler implementation with explicit cache saving
-          const jsonContent = JSON.parse(file.content);
-          const translatedJson = await translateJsonObjectSimple(jsonContent, translationCache, lang, to, translationModel);
+          // Check if this file already has nested locale structure
+          const hasNestedStructure = Object.values(jsonContent).some(value => 
+            typeof value === 'object' && value !== null && !Array.isArray(value) &&
+            Object.keys(value).some(key => /^[a-z]{2}(-[a-z]{2,3})?$/i.test(key))
+          );
           
-          await workspace.writeText(translationFn, JSON.stringify(translatedJson, null, 2));
+          if (hasNestedStructure) {
+            // File already has nested structure, just add new language
+            nestedJson = jsonContent;
+            dbg(`JSON file already has nested structure, adding ${to}`);
+          } else {
+            // Convert flat structure to nested structure
+            dbg(`Converting JSON to nested locale structure`);
+            
+            // First, establish the source language structure (defaulting to 'en')
+            const sourceLanguage = source || 'en';
+            nestedJson = await convertToNestedStructure(jsonContent, sourceLanguage);
+          }
           
-          // Explicitly save the updated translation cache
+          // Now add translations for the target language
+          dbg(`Adding translations for language: ${to}`);
+          await addLanguageToNestedStructure(nestedJson, to, translationCache, lang, translationModel);
+          
+          // Write the updated nested structure back to the original file
+          await workspace.writeText(filename, JSON.stringify(nestedJson, null, 2));
+          
+          // Save the updated translation cache
           await workspace.writeText(
             translationCacheFilename,
             JSON.stringify(translationCache, null, 2),
           );
           
-          await workspace.writeText(translationFn, JSON.stringify(translatedJson, null, 2));
-          output.resultItem(true, `translated JSON configuration file`);
+          output.resultItem(true, `added ${to} translations to JSON configuration with nested locale structure`);
         } catch (error) {
           output.error(`Error processing JSON file ${filename}:`, error);
         }

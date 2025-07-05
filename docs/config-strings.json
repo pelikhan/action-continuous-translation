@@ -1,7 +1,19 @@
 {
-  "title": "Continuous Translation",
-  "description": "A GitHub Action for continuous translation",
+  "title": {
+    "en": "Continuous Translation",
+    "fr": "Traduction Continue",
+    "es": "Traducción Continua"
+  },
+  "description": {
+    "en": "A GitHub Action for continuous translation",
+    "fr": "Une action GitHub pour la traduction continue",
+    "es": "Una Acción de GitHub para traducción continua"
+  },
   "sidebar": {
-    "reference": "Reference"
+    "reference": {
+      "en": "Reference",
+      "fr": "Référence",
+      "es": "Referencia"
+    }
   }
 }

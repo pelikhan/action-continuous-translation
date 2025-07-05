@@ -54,7 +54,7 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 
 ### 🗂️ JSON Configuration Translation (NEW!)
 
-Translate configuration strings for Starlight multi-lingual titles and other structured content:
+Translate configuration strings for Starlight multi-lingual titles and other structured content with **nested locale structure**:
 
 1. **Create a JSON file** with your translatable configuration strings:
    ```json
@@ -77,30 +77,55 @@ Translate configuration strings for Starlight multi-lingual titles and other str
        lang: fr,es
    ```
 
-3. **Import translated files** in your `astro.config.mjs`:
+3. **Use the nested locale structure** in your `astro.config.mjs`:
    ```javascript
+   // After translation, config-strings.json becomes:
+   // {
+   //   "title": {
+   //     "en": "My Documentation Site",
+   //     "fr": "Mon Site de Documentation",
+   //     "es": "Mi Sitio de Documentación"
+   //   },
+   //   "sidebar": {
+   //     "reference": {
+   //       "en": "Reference",
+   //       "fr": "Référence", 
+   //       "es": "Referencia"
+   //     }
+   //   }
+   // }
+
    import configStrings from "./config-strings.json" with { type: "json" };
-   import configStringsFr from "./config-strings.fr.json" with { type: "json" };
    
-   // Helper function for localized strings
-   function getLocalizedString(key, locale = 'en') {
-     const translations = { en: configStrings, fr: configStringsFr };
-     return translations[locale]?.[key] || configStrings[key];
+   // Helper function for nested locale structure
+   function getLocalizedString(keyPath, locale = 'en') {
+     const keys = keyPath.split('.');
+     let value = configStrings;
+     for (const key of keys) {
+       if (value && typeof value === 'object' && key in value) {
+         value = value[key];
+       } else return null;
+     }
+     return (value && typeof value === 'object') ? 
+       (value[locale] || value['en']) : value;
    }
    
    export default defineConfig({
      integrations: [
        starlight({
-         // Multi-lingual titles!
+         // Multi-lingual titles with single import!
          title: {
-           root: getLocalizedString('title', 'en'),
+           en: getLocalizedString('title', 'en'),
            fr: getLocalizedString('title', 'fr'),
+           es: getLocalizedString('title', 'es'),
          },
          // ... rest of config
        })
      ]
    });
    ```
+
+✅ **Benefits**: Single file import, better maintainability, automatic fallbacks, version control friendly!
 
 This enables **multi-lingual titles** and other configuration strings in Starlight! 🎉
 

@@ -3,19 +3,29 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
 
-// Import translation strings
+// Import translation strings with nested locale structure
 import configStrings from "./config-strings.json" with { type: "json" };
-import configStringsFr from "./config-strings.fr.json" with { type: "json" };
-import configStringsEs from "./config-strings.es.json" with { type: "json" };
 
-// Helper function to get localized string
-function getLocalizedString(key, locale = 'en') {
-  const translations = {
-    en: configStrings,
-    fr: configStringsFr,
-    es: configStringsEs,
-  };
-  return translations[locale]?.[key] || configStrings[key];
+// Helper function to get localized string from nested structure
+function getLocalizedString(keyPath, locale = 'en') {
+  const keys = keyPath.split('.');
+  let value = configStrings;
+  
+  // Navigate through the nested structure
+  for (const key of keys) {
+    if (value && typeof value === 'object' && key in value) {
+      value = value[key];
+    } else {
+      return null;
+    }
+  }
+  
+  // If we have a locale object, return the requested locale or fallback to English
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    return value[locale] || value['en'] || null;
+  }
+  
+  return value;
 }
 
 // https://astro.build/config
@@ -30,9 +40,9 @@ export default defineConfig({
           errorOnInconsistentLocale: true,
         }),
       ],
-      // Multi-lingual title using translation files
+      // Multi-lingual title using nested translation structure
       title: {
-        root: getLocalizedString('title', 'en'),
+        en: getLocalizedString('title', 'en'),
         fr: getLocalizedString('title', 'fr'),
         es: getLocalizedString('title', 'es'),
       },
@@ -43,9 +53,9 @@ export default defineConfig({
           href: "https://github.com/pelikhan/action-continuous-translation",
         },
       ],
-      defaultLocale: "root",
+      defaultLocale: "en",
       locales: {
-        root: {
+        en: {
           label: "English",
           lang: "en",
         },
