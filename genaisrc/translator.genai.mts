@@ -101,6 +101,89 @@ const FRONTMATTER_FIELDS = [
   "og_description",
 ];
 
+// Patterns for determining if a field name is translatable
+const TRANSLATABLE_FIELD_PATTERNS = [
+  /^title$/i,
+  /^description$/i,
+  /^summary$/i,
+  /^excerpt$/i,
+  /^alt$/i,
+  /^caption$/i,
+  /^text$/i,
+  /^tagline$/i,
+  /^name$/i,
+  /^label$/i,
+  /title$/i,
+  /description$/i,
+  /summary$/i,
+  /excerpt$/i,
+  /caption$/i,
+  /tagline$/i,
+  /text$/i,
+  /label$/i,
+  /^og_title$/i,
+  /^og_description$/i,
+];
+
+/**
+ * Determines if a field name indicates it contains translatable content
+ */
+const isTranslatableFieldName = (fieldName: string): boolean => {
+  return TRANSLATABLE_FIELD_PATTERNS.some(pattern => pattern.test(fieldName));
+};
+
+/**
+ * Recursively walks through a frontmatter object and collects translatable fields
+ * @param obj The object to walk
+ * @param path The current path (for nested objects)
+ * @returns Array of objects with {path, value} for translatable fields
+ */
+const collectTranslatableFields = (obj: any, path: string[] = []): { path: string[], value: string }[] => {
+  const result: { path: string[], value: string }[] = [];
+  
+  if (!obj || typeof obj !== 'object') {
+    return result;
+  }
+  
+  for (const [key, value] of Object.entries(obj)) {
+    const currentPath = [...path, key];
+    
+    if (typeof value === 'string' && value.trim() && isTranslatableFieldName(key)) {
+      result.push({ path: currentPath, value });
+    } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      // Recursively process nested objects
+      result.push(...collectTranslatableFields(value, currentPath));
+    } else if (Array.isArray(value)) {
+      // Handle arrays - check each item
+      value.forEach((item, index) => {
+        if (typeof item === 'object' && item !== null) {
+          result.push(...collectTranslatableFields(item, [...currentPath, index.toString()]));
+        }
+      });
+    }
+  }
+  
+  return result;
+};
+
+/**
+ * Sets a value in a nested object using a path array
+ */
+const setNestedValue = (obj: any, path: string[], value: string): void => {
+  let current = obj;
+  for (let i = 0; i < path.length - 1; i++) {
+    const key = path[i];
+    const nextKey = path[i + 1];
+    const isArrayIndex = /^\d+$/.test(nextKey);
+    
+    if (!(key in current) || typeof current[key] !== 'object' || current[key] === null) {
+      current[key] = isArrayIndex ? [] : {};
+    }
+    current = current[key];
+  }
+  current[path[path.length - 1]] = value;
+};
+
 const isUri = (str: string): URL => {
   try {
     return new URL(str);
@@ -359,61 +442,28 @@ export default async function main() {
               dbgfm(`%s`, node.value);
               const data = parsers.YAML(node.value);
               if (data && starlight) {
-                if (data.hero) {
-                  if (typeof data.hero.tagline === "string") {
-                    const nhash = hashNode(data.hero.tagline);
-                    const tr = translationCache[nhash];
-                    nTranslatable++;
-                    if (tr) data.hero.tagline = tr;
-                    else {
-                      const llmHash = `T${Object.keys(llmHashes)
-                        .length.toString()
-                        .padStart(3, "0")}`;
-                      llmHashes[llmHash] = nhash;
-                      llmHashTodos.add(llmHash);
-                      data.hero.tagline = `┌${llmHash}┐${data.hero.tagline}└${llmHash}┘`;
-                    }
-                  }
-                  if (Array.isArray(data.hero.actions)) {
-                    for (const action of data.hero.actions) {
-                      if (typeof action.text === "string") {
-                        const nhash = hashNode(action.text);
-                        const tr = translationCache[nhash];
-                        dbga(`hero.action: %s -> %s`, nhash, tr);
-                        nTranslatable++;
-                        if (tr) action.text = tr;
-                        else {
-                          const llmHash = `T${Object.keys(llmHashes)
-                            .length.toString()
-                            .padStart(3, "0")}`;
-                          llmHashes[llmHash] = nhash;
-                          llmHashTodos.add(llmHash);
-                          action.text = `┌${llmHash}┐${action.text}└${llmHash}┘`;
-                        }
-                      }
-                    }
-                  }
-                }
                 if (data?.cover?.image) {
                   data.cover.image = patchFn(data.cover.image);
                   dbga(`cover.image: %s`, data.cover.image);
                 }
               }
-              for (const field of FRONTMATTER_FIELDS.filter(
-                (field) => typeof data[field] === "string",
-              )) {
-                const nhash = hashNode(data[field]);
+              // Recursively collect all translatable fields from frontmatter
+              const translatableFields = collectTranslatableFields(data);
+              for (const { path, value } of translatableFields) {
+                const nhash = hashNode(value);
                 const tr = translationCache[nhash];
-                dbga(`%s: %s -> %s`, field, nhash, tr);
+                const fieldPath = path.join('.');
+                dbga(`%s: %s -> %s`, fieldPath, nhash, tr);
                 nTranslatable++;
-                if (tr) data[field] = tr;
-                else {
+                if (tr) {
+                  setNestedValue(data, path, tr);
+                } else {
                   const llmHash = `T${Object.keys(llmHashes)
                     .length.toString()
                     .padStart(3, "0")}`;
                   llmHashes[llmHash] = nhash;
                   llmHashTodos.add(llmHash);
-                  data[field] = `┌${llmHash}┐${data[field]}└${llmHash}┘`;
+                  setNestedValue(data, path, `┌${llmHash}┐${value}└${llmHash}┘`);
                 }
               }
               node.value = YAML.stringify(data);
@@ -625,20 +675,18 @@ export default async function main() {
                   dbgo(`yaml cover image: %s`, data.cover.image);
                 }
               }
-              if (data.hero && typeof data.hero.tagline === "string") {
-                const nhash = hashNode(data.hero.tagline);
+              // Recursively collect and apply translations for all translatable fields
+              const translatableFields = collectTranslatableFields(data);
+              for (const { path, value } of translatableFields) {
+                const nhash = hashNode(value);
                 const tr = translationCache[nhash];
-                if (tr) data.hero.tagline = tr;
-                else unresolvedTranslations.add(nhash);
-              }
-              for (const field of FRONTMATTER_FIELDS.filter(
-                (field) => typeof data[field] === "string",
-              )) {
-                const nhash = hashNode(data[field]);
-                const tr = translationCache[nhash];
-                dbgo(`yaml %s: %s -> %s`, field, nhash, tr);
-                if (tr) data[field] = tr;
-                else unresolvedTranslations.add(nhash);
+                const fieldPath = path.join('.');
+                dbgo(`yaml %s: %s -> %s`, fieldPath, nhash, tr);
+                if (tr) {
+                  setNestedValue(data, path, tr);
+                } else {
+                  unresolvedTranslations.add(nhash);
+                }
               }
               node.value = YAML.stringify(data);
               return SKIP;
