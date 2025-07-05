@@ -86,9 +86,9 @@ with:
   starlight_base:
   force: false
   debug: false
-  github_token: ${{ secrets.GITHUB_TOKEN }}
-  ...
 ```
+
+Consulta [Modelos](../../reference/models/) para más detalles sobre otros proveedores como OpenAI, Azure OpenAI, etc.
 
 ### `lang`
 
@@ -136,9 +136,7 @@ Debe definirse si se define la opción [`starlight_base`](#starlight_base).
 **Tipo**: `string`
 
 Alias base para la documentación de [Astro Starlight](../../reference/astro-starlight/).
-Se utiliza para corregir los enlaces en las traducciones.
-Debe definirse si se define la opción [`starlight_dir`](#starlight_dir).
-Actualmente no hay soporte para la [opción sin base](https://docs.astro.build/en/reference/configuration-reference/#base).
+Si no defines la [opción base de Astro](https://docs.astro.build/en/reference/configuration-reference/#base), no configures esta opción.
 
 ### `force`
 
@@ -162,7 +160,3 @@ Lee más detalles en [la documentación de registros de GenAIScript](https://mic
 
 Tu [token de GitHub](https://github.com/settings/tokens) con al menos permiso de `models: read`.
 Lee más detalles en [la documentación de Permisos de Modelos de GenAIScript en GitHub](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
-
-### OpenAI, Azure OpenAI, ...
-
-Consulta [Modelos](../../reference/models/) para más detalles sobre otros proveedores como OpenAI, Azure OpenAI, ...

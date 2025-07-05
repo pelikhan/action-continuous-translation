@@ -16,7 +16,9 @@
   },
   "scripts": {
     "upgrade": "npx -y npm-check-updates -u && npm install && npm run fix",
-    "lint": "npx --yes prettier --write genaisrc/",
+    "lint": "npm run lint:genaisrc",
+    "lint:genaisrc": "npx --yes prettier --write genaisrc/",
+    "lint:docs": "npx --yes prettier --write docs/src/content/",
     "fix": "genaiscript scripts fix",
     "typecheck": "genaiscript scripts compile",
     "configure": "genaiscript configure action translator",

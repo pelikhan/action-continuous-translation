@@ -277,5 +277,7 @@
   " option in your \n": "الخيار في ملف ",
   "!\n": "! الدعم المدمج لـ [Astro Starlight](https://starlight.astro.build/)",
   "Arabic\n": "العربية",
-  "How does it work?\n": "كيف تعمل؟"
+  "How does it work?\n": "كيف تعمل؟",
+  "See [Models](/action-continuous-translation/reference/models/) for more details .560AFCF5FB0E7B1318B8": "انظر [النماذج](/action-continuous-translation/reference/models/) لمزيد من التفاصيل حول موفرين آخرين مثل OpenAI وAzure OpenAI وغيرهم.",
+  "Base alias for the [Astro Starlight](/action-continuous-translation/reference/as.1F585CE9CE4F102B9AF4": "الاسم المستعار الأساسي لتوثيق [Astro Starlight](/action-continuous-translation/reference/astro-starlight/).\nإذا لم تقم بتعريف خيار [الأساس لـ Astro](https://docs.astro.build/en/reference/configuration-reference/#base)، فلا تقم بتعيين هذا الخيار."
 }
