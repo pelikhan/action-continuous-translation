@@ -12,6 +12,10 @@ jobs:
   genai_pull_request_descriptor:
     runs-on: ubuntu-latest
     steps:
+      - uses: pelikhan/action-add-reaction@v0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          reaction: eyes
       - uses: actions/checkout@v4
       # do not run setup or any code
       - uses: actions/cache@v4
