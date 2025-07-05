@@ -1,18 +1,19 @@
 name: GenAI Pull Request Descriptor
 on:
-    pull_request:
+  pull_request_target: # the code is treated as text, no install/code shall be executed
 permissions:
-    contents: read
-    pull-requests: write
-    models: read
+  contents: read
+  pull-requests: write
+  models: read
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  action_genai_pull_request_descriptor:
+  genai_pull_request_descriptor:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # do not run setup or any code
       - uses: actions/cache@v4
         with:
           path: .genaiscript/cache/**
