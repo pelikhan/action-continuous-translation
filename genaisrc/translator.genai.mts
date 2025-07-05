@@ -172,7 +172,7 @@ export default async function main() {
   }
 
   for (const to of langs) {
-    const langInfo = resolveModels(to);
+    const langInfo = await resolveModels(to);
     const lang = langInfo.name;
     const translationModel = langInfo.models.translation;
     const classifyModel = langInfo.models.classify;

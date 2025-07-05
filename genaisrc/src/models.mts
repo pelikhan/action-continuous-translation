@@ -1,4 +1,6 @@
-export function resolveModels(lang: string): LangConfiguration {
+const dbg = host.logger(`ct:models`);
+
+export async function resolveModels(lang: string): Promise<LangConfiguration> {
   const config = LANGS[lang];
   if (!config)
     throw new Error(`Language configuration for "${lang}" not found.`);
@@ -6,6 +8,20 @@ export function resolveModels(lang: string): LangConfiguration {
   if (!res.models) res.models = {};
   res.models.translation ??= DEFAULT_MODELS.translation;
   res.models.classify ??= DEFAULT_MODELS.classify;
+
+  dbg(`unresolved: %s -> %O`, lang, res.models);
+
+  // resolve models
+  const tinfo = await host.resolveLanguageModel(res.models.translation);
+  if (!tinfo)
+    throw new Error(`Unable to resolve translation model for "${lang}"`);
+  res.models.translation = tinfo.modelId;
+  const cinfo = await host.resolveLanguageModel(res.models.classify);
+  if (!cinfo)
+    throw new Error(`Unable to resolve classification model for "${lang}"`);
+  res.models.classify = cinfo.modelId;
+
+  dbg(`resolved: %s -> %O`, lang, res.models);
   return res;
 }
 
