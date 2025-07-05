@@ -88,7 +88,18 @@ const nodeTypes = ["text", "paragraph", "heading", "yaml"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
-const STARLIGHT_FRONTMATTER_STRINGS = ["excerpt", "title", "description"];
+const FRONTMATTER_FIELDS = [
+  "title",
+  "description",
+  "summary",
+  "excerpt",
+  "alt",
+  "caption",
+  "text",
+  "tagline",
+  "og_title",
+  "og_description",
+];
 
 const isUri = (str: string): URL => {
   try {
@@ -106,11 +117,12 @@ export default async function main() {
   const { dbg, output, vars } = env;
   const dbgn = host.logger(`ct:node`);
   const dbgc = host.logger(`ct:md`);
-  const dbgo = host.logger(`ct:translated`);
+  const dbgo = host.logger(`ct:target`);
   const dbgt = host.logger(`ct:tree`);
   const dbge = host.logger(`ct:text`);
   const dbgm = host.logger(`ct:mdx`);
-  const dbga = host.logger(`ct:translate`);
+  const dbga = host.logger(`ct:source`);
+  const dbgfm = host.logger(`ct:frontmatter`);
   const dbgp = host.logger(`ct:patch`);
   const parameters = vars as {
     lang?: string;
@@ -359,18 +371,32 @@ export default async function main() {
               });
               return SKIP; // don't process children of paragraphs
             } else if (node.type === "yaml") {
-              dbga(`yaml node: %s`, nhash);
+              dbgfm(`%s`, node.value);
               const data = parsers.YAML(node.value);
-              if (data) {
-                if (starlight) {
-                  if (Array.isArray(data?.hero?.actions)) {
-                    data.hero.actions.forEach((action) => {
+              if (data && starlight) {
+                if (data.hero) {
+                  if (typeof data.hero.tagline === "string") {
+                    const nhash = hashNode(data.hero.tagline);
+                    const tr = translationCache[nhash];
+                    nTranslatable++;
+                    if (tr) data.hero.tagline = tr;
+                    else {
+                      const llmHash = `T${Object.keys(llmHashes)
+                        .length.toString()
+                        .padStart(3, "0")}`;
+                      llmHashes[llmHash] = nhash;
+                      llmHashTodos.add(llmHash);
+                      data.hero.tagline = `┌${llmHash}┐${data.hero.tagline}└${llmHash}┘`;
+                    }
+                  }
+                  if (Array.isArray(data.hero.actions)) {
+                    for (const action of data.hero.actions) {
                       if (typeof action.text === "string") {
                         const nhash = hashNode(action.text);
                         const tr = translationCache[nhash];
-                        dbg(`yaml hero.action: %s -> %s`, nhash, tr);
+                        dbga(`hero.action: %s -> %s`, nhash, tr);
                         nTranslatable++;
-                        if (!tr) action.text = tr;
+                        if (tr) action.text = tr;
                         else {
                           const llmHash = `T${Object.keys(llmHashes)
                             .length.toString()
@@ -380,46 +406,34 @@ export default async function main() {
                           action.text = `┌${llmHash}┐${action.text}└${llmHash}┘`;
                         }
                       }
-                    });
-                  }
-                  if (data?.cover?.image) {
-                    data.cover.image = patchFn(data.cover.image);
-                    dbg(`yaml cover image: %s`, data.cover.image);
+                    }
                   }
                 }
-                if (data.hero && typeof data.hero.tagline === "string") {
-                  const nhash = hashNode(data.hero.tagline);
-                  const tr = translationCache[nhash];
-                  nTranslatable++;
-                  if (tr) data.hero.tagline = tr;
-                  else {
-                    const llmHash = `T${Object.keys(llmHashes)
-                      .length.toString()
-                      .padStart(3, "0")}`;
-                    llmHashes[llmHash] = nhash;
-                    llmHashTodos.add(llmHash);
-                    data.hero.tagline = `┌${llmHash}┐${data.hero.tagline}└${llmHash}┘`;
-                  }
+                if (data?.cover?.image) {
+                  data.cover.image = patchFn(data.cover.image);
+                  dbga(`cover.image: %s`, data.cover.image);
                 }
-                for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
-                  (field) => typeof data[field] === "string",
-                )) {
-                  const nhash = hashNode(data[field]);
-                  const tr = translationCache[nhash];
-                  nTranslatable++;
-                  if (tr) data[field] = tr;
-                  else {
-                    const llmHash = `T${Object.keys(llmHashes)
-                      .length.toString()
-                      .padStart(3, "0")}`;
-                    llmHashes[llmHash] = nhash;
-                    llmHashTodos.add(llmHash);
-                    data[field] = `┌${llmHash}┐${data[field]}└${llmHash}┘`;
-                  }
-                }
-                node.value = YAML.stringify(data);
-                return SKIP;
               }
+              for (const field of FRONTMATTER_FIELDS.filter(
+                (field) => typeof data[field] === "string",
+              )) {
+                const nhash = hashNode(data[field]);
+                const tr = translationCache[nhash];
+                dbga(`%s: %s -> %s`, field, nhash, tr);
+                nTranslatable++;
+                if (tr) data[field] = tr;
+                else {
+                  const llmHash = `T${Object.keys(llmHashes)
+                    .length.toString()
+                    .padStart(3, "0")}`;
+                  llmHashes[llmHash] = nhash;
+                  llmHashTodos.add(llmHash);
+                  data[field] = `┌${llmHash}┐${data[field]}└${llmHash}┘`;
+                }
+              }
+              node.value = YAML.stringify(data);
+              dbgfm(`patched: %s`, node.value);
+              return SKIP;
             } else {
               dbga(`untranslated node type: %s`, node.type);
             }
@@ -632,7 +646,7 @@ export default async function main() {
                 if (tr) data.hero.tagline = tr;
                 else unresolvedTranslations.add(nhash);
               }
-              for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
+              for (const field of FRONTMATTER_FIELDS.filter(
                 (field) => typeof data[field] === "string",
               )) {
                 const nhash = hashNode(data[field]);

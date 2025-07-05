@@ -120,5 +120,7 @@
   "Add the components in your `src/components` directory [from the `docs/src/compon.E446B05C1C170B2A4817": "Adicione os componentes no diretório `src/components` [a partir de `docs/src/components` neste repositório](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).",
   "Feel free to modify the logic in `AIGeneratedNotice.astro` to fit your needs.": "Sinta-se à vontade para modificar a lógica no arquivo `AIGeneratedNotice.astro` para atender às suas necessidades.",
   "## Astro Link Validator": "Validador de Links Astro",
-  "If you use the [Astro Link Validator](https://github.com/HiDeoo/starlight-links-.4D7AD35958DE15CD3C08": "Se você usar o [Astro Link Validator](https://github.com/HiDeoo/starlight-links-validator), certifique-se de desativar a opção `errorOnRelativeLinks` no arquivo `astro.config.mjs`, pois os links localizados são relativos ao locale raiz."
+  "If you use the [Astro Link Validator](https://github.com/HiDeoo/starlight-links-.4D7AD35958DE15CD3C08": "Se você usar o [Astro Link Validator](https://github.com/HiDeoo/starlight-links-validator), certifique-se de desativar a opção `errorOnRelativeLinks` no arquivo `astro.config.mjs`, pois os links localizados são relativos ao locale raiz.",
+  "Getting Started": "Começando",
+  "Read the blog post": "Leia o post no blog"
 }
