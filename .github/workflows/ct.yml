@@ -11,6 +11,7 @@ on:
       - "!docs/src/content/docs/fr/**"
       - "!docs/src/content/docs/es/**"
       - "!docs/src/content/docs/pt-br/**"
+      - "!docs/src/content/docs/ar/**"
 concurrency:
   group: \${{ github.workflow }}-\${{ github.ref }}
   cancel-in-progress: true
@@ -25,6 +26,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: npm
+          node-version: "22"
       - run: npm ci
       - run: npm test
   test-action:
@@ -35,6 +37,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
       - uses: actions/cache@v4
         with:
           path: .genaiscript/cache/**
@@ -51,11 +56,12 @@ jobs:
           files: |
             README.md
             docs/src/content/**/*
+      - run: npm run lint
       - run: git pull --ff-only
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           file_pattern: "**.md* translations/*.json"
-          commit_message: "[cai] translated docs"
+          commit_message: "[cai] 🤖 translated docs"
           commit_user_name: "genaiscript"
   build-docs:
     permissions:
@@ -69,6 +75,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
+          cache: npm
           node-version: "22"
       - run: npm ci
       - run: npm run build
