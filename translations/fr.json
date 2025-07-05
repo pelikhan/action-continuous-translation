@@ -280,5 +280,6 @@
   "`hero.actions.action.text`: The text of the action button in the hero section.": "`hero.actions.action.text` : Le texte du bouton d'action dans la section héros.",
   "We also support frontmatter entries from [Starlight Blog](https://starlight-blog.5B51B20B57D70EEBA893": "Nous prenons également en charge les entrées frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/)",
   "`excerpt`: A short excerpt of the page.": "`excerpt` : Un court extrait de la page.",
-  "You can also enable the `errorOnInconsistentLocale` option to ensure that all li.677537442D7ACC09B86B": "Vous pouvez également activer l'option `errorOnInconsistentLocale` pour garantir que tous les liens sont cohérents avec la locale actuelle."
+  "You can also enable the `errorOnInconsistentLocale` option to ensure that all li.677537442D7ACC09B86B": "Vous pouvez également activer l'option `errorOnInconsistentLocale` pour garantir que tous les liens sont cohérents avec la locale actuelle.",
+  "### Complete Workflow Example": "Exemple Complet de Workflow"
 }
