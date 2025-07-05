@@ -1,6 +1,6 @@
 ---
 title: Astro Starlight
-description: Configurando el sitio de documentación de Starlight
+description: Configurando tu sitio de documentación Starlight
 sidebar:
   order: 9
 ---
@@ -17,22 +17,25 @@ Requiere una configuración específica de Starlight como se detalla a continuac
     </li>
 
     <li>
-      Para habilitar el modo Starlight, necesitas proporcionar las entradas `starlight_dir` y `starlight_base` en la acción.
+      Para habilitar el modo Starlight, necesitas proporcionar la entrada `starlight_dir` en la acción.
+      Si también has configurado la [opción `base` de Astro](https://docs.astro.build/en/reference/configuration-reference/#base), debes proporcionar la entrada `starlight_base` también.
 
       ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs
-        starlight_base: my_repo_name
+        starlight_base: astro_base_option
       ```
     </li>
 
   </ol>
 </Steps>
 
-## Aviso de Contenido AI
+## Aviso de Contenido de IA
 
-Puedes informar a tus usuarios que la traducción fue generada por GenAI añadiendo un aviso en el título. En este momento, Astro Starlight no soporta una función integrada para añadir avisos, por lo que es necesario sobrescribir algunos componentes.
+Puedes informar a tus usuarios que la traducción fue generada por GenAI
+añadiendo un aviso en el título. Actualmente, Astro Starlight no admite una función incorporada para añadir avisos,
+por lo que es necesario sobrescribir algunos componentes.
 
 - [Sobrescribe](https://starlight.astro.build/guides/overriding-components/#how-to-override) los componentes `PageTitle` y `Hero` en tu archivo `astro.config.mjs`:
 
@@ -49,15 +52,15 @@ Puedes informar a tus usuarios que la traducción fue generada por GenAI añadie
   });
   ```
 
-- Agrega los componentes en tu directorio `src/components` [desde `docs/src/components` en este repositorio](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+- Añade los componentes en tu directorio `src/components` [desde `docs/src/components` en este repositorio](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
-Siéntete libre de modificar la lógica en `AIGeneratedNotice.astro` para adaptarlo a tus necesidades.
+Siéntete libre de modificar la lógica en `AIGeneratedNotice.astro` para ajustarla a tus necesidades.
 
-## Validador de Enlaces Astro
+## Validador de Enlaces de Astro
 
-Si utilizas el [Astro Link Validator](https://github.com/HiDeoo/starlight-links-validator),
-asegúrate de deshabilitar la opción `errorOnRelativeLinks` en tu archivo `astro.config.mjs`,
-ya que los enlaces localizados son relativos a la raíz del idioma.
+Si utilizas el [Validador de Enlaces de Astro](https://github.com/HiDeoo/starlight-links-validator),
+asegúrate de desactivar la opción `errorOnRelativeLinks` en tu archivo `astro.config.mjs`
+ya que los enlaces localizados son relativos al idioma raíz.
 
 ```js title="astro.config.mjs" "errorOnRelativeLinks: false"
 import starlightLinksValidator from "starlight-links-validator";
