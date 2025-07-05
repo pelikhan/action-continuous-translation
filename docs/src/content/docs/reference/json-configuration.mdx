@@ -1,0 +1,272 @@
+---
+title: JSON Configuration Translation
+description: Learn how to translate Starlight configuration strings and enable multi-lingual titles
+---
+
+## Overview
+
+The JSON configuration translation feature enables you to translate structured configuration strings for Astro Starlight and other applications. This is particularly useful for creating **multi-lingual site titles**, navigation labels, and other configuration text.
+
+## How It Works
+
+1. **Extract translatable strings** into a JSON file
+2. **Run the translator** on the JSON file  
+3. **Import and use** translated configurations in your code
+
+## Quick Start
+
+### Step 1: Create Translation JSON
+
+Create a JSON file with your translatable configuration strings:
+
+```json title="config-strings.json"
+{
+  "title": "My Documentation Site",
+  "description": "A comprehensive guide to our project",
+  "sidebar": {
+    "reference": "Reference",
+    "guides": "Guides",
+    "examples": "Examples"
+  },
+  "hero": {
+    "tagline": "Build amazing docs with ease"
+  }
+}
+```
+
+### Step 2: Run Translation
+
+Include the JSON file in your translation workflow:
+
+```yaml title=".github/workflows/translate.yml"
+- uses: pelikhan/action-continuous-translation@v0
+  with:
+    files: "README.md docs/**/*.mdx config-strings.json"
+    lang: fr,es,de
+    starlight_dir: docs
+```
+
+This will generate translated versions:
+- `config-strings.fr.json`
+- `config-strings.es.json` 
+- `config-strings.de.json`
+
+### Step 3: Use in Starlight Configuration
+
+Import and use the translations in your `astro.config.mjs`:
+
+```javascript title="astro.config.mjs"
+// @ts-check
+import { defineConfig } from "astro/config";
+import starlight from "@astrojs/starlight";
+
+// Import translation files
+import configStrings from "./config-strings.json" with { type: "json" };
+import configStringsFr from "./config-strings.fr.json" with { type: "json" };
+import configStringsEs from "./config-strings.es.json" with { type: "json" };
+
+// Helper function for localized strings
+function getLocalizedString(key, locale = 'en') {
+  const translations = {
+    en: configStrings,
+    fr: configStringsFr,
+    es: configStringsEs,
+  };
+  
+  // Support nested keys like "sidebar.reference"
+  const getValue = (obj, path) => {
+    return path.split('.').reduce((current, key) => current?.[key], obj);
+  };
+  
+  return getValue(translations[locale], key) || getValue(configStrings, key);
+}
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      // Multi-lingual site title! 🎉
+      title: {
+        root: getLocalizedString('title', 'en'),
+        fr: getLocalizedString('title', 'fr'),
+        es: getLocalizedString('title', 'es'),
+      },
+      
+      defaultLocale: "root",
+      locales: {
+        root: { label: "English", lang: "en" },
+        fr: { label: "Français", lang: "fr" },
+        es: { label: "Español", lang: "es" },
+      },
+      
+      sidebar: [
+        {
+          label: getLocalizedString('sidebar.reference', 'en'),
+          autogenerate: { directory: "reference" },
+        },
+        {
+          label: getLocalizedString('sidebar.guides', 'en'), 
+          autogenerate: { directory: "guides" },
+        },
+      ],
+    }),
+  ],
+});
+```
+
+## Supported File Types
+
+The translator now accepts these file types:
+
+- **Markdown**: `.md`, `.mdx` - For documentation content
+- **JSON**: `.json` - For configuration strings (NEW!)
+
+## Translation Behavior
+
+### What Gets Translated
+
+- String values longer than 2 characters
+- Nested object values (recursively)
+- Array string elements
+
+### What Doesn't Get Translated
+
+- Object keys (preserved as-is)
+- Constant identifiers (ALL_CAPS patterns)
+- Very short strings (≤2 characters)
+- Empty or whitespace-only strings
+
+### Example Translation
+
+**Input** (`config-strings.json`):
+```json
+{
+  "title": "Continuous Translation",
+  "API_VERSION": "v1.0",  // Not translated (constant)
+  "nav": {
+    "home": "Home",       // Translated
+    "docs": "Documentation" // Translated
+  }
+}
+```
+
+**Output** (`config-strings.fr.json`):
+```json
+{
+  "title": "Traduction Continue",
+  "API_VERSION": "v1.0",
+  "nav": {
+    "home": "Accueil",
+    "docs": "Documentation"
+  }
+}
+```
+
+## Best Practices
+
+### 1. Organize by Feature
+Group related strings together:
+
+```json
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel"
+  }
+}
+```
+
+### 2. Use Descriptive Keys
+Make keys self-documenting:
+
+```json
+{
+  "page_title_home": "Welcome to our site",
+  "error_message_404": "Page not found",
+  "button_text_submit": "Submit Form"
+}
+```
+
+### 3. Keep Constants Separate
+Don't mix translatable text with configuration values:
+
+```json
+{
+  // Translatable content
+  "ui_strings": {
+    "welcome": "Welcome to our app"
+  },
+  
+  // Non-translatable config (separate file recommended)
+  "api_endpoints": {
+    "base_url": "https://api.example.com"
+  }
+}
+```
+
+## Troubleshooting
+
+### Translations Not Generated
+
+1. **Check file inclusion**: Ensure your JSON file is in the `files` parameter
+2. **Verify format**: JSON must be valid (use a JSON validator)
+3. **Review logs**: Check GitHub Actions logs for translation errors
+
+### Missing Translations
+
+1. **Check string length**: Very short strings (≤2 chars) aren't translated
+2. **Verify cache**: Use `force: true` to bypass cache if needed
+3. **Review format**: Constants (ALL_CAPS) are preserved as-is
+
+### Import Errors
+
+1. **Check Node version**: JSON imports require Node.js 18+ with `type: "json"`
+2. **Update syntax**: Use `import ... with { type: "json" }` syntax
+3. **Verify paths**: Ensure JSON files are in correct relative locations
+
+## Advanced Usage
+
+### Dynamic Locale Loading
+
+For larger applications, load translations dynamically:
+
+```javascript
+async function loadTranslations(locale) {
+  try {
+    const module = await import(`./config-strings.${locale}.json`, {
+      with: { type: "json" }
+    });
+    return module.default;
+  } catch {
+    // Fallback to English
+    return (await import('./config-strings.json', {
+      with: { type: "json" }
+    })).default;
+  }
+}
+```
+
+### Type Safety with TypeScript
+
+Define types for your configuration:
+
+```typescript
+interface ConfigStrings {
+  title: string;
+  description: string;
+  sidebar: {
+    reference: string;
+    guides: string;
+  };
+}
+
+const configStrings: ConfigStrings = {
+  // ... your strings
+};
+```
+
+This feature opens up powerful possibilities for creating truly multilingual Starlight documentation sites! 🌍

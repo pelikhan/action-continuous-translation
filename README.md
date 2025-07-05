@@ -12,6 +12,7 @@
 - 🔄 **Cache Management** - Intelligent caching to avoid redundant translations
 - 📚 **Astro Starlight Ready** - Built-in support for documentation sites
 - 🌐 **Multi-language Support** - Translate to multiple languages simultaneously
+- 🗂️ **JSON Configuration Translation** - NEW! Translate Starlight titles and configuration strings
 - 🔍 **Quality Validation** - Automatic validation of translation quality
 - ⚡ **GitHub Actions Native** - Seamless integration with your CI/CD pipeline
 
@@ -50,6 +51,58 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 |-----------|-------------|----------|
 | `starlight_dir` | Root folder of Astro Starlight documentation | Only for Starlight |
 | `starlight_base` | Base alias for Starlight documentation | Optional |
+
+### 🗂️ JSON Configuration Translation (NEW!)
+
+Translate configuration strings for Starlight multi-lingual titles and other structured content:
+
+1. **Create a JSON file** with your translatable configuration strings:
+   ```json
+   // config-strings.json
+   {
+     "title": "My Documentation Site",
+     "description": "A comprehensive guide to our project",
+     "sidebar": {
+       "reference": "Reference",
+       "guides": "Guides"
+     }
+   }
+   ```
+
+2. **Run the translator** on your JSON file:
+   ```yaml
+   - uses: pelikhan/action-continuous-translation@v0
+     with:
+       files: "README.md config-strings.json"
+       lang: fr,es
+   ```
+
+3. **Import translated files** in your `astro.config.mjs`:
+   ```javascript
+   import configStrings from "./config-strings.json" with { type: "json" };
+   import configStringsFr from "./config-strings.fr.json" with { type: "json" };
+   
+   // Helper function for localized strings
+   function getLocalizedString(key, locale = 'en') {
+     const translations = { en: configStrings, fr: configStringsFr };
+     return translations[locale]?.[key] || configStrings[key];
+   }
+   
+   export default defineConfig({
+     integrations: [
+       starlight({
+         // Multi-lingual titles!
+         title: {
+           root: getLocalizedString('title', 'en'),
+           fr: getLocalizedString('title', 'fr'),
+         },
+         // ... rest of config
+       })
+     ]
+   });
+   ```
+
+This enables **multi-lingual titles** and other configuration strings in Starlight! 🎉
 
 ### 🔧 Diagnostics & Debugging
 
