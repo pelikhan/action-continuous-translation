@@ -205,9 +205,9 @@ export default async function main() {
         }
         const text =
           typeof node === "string"
-            ? node.trim()
-            : stringify({ type: "root", children: [node as any] }).trim();
-        const chunkHash = hash("sha-256", JSON.stringify(text));
+            ? node
+            : stringify({ type: "root", children: [node as any] });
+        const chunkHash = hash("sha-256", JSON.stringify(text.tim()));
         if (text.length < HASH_TEXT_LENGTH) return text;
         else
           return (
@@ -828,7 +828,7 @@ export default async function main() {
         await workspace.writeText(translationFn, contentTranslated);
         await workspace.writeText(
           translationCacheFilename,
-          JSON.stringify(trimTranslationCache(translationCache), null, 2)
+          JSON.stringify(translationCache, null, 2)
         );
 
         output.resultItem(
