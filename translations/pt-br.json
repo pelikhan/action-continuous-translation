@@ -267,5 +267,7 @@
   "This action uses translate incrementally markdown document using \n": "Esta ação usa a tradução incremental de documentos markdown usando ",
   "!\n": "Suporte integrado para Astro Starlight!",
   "How does it work?\n": "Como funciona?",
-  "Diagnostics\n": "Diagnósticos"
+  "Diagnostics\n": "Diagnósticos",
+  "See [Models](/action-continuous-translation/reference/models/) for more details .560AFCF5FB0E7B1318B8": "Consulte [Modelos](/action-continuous-translation/reference/models/) para mais detalhes sobre outros provedores como OpenAI, Azure OpenAI, etc.",
+  "Base alias for the [Astro Starlight](/action-continuous-translation/reference/as.1F585CE9CE4F102B9AF4": "Base para o alias da documentação [Astro Starlight](/action-continuous-translation/reference/astro-starlight/).\nSe você não definir a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base), não configure esta opção."
 }

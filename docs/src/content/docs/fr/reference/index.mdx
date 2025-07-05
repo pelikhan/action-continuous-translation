@@ -3,7 +3,6 @@ title: Référence
 description: Documentation de référence pour l'action
 sidebar:
   order: 8
-
 ---
 
 L'action personnalisée utilise [GitHub Models](https://github.com/models) pour traduire les fichiers Markdown dans votre dépôt.
@@ -86,9 +85,9 @@ with:
   starlight_base:
   force: false
   debug: false
-  github_token: ${{ secrets.GITHUB_TOKEN }}
-  ...
 ```
+
+Voir [Modèles](../../reference/models/) pour plus de détails sur d'autres fournisseurs comme OpenAI, Azure OpenAI, etc.
 
 ### `lang`
 
@@ -136,9 +135,7 @@ Doit être défini si l’option [`starlight_base`](#starlight_base) est défini
 **Type** : `string`
 
 Alias de base pour la documentation [Astro Starlight](../../reference/astro-starlight/).
-Cela est utilisé pour corriger les liens dans les traductions.
-Doit être défini si l’option [`starlight_dir`](#starlight_dir) est définie.
-Il n'y a actuellement aucun support pour [l’option sans base](https://docs.astro.build/en/reference/configuration-reference/#base).
+Si vous ne définissez pas l'option [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base), ne définissez pas cette option.
 
 ### `force`
 
@@ -161,7 +158,3 @@ Lisez plus de détails dans [la documentation du journal GenAIScript](https://mi
 **Par défaut** : `${{ secrets.GITHUB_TOKEN }}`
 
 Votre [Jeton GitHub](https://github.com/settings/tokens) avec au moins la permission `models: read`. Consultez plus de détails dans [les documents sur les Permissions des Modèles GitHub de GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
-
-### OpenAI, Azure OpenAI, ...
-
-Voir [Modèles](../../reference/models/) pour plus de détails sur d'autres fournisseurs comme OpenAI, Azure OpenAI, ...

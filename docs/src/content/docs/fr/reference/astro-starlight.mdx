@@ -3,7 +3,6 @@ title: Astro Starlight
 description: Configurer votre site de documentation Starlight
 sidebar:
   order: 9
-
 ---
 
 import { Steps } from "@astrojs/starlight/components";
@@ -27,6 +26,7 @@ Elle nécessite une configuration spécifique de Starlight détaillée ci-dessou
         starlight_base: my_repo_name
       ```
     </li>
+
   </ol>
 </Steps>
 
@@ -36,7 +36,7 @@ Vous pouvez informer vos utilisateurs que la traduction a été générée par G
 ajoutant un avis dans le titre. Actuellement, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis,
 ce qui nécessite de remplacer quelques composants.
 
-* [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
+- [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -51,7 +51,7 @@ ce qui nécessite de remplacer quelques composants.
   });
   ```
 
-* Ajoutez les composants dans votre répertoire `src/components` [depuis le répertoire `docs/src/components` de ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+- Ajoutez les composants dans votre répertoire `src/components` [depuis le répertoire `docs/src/components` de ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 N'hésitez pas à modifier la logique dans `AIGeneratedNotice.astro` pour l'adapter à vos besoins.
 

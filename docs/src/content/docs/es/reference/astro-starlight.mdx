@@ -3,7 +3,6 @@ title: Astro Starlight
 description: Configurando el sitio de documentación de Starlight
 sidebar:
   order: 9
-
 ---
 
 import { Steps } from "@astrojs/starlight/components";
@@ -27,6 +26,7 @@ Requiere una configuración específica de Starlight como se detalla a continuac
         starlight_base: my_repo_name
       ```
     </li>
+
   </ol>
 </Steps>
 
@@ -34,7 +34,7 @@ Requiere una configuración específica de Starlight como se detalla a continuac
 
 Puedes informar a tus usuarios que la traducción fue generada por GenAI añadiendo un aviso en el título. En este momento, Astro Starlight no soporta una función integrada para añadir avisos, por lo que es necesario sobrescribir algunos componentes.
 
-* [Sobrescribe](https://starlight.astro.build/guides/overriding-components/#how-to-override) los componentes `PageTitle` y `Hero` en tu archivo `astro.config.mjs`:
+- [Sobrescribe](https://starlight.astro.build/guides/overriding-components/#how-to-override) los componentes `PageTitle` y `Hero` en tu archivo `astro.config.mjs`:
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -49,7 +49,7 @@ Puedes informar a tus usuarios que la traducción fue generada por GenAI añadie
   });
   ```
 
-* Agrega los componentes en tu directorio `src/components` [desde `docs/src/components` en este repositorio](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+- Agrega los componentes en tu directorio `src/components` [desde `docs/src/components` en este repositorio](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 Siéntete libre de modificar la lógica en `AIGeneratedNotice.astro` para adaptarlo a tus necesidades.
 

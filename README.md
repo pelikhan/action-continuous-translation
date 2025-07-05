@@ -115,34 +115,17 @@ We recommend updating the script metadata instead of editing the action files di
 - the readme description is the script description
 - the action branding is the script branding
 
-To **regenerate** the action files (`action.yml`), run:
+## 🧞 Commands
 
-```bash
-npm run configure
-```
+All commands are run from the root of the project, from a terminal:
 
-To lint script files, run:
-
-```bash
-npm run lint
-```
-
-To typecheck the scripts, run:
-
-```bash
-npm run typecheck
-```
-
-To test the translator, run:
-
-```bash
-npm run test:genai
-```
-
-## Upgrade
-
-The GenAIScript version is pinned in the `package.json` file. To upgrade it, run:
-
-```bash
-npm run upgrade
-```
+| Command              | Action                                                             |
+| :------------------- | :----------------------------------------------------------------- |
+| `npm install`        | Installs dependencies                                              |
+| `npm run dev`        | Runs a translation test of `README.md` in `fr`                     |
+| `npm run dev:astro`  | Translates the entire Astro docs                                   |
+| `npm run typecheck`  | Typecheck TypeScript files                                         |
+| `npm run lint`       | Run prettier against all files in the repo                         |
+| `npm run configure`  | Regenerate `action.yml` when changing the parameters in the script |
+| `npm run upgrade`    | Refresh dependencies                                               |
+| `npm run test:genai` | local test suite                                                   |

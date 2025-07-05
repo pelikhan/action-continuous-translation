@@ -909,5 +909,7 @@
   "If you use the \n": "Si utilizas el ",
   " option in your \n": "opción `errorOnRelativeLinks` en tu ",
   "!\n": "¡Soporte integrado para [Astro Starlight](https://starlight.astro.build/)!",
-  "How does it work?\n": "¿Cómo funciona?"
+  "How does it work?\n": "¿Cómo funciona?",
+  "See [Models](/action-continuous-translation/reference/models/) for more details .560AFCF5FB0E7B1318B8": "Consulta [Modelos](/action-continuous-translation/reference/models/) para más detalles sobre otros proveedores como OpenAI, Azure OpenAI, etc.",
+  "Base alias for the [Astro Starlight](/action-continuous-translation/reference/as.1F585CE9CE4F102B9AF4": "Alias base para la documentación de [Astro Starlight](/action-continuous-translation/reference/astro-starlight/).\nSi no defines la [opción base de Astro](https://docs.astro.build/en/reference/configuration-reference/#base), no configures esta opción."
 }

@@ -3,7 +3,6 @@ title: أسترو ستارلايت
 description: تكوين موقع الوثائق الخاص بستارلايت
 sidebar:
   order: 9
-
 ---
 
 import { Steps } from "@astrojs/starlight/components";
@@ -27,6 +26,7 @@ import { Steps } from "@astrojs/starlight/components";
         starlight_base: my_repo_name
       ```
     </li>
+
   </ol>
 </Steps>
 
@@ -36,7 +36,7 @@ import { Steps } from "@astrojs/starlight/components";
 إضافة إشعار في العنوان. في الوقت الحالي، لا يدعم Astro Starlight ميزة مدمجة لإضافة الإشعارات
 لذا يتطلب تجاوز بعض المكونات.
 
-* [قم بالتجاوز](https://starlight.astro.build/guides/overriding-components/#how-to-override) لمكونات `PageTitle` و `Hero` في ملف `astro.config.mjs` الخاص بك:
+- [قم بالتجاوز](https://starlight.astro.build/guides/overriding-components/#how-to-override) لمكونات `PageTitle` و `Hero` في ملف `astro.config.mjs` الخاص بك:
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -51,7 +51,7 @@ import { Steps } from "@astrojs/starlight/components";
   });
   ```
 
-* أضف المكونات إلى دليل `src/components` الخاص بك [من `docs/src/components` في هذا المستودع](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+- أضف المكونات إلى دليل `src/components` الخاص بك [من `docs/src/components` في هذا المستودع](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 لا تتردد في تعديل المنطق في `AIGeneratedNotice.astro` ليناسب احتياجاتك.
 
