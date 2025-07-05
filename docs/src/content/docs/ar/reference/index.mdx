@@ -86,9 +86,9 @@ with:
   starlight_base:
   force: false
   debug: false
-  github_token: ${{ secrets.GITHUB_TOKEN }}
-  ...
 ```
+
+انظر [النماذج](../../reference/models/) لمزيد من التفاصيل حول موفرين آخرين مثل OpenAI وAzure OpenAI وغيرهم.
 
 ### `lang`
 
@@ -136,9 +136,7 @@ with:
 **النوع**: `string`
 
 الاسم المستعار الأساسي لتوثيق [Astro Starlight](../../reference/astro-starlight/).
-يتم استخدامه لتعديل الروابط في الترجمات.
-يجب أن يتم تعريفه إذا تم تعريف الخيار [`starlight_dir`](#starlight_dir).
-لا يوجد دعم حاليًا [لخيار بدون أساس](https://docs.astro.build/en/reference/configuration-reference/#base).
+إذا لم تقم بتعريف خيار [الأساس لـ Astro](https://docs.astro.build/en/reference/configuration-reference/#base)، فلا تقم بتعيين هذا الخيار.
 
 ### `force`
 
@@ -161,7 +159,3 @@ with:
 **القيمة الافتراضية**: `${{ secrets.GITHUB_TOKEN }}`
 
 رمز GitHub الخاص بك [GitHub token](https://github.com/settings/tokens) مع صلاحية `models: read` على الأقل. اقرأ المزيد من التفاصيل في [وثائق أذونات نماذج GenAIScript لـ GitHub](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
-
-### OpenAI، Azure OpenAI، ...
-
-راجع [النماذج](../../reference/models/) لمزيد من التفاصيل حول المزودين الآخرين مثل OpenAI وAzure OpenAI و...
