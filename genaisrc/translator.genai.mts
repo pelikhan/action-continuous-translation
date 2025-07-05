@@ -88,7 +88,18 @@ const nodeTypes = ["text", "paragraph", "heading", "yaml"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
-const STARLIGHT_FRONTMATTER_STRINGS = ["excerpt", "title", "description"];
+const FRONTMATTER_FIELDS = [
+  "title",
+  "description",
+  "summary",
+  "excerpt",
+  "alt",
+  "caption",
+  "text",
+  "tagline",
+  "og_title",
+  "og_description",
+];
 
 const isUri = (str: string): URL => {
   try {
@@ -106,11 +117,12 @@ export default async function main() {
   const { dbg, output, vars } = env;
   const dbgn = host.logger(`ct:node`);
   const dbgc = host.logger(`ct:md`);
-  const dbgo = host.logger(`ct:translated`);
+  const dbgo = host.logger(`ct:target`);
   const dbgt = host.logger(`ct:tree`);
   const dbge = host.logger(`ct:text`);
   const dbgm = host.logger(`ct:mdx`);
-  const dbga = host.logger(`ct:translate`);
+  const dbga = host.logger(`ct:source`);
+  const dbgfm = host.logger(`ct:frontmatter`);
   const dbgp = host.logger(`ct:patch`);
   const parameters = vars as {
     lang?: string;
@@ -127,7 +139,7 @@ export default async function main() {
   const { force } = parameters;
   let { instructions } = parameters;
   const source = parameters.source;
-  const sourceInfo = resolveModels(source);
+  const sourceInfo = await resolveModels(source);
   const instructionsFile = parameters.instructionsFile
     ? MD.content(await workspace.readText(parameters.instructionsFile))
     : undefined;
@@ -139,7 +151,7 @@ export default async function main() {
   dbg(`starlightBase: %s`, starlightBase);
   if (starlightBase && !starlightDir) {
     throw new Error(
-      `"starlightDir" must be defined when "starlightBase" is defined.`
+      `"starlightDir" must be defined when "starlightBase" is defined.`,
     );
   }
   const starlightBaseRx = starlightBase
@@ -157,7 +169,7 @@ export default async function main() {
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
   dbg(
     `files (before filter): %O`,
-    env.files.map((f) => f.filename)
+    env.files.map((f) => f.filename),
   );
   const files = env.files
     .filter((f) => ignorer([f.filename]).length)
@@ -172,7 +184,7 @@ export default async function main() {
   }
 
   for (const to of langs) {
-    const langInfo = resolveModels(to);
+    const langInfo = await resolveModels(to);
     const lang = langInfo.name;
     const translationModel = langInfo.models.translation;
     const classifyModel = langInfo.models.classify;
@@ -186,9 +198,6 @@ export default async function main() {
     const translationCache: Record<string, string> = force
       ? {}
       : (await workspace.readJSON(translationCacheFilename)) || {};
-    for (const [k, v] of Object.entries(translationCache)) {
-      if (hasMarker(v)) delete translationCache[k];
-    }
     dbgc(`translation cache: %O`, translationCache);
 
     for (const file of files) {
@@ -203,11 +212,12 @@ export default async function main() {
           node = structuredClone(node);
           visit(node, (node) => delete node.position);
         }
-        const text =
+        const text = (
           typeof node === "string"
             ? node
-            : stringify({ type: "root", children: [node as any] });
-        const chunkHash = hash("sha-256", JSON.stringify(text));
+            : stringify({ type: "root", children: [node as any] })
+        ).trim();
+        const chunkHash = hash("sha-256", text);
         if (text.length < HASH_TEXT_LENGTH) return text;
         else
           return (
@@ -256,7 +266,7 @@ export default async function main() {
 
         // Extract instructions from frontmatter if not provided via parameters
         const frontmatterNode = root.children.find(
-          (child) => child.type === "yaml"
+          (child) => child.type === "yaml",
         );
         const frontmatter = parsers.YAML(frontmatterNode?.value, {
           schema: FrontmatterWithTranslatorSchema,
@@ -346,18 +356,32 @@ export default async function main() {
               });
               return SKIP; // don't process children of paragraphs
             } else if (node.type === "yaml") {
-              dbga(`yaml node: %s`, nhash);
+              dbgfm(`%s`, node.value);
               const data = parsers.YAML(node.value);
-              if (data) {
-                if (starlight) {
-                  if (Array.isArray(data?.hero?.actions)) {
-                    data.hero.actions.forEach((action) => {
+              if (data && starlight) {
+                if (data.hero) {
+                  if (typeof data.hero.tagline === "string") {
+                    const nhash = hashNode(data.hero.tagline);
+                    const tr = translationCache[nhash];
+                    nTranslatable++;
+                    if (tr) data.hero.tagline = tr;
+                    else {
+                      const llmHash = `T${Object.keys(llmHashes)
+                        .length.toString()
+                        .padStart(3, "0")}`;
+                      llmHashes[llmHash] = nhash;
+                      llmHashTodos.add(llmHash);
+                      data.hero.tagline = `┌${llmHash}┐${data.hero.tagline}└${llmHash}┘`;
+                    }
+                  }
+                  if (Array.isArray(data.hero.actions)) {
+                    for (const action of data.hero.actions) {
                       if (typeof action.text === "string") {
                         const nhash = hashNode(action.text);
                         const tr = translationCache[nhash];
-                        dbg(`yaml hero.action: %s -> %s`, nhash, tr);
+                        dbga(`hero.action: %s -> %s`, nhash, tr);
                         nTranslatable++;
-                        if (!tr) action.text = tr;
+                        if (tr) action.text = tr;
                         else {
                           const llmHash = `T${Object.keys(llmHashes)
                             .length.toString()
@@ -367,46 +391,34 @@ export default async function main() {
                           action.text = `┌${llmHash}┐${action.text}└${llmHash}┘`;
                         }
                       }
-                    });
-                  }
-                  if (data?.cover?.image) {
-                    data.cover.image = patchFn(data.cover.image);
-                    dbg(`yaml cover image: %s`, data.cover.image);
+                    }
                   }
                 }
-                if (data.hero && typeof data.hero.tagline === "string") {
-                  const nhash = hashNode(data.hero.tagline);
-                  const tr = translationCache[nhash];
-                  nTranslatable++;
-                  if (tr) data.hero.tagline = tr;
-                  else {
-                    const llmHash = `T${Object.keys(llmHashes)
-                      .length.toString()
-                      .padStart(3, "0")}`;
-                    llmHashes[llmHash] = nhash;
-                    llmHashTodos.add(llmHash);
-                    data.hero.tagline = `┌${llmHash}┐${data.hero.tagline}└${llmHash}┘`;
-                  }
+                if (data?.cover?.image) {
+                  data.cover.image = patchFn(data.cover.image);
+                  dbga(`cover.image: %s`, data.cover.image);
                 }
-                for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
-                  (field) => typeof data[field] === "string"
-                )) {
-                  const nhash = hashNode(data[field]);
-                  const tr = translationCache[nhash];
-                  nTranslatable++;
-                  if (tr) data[field] = tr;
-                  else {
-                    const llmHash = `T${Object.keys(llmHashes)
-                      .length.toString()
-                      .padStart(3, "0")}`;
-                    llmHashes[llmHash] = nhash;
-                    llmHashTodos.add(llmHash);
-                    data[field] = `┌${llmHash}┐${data[field]}└${llmHash}┘`;
-                  }
-                }
-                node.value = YAML.stringify(data);
-                return SKIP;
               }
+              for (const field of FRONTMATTER_FIELDS.filter(
+                (field) => typeof data[field] === "string",
+              )) {
+                const nhash = hashNode(data[field]);
+                const tr = translationCache[nhash];
+                dbga(`%s: %s -> %s`, field, nhash, tr);
+                nTranslatable++;
+                if (tr) data[field] = tr;
+                else {
+                  const llmHash = `T${Object.keys(llmHashes)
+                    .length.toString()
+                    .padStart(3, "0")}`;
+                  llmHashes[llmHash] = nhash;
+                  llmHashTodos.add(llmHash);
+                  data[field] = `┌${llmHash}┐${data[field]}└${llmHash}┘`;
+                }
+              }
+              node.value = YAML.stringify(data);
+              dbgfm(`patched: %s`, node.value);
+              return SKIP;
             } else {
               dbga(`untranslated node type: %s`, node.type);
             }
@@ -530,7 +542,7 @@ export default async function main() {
               system: [],
               cache: true,
               label: `translating ${filename} (${llmHashTodos.size} nodes)`,
-            }
+            },
           );
 
           if (error) {
@@ -590,8 +602,8 @@ export default async function main() {
                       action.link = patchFn(
                         action.link.replace(
                           starlightBaseRx,
-                          `/${starlightBase || ""}/${to.toLowerCase()}/`
-                        )
+                          `/${starlightBase || ""}/${to.toLowerCase()}/`,
+                        ),
                       );
                       dbgo(`yaml hero action link: %s`, action.link);
                     }
@@ -619,8 +631,8 @@ export default async function main() {
                 if (tr) data.hero.tagline = tr;
                 else unresolvedTranslations.add(nhash);
               }
-              for (const field of STARLIGHT_FRONTMATTER_STRINGS.filter(
-                (field) => typeof data[field] === "string"
+              for (const field of FRONTMATTER_FIELDS.filter(
+                (field) => typeof data[field] === "string",
               )) {
                 const nhash = hashNode(data[field]);
                 const tr = translationCache[nhash];
@@ -700,7 +712,7 @@ export default async function main() {
             if (starlightBaseRx.test(node.url)) {
               node.url = patchFn(
                 node.url.replace(starlightBaseRx, "../"),
-                true
+                true,
               );
             }
           });
@@ -711,7 +723,7 @@ export default async function main() {
           output.fence(
             Array.from(unresolvedTranslations)
               .map((t) => t)
-              .join("\n")
+              .join("\n"),
           );
         }
         const nTranslations = Object.keys(llmHashes).length;
@@ -757,7 +769,7 @@ export default async function main() {
           });
           const diffLinks = xor(
             Array.from(originalLinks),
-            Array.from(translatedLinks)
+            Array.from(translatedLinks),
           );
           if (diffLinks.length) {
             output.warn(`some links have changed`);
@@ -775,12 +787,12 @@ export default async function main() {
           } (${source}) to ${lang} (${to}).
           The original document is in ${ctx.def(
             "ORIGINAL",
-            content
+            content,
           )}, and the translated document is provided in ${ctx.def(
-                "TRANSLATED",
-                contentTranslated,
-                { lineNumbers: true }
-              )} (line numbers were added).`.role("system");
+            "TRANSLATED",
+            contentTranslated,
+            { lineNumbers: true },
+          )} (line numbers were added).`.role("system");
             },
             {
               ok: `Translation is faithful to the original document and conveys the same meaning.`,
@@ -792,7 +804,7 @@ export default async function main() {
               cache: true,
               systemSafety: true,
               model: classifyModel,
-            }
+            },
           );
 
           // are we out of tokens?
@@ -803,7 +815,7 @@ export default async function main() {
 
           output.resultItem(
             res.label === "ok",
-            `translation validation: ${res.label}`
+            `translation validation: ${res.label}`,
           );
           if (res.label !== "ok") {
             output.fence(res.answer);
@@ -819,12 +831,12 @@ export default async function main() {
         await workspace.writeText(translationFn, contentTranslated);
         await workspace.writeText(
           translationCacheFilename,
-          JSON.stringify(translationCache, null, 2)
+          JSON.stringify(translationCache, null, 2),
         );
 
         output.resultItem(
           true,
-          `translated chunks: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`
+          `translated chunks: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`,
         );
       } catch (error) {
         output.error(error);

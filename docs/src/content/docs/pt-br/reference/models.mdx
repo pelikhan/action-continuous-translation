@@ -3,11 +3,9 @@ title: Modelos
 description: Configuração de LLM
 sidebar:
   order: 31
-
 ---
 
-A ação do GitHub `pelikhan/action-continuous-translation` suporta muitos provedores diferentes de LLM
-através do [GenAIScript](https://microsoft.github.io/genaiscript/configuration/).
+A ação do GitHub `pelikhan/action-continuous-translation` suporta muitos provedores de LLM diferentes através do [GenAIScript](https://microsoft.github.io/genaiscript/configuration/).
 
 ```yaml
 with:
@@ -23,42 +21,38 @@ with:
 
 ### `github_token`
 
-**Tipo**: `string` (segredo recomendado)\
+**Tipo**: `string` (secreto recomendado)\
 **Padrão**: `${{ secrets.GITHUB_TOKEN }}`
 
-Seu [token do GitHub](https://github.com/settings/tokens) com pelo menos permissão `models: read`.
-Leia mais detalhes em [os documentos de Permissões de Modelos do GitHub no GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+Seu [token do GitHub](https://github.com/settings/tokens) com pelo menos permissão de `models: read`. Leia mais detalhes em [os documentos de permissões do GenAIScript GitHub Models](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
 
 ### `openai_api_key`
 
-**Tipo**: `string` (segredo recomendado)\
+**Tipo**: `string` (secreto recomendado)\
 **Padrão**: `${{ secrets.OPENAI_API_KEY }}`
 
-Sua chave de API do OpenAI.
-Leia mais [aqui](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
+Sua chave API da OpenAI. Leia mais [aqui](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
 
 ### `openai_api_base`
 
 **Tipo**: `string` (variável de ambiente recomendada)\
 **Padrão**: `${{ env.OPENAI_API_BASE }}`
 
-A URL base da API do OpenAI.
+A URL base da API da OpenAI.
 
 ### `azure_openai_api_endpoint`
 
 **Tipo**: `string` (variável de ambiente recomendada)\
 **Padrão**: `${{ env.AZURE_OPENAI_API_ENDPOINT }}`
 
-O endpoint do Azure OpenAI.
-Para encontrar este endpoint, vá para o Portal do Azure, abra o recurso do Azure OpenAI.
-Localize Chaves e Endpoints e copie o Endpoint.
+O endpoint do Azure OpenAI. Para encontrar este endpoint, vá ao seu Portal Azure, abra seu recurso Azure OpenAI. Encontre Chaves e Endpoints e, por fim, copie o Endpoint.
 
 ### `azure_openai_api_key`
 
-**Tipo**: `string` (segredo recomendado)\
+**Tipo**: `string` (secreto recomendado)\
 **Padrão**: `${{ secrets.AZURE_OPENAI_API_KEY }}`
 
-A chave de API do Azure OpenAI.
+A chave API do Azure OpenAI.
 
 :::note
 Você NÃO precisa disso se estiver usando o Microsoft Entra ID.
@@ -87,5 +81,4 @@ A versão da API do Azure OpenAI.
 **Tipo**: `string` (variável de ambiente recomendada)\
 **Padrão**: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`
 
-O tipo de credenciais de API do Azure OpenAI.
-Mantenha isso como `'default'`, a menos que você tenha uma configuração especial no Azure.
+O tipo de credenciais da API do Azure OpenAI. Mantenha isso como `'default'` a menos que você tenha uma configuração especial do Azure.
