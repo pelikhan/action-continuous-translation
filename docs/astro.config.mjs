@@ -52,6 +52,10 @@ export default defineConfig({
           label: "Reference",
           autogenerate: { directory: "reference" },
         },
+        {
+          label: "Resources",
+          autogenerate: { directory: "resources" },
+        },
       ],
       components: {
         PageTitle: "./src/components/PageTitle.astro",
