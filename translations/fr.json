@@ -928,5 +928,7 @@
   " in this repository\n": "`docs/src/components` de ce dépôt",
   "Astro Link Validator\n": "Validateur de liens Astro",
   "If you use the \n": "Si vous utilisez le ",
-  " option in your \n": "option `errorOnRelativeLinks` dans votre "
+  " option in your \n": "option `errorOnRelativeLinks` dans votre ",
+  "`starlight_dir`: root folder of the Astro Starlight documentation. (only set whe.75C6D4F26906301D61E9": "`starlight_dir` : dossier racine de la documentation Astro Starlight. (à définir uniquement lors de l'utilisation de Starlight)",
+  "`starlight_base`: base alias for the Starlight documentation. (optional, even wh.084CAC7A1F93934F724C": "`starlight_base` : alias de base pour la documentation Starlight. (optionnel, même lors de l'utilisation de Starlight)"
 }

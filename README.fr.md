@@ -27,8 +27,8 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 * `files` : Fichiers à traiter, séparés par des points-virgules. Par défaut, `README.md`.
 * `instructions` : Instructions supplémentaires à utiliser par le LLM lors de la traduction.
 * `instructions_file` : Chemin d'accès à un fichier contenant des instructions supplémentaires à utiliser par le LLM lors de la traduction.
-* `starlight_dir` : dossier racine de la documentation Astro Starlight.
-* `starlight_base` : alias de base pour la documentation Starlight.
+* `starlight_dir` : dossier racine de la documentation Astro Starlight. (à définir uniquement lors de l'utilisation de Starlight)
+* `starlight_base` : alias de base pour la documentation Starlight. (optionnel, même lors de l'utilisation de Starlight)
 
 ### Diagnostic
 
