@@ -3,7 +3,8 @@ title: Traduction continue
 description: Documentation traduite à l'aide de GenAI
 template: splash
 hero:
-  tagline: Documentation traduite automatiquement à l'aide de GitHub Actions et de
+  tagline:
+    Documentation traduite automatiquement à l'aide de GitHub Actions et de
     modèles
   image:
     file: ../../../assets/houston.webp
@@ -15,7 +16,6 @@ hero:
       link: https://microsoft.github.io/genaiscript/blog/continuous-translations/
       icon: external
       variant: minimal
-
 ---
 
 import { Card, CardGrid } from "@astrojs/starlight/components";
@@ -37,7 +37,8 @@ Ce site web est traduit par l'IA. Découvrez les autres langues (en haut à droi
 <Card title="IA continue" icon="rocket">
   Exploration de l'automatisation alimentée par LLM dans la collaboration logicielle basée sur des plateformes
 
-  [https://githubnext.com/projects/continuous-ai/](https://githubnext.com/projects/continuous-ai/)
+[https://githubnext.com/projects/continuous-ai/](https://githubnext.com/projects/continuous-ai/)
+
 </Card>
 
 ## Étapes suivantes
@@ -49,15 +50,16 @@ Ce site web est traduit par l'IA. Découvrez les autres langues (en haut à droi
     ```
     add the workflow for the pelikhan/action-continuous-translation action
     ```
+
   </Card>
 
-  <Card title="Configurer votre site" icon="setting">
-    Modifiez le workflow en y ajoutant les informations Astro Starlight.
-  </Card>
+<Card title="Configurer votre site" icon="setting">
+  Modifiez le workflow en y ajoutant les informations Astro Starlight.
+</Card>
 
-  <Card title="Traduisez !" icon="add-document">
-    Validez et laissez le workflow faire le travail !
-  </Card>
+<Card title="Traduisez !" icon="add-document">
+  Validez et laissez le workflow faire le travail !
+</Card>
 
   <Card title="Lire la documentation" icon="open-book">
     En savoir plus dans le
@@ -67,12 +69,12 @@ Ce site web est traduit par l'IA. Découvrez les autres langues (en haut à droi
 
 ## Fonctionnalités
 
-* Traductions alimentées par l’IA pour votre documentation.
-* Intégration transparente avec GitHub Actions.
-* Mises à jour incrémentielles des traductions à l’aide de l’inférence LLM.
-* Utilise Remark et la manipulation de l’AST pour des traductions fiables.
-* Contrôle qualité grâce à LLM comme juge et vérifications du compilateur.
-* Prise en charge des formats Markdown, GFM et MDX (dans une certaine mesure).
-* Intégration Astro Starlight
+- Traductions alimentées par l’IA pour votre documentation.
+- Intégration transparente avec GitHub Actions.
+- Mises à jour incrémentielles des traductions à l’aide de l’inférence LLM.
+- Utilise Remark et la manipulation de l’AST pour des traductions fiables.
+- Contrôle qualité grâce à LLM comme juge et vérifications du compilateur.
+- Prise en charge des formats Markdown, GFM et MDX (dans une certaine mesure).
+- Intégration Astro Starlight
 
 Ce projet est construit avec [GenAIScript](https://microsoft.github.io/genaiscript).
