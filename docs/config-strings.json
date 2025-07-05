@@ -1,0 +1,7 @@
+{
+  "title": "Continuous Translation",
+  "description": "A GitHub Action for continuous translation",
+  "sidebar": {
+    "reference": "Reference"
+  }
+}

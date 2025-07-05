@@ -24,7 +24,7 @@ script({
   title: "Automatic Markdown Translations using GenAI",
   description:
     "This action uses GitHub Models and remark to incrementally translate markdown documents in your repository.",
-  accept: ".md,.mdx",
+  accept: ".md,.mdx,.json",
   branding: {
     color: "yellow",
     icon: "globe",
@@ -113,6 +113,145 @@ const hasMarker = (str: string): boolean => {
   return str.includes(MARKER_START) || str.includes(MARKER_END);
 };
 
+// Helper function to recursively translate JSON object values
+const translateJsonObject = async (
+  obj: any, 
+  translationCache: Record<string, string>, 
+  lang: string, 
+  to: string,
+  translationModel: string
+): Promise<any> => {
+  if (typeof obj === 'string') {
+    // Use the same hash function to check cache
+    const hashStr = (str: string) => {
+      const chunkHash = hash("sha-256", str);
+      if (str.length < HASH_TEXT_LENGTH) return str;
+      else
+        return (
+          str.slice(0, HASH_TEXT_LENGTH) +
+          "." +
+          chunkHash.slice(0, HASH_LENGTH).toUpperCase()
+        );
+    };
+    
+    const hashKey = hashStr(obj);
+    
+    // Check if we have a translation in cache
+    const cached = translationCache[hashKey];
+    if (cached) {
+      return cached;
+    }
+    
+    // If string is long enough or complex enough, translate it
+    if (obj.length > 5 && !/^[A-Z_][A-Z0-9_]*$/i.test(obj) && obj.trim()) {
+      // Use a simple translation approach for now
+      try {
+        const { text } = await runPrompt(
+          async (ctx) => {
+            ctx.$`Translate the following text from English to ${lang}:
+
+"${obj}"
+
+Provide only the translation, no explanations or quotes.`;
+          },
+          { 
+            label: `translate config string to ${to}`, 
+            cache: true,
+            model: translationModel,
+            responseType: "text"
+          }
+        );
+        
+        if (text) {
+          const translatedText = text.trim().replace(/^["']|["']$/g, '');
+          translationCache[hashKey] = translatedText;
+          return translatedText;
+        }
+      } catch (error) {
+        // If translation fails, return original
+        console.warn(`Translation failed for "${obj}":`, error);
+      }
+    }
+    
+    return obj;
+  } else if (Array.isArray(obj)) {
+    const results = [];
+    for (const item of obj) {
+      results.push(await translateJsonObject(item, translationCache, lang, to, translationModel));
+    }
+    return results;
+  } else if (obj !== null && typeof obj === 'object') {
+    const result: any = {};
+    for (const [key, value] of Object.entries(obj)) {
+      result[key] = await translateJsonObject(value, translationCache, lang, to, translationModel);
+    }
+    return result;
+  }
+  
+  return obj;
+};
+
+// Simpler JSON translation that works directly with strings
+const translateJsonObjectSimple = async (
+  obj: any, 
+  translationCache: Record<string, string>, 
+  lang: string, 
+  to: string,
+  translationModel: string
+): Promise<any> => {
+  if (typeof obj === 'string') {
+    // Check cache first using the string as key
+    if (translationCache[obj]) {
+      return translationCache[obj];
+    }
+    
+    // If string is translatable, translate it
+    if (obj.length > 2 && obj.trim() && !/^[A-Z_][A-Z0-9_]*$/i.test(obj)) {
+      try {
+        const result = await runPrompt(
+          async (ctx) => {
+            ctx.$`Translate the following text from English to ${lang}:
+
+"${obj}"
+
+Provide only the translation, no explanations or quotes.`;
+          },
+          { 
+            label: `translate config string to ${to}`, 
+            cache: true,
+            model: translationModel,
+            responseType: "text"
+          }
+        );
+        
+        if (result?.text && result.text.trim()) {
+          const translatedText = result.text.trim().replace(/^["']|["']$/g, '');
+          translationCache[obj] = translatedText;
+          return translatedText;
+        }
+      } catch (error) {
+        console.warn(`Translation failed for "${obj}":`, error);
+      }
+    }
+    
+    return obj;
+  } else if (Array.isArray(obj)) {
+    const results = [];
+    for (const item of obj) {
+      results.push(await translateJsonObjectSimple(item, translationCache, lang, to, translationModel));
+    }
+    return results;
+  } else if (obj !== null && typeof obj === 'object') {
+    const result: any = {};
+    for (const [key, value] of Object.entries(obj)) {
+      result[key] = await translateJsonObjectSimple(value, translationCache, lang, to, translationModel);
+    }
+    return result;
+  }
+  
+  return obj;
+};
+
 export default async function main() {
   const { dbg, output, vars } = env;
   const dbgn = host.logger(`ct:node`);
@@ -174,7 +313,7 @@ export default async function main() {
   const files = env.files
     .filter((f) => ignorer([f.filename]).length)
     // Filter files that match the ISO language code pattern in the filename
-    .filter(({ filename }) => !/\.\w\w(-\w\w\w?)?\.mdx?$/i.test(filename))
+    .filter(({ filename }) => !/\.\w\w(-\w\w\w?)?\.(mdx?|json)$/i.test(filename))
     .filter(({ filename }) => !/\/\w\w(-\w\w\w?)?\//i.test(filename));
   if (!files.length) cancel("No files or not matching languages selected.");
 
@@ -188,7 +327,7 @@ export default async function main() {
     const lang = langInfo.name;
     const translationModel = langInfo.models.translation;
     const classifyModel = langInfo.models.classify;
-    output.heading(2, `Translating Markdown files to ${lang} (${to})`);
+    output.heading(2, `Translating files to ${lang} (${to})`);
     const translationCacheFilename = `translations/${to.toLowerCase()}.json`;
     dbg(`cache: %s`, translationCacheFilename);
     output.itemValue(`translation model`, translationModel);
@@ -204,6 +343,36 @@ export default async function main() {
       const { filename } = file;
       output.heading(3, `${filename}`);
 
+      // Check if this is a JSON file
+      const isJson = /\.json$/i.test(filename);
+      
+      if (isJson) {
+        // Handle JSON configuration files
+        try {
+          const translationFn = path.changeext(filename, `.${to.toLowerCase()}.json`);
+          dbg(`JSON translation %s`, translationFn);
+          
+          // JSON translation mode - use simpler implementation with explicit cache saving
+          const jsonContent = JSON.parse(file.content);
+          const translatedJson = await translateJsonObjectSimple(jsonContent, translationCache, lang, to, translationModel);
+          
+          await workspace.writeText(translationFn, JSON.stringify(translatedJson, null, 2));
+          
+          // Explicitly save the updated translation cache
+          await workspace.writeText(
+            translationCacheFilename,
+            JSON.stringify(translationCache, null, 2),
+          );
+          
+          await workspace.writeText(translationFn, JSON.stringify(translatedJson, null, 2));
+          output.resultItem(true, `translated JSON configuration file`);
+        } catch (error) {
+          output.error(`Error processing JSON file ${filename}:`, error);
+        }
+        continue;
+      }
+
+      // Handle markdown files
       const { visit, parse, stringify, SKIP } = await mdast({
         mdx: /\.mdx$/i.test(filename),
       });
