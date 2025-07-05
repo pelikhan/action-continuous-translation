@@ -31,6 +31,19 @@ Elle nécessite une configuration spécifique de Starlight comme détaillé ci-d
   </ol>
 </Steps>
 
+## Entrées Frontmatter prises en charge
+
+En plus du Markdown/MDX, nous prenons en charge certaines des métadonnées frontmatter que Starlight prend en charge.
+
+- `title` : Le titre de la page.
+- `description` : La description de la page.
+- `hero.tagline` : Le slogan de la section héros.
+- `hero.actions.action.text` : Le texte du bouton d'action dans la section héros.
+
+Nous prenons également en charge les entrées frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/)
+
+- `excerpt` : Un court extrait de la page.
+
 ## Avis sur le contenu généré par l'IA
 
 Vous pouvez informer vos utilisateurs que la traduction a été générée par une IA en ajoutant un avis dans le titre. À ce jour, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis, il est donc nécessaire de remplacer quelques composants.
@@ -57,6 +70,8 @@ N'hésitez pas à modifier la logique dans `AIGeneratedNotice.astro` pour répon
 ## Validateur de liens Astro
 
 Si vous utilisez le [validateur de liens Astro](https://github.com/HiDeoo/starlight-links-validator), assurez-vous de désactiver l'option `errorOnRelativeLinks` dans votre fichier `astro.config.mjs`, car les liens localisés sont relatifs à la racine de la locale.
+
+Vous pouvez également activer l'option `errorOnInconsistentLocale` pour garantir que tous les liens sont cohérents avec la locale actuelle.
 
 ```js title="astro.config.mjs" "errorOnRelativeLinks: false"
 import starlightLinksValidator from "starlight-links-validator";

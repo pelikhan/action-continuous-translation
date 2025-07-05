@@ -31,6 +31,19 @@ import { Steps } from "@astrojs/starlight/components";
   </ol>
 </Steps>
 
+## مدخلات Frontmatter المدعومة
+
+إلى جانب Markdown/MDX، نحن ندعم بعض بيانات frontmatter الوصفية التي يدعمها Starlight.
+
+- `title`: عنوان الصفحة.
+- `description`: وصف الصفحة.
+- `hero.tagline`: الشعار الخاص بقسم البطل.
+- `hero.actions.action.text`: نص زر الإجراء في قسم البطل.
+
+نحن ندعم أيضًا مدخلات frontmatter من [مدونة Starlight](https://starlight-blog-docs.vercel.app/)
+
+- `excerpt`: مقتطف قصير عن الصفحة.
+
 ## إشعار محتوى الذكاء الاصطناعي
 
 يمكنك إعلام المستخدمين بأن الترجمة قد تم إنشاؤها بواسطة الذكاء الاصطناعي من خلال
@@ -61,6 +74,8 @@ import { Steps } from "@astrojs/starlight/components";
 إذا كنت تستخدم [مدقق روابط Astro](https://github.com/HiDeoo/starlight-links-validator)،
 تأكد من إيقاف خيار `errorOnRelativeLinks` في ملف `astro.config.mjs` الخاص بك
 نظرًا لأن الروابط المحلية مرتبطة باللغة الجذرية.
+
+يمكنك أيضًا تفعيل خيار `errorOnInconsistentLocale` لضمان أن تكون جميع الروابط متوافقة مع اللغة الحالية.
 
 ```js title="astro.config.mjs" "errorOnRelativeLinks: false"
 import starlightLinksValidator from "starlight-links-validator";

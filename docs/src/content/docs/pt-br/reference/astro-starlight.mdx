@@ -30,6 +30,19 @@ Esta ação pode ser usada para traduzir o conteúdo de um site de documentaçã
   </ol>
 </Steps>
 
+## Entradas Frontmatter Suportadas
+
+Além do Markdown/MDX, damos suporte a algumas das possíveis metadatas frontmatter que o Starlight suporta.
+
+- `title`: O título da página.
+- `description`: A descrição da página.
+- `hero.tagline`: O slogan da seção hero.
+- `hero.actions.action.text`: O texto do botão de ação na seção hero.
+
+Também damos suporte a entradas frontmatter do [Starlight Blog](https://starlight-blog-docs.vercel.app/)
+
+- `excerpt`: Um breve resumo da página.
+
 ## Aviso de Conteúdo de IA
 
 Você pode informar aos seus usuários que a tradução foi gerada por IA ao adicionar um aviso no título. No momento, o Astro Starlight não oferece suporte a um recurso embutido para adicionar avisos, sendo necessário sobrescrever alguns componentes.
@@ -56,6 +69,8 @@ Sinta-se à vontade para modificar a lógica no arquivo `AIGeneratedNotice.astro
 ## Validador de Links Astro
 
 Se você usar o [Astro Link Validator](https://github.com/HiDeoo/starlight-links-validator), certifique-se de desativar a opção `errorOnRelativeLinks` no arquivo `astro.config.mjs`, pois os links localizados são relativos ao locale raiz.
+
+Você também pode habilitar a opção `errorOnInconsistentLocale` para garantir que todos os links estejam consistentes com o locale atual.
 
 ```js title="astro.config.mjs" "errorOnRelativeLinks: false"
 import starlightLinksValidator from "starlight-links-validator";
