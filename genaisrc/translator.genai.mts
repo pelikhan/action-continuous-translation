@@ -88,7 +88,18 @@ const nodeTypes = ["text", "paragraph", "heading", "yaml"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
 type NodeType = Text | Paragraph | Heading | Yaml;
-const FRONTMATTER_STRINGS = ["excerpt", "title", "description"];
+const FRONTMATTER_FIELDS = [
+  "title",
+  "description",
+  "summary",
+  "excerpt",
+  "alt",
+  "caption",
+  "text",
+  "tagline",
+  "og_title",
+  "og_description",
+];
 
 const isUri = (str: string): URL => {
   try {
@@ -388,7 +399,7 @@ export default async function main() {
                   dbga(`cover.image: %s`, data.cover.image);
                 }
               }
-              for (const field of FRONTMATTER_STRINGS.filter(
+              for (const field of FRONTMATTER_FIELDS.filter(
                 (field) => typeof data[field] === "string",
               )) {
                 const nhash = hashNode(data[field]);
@@ -620,7 +631,7 @@ export default async function main() {
                 if (tr) data.hero.tagline = tr;
                 else unresolvedTranslations.add(nhash);
               }
-              for (const field of FRONTMATTER_STRINGS.filter(
+              for (const field of FRONTMATTER_FIELDS.filter(
                 (field) => typeof data[field] === "string",
               )) {
                 const nhash = hashNode(data[field]);
