@@ -1,6 +1,6 @@
 # 🌍 Continuous Translation
 
-> **Automatically translate your markdown documentation using AI** - powered by [GitHub Models](https://github.com/models) with built-in support for [Astro Starlight](https://starlight.astro.build/)!
+> **Automatically translate your markdown documentation using AI** - powered by [GitHub Actions](https://github.com/actions) and [GitHub Models](https://github.com/models) with built-in support for [Astro Starlight](https://starlight.astro.build/)!
 
 [![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)](https://github.com/marketplace/actions/continuous-translation)
 [![Documentation](https://img.shields.io/badge/📖-Documentation-green)](https://pelikhan.github.io/action-continuous-translation/)
