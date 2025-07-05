@@ -1,29 +1,30 @@
 ---
 title: أسترو ستارلايت
-description: تكوين موقع الوثائق الخاص بستارلايت
+description: تكوين موقع وثائق Starlight الخاص بك
 sidebar:
   order: 9
 ---
 
 import { Steps } from "@astrojs/starlight/components";
 
-يمكن استخدام هذا الإجراء لترجمة محتوى موقع وثائق [أسترو ستارلايت](https://starlight.astro.build/).
-يتطلب إعدادًا محددًا لـ ستارلايت كما هو مفصل أدناه.
+يمكن استخدام هذا الإجراء لترجمة محتوى موقع وثائق [Astro Starlight](https://starlight.astro.build/).
+يتطلب إعدادًا محددًا لـ Starlight كما هو مفصل أدناه.
 
 <Steps>
   <ol>
     <li>
-      اتبع دليل Starlight لاستخدام [root locale](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+      اتبع دليل Starlight لاستخدام [إعداد الجذر للغة](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
     </li>
 
     <li>
-      لتفعيل وضع ستارلايت، تحتاج إلى توفير مدخلات `starlight_dir` و `starlight_base` في الإجراء.
+      لتفعيل وضع Starlight، تحتاج إلى تقديم قيمة `starlight_dir` في الإجراء.
+      إذا كنت قد قمت بتعيين [خيارات `base` الخاصة بـ Astro أيضًا](https://docs.astro.build/en/reference/configuration-reference/#base)، فستحتاج إلى تقديم قيمة `starlight_base` أيضًا.
 
       ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs
-        starlight_base: my_repo_name
+        starlight_base: astro_base_option
       ```
     </li>
 
@@ -32,11 +33,11 @@ import { Steps } from "@astrojs/starlight/components";
 
 ## إشعار محتوى الذكاء الاصطناعي
 
-يمكنك إعلام مستخدميك بأن الترجمة تم إنشاؤها بواسطة GenAI عن طريق
-إضافة إشعار في العنوان. في الوقت الحالي، لا يدعم Astro Starlight ميزة مدمجة لإضافة الإشعارات
-لذا يتطلب تجاوز بعض المكونات.
+يمكنك إعلام المستخدمين بأن الترجمة قد تم إنشاؤها بواسطة الذكاء الاصطناعي من خلال
+إضافة إشعار في العنوان. في الوقت الحالي، لا يدعم Astro Starlight ميزة مضمنة لإضافة الإشعارات
+لذلك يتطلب تجاوز بعض المكونات.
 
-- [قم بالتجاوز](https://starlight.astro.build/guides/overriding-components/#how-to-override) لمكونات `PageTitle` و `Hero` في ملف `astro.config.mjs` الخاص بك:
+- [تجاوز](https://starlight.astro.build/guides/overriding-components/#how-to-override) مكوني `PageTitle` و`Hero` في ملف `astro.config.mjs` الخاص بك:
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -53,12 +54,13 @@ import { Steps } from "@astrojs/starlight/components";
 
 - أضف المكونات إلى دليل `src/components` الخاص بك [من `docs/src/components` في هذا المستودع](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
-لا تتردد في تعديل المنطق في `AIGeneratedNotice.astro` ليناسب احتياجاتك.
+لا تتردد في تعديل المنطق في ملف `AIGeneratedNotice.astro` ليتناسب مع احتياجاتك.
 
-## مدقق الروابط لأسترو
+## مدقق روابط Astro
 
-إذا كنت تستخدم [مدقق روابط أسترو](https://github.com/HiDeoo/starlight-links-validator)،
-فتأكد من تعطيل خيار `errorOnRelativeLinks` في ملف `astro.config.mjs` الخاص بك حيث أن الروابط المترجمة تعتمد على لغة الجذر.
+إذا كنت تستخدم [مدقق روابط Astro](https://github.com/HiDeoo/starlight-links-validator)،
+تأكد من إيقاف خيار `errorOnRelativeLinks` في ملف `astro.config.mjs` الخاص بك
+نظرًا لأن الروابط المحلية مرتبطة باللغة الجذرية.
 
 ```js title="astro.config.mjs" "errorOnRelativeLinks: false"
 import starlightLinksValidator from "starlight-links-validator";

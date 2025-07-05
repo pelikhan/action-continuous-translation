@@ -5,8 +5,8 @@ sidebar:
   order: 10
 ---
 
-Puede inyectar instrucciones personalizadas de indicación para la tarea de traducción.
-Esto se puede usar para insertar instrucciones adicionales, un glosario u otras orientaciones para mejorar
+Puedes inyectar instrucciones personalizadas para la tarea de traducción.
+Esto se puede usar para insertar instrucciones adicionales, un glosario u otra orientación para mejorar
 la calidad general de la traducción.
 
 ## Instrucciones en línea
@@ -27,8 +27,8 @@ with:
 
 ## Instrucciones en el frontmatter
 
-También puede especificar instrucciones de traducción directamente en el frontmatter de documentos individuales.
-Esto es útil cuando diferentes documentos requieren enfoques específicos de traducción.
+También puedes especificar instrucciones de traducción directamente en el frontmatter de documentos individuales.
+Esto es útil cuando diferentes documentos requieren enfoques de traducción específicos.
 
 ```markdown title="example.md"
 ---
@@ -43,8 +43,8 @@ translator:
 This document will be translated using the instructions specified in the frontmatter.
 ```
 
-El objeto `translator` es una [configuración](../../reference/configuration/) que se valida en tiempo de ejecución.
-Se elimina del frontmatter antes de que comience la traducción, por lo que no afecta el resultado final.
+El objeto `translator` es una instancia de [configuración](../../reference/configuration/) y se valida en tiempo de ejecución.
+Se elimina del frontmatter antes de que comience la traducción, por lo que no afecta al resultado final.
 
 ## Orden de Prioridad
 
@@ -52,6 +52,6 @@ Las instrucciones se aplican en el siguiente orden de prioridad:
 
 1. Parámetro `instructions` (máxima prioridad)
 2. Parámetro `instructions_file`
-3. `translator.instructions` desde el frontmatter del documento (menor prioridad)
+3. `translator.instructions` del frontmatter del documento (menor prioridad)
 
 Si se utilizan múltiples métodos, solo se aplicará el de mayor prioridad.

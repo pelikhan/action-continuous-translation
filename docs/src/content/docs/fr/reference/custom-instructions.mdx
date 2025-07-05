@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-Vous pouvez injecter des instructions de suggestion personnalisées pour la tâche de traduction. Cela peut être utilisé pour insérer des instructions supplémentaires, un glossaire ou d'autres orientations afin d'améliorer la qualité globale de la traduction.
+Vous pouvez injecter des instructions personnalisées pour la tâche de traduction. Cela peut être utilisé pour insérer des instructions supplémentaires, un glossaire ou d'autres orientations afin d'améliorer la qualité globale de la traduction.
 
 ## Instructions en ligne
 
@@ -40,14 +40,14 @@ translator:
 This document will be translated using the instructions specified in the frontmatter.
 ```
 
-L'objet `translator` est une [configuration](../../reference/configuration/) instance et validée au moment de l'exécution. Il est retiré du frontmatter avant le début de la traduction, de sorte qu'il n'affecte pas la sortie finale.
+L'objet `translator` est une [configuration](../../reference/configuration/) instance et validé au moment de l'exécution. Il est supprimé du frontmatter avant que la traduction ne commence, de sorte qu'il n'affecte pas le résultat final.
 
 ## Ordre de priorité
 
 Les instructions sont appliquées dans l'ordre de priorité suivant :
 
-1. Paramètre `instructions` (priorité la plus élevée)
+1. Paramètre `instructions` (priorité la plus haute)
 2. Paramètre `instructions_file`
-3. `translator.instructions` depuis le frontmatter du document (priorité la plus basse)
+3. `translator.instructions` du frontmatter du document (priorité la plus basse)
 
-Si plusieurs méthodes sont utilisées, seule celle ayant la priorité la plus élevée sera appliquée.
+Si plusieurs méthodes sont utilisées, seule celle avec la priorité la plus élevée sera appliquée.

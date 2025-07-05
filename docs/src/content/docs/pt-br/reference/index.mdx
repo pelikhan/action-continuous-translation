@@ -5,8 +5,8 @@ sidebar:
   order: 8
 ---
 
-A ação customizada usa [GitHub Models](https://github.com/models) para traduzir arquivos markdown no seu repositório.
-Ela é projetada para ser usada em um fluxo de trabalho do [GitHub Actions](https://docs.github.com/en/actions) para traduzir automaticamente os arquivos de documentação quando eles são atualizados.
+A ação personalizada utiliza [GitHub Models](https://github.com/models) para traduzir arquivos markdown em seu repositório.
+Ela foi projetada para ser usada em um fluxo de trabalho do [GitHub Actions](https://docs.github.com/en/actions) para traduzir automaticamente arquivos de documentação quando eles são atualizados.
 
 ```yaml title=".github/workflows/ct.yml"
 - uses: pelikhan/action-continuous-translation@v0
@@ -17,7 +17,7 @@ Ela é projetada para ser usada em um fluxo de trabalho do [GitHub Actions](http
 
 ## Instalação
 
-Você pode salvar este arquivo no seu diretório `.github/workflows/` como `ct.yml`:
+Você pode salvar este arquivo no diretório `.github/workflows/` como `ct.yml`:
 
 ```yaml title=".github/workflows/ct.yml" wrap
 name: Continuous Translation
@@ -68,10 +68,10 @@ jobs:
 
 A ação do GitHub `pelikhan/action-continuous-translation` suporta os seguintes parâmetros.
 Todos os parâmetros são opcionais.
-Os valores padrão são exibidos na referência abaixo.
+Os valores padrão estão mostrados na referência abaixo.
 
 :::caution
-Esta ação está atualmente em desenvolvimento. Os parâmetros podem mudar a qualquer momento!
+Esta ação está atualmente em progresso. Os parâmetros podem mudar a qualquer momento!
 :::
 
 ```yaml
@@ -87,22 +87,22 @@ with:
   debug: false
 ```
 
-Consulte [Modelos](../../reference/models/) para mais detalhes sobre outros provedores como OpenAI, Azure OpenAI, etc.
+Consulte [Models](../../reference/models/) para mais detalhes sobre outros provedores como OpenAI, Azure OpenAI, etc.
 
 ### `lang`
 
 **Tipo**: `string`\
 **Padrão**: `fr`
 
-Uma lista de códigos ISO das línguas alvo separadas por vírgula (`,`) para as quais a documentação deve ser traduzida a partir da [língua de origem](#source).
-Consulte uma lista de todas as línguas suportadas [no arquivo `models.mts` no repositório](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
+Uma lista de códigos ISO dos idiomas de destino, separados por vírgulas (`,`) para os quais a documentação deve ser traduzida a partir do [idioma de origem](#source).
+Veja uma lista de todos os idiomas suportados [no arquivo `models.mts` no repositório](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
 
 ### `source`
 
 **Tipo**: `string`\
 **Padrão**: `en`
 
-O código ISO do idioma de origem no qual o conteúdo principal foi escrito.
+O código ISO do idioma de origem em que o conteúdo principal está escrito.
 
 ### `files`
 
@@ -115,27 +115,27 @@ Uma lista de arquivos a serem processados, separados por vírgulas.
 
 **Tipo**: `string`
 
-Instruções adicionais para o LLM usar durante a tradução.
+Instruções extras para o LLM usar durante a tradução.
 
 ### `instructions_file`
 
 **Tipo**: `string`
 
-Caminho para um arquivo contendo instruções adicionais para o LLM usar durante a tradução.
+Caminho para um arquivo contendo instruções extras para o LLM usar durante a tradução.
 
 ### `starlight_dir`
 
 **Tipo**: `string`
 
 Pasta raiz da documentação [Astro Starlight](../../reference/astro-starlight/).
-Deve ser definida se a opção [`starlight_base`](#starlight_base) estiver definida.
+Deve ser definida se a opção [`starlight_base`](#starlight_base) for definida.
 
 ### `starlight_base`
 
 **Tipo**: `string`
 
-Base para o alias da documentação [Astro Starlight](../../reference/astro-starlight/).
-Se você não definir a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base), não configure esta opção.
+Alias base para a documentação [Astro Starlight](../../reference/astro-starlight/).
+Se você não definir a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base), não defina esta opção.
 
 ### `force`
 
@@ -149,13 +149,12 @@ Força a tradução mesmo que o arquivo já tenha sido traduzido.
 **Tipo**: `boolean`\
 **Padrão**: `false`
 
-Habilita o registro de depuração.
-Leia mais detalhes em [os documentos de Logging do GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+Ativa o registro de depuração.
+Leia mais detalhes em [os documentos de logs do GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
 ### `github_token`
 
-**Tipo**: `string` (segredo recomendado)\
+**Tipo**: `string` (secreto recomendado)\
 **Padrão**: `${{ secrets.GITHUB_TOKEN }}`
 
-Seu [token do GitHub](https://github.com/settings/tokens) com pelo menos permissão `models: read`.
-Leia mais detalhes em [os documentos de Permissões de Modelos do GitHub no GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+Seu [token do GitHub](https://github.com/settings/tokens) com pelo menos permissão de `models: read`. Leia mais detalhes em [os documentos de permissões do GenAIScript GitHub Models](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).

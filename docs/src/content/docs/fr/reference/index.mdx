@@ -5,8 +5,8 @@ sidebar:
   order: 8
 ---
 
-L'action personnalisée utilise [GitHub Models](https://github.com/models) pour traduire les fichiers Markdown dans votre dépôt.
-Elle est conçue pour être utilisée dans un flux de travail [GitHub Actions](https://docs.github.com/en/actions) afin de traduire automatiquement les fichiers de documentation lorsqu'ils sont mis à jour.
+L'action personnalisée utilise [GitHub Models](https://github.com/models) pour traduire les fichiers markdown dans votre dépôt.
+Elle est conçue pour être utilisée dans un workflow [GitHub Actions](https://docs.github.com/en/actions) afin de traduire automatiquement les fichiers de documentation lorsqu'ils sont mis à jour.
 
 ```yaml title=".github/workflows/ct.yml"
 - uses: pelikhan/action-continuous-translation@v0
@@ -67,11 +67,11 @@ jobs:
 ## Paramètres
 
 L'action GitHub `pelikhan/action-continuous-translation` prend en charge les paramètres suivants.
-Tous les paramètres sont optionnels.
+Tous les paramètres sont facultatifs.
 Les valeurs par défaut sont indiquées dans la référence ci-dessous.
 
 :::caution
-Cette action est actuellement en cours de développement. Les paramètres peuvent changer à tout moment !
+Cette action est actuellement en cours de développement. Les paramètres peuvent changer à tout moment !
 :::
 
 ```yaml
@@ -87,74 +87,75 @@ with:
   debug: false
 ```
 
-Voir [Modèles](../../reference/models/) pour plus de détails sur d'autres fournisseurs comme OpenAI, Azure OpenAI, etc.
+Consultez [Models](../../reference/models/) pour plus de détails sur d'autres fournisseurs comme OpenAI, Azure OpenAI, etc.
 
 ### `lang`
 
-**Type** : `string`\
-**Par défaut** : `fr`
+**Type** : `string`\
+**Par défaut** : `fr`
 
-Une liste de codes ISO des langues cibles, séparés par des virgules (`,`), vers lesquelles la documentation doit être traduite à partir de la [langue source](#source).
-Voir la liste de toutes les langues prises en charge [dans le fichier `models.mts` du dépôt](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
+Une liste des codes ISO des langues cibles, séparés par des virgules (`,`), vers lesquelles la documentation doit être traduite à partir de la [langue source](#source).
+Voir une liste de toutes les langues prises en charge [dans le fichier `models.mts` du dépôt](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
 
 ### `source`
 
-**Type** : `string`\
-**Par défaut** : `en`
+**Type** : `string`\
+**Par défaut** : `en`
 
 Le code ISO de la langue source dans laquelle le contenu principal est écrit.
 
 ### `files`
 
-**Type** : `string`\
-**Par défaut** : `README.md`
+**Type** : `string`\
+**Par défaut** : `README.md`
 
 Une liste de fichiers à traiter, séparés par des virgules.
 
 ### `instructions`
 
-**Type** : `string`
+**Type** : `string`
 
 Instructions supplémentaires pour que le LLM les utilise lors de la traduction.
 
 ### `instructions_file`
 
-**Type** : `string`
+**Type** : `string`
 
-Chemin d’un fichier contenant des instructions supplémentaires pour que le LLM les utilise lors de la traduction.
+Chemin vers un fichier contenant des instructions supplémentaires pour que le LLM les utilise lors de la traduction.
 
 ### `starlight_dir`
 
-**Type** : `string`
+**Type** : `string`
 
 Dossier racine de la documentation [Astro Starlight](../../reference/astro-starlight/).
-Doit être défini si l’option [`starlight_base`](#starlight_base) est définie.
+Doit être défini si l'option [`starlight_base`](#starlight_base) est définie.
 
 ### `starlight_base`
 
-**Type** : `string`
+**Type** : `string`
 
 Alias de base pour la documentation [Astro Starlight](../../reference/astro-starlight/).
 Si vous ne définissez pas l'option [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base), ne définissez pas cette option.
 
 ### `force`
 
-**Type** : `boolean`\
-**Par défaut** : `false`
+**Type** : `boolean`\
+**Par défaut** : `false`
 
 Forcer la traduction même si le fichier a déjà été traduit.
 
 ### `debug`
 
-**Type** : `boolean`\
-**Par défaut** : `false`
+**Type** : `boolean`\
+**Par défaut** : `false`
 
 Activer la journalisation de débogage.
-Lisez plus de détails dans [la documentation du journal GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+Lisez plus de détails dans la documentation [GenAIScript Logging docs](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
 ### `github_token`
 
 **Type** : `string` (secret recommandé)\
 **Par défaut** : `${{ secrets.GITHUB_TOKEN }}`
 
-Votre [Jeton GitHub](https://github.com/settings/tokens) avec au moins la permission `models: read`. Consultez plus de détails dans [les documents sur les Permissions des Modèles GitHub de GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+Votre [jeton GitHub](https://github.com/settings/tokens) avec au moins la permission `models: read`.
+Lisez les détails supplémentaires dans la documentation [les permissions des modèles GitHub pour GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).

@@ -8,7 +8,7 @@ sidebar:
 import { Steps } from "@astrojs/starlight/components";
 
 Cette action peut être utilisée pour traduire le contenu d'un site de documentation [Astro Starlight](https://starlight.astro.build/).
-Elle nécessite une configuration spécifique de Starlight détaillée ci-dessous.
+Elle nécessite une configuration spécifique de Starlight comme détaillé ci-dessous.
 
 <Steps>
   <ol>
@@ -17,13 +17,14 @@ Elle nécessite une configuration spécifique de Starlight détaillée ci-dessou
     </li>
 
     <li>
-      Pour activer le mode Starlight, vous devez fournir les entrées `starlight_dir` et `starlight_base` dans l'action.
+      Pour activer le mode Starlight, vous devez fournir l'entrée `starlight_dir` dans l'action.
+      Si vous avez également défini l'[option `base` d'Astro](https://docs.astro.build/en/reference/configuration-reference/#base), vous devez également fournir l'entrée `starlight_base`.
 
       ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs
-        starlight_base: my_repo_name
+        starlight_base: astro_base_option
       ```
     </li>
 
@@ -32,11 +33,9 @@ Elle nécessite une configuration spécifique de Starlight détaillée ci-dessou
 
 ## Avis sur le contenu généré par l'IA
 
-Vous pouvez informer vos utilisateurs que la traduction a été générée par GenAI en
-ajoutant un avis dans le titre. Actuellement, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis,
-ce qui nécessite de remplacer quelques composants.
+Vous pouvez informer vos utilisateurs que la traduction a été générée par une IA en ajoutant un avis dans le titre. À ce jour, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis, il est donc nécessaire de remplacer quelques composants.
 
-- [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
+- [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -51,15 +50,13 @@ ce qui nécessite de remplacer quelques composants.
   });
   ```
 
-- Ajoutez les composants dans votre répertoire `src/components` [depuis le répertoire `docs/src/components` de ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+- Ajoutez les composants dans votre répertoire `src/components` [à partir de `docs/src/components` dans ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
-N'hésitez pas à modifier la logique dans `AIGeneratedNotice.astro` pour l'adapter à vos besoins.
+N'hésitez pas à modifier la logique dans `AIGeneratedNotice.astro` pour répondre à vos besoins.
 
 ## Validateur de liens Astro
 
-Si vous utilisez le [Validateur de liens Astro](https://github.com/HiDeoo/starlight-links-validator),
-assurez-vous de désactiver l'option `errorOnRelativeLinks` dans votre fichier `astro.config.mjs`
-car les liens localisés sont relatifs au locale racine.
+Si vous utilisez le [validateur de liens Astro](https://github.com/HiDeoo/starlight-links-validator), assurez-vous de désactiver l'option `errorOnRelativeLinks` dans votre fichier `astro.config.mjs`, car les liens localisés sont relatifs à la racine de la locale.
 
 ```js title="astro.config.mjs" "errorOnRelativeLinks: false"
 import starlightLinksValidator from "starlight-links-validator";

@@ -1,12 +1,12 @@
 ---
 title: المرجع
-description: توثيق المرجع للإجراء
+description: وثائق المرجع للإجراء
 sidebar:
   order: 8
 ---
 
 الإجراء المخصص يستخدم [نماذج GitHub](https://github.com/models) لترجمة ملفات Markdown في مستودعك.
-تم تصميمه ليُستخدم في سير عمل [إجراءات GitHub](https://docs.github.com/en/actions) لترجمة ملفات التوثيق تلقائيًا عند تحديثها.
+تم تصميمه ليُستخدم في سير عمل [GitHub Actions](https://docs.github.com/en/actions) لترجمة ملفات الوثائق تلقائيًا عند تحديثها.
 
 ```yaml title=".github/workflows/ct.yml"
 - uses: pelikhan/action-continuous-translation@v0
@@ -17,7 +17,7 @@ sidebar:
 
 ## التثبيت
 
-يمكنك حفظ هذا الملف في دليل `.github/workflows/` الخاص بك باسم `ct.yml`:
+يمكنك حفظ هذا الملف في دليل `.github/workflows/` الخاص بك كـ `ct.yml`:
 
 ```yaml title=".github/workflows/ct.yml" wrap
 name: Continuous Translation
@@ -66,12 +66,12 @@ jobs:
 
 ## المعلمات
 
-إجراء GitHub `pelikhan/action-continuous-translation` يدعم المعلمات التالية.
+يدعم إجراء `pelikhan/action-continuous-translation` في GitHub المعلمات التالية.
 جميع المعلمات اختيارية.
-يتم عرض القيم الافتراضية في المرجع أدناه.
+القيم الافتراضية موضحة في المرجع أدناه.
 
 :::caution
-هذا الإجراء قيد التطوير حاليًا. قد تتغير المعلمات في أي وقت!
+هذا الإجراء قيد التقدم حاليًا. يمكن أن تتغير المعلمات في أي وقت!
 :::
 
 ```yaml
@@ -87,62 +87,62 @@ with:
   debug: false
 ```
 
-انظر [النماذج](../../reference/models/) لمزيد من التفاصيل حول موفرين آخرين مثل OpenAI وAzure OpenAI وغيرهم.
+راجع [النماذج](../../reference/models/) للحصول على مزيد من التفاصيل حول موفرين آخرين مثل OpenAI وAzure OpenAI، وما إلى ذلك.
 
 ### `lang`
 
 **النوع**: `string`\
 **القيمة الافتراضية**: `fr`
 
-قائمة رموز ISO للغات الهدف مفصولة بفاصلة (`,`) التي يجب ترجمة التوثيق إليها من [لغة المصدر](#source).
-انظر قائمة بجميع اللغات المدعومة [في ملف `models.mts` في المستودع](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
+قائمة بأكواد ISO للغات المستهدفة مفصولة بفاصلة (`,`) والتي يجب ترجمة الوثائق إليها من [اللغة المصدر](#source).
+اطلع على قائمة بجميع اللغات المدعومة [في ملف `models.mts` في المستودع](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
 
 ### `source`
 
 **النوع**: `string`\
 **القيمة الافتراضية**: `en`
 
-رمز ISO للغة المصدر التي تم كتابة المحتوى الرئيسي بها.
+كود ISO للغة المصدر التي تم كتابة المحتوى الرئيسي بها.
 
 ### `files`
 
 **النوع**: `string`\
 **القيمة الافتراضية**: `README.md`
 
-قائمة بالملفات لمعالجتها مفصولة بفاصلات.
+قائمة بالملفات التي ستتم معالجتها مفصولة بفاصلة.
 
 ### `instructions`
 
 **النوع**: `string`
 
-تعليمات إضافية لاستخدامها عند الترجمة.
+تعليمات إضافية لاستخدام LLM أثناء الترجمة.
 
 ### `instructions_file`
 
 **النوع**: `string`
 
-مسار إلى ملف يحتوي على تعليمات إضافية لاستخدامها عند الترجمة.
+مسار إلى ملف يحتوي على تعليمات إضافية لاستخدام LLM أثناء الترجمة.
 
 ### `starlight_dir`
 
 **النوع**: `string`
 
-المجلد الجذري لتوثيق [Astro Starlight](../../reference/astro-starlight/).
-يجب أن يتم تعريفه إذا تم تعريف الخيار [`starlight_base`](#starlight_base).
+المجلد الجذري لوثائق [Astro Starlight](../../reference/astro-starlight/).
+يجب تعيينه إذا تم تعريف خيار [`starlight_base`](#starlight_base).
 
 ### `starlight_base`
 
 **النوع**: `string`
 
-الاسم المستعار الأساسي لتوثيق [Astro Starlight](../../reference/astro-starlight/).
-إذا لم تقم بتعريف خيار [الأساس لـ Astro](https://docs.astro.build/en/reference/configuration-reference/#base)، فلا تقم بتعيين هذا الخيار.
+الاسم المستعار الأساسي لوثائق [Astro Starlight](../../reference/astro-starlight/).
+إذا لم تقم بتحديد خيار [الأساس لـ Astro](https://docs.astro.build/en/reference/configuration-reference/#base)، فلا تحدد هذا الخيار.
 
 ### `force`
 
 **النوع**: `boolean`\
 **القيمة الافتراضية**: `false`
 
-إجبار الترجمة حتى إذا تم ترجمة الملف بالفعل.
+فرض الترجمة حتى إذا كان الملف قد تمت ترجمته بالفعل.
 
 ### `debug`
 
@@ -150,11 +150,12 @@ with:
 **القيمة الافتراضية**: `false`
 
 تمكين تسجيل التصحيح.
-اقرأ التفاصيل الإضافية تحت [توثيق تسجيل GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+اقرأ المزيد من التفاصيل في [وثائق تسجيل GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
 ### `github_token`
 
-**النوع**: `string` (موصى باستخدامه كسر)\
+**النوع**: `string` (يفضل أن يكون سريًا)\
 **القيمة الافتراضية**: `${{ secrets.GITHUB_TOKEN }}`
 
-رمز GitHub الخاص بك [GitHub token](https://github.com/settings/tokens) مع صلاحية `models: read` على الأقل. اقرأ المزيد من التفاصيل في [وثائق أذونات نماذج GenAIScript لـ GitHub](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+رمز [GitHub token](https://github.com/settings/tokens) الخاص بك مع إذن `models: read` على الأقل.
+اقرأ المزيد من التفاصيل ضمن [وثائق أذونات نماذج GitHub في GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).

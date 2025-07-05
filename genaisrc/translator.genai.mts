@@ -127,7 +127,7 @@ export default async function main() {
   const { force } = parameters;
   let { instructions } = parameters;
   const source = parameters.source;
-  const sourceInfo = resolveModels(source);
+  const sourceInfo = await resolveModels(source);
   const instructionsFile = parameters.instructionsFile
     ? MD.content(await workspace.readText(parameters.instructionsFile))
     : undefined;
@@ -186,9 +186,6 @@ export default async function main() {
     const translationCache: Record<string, string> = force
       ? {}
       : (await workspace.readJSON(translationCacheFilename)) || {};
-    for (const [k, v] of Object.entries(translationCache)) {
-      if (hasMarker(v)) delete translationCache[k];
-    }
     dbgc(`translation cache: %O`, translationCache);
 
     for (const file of files) {
@@ -203,11 +200,12 @@ export default async function main() {
           node = structuredClone(node);
           visit(node, (node) => delete node.position);
         }
-        const text =
+        const text = (
           typeof node === "string"
             ? node
-            : stringify({ type: "root", children: [node as any] });
-        const chunkHash = hash("sha-256", JSON.stringify(text));
+            : stringify({ type: "root", children: [node as any] })
+        ).trim();
+        const chunkHash = hash("sha-256", text);
         if (text.length < HASH_TEXT_LENGTH) return text;
         else
           return (
