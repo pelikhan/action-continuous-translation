@@ -1,0 +1,3 @@
+{"filename":"test/markdown.md","stage":"translate","model":"github:openai/gpt-4o","inputTokens":5881,"outputTokens":1294,"cost":0.0276425,"date":"2025-07-06T23:31:51.246Z"}
+{"filename":"test/example-with-instructions.md","stage":"translate","model":"github:openai/gpt-4o","inputTokens":832,"outputTokens":142,"cost":0.0035,"date":"2025-07-06T23:31:58.563Z"}
+{"filename":"test/example-with-instructions.md","stage":"validate","model":"github:openai/gpt-4o","inputTokens":856,"outputTokens":24,"cost":0.00238,"date":"2025-07-06T23:31:59.422Z"}
