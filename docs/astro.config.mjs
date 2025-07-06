@@ -2,10 +2,11 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
+import { title } from "./resources.json" assert { type: "json" };
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://microsoft.github.io",
+  site: "https://pelikhan.github.io",
   base: "/action-continuous-translation",
   integrations: [
     starlight({
@@ -15,7 +16,7 @@ export default defineConfig({
           errorOnInconsistentLocale: true,
         }),
       ],
-      title: "Continuous Translation",
+      title,
       social: [
         {
           icon: "github",
