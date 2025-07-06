@@ -30,7 +30,7 @@ Esta ação pode ser usada para traduzir o conteúdo de um site de documentaçã
       Se você também configurou a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base),
       você precisa fornecer a entrada `starlight_base` também.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_base: my_repo_name"
+      ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs
@@ -98,3 +98,10 @@ export default defineConfig({
   ],
 });
 ```
+
+## Painel de Tradução Lunaria
+
+Você pode usar o [Painel de Tradução Lunaria](https://lunaria.dev/integrations/starlight/) para gerar
+um painel de status de tradução para o seu site Starlight.
+
+Você pode experimentar o painel navegando até o link **Painel de Tradução** na barra lateral desta página.

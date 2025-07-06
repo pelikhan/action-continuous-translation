@@ -31,7 +31,7 @@ Elle nécessite une configuration spécifique de Starlight comme détaillé ci-d
       Si vous avez également défini l'option [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base),
       vous devez également fournir l'entrée `starlight_base`.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_base: my_repo_name"
+      ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs
@@ -99,3 +99,10 @@ export default defineConfig({
   ],
 });
 ```
+
+## Tableau de bord de traduction Lunaria
+
+Vous pouvez utiliser le [Tableau de bord de traduction Lunaria](https://lunaria.dev/integrations/starlight/) pour générer
+un tableau de bord de statut de traduction pour votre site Starlight.
+
+Vous pouvez essayer le tableau de bord en naviguant vers le lien **Tableau de bord de traduction** dans la barre latérale de cette page.
