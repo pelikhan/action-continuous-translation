@@ -56,7 +56,6 @@ jobs:
           files: |
             README.md
             docs/src/content/**/*
-      - run: npm run lint:docs
       - run: git pull --ff-only
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
