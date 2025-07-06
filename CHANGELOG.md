@@ -5,3 +5,7 @@
 ### Patch Changes
 
 - [`589114a`](https://github.com/pelikhan/action-continuous-translation/commit/589114a5f7f8cd618bd0498f598b8afd9c25f963) Thanks [@pelikhan](https://github.com/pelikhan)! - Testing changeset
+
+## 0.0.0
+
+Initial Release

@@ -13,6 +13,13 @@ fi
 NEW_VERSION=$(jq -r .version package.json)
 echo "version: $NEW_VERSION"
 
+# Step 1.5: Extract changelog section for current version
+CHANGELOG_CONTENT=$(sed -n "/^## $NEW_VERSION\$/,/^## /{ /^## $NEW_VERSION\$/d; /^## /d; p }" CHANGELOG.md)
+if [ -z "$CHANGELOG_CONTENT" ]; then
+  echo "❌ Could not find changelog entry for version $NEW_VERSION"
+  exit 1
+fi
+
 # Calculate major version for tagging
 MAJOR=$(echo "$NEW_VERSION" | cut -d. -f1)
 echo "major: $MAJOR"
@@ -44,14 +51,6 @@ sed -i "s|image: .*|image: docker://$IMAGE_NAME:$NEW_VERSION|" action.yml
 git add action.yml
 git commit -m "[chore] upgrade image in action.yml"
 git push origin HEAD
-
-# Step 4.1: Extract changelog section for current version
-CHANGELOG_CONTENT=$(awk "/^##?\\s+$NEW_VERSION\\b/{flag=1; next} /^##?\\s+/{flag=0} flag" CHANGELOG.md)
-
-if [ -z "$CHANGELOG_CONTENT" ]; then
-  echo "❌ Could not find changelog entry for version $NEW_VERSION"
-  exit 1
-fi
 
 # Step 4.2: Create GitHub release with extracted changelog notes
 gh release create "$NEW_VERSION" \
