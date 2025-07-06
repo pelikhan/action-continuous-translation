@@ -1,5 +1,26 @@
 # Ruler Instructions
 
+## Project File Structure
+
+This project is a custom GitHub ACtion that uses GenAIScript to translate markdown files in a repository. The project structure is as follows:
+
+- `genaisrc/`: Contains GenAIScript code files.
+- `docs/`: Contains documentation files and configurations for the action.
+- `test/`: Contains test files and configurations.
+- `package.json`: Contains project metadata, dependencies, and scripts for building and running the action.
+- `README.md`: The main documentation file for the action.
+- `.github/workflows/`: Contains GitHub Actions workflow files for continuous translation.
+- `.ruler/`: Contains instructions for the Ruler tool to apply changes to the project.
+- `action.yml`: The main GitHub Action configuration file.
+- `translations/`: Contains translation files for different languages.
+
+## Localized documentation
+
+The localized files are automatically updated through a GitHub action. Do not try to edit them.
+
+- `README.*.md`: localized readmes.
+- `docs/src/content/docs/[fr,es,ar,pt-br,...]/*`: localized documentation files.
+
 ## GenAIScript Code Generation Instructions
 
 GenAIScript is a custom runtime for node.js. It provides a set of unique APIs and support the TypeScript syntax, ESM, await/async.
