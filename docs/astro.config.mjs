@@ -66,6 +66,10 @@ export default defineConfig({
           label: "Resources",
           autogenerate: { directory: "resources" },
         },
+        {
+          label: "Translation Status",
+          link: "/lunaria"
+        }
       ],
       components: {
         PageTitle: "./src/components/PageTitle.astro",
