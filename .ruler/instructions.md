@@ -1,5 +1,13 @@
 # Ruler Instructions
 
+## You Ain't Gonna Need It Rule
+
+When you are asked to solve a task, you should not add any extra features, enhancements, or modifications that are not explicitly requested. Do not add any code that you think might be useful in the future but is not required for the current task. The goal is to keep the solution focused and concise.
+
+## Small Is Better Rule
+
+When you are asked to solve a task, you should always strive to keep the solution as small and simple as possible. Avoid adding unnecessary complexity or features that are not required for the task at hand. The goal is to create a solution that is easy to understand and maintain.
+
 ## Project File Structure
 
 This project is a custom GitHub ACtion that uses GenAIScript to translate markdown files in a repository. The project structure is as follows:
