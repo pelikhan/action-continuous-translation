@@ -4,6 +4,13 @@ script({
   title: "Generates a changeset from the current changes",
 });
 
+const branch = await git.branch();
+const defaultBranch = await git.defaultBranch();
+if (branch === defaultBranch)
+  cancel(
+    "You must be on a feature branch to generate a changeset. Please switch to a feature branch and try again."
+  );
+
 const diff = await git.diff({
   base: await git.defaultBranch(),
   askStageOnEmpty: true,
@@ -20,7 +27,7 @@ const diff = await git.diff({
 });
 console.debug(diff);
 
-const filename = `.changeset/${nanoid()}.md`;
+const filename = `.changeset/${branch}.md`;
 const { text: content } = await runPrompt(
   (ctx) => {
     const diffRef = ctx.def("GIT_DIFF", diff);
