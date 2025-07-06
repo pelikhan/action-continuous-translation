@@ -9,7 +9,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  genai_pull_request_descriptor:
+  add_reaction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pelikhan/action-add-reaction@v0
+  describe_pull_request:
+    needs: add_reaction
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

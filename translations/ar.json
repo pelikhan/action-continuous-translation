@@ -311,5 +311,11 @@
   "You can also use other LLM providers like OpenAI, Azure OpenAI, etc.\nSee [Models.A9963D438B6EB026B4BE": "يمكنك أيضًا استخدام مزودي LLM الآخرين مثل OpenAI وAzure OpenAI وما إلى ذلك.\nراجع [النماذج](/action-continuous-translation/reference/models/) للحصول على مزيد من التفاصيل حول الموفرين الآخرين.",
   "The `translator` types are defined `types.ts`.\nIt is removed from the frontmatte.C6576201871AA41C1F8F": "يتم تعريف أنواع `translator` في `types.ts`. يتم إزالتها من المقدمة قبل بدء الترجمة، لذا فهي لا تؤثر على النتيجة النهائية.",
   "To enable the Starlight mode, you need to provide the `starlight_dir` input in t.01DC52ED32343A363AF9": "لتمكين وضع Starlight، تحتاج إلى توفير إدخال `starlight_dir` في الإجراء.",
-  "If you have set the [Astro `base` option as well](https://docs.astro.build/en/re.59676C1215F183CD7C69": "إذا كنت قد قمت بتعيين خيار [Astro `base`] أيضًا (https://docs.astro.build/en/reference/configuration-reference/#base)،\nفستحتاج إلى توفير إدخال `starlight_base` أيضًا."
+  "If you have set the [Astro `base` option as well](https://docs.astro.build/en/re.59676C1215F183CD7C69": "إذا كنت قد قمت بتعيين خيار [Astro `base`] أيضًا (https://docs.astro.build/en/reference/configuration-reference/#base)،\nفستحتاج إلى توفير إدخال `starlight_base` أيضًا.",
+  "🤖 **AI-Powered** - Leverage GitHub Models for seamless high-quality translation.14F7DE43C9ADEDA07D5E": "🤖 **مدعوم بالذكاء الاصطناعي** - استفد من GitHub Models للحصول على ترجمات عالية الجودة وسلسة.",
+  "📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/.62DA46C2C2E3FF87F510": "📖 [**الوثائق**](https://pelikhan.github.io/action-continuous-translation/) - دليل الإعداد الكامل ومرجع API (تمت ترجمته بواسطة هذا الإجراء أيضًا)",
+  "#### Model Alias": "الاسم المستعار للنموذج",
+  "A YAML-like string of": "سلسلة تشبه YAML ",
+  "pairs": "أزواج",
+  "See the [Models](/action-continuous-translation/models/) documentation for more .82C2260EAB1D798EB76E": "راجع وثائق [النماذج](/action-continuous-translation/models/) لمزيد من التفاصيل."
 }

@@ -253,5 +253,11 @@
   "You can also use other LLM providers like OpenAI, Azure OpenAI, etc.\nSee [Models.A9963D438B6EB026B4BE": "Você também pode usar outros provedores de LLM, como OpenAI, Azure OpenAI, etc.\nConsulte [Models](/action-continuous-translation/reference/models/) para mais detalhes sobre outros provedores.",
   "The `translator` types are defined `types.ts`.\nIt is removed from the frontmatte.C6576201871AA41C1F8F": "Os tipos `translator` são definidos em `types.ts`. Eles são removidos do frontmatter antes do início da tradução, para que não afetem o resultado final.",
   "To enable the Starlight mode, you need to provide the `starlight_dir` input in t.01DC52ED32343A363AF9": "Para habilitar o modo Starlight, você precisa fornecer a entrada `starlight_dir` na ação.",
-  "If you have set the [Astro `base` option as well](https://docs.astro.build/en/re.59676C1215F183CD7C69": "Se você também configurou a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base),\nvocê precisa fornecer a entrada `starlight_base` também."
+  "If you have set the [Astro `base` option as well](https://docs.astro.build/en/re.59676C1215F183CD7C69": "Se você também configurou a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base),\nvocê precisa fornecer a entrada `starlight_base` também.",
+  "🤖 **AI-Powered** - Leverage GitHub Models for seamless high-quality translation.14F7DE43C9ADEDA07D5E": "🤖 **IA-Powered** - Aproveite os GitHub Models para traduções perfeitas de alta qualidade",
+  "📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/.62DA46C2C2E3FF87F510": "📖 [**Documentação**](https://pelikhan.github.io/action-continuous-translation/) - Guia completo de configuração e referência de API (também traduzido por esta ação)",
+  "#### Model Alias": "Alias de Modelo",
+  "A YAML-like string of": "Uma string no formato YAML ",
+  "pairs": "pares `alias: modelid`",
+  "See the [Models](/action-continuous-translation/models/) documentation for more .82C2260EAB1D798EB76E": "Veja a documentação de [Modelos](/action-continuous-translation/models/) para mais detalhes."
 }

@@ -14,10 +14,11 @@
 * 🌐 **Suporte a Múltiplos Idiomas** - Traduza para vários idiomas simultaneamente
 * 🔍 **Validação de Qualidade** - Validação automática da qualidade da tradução
 * ⚡ **Nativo do GitHub Actions** - Integração perfeita com seu pipeline CI/CD
+* 🤖 **IA-Powered** - Aproveite os GitHub Models para traduções perfeitas de alta qualidade
 
 ## 📚 Recursos
 
-* 📖 [**Documentação**](https://pelikhan.github.io/action-continuous-translation/) - Guia completo de configuração e referência da API
+* 📖 [**Documentação**](https://pelikhan.github.io/action-continuous-translation/) - Guia completo de configuração e referência de API (também traduzido por esta ação)
 * ✍️ [**Post no Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Análise detalhada da tecnologia
 * 🌐 **Traduções**: [Français](./README.fr.md) | [Español](./README.es.md) | [العربية](./README.ar.md)
 
@@ -83,6 +84,14 @@ Esta ação utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) para
 | `azure_openai_api_version`     | Versão da API do Azure OpenAI                                         | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
 | `azure_openai_api_credentials` | Tipo de credenciais da API                                            | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
 
+#### Alias de Modelo
+
+| Parâmetro     | Descrição                                                           | Padrão |
+| ------------- | ------------------------------------------------------------------- | ------ |
+| `model_alias` | Uma string no formato YAML `alias: modelid`pares \`alias: modelid\` |        |
+
+Veja a documentação de [Modelos](/action-continuous-translation/models/) para mais detalhes.
+
 ## 📤 Saídas
 
 | Saída  | Descrição                           |
@@ -144,41 +153,8 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## 🛠️ Desenvolvimento e Contribuição
-
-### Arquitetura do Projeto
-
-Esta ação é gerada automaticamente pelo GenAIScript a partir de metadados do script, garantindo consistência e confiabilidade. Recomendamos atualizar os metadados do script em vez de editar diretamente os arquivos da ação.
-
-**Componentes gerados automaticamente:**
-
-* ⚙️ Entradas da ação → inferidas dos parâmetros do script
-* 📤 Saídas da ação → inferidas do esquema de saída do script
-* 📝 Descrição da ação → descrição do script
-* 📖 Descrição do README → descrição do script
-* 🎨 Identidade visual da ação → identidade visual do script
-
-### 🧞 Comandos de Desenvolvimento
-
-Todos os comandos devem ser executados a partir do diretório raiz do projeto:
-
-| Comando              | Ação                                    | Caso de Uso                     |
-| :------------------- | :-------------------------------------- | :------------------------------ |
-| `npm install`        | Instalar dependências                   | Configuração inicial            |
-| `npm run dev`        | Testar tradução de `README.md`→ Francês | Teste rápido                    |
-| `npm run dev:astro`  | Traduzir toda a documentação do Astro   | Tradução completa de documentos |
-| `npm run typecheck`  | Validar arquivos TypeScript             | Qualidade do código             |
-| `npm run lint`       | Formatar código com Prettier            | Estilo de código                |
-| `npm run configure`  | Regenerar `action.yml`                  | Após alterações de parâmetros   |
-| `npm run upgrade`    | Atualizar dependências                  | Manutenção                      |
-| `npm run test:genai` | Executar suíte de testes local          | Garantia de qualidade           |
-
-***
-
 <div align="center">
 
 **Feito com ❤️ usando [GenAIScript](https://microsoft.github.io/genaiscript/)**
-
-[📖 Documentação](https://pelikhan.github.io/action-continuous-translation/) • [🐛 Problemas](https://github.com/pelikhan/action-continuous-translation/issues) • [💡 Discussões](https://github.com/pelikhan/action-continuous-translation/discussions)
 
 </div>
