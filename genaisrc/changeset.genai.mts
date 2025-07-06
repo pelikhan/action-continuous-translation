@@ -6,6 +6,7 @@ script({
 
 const diff = await git.diff({
   base: await git.defaultBranch(),
+  askStageOnEmpty: true,
   maxTokensFullDiff: 7000,
   excludedPaths: [
     "**/translations/**",
