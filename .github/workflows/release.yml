@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-permissions:
-  contents: write
-  packages: write
-  pull-requests: read
 env:
   REGISTRY: ghcr.io
 jobs:
@@ -32,6 +28,8 @@ jobs:
           title: "ci: release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Run release if: (1) no remaining changesets and a release commit was pushed, or (2) workflow was manually triggered
   release:
     needs: [changesets]
     if: >
@@ -67,6 +65,7 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
       - run: docker logout ghcr.io
         if: always()
+
   test_release:
     needs: release
     if: needs.release.result == 'success'

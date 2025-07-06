@@ -36,6 +36,8 @@
     "start": "genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY"
   },
   "devDependencies": {
-    "@intellectronica/ruler": "^0.2.6"
+    "@intellectronica/ruler": "^0.2.6",
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.11"
   }
 }

@@ -10,7 +10,7 @@ if [ "$(git status --porcelain)" ]; then
 fi
 
 # Step 1: Read the new version from package.json (after Changesets release)
-NEW_VERSION=$(node -p "require('./package.json').version")
+NEW_VERSION=$(jq -r .version package.json)
 echo "version: $NEW_VERSION"
 
 # Calculate major version for tagging
