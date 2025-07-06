@@ -1,6 +1,7 @@
 name: GenAI Pull Request Descriptor
 on:
   pull_request_target: # the code is treated as text, no install/code shall be executed
+    types: [closed]
 permissions:
   contents: read
   pull-requests: write
