@@ -1,6 +1,9 @@
 name: Release
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 permissions:
   contents: write
   packages: write
@@ -8,7 +11,34 @@ permissions:
 env:
   REGISTRY: ghcr.io
 jobs:
+  changesets:
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    outputs:
+      hasChangesets: ${{ steps.changesets.outputs.hasChangesets }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: npm
+      - run: npm ci
+      - name: Create Release Pull Request
+        id: changesets
+        uses: changesets/action@v1.5.3
+        with:
+          commit: "ci: release"
+          title: "ci: release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release:
+    needs: [changesets]
+    if: >
+      (
+        needs.changesets.outputs.hasChangesets == 'false' && contains(github.event.head_commit.message, 'ci: release')
+      ) || 
+      github.event_name == 'workflow_dispatch'
     permissions:
       contents: write
       packages: write
@@ -39,6 +69,7 @@ jobs:
         if: always()
   test_release:
     needs: release
+    if: needs.release.result == 'success'
     permissions:
       contents: write
       pull-requests: read
@@ -57,6 +88,6 @@ jobs:
       - run: git pull --ff-only
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: "translations/*.json **.md* translations/*.json"
+          file_pattern: "**.md* translations/*.json"
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"

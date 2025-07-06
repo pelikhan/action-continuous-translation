@@ -9,8 +9,8 @@ if [ "$(git status --porcelain)" ]; then
   exit 1
 fi
 
-# Step 1: Bump patch version using npm
-NEW_VERSION=$(npm version patch -m "chore: bump version to %s")
+# Step 1: Read the new version from package.json (after Changesets release)
+NEW_VERSION=$(node -p "require('./package.json').version")
 echo "version: $NEW_VERSION"
 
 # Calculate major version for tagging
