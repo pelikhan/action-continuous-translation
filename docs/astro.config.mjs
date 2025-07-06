@@ -67,8 +67,8 @@ export default defineConfig({
           autogenerate: { directory: "resources" },
         },
         {
-          label: "Translation Status",
-          link: "/lunaria"
+          label: "Translation Dashboard",
+          link: "https://pelikhan.github.io/action-continous-translation/lunaria"
         }
       ],
       components: {
