@@ -14,10 +14,11 @@
 * 🌐 **Soporte Multilenguaje** - Traduce a múltiples idiomas simultáneamente
 * 🔍 **Validación de Calidad** - Validación automática de la calidad de la traducción
 * ⚡ **Nativo en GitHub Actions** - Integración fluida con tu tubería CI/CD
+* 🤖 **Impulsado por IA** - Aprovecha GitHub Models para traducciones fluidas y de alta calidad
 
 ## 📚 Recursos
 
-* 📖 [**Documentación**](https://pelikhan.github.io/action-continuous-translation/) - Guía completa de configuración y referencia de API
+* 📖 [**Documentación**](https://pelikhan.github.io/action-continuous-translation/) - Guía completa de configuración y referencia de API (traducido también por esta acción)
 * ✍️ [**Publicación del Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Análisis profundo de la tecnología
 * 🌐 **Traducciones**: [Français](./README.fr.md) | [Español](./README.es.md) | [العربية](./README.ar.md)
 
@@ -83,6 +84,14 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 | `azure_openai_api_version`     | Versión de la API de Azure OpenAI                                   | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
 | `azure_openai_api_credentials` | Tipo de credenciales de API                                         | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
 
+#### Alias de Modelo
+
+| Parámetro     | Descripción                                        | Por defecto |
+| ------------- | -------------------------------------------------- | ----------- |
+| `model_alias` | Una cadena similar a YAML de `alias: modelid`pares |             |
+
+Consulta la documentación de [Modelos](/action-continuous-translation/models/) para más detalles.
+
 ## 📤 Salidas
 
 | Salida | Descripción                                 |
@@ -144,41 +153,8 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## 🛠️ Desarrollo y Contribución
-
-### Arquitectura del Proyecto
-
-Esta acción es generada automáticamente por GenAIScript a partir de metadatos del script, asegurando consistencia y fiabilidad. Recomendamos actualizar los metadatos del script en lugar de editar los archivos de la acción directamente.
-
-**Componentes generados automáticamente:**
-
-* ⚙️ Entradas de la acción → inferidas desde los parámetros del script
-* 📤 Salidas de la acción → inferidas desde el esquema de salida del script
-* 📝 Descripción de la acción → descripción del script
-* 📖 Descripción del README → descripción del script
-* 🎨 Branding de la acción → branding del script
-
-### 🧞 Comandos de Desarrollo
-
-Todos los comandos se ejecutan desde la raíz del proyecto:
-
-| Comando              | Acción                                       | Caso de uso                          |
-| :------------------- | :------------------------------------------- | :----------------------------------- |
-| `npm install`        | Instalar dependencias                        | Configuración inicial                |
-| `npm run dev`        | Probar la traducción de `README.md`→ Francés | Pruebas rápidas                      |
-| `npm run dev:astro`  | Traducir toda la documentación de Astro      | Traducción completa de documentación |
-| `npm run typecheck`  | Validar archivos TypeScript                  | Calidad de código                    |
-| `npm run lint`       | Formatear código con Prettier                | Estilo de código                     |
-| `npm run configure`  | Regenera `action.yml`                        | Después de cambios en los parámetros |
-| `npm run upgrade`    | Actualizar dependencias                      | Mantenimiento                        |
-| `npm run test:genai` | Ejecutar pruebas locales                     | Aseguramiento de calidad             |
-
-***
-
 <div align="center">
 
 **Hecho con ❤️ usando [GenAIScript](https://microsoft.github.io/genaiscript/)**
-
-[📖 Documentación](https://pelikhan.github.io/action-continuous-translation/) • [🐛 Problemas](https://github.com/pelikhan/action-continuous-translation/issues) • [💡 Discusiones](https://github.com/pelikhan/action-continuous-translation/discussions)
 
 </div>

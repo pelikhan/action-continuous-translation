@@ -14,10 +14,11 @@
 * 🌐 **Support Multilingue** - Traduire vers plusieurs langues simultanément
 * 🔍 **Validation de la Qualité** - Validation automatique de la qualité des traductions
 * ⚡ **Natif GitHub Actions** - Intégration transparente avec votre pipeline CI/CD
+* 🤖 **Propulsé par l'IA** - Exploitez GitHub Models pour des traductions fluides et de haute qualité
 
 ## 📚 Ressources
 
-* 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet d'installation et référence API
+* 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet de configuration et référence API (traduit également par cette action)
 * ✍️ [**Article de Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Exploration approfondie de la technologie
 * 🌐 **Traductions** : [Français](./README.fr.md) | [Español](./README.es.md) | [العربية](./README.ar.md)
 
@@ -83,6 +84,14 @@ Cette action s'appuie sur [GenAIScript](https://microsoft.github.io/genaiscript/
 | `azure_openai_api_version`     | Version de l'API Azure OpenAI                                        | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
 | `azure_openai_api_credentials` | Type des identifiants API                                            | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
 
+#### Alias de Modèle
+
+| Paramètre     | Description                                    | Par Défaut |
+| ------------- | ---------------------------------------------- | ---------- |
+| `model_alias` | Une chaîne YAML-like de `alias: modelid`paires |            |
+
+Consultez la documentation des [Modèles](/action-continuous-translation/models/) pour plus de détails.
+
 ## 📤 Sorties
 
 | Sortie | Description                       |
@@ -144,41 +153,8 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## 🛠️ Développement & Contribution
-
-### Architecture du Projet
-
-Cette action est générée automatiquement par GenAIScript à partir des métadonnées du script, garantissant cohérence et fiabilité. Nous vous recommandons de mettre à jour les métadonnées du script plutôt que de modifier directement les fichiers de l'action.
-
-**Composants générés automatiquement :**
-
-* ⚙️ Entrées de l'action → déduites des paramètres du script
-* 📤 Sorties de l'action → déduites du schéma de sortie du script
-* 📝 Description de l'action → description du script
-* 📖 Description du README → description du script
-* 🎨 Branding de l'action → branding du script
-
-### 🧞 Commandes de Développement
-
-Toutes les commandes sont exécutées depuis la racine du projet :
-
-| Commande             | Action                                        | Cas d'Utilisation                 |
-| :------------------- | :-------------------------------------------- | :-------------------------------- |
-| `npm install`        | Installer les dépendances                     | Configuration initiale            |
-| `npm run dev`        | Tester la traduction de `README.md`→ Français | Test rapide                       |
-| `npm run dev:astro`  | Traduire l'ensemble de la documentation Astro | Traduction complète des docs      |
-| `npm run typecheck`  | Valider les fichiers TypeScript               | Qualité du code                   |
-| `npm run lint`       | Formater le code avec Prettier                | Style du code                     |
-| `npm run configure`  | Régénère `action.yml`                         | Après modification des paramètres |
-| `npm run upgrade`    | Mettre à jour les dépendances                 | Maintenance                       |
-| `npm run test:genai` | Exécuter la suite de tests locale             | Assurance qualité                 |
-
-***
-
 <div align="center">
 
 **Créé avec ❤️ grâce à [GenAIScript](https://microsoft.github.io/genaiscript/)**
-
-[📖 Documentation](https://pelikhan.github.io/action-continuous-translation/) • [🐛 Problèmes](https://github.com/pelikhan/action-continuous-translation/issues) • [💡 Discussions](https://github.com/pelikhan/action-continuous-translation/discussions)
 
 </div>
