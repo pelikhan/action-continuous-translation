@@ -15,8 +15,8 @@ export async function resolveModels(lang: string): Promise<LangConfiguration> {
       dbg(`resolve alias %s`, alias);
       const info = await host.resolveLanguageModel(alias);
       if (info?.provider) {
-        dbg(`translation alias %s: %s`, alias, info.modelId);
-        res.models.translation = info.modelId;
+        dbg(`translation alias %s: %o`, alias, info);
+        res.models.translation = `${info.provider}:${info.model}`;
         res.alias = alias;
       }
     }
@@ -25,8 +25,8 @@ export async function resolveModels(lang: string): Promise<LangConfiguration> {
       dbg(`resolve alias %s`, alias);
       const info = await host.resolveLanguageModel(alias);
       if (info?.provider) {
-        dbg(`validate alias %s: %s`, alias, info.modelId);
-        res.models.classify = info.modelId;
+        dbg(`validate alias %s: %o`, alias, info);
+        res.models.classify = `${info.provider}:${info.model}`;
         res.alias = alias;
       }
     }
