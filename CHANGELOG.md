@@ -1,5 +1,18 @@
 # action-continuous-translation
 
+## 0.0.21
+
+### Patch Changes
+
+- [#40](https://github.com/pelikhan/action-continuous-translation/pull/40) [`1efc366`](https://github.com/pelikhan/action-continuous-translation/commit/1efc3661ec8607e74c20a564bdd1bc6846e2321b) Thanks [@pelikhan](https://github.com/pelikhan)! - - ✨ Added an automated script to generate changesets using AI, available via `npm run genai:changeset`
+  - 🤖 Integrates LLM-powered summarization for creating concise, emoji-rich, bullet-pointed changeset descriptions
+  - 🛡️ Excludes translation files, localized docs, and package manifests from the diff to keep summaries focused
+  - 🗃️ Generates and names the changeset file after the current branch, saving it in `.changeset/`
+  - 🌳 Enforces usage only on feature branches, preventing main branch usage
+  - 🛠️ Adds detailed logging for debugging and transparency during execution
+  - ⚡ Automatically stages and commits the generated changeset to version control
+  - 📄 Updated contribution guidelines to document the new AI-powered changeset workflow
+
 ## 0.0.20
 
 ### Patch Changes
