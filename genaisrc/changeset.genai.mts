@@ -26,15 +26,26 @@ const diff = await git.diff({
   ],
 });
 console.debug(diff);
+if (!diff)
+  cancel(
+    "No changes found in the current branch. Please make some changes first."
+  );
+
+const type = await host.select("What type of changeset is this?", [
+  "patch",
+  "minor",
+  "major",
+]);
+if (!type) cancel("No type selected. Please select a type of changeset.");
 
 const filename = `.changeset/${branch}.md`;
 const { text: content } = await runPrompt(
   (ctx) => {
     const diffRef = ctx.def("GIT_DIFF", diff);
-    ctx.$`## Task
+    ctx.$`## Role
+    You are an expert code reviewer with great English technical writing skills.
 
-You are an expert code reviewer with great English technical writing skills.
-
+## Task
 Your task is to generate a **changeset** description of the changes in ${diffRef}.
 
 ## Instructions
@@ -58,7 +69,7 @@ console.log(`Writing changeset to ${filename}...`);
 await workspace.writeText(
   filename,
   `---
-"action-continuous-translation": patch
+"action-continuous-translation": ${type}
 ---
 
 ${content}

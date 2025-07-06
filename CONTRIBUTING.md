@@ -97,6 +97,14 @@ If you have changed multiple unrelated features or fixes, just run `npx changese
 
 The changeset action will then automatically determine the biggest bump of all changeset in the next release, so the correct version is set. 🎉
 
+#### AI Generated changesets
+
+If you are working in a **branch**, you can run the following command to let the LLM generate the description.
+
+```sh
+npm run changeset
+```
+
 ## Showcase
 
 ### Sites
