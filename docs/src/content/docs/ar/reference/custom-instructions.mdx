@@ -6,6 +6,9 @@ sidebar:
 
 ---
 
+import { Code } from "@astrojs/starlight/components";
+import types from "../../../../../../genaisrc/src/types.mjs?raw";
+
 يمكنك إدخال إرشادات مخصصة لتحفيز عملية الترجمة. يمكن استخدام هذا لإضافة تعليمات إضافية أو مسرد أو توجيهات أخرى لتحسين جودة الترجمة بشكل عام.
 
 ## تعليمات مضمنة
@@ -41,7 +44,9 @@ translator:
 This document will be translated using the instructions specified in the frontmatter.
 ```
 
-كائن `translator` هو [إعداد](../../reference/configuration/) يتم التحقق منه في وقت التشغيل. يتم إزالته من المقدمة قبل بدء الترجمة، لذلك لا يؤثر على النتيجة النهائية.
+يتم تعريف أنواع `translator` في `types.ts`. يتم إزالتها من المقدمة قبل بدء الترجمة، لذا فهي لا تؤثر على النتيجة النهائية.
+
+<Code lang="ts" code={types} title="أنواع التكوين" />
 
 ## ترتيب الأولوية
 

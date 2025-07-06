@@ -304,5 +304,12 @@
   "Enable debug logging (": "تمكين تسجيل تصحيح الأخطاء",
   "permission (": "إذن (models: read) (دليل الإعداد)",
   "Azure OpenAI API key (not needed for Microsoft Entra ID)": "مفتاح Azure OpenAI API (غير مطلوب مع Microsoft Entra ID)",
-  "Subscription ID for deployment listing (Entra ID only)": "معرّف الاشتراك لقائمة النشر (خاص بـ Entra ID فقط)"
+  "Subscription ID for deployment listing (Entra ID only)": "معرّف الاشتراك لقائمة النشر (خاص بـ Entra ID فقط)",
+  "Your [GitHub token](https://github.com/settings/tokens) with at least `models: r.40B91BF86B689E92221B": "رمز GitHub الخاص بك [GitHub token](https://github.com/settings/tokens) مع إذن `models: read` على الأقل.",
+  "Read further details under [the GenAIScript GitHub Models Permissions docs](http.8960C96281F687406CDE": "اقرأ المزيد من التفاصيل في [وثائق أذونات نماذج GitHub الخاصة بـ GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).",
+  "### Other LLM providers": "مزودي LLM الآخرين",
+  "You can also use other LLM providers like OpenAI, Azure OpenAI, etc.\nSee [Models.A9963D438B6EB026B4BE": "يمكنك أيضًا استخدام مزودي LLM الآخرين مثل OpenAI وAzure OpenAI وما إلى ذلك.\nراجع [النماذج](/action-continuous-translation/reference/models/) للحصول على مزيد من التفاصيل حول الموفرين الآخرين.",
+  "The `translator` types are defined `types.ts`.\nIt is removed from the frontmatte.C6576201871AA41C1F8F": "يتم تعريف أنواع `translator` في `types.ts`. يتم إزالتها من المقدمة قبل بدء الترجمة، لذا فهي لا تؤثر على النتيجة النهائية.",
+  "To enable the Starlight mode, you need to provide the `starlight_dir` input in t.01DC52ED32343A363AF9": "لتمكين وضع Starlight، تحتاج إلى توفير إدخال `starlight_dir` في الإجراء.",
+  "If you have set the [Astro `base` option as well](https://docs.astro.build/en/re.59676C1215F183CD7C69": "إذا كنت قد قمت بتعيين خيار [Astro `base`] أيضًا (https://docs.astro.build/en/reference/configuration-reference/#base)،\nفستحتاج إلى توفير إدخال `starlight_base` أيضًا."
 }
