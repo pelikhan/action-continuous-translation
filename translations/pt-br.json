@@ -239,5 +239,19 @@
   "**Type**: `string` (secret recommended)\\\n**Recommended**: `${{ secrets.GITHUB_TO.9BA5C0E148CCC3E94861": "**Tipo**: `string` (secreto recomendado)\\\n**Recomendado**: `${{ secrets.GITHUB_TOKEN }}`",
   "The frontmatter configuration data is defined `types.ts`.\nIt can be added to a d.8788BD1CA4105086EAF4": "Os dados de configuração do frontmatter são definidos no arquivo `types.ts`.\nEles podem ser adicionados ao frontmatter de uma documentação como um objeto `translator`.",
   "## Types": "Tipos",
-  "Configuration Types": "Tipos de Configuração"
+  "Configuration Types": "Tipos de Configuração",
+  "Target language(s) for translation (ISO codes, comma-separated)": "Idioma(s) de destino para tradução (códigos ISO, separados por vírgula)",
+  "Source language (ISO code)": "Idioma de origem (código ISO)",
+  "Files to translate (semicolon-separated)": "Arquivos para traduzir (separados por ponto e vírgula)",
+  "Enable debug logging (": "Habilitar registro de depuração",
+  "permission (": "permissão",
+  "Azure OpenAI API key (not needed for Microsoft Entra ID)": "Chave da API do Azure OpenAI (não necessária para Microsoft Entra ID)",
+  "Subscription ID for deployment listing (Entra ID only)": "ID de assinatura para listagem de implantação (somente Entra ID)",
+  "Your [GitHub token](https://github.com/settings/tokens) with at least `models: r.40B91BF86B689E92221B": "Seu [token do GitHub](https://github.com/settings/tokens) com pelo menos permissão de `models: read`.",
+  "Read further details under [the GenAIScript GitHub Models Permissions docs](http.8960C96281F687406CDE": "Leia mais detalhes em [os documentos de Permissões do GitHub Models do GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).",
+  "### Other LLM providers": "Outros provedores de LLM",
+  "You can also use other LLM providers like OpenAI, Azure OpenAI, etc.\nSee [Models.A9963D438B6EB026B4BE": "Você também pode usar outros provedores de LLM, como OpenAI, Azure OpenAI, etc.\nConsulte [Models](/action-continuous-translation/reference/models/) para mais detalhes sobre outros provedores.",
+  "The `translator` types are defined `types.ts`.\nIt is removed from the frontmatte.C6576201871AA41C1F8F": "Os tipos `translator` são definidos em `types.ts`. Eles são removidos do frontmatter antes do início da tradução, para que não afetem o resultado final.",
+  "To enable the Starlight mode, you need to provide the `starlight_dir` input in t.01DC52ED32343A363AF9": "Para habilitar o modo Starlight, você precisa fornecer a entrada `starlight_dir` na ação.",
+  "If you have set the [Astro `base` option as well](https://docs.astro.build/en/re.59676C1215F183CD7C69": "Se você também configurou a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base),\nvocê precisa fornecer a entrada `starlight_base` também."
 }

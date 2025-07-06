@@ -6,6 +6,9 @@ sidebar:
 
 ---
 
+import { Code } from "@astrojs/starlight/components";
+import types from "../../../../../../genaisrc/src/types.mjs?raw";
+
 Vous pouvez injecter des instructions personnalisées pour la tâche de traduction. Cela peut être utilisé pour insérer des instructions supplémentaires, un glossaire ou d'autres orientations afin d'améliorer la qualité globale de la traduction.
 
 ## Instructions en ligne
@@ -41,7 +44,9 @@ translator:
 This document will be translated using the instructions specified in the frontmatter.
 ```
 
-L'objet `translator` est une [configuration](../../reference/configuration/) instance et validé au moment de l'exécution. Il est supprimé du frontmatter avant que la traduction ne commence, de sorte qu'il n'affecte pas le résultat final.
+Les types `translator` sont définis dans `types.ts`. Ils sont supprimés du frontmatter avant le début de la traduction, de sorte qu'ils n'affectent pas le résultat final.
+
+<Code lang="ts" code={types} title="Types de configuration" />
 
 ## Ordre de priorité
 

@@ -19,9 +19,19 @@ Requiere una configuración específica de Starlight como se detalla a continuac
 
     <li>
       Para habilitar el modo Starlight, necesitas proporcionar la entrada `starlight_dir` en la acción.
-      Si también has configurado la [opción `base` de Astro](https://docs.astro.build/en/reference/configuration-reference/#base), debes proporcionar la entrada `starlight_base` también.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
+      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
+      uses: pelikhan/action-continuous-translation@v0
+      with:
+        starlight_dir: ./docs
+      ```
+    </li>
+
+    <li>
+      Si también has configurado la [opción `base` de Astro](https://docs.astro.build/en/reference/configuration-reference/#base),
+      necesitas proporcionar también la entrada `starlight_base`.
+
+      ```yaml title=".github/workflows/ct.yml" "starlight_base: my_repo_name"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs

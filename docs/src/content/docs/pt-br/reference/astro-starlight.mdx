@@ -17,10 +17,20 @@ Esta ação pode ser usada para traduzir o conteúdo de um site de documentaçã
     </li>
 
     <li>
-      Para habilitar o modo Starlight, é necessário fornecer o parâmetro `starlight_dir` na ação.
-      Se você configurou também a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base), será necessário fornecer também o parâmetro `starlight_base`.
+      Para habilitar o modo Starlight, você precisa fornecer a entrada `starlight_dir` na ação.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
+      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
+      uses: pelikhan/action-continuous-translation@v0
+      with:
+        starlight_dir: ./docs
+      ```
+    </li>
+
+    <li>
+      Se você também configurou a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base),
+      você precisa fornecer a entrada `starlight_base` também.
+
+      ```yaml title=".github/workflows/ct.yml" "starlight_base: my_repo_name"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs

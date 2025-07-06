@@ -304,5 +304,12 @@
   "Enable debug logging (": "Activer les journaux de débogage",
   "permission (": "autorisation",
   "Azure OpenAI API key (not needed for Microsoft Entra ID)": "Clé API Azure OpenAI (non nécessaire pour l'ID Microsoft Entra)",
-  "Subscription ID for deployment listing (Entra ID only)": "ID d'abonnement pour la liste des déploiements (ID Entra uniquement)"
+  "Subscription ID for deployment listing (Entra ID only)": "ID d'abonnement pour la liste des déploiements (ID Entra uniquement)",
+  "Your [GitHub token](https://github.com/settings/tokens) with at least `models: r.40B91BF86B689E92221B": "Votre [jeton GitHub](https://github.com/settings/tokens) avec au moins la permission `models: read`.",
+  "Read further details under [the GenAIScript GitHub Models Permissions docs](http.8960C96281F687406CDE": "Lisez plus de détails dans la documentation [GenAIScript GitHub Models Permissions docs](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).",
+  "### Other LLM providers": "Autres fournisseurs de LLM",
+  "You can also use other LLM providers like OpenAI, Azure OpenAI, etc.\nSee [Models.A9963D438B6EB026B4BE": "Vous pouvez également utiliser d'autres fournisseurs de LLM comme OpenAI, Azure OpenAI, etc.\nConsultez [Models](/action-continuous-translation/reference/models/) pour plus de détails sur d'autres fournisseurs.",
+  "The `translator` types are defined `types.ts`.\nIt is removed from the frontmatte.C6576201871AA41C1F8F": "Les types `translator` sont définis dans `types.ts`. Ils sont supprimés du frontmatter avant le début de la traduction, de sorte qu'ils n'affectent pas le résultat final.",
+  "To enable the Starlight mode, you need to provide the `starlight_dir` input in t.01DC52ED32343A363AF9": "Pour activer le mode Starlight, vous devez fournir l'entrée `starlight_dir` dans l'action.",
+  "If you have set the [Astro `base` option as well](https://docs.astro.build/en/re.59676C1215F183CD7C69": "Si vous avez également défini l'option [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base),\nvous devez également fournir l'entrée `starlight_base`."
 }
