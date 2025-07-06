@@ -322,10 +322,11 @@ export default async function main() {
               }
             }
           } else {
+            dbgo(`missing %s %s`, node.type, nhash);
             // mark untranslated nodes with a unique identifier
             if (node.type === "text") {
               if (
-                !/\s*[.,:;<>\]\[{}\(\)…]+\s*/.test(node.value) &&
+                !/^\s*[.,:;<>\]\[{}\(\)…]+\s*$/.test(node.value) &&
                 !isUri(node.value)
               ) {
                 dbga(`text node: %s`, nhash);
@@ -726,6 +727,10 @@ export default async function main() {
               .join("\n"),
           );
         }
+
+        dbgt(`stringifying %O`, translated.children);
+        let contentTranslated = await stringify(translated);
+
         const nTranslations = Object.keys(llmHashes).length;
         if (
           unresolvedTranslations.size > 5 &&
@@ -733,11 +738,10 @@ export default async function main() {
             minTranslationsThreshold
         ) {
           output.warn(`not enough translations, try to translate more.`);
+          output.fence(contentTranslated, 'markdown')
           continue;
         }
 
-        dbgt(`stringifying %O`, translated.children);
-        let contentTranslated = await stringify(translated);
         if (content === contentTranslated) {
           output.warn(`Unable to translate anything, skipping file.`);
           continue;
