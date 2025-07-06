@@ -1,6 +1,18 @@
 script({
-    title: "Generates a changeset from the current changes"
-})
+  title: "Generates a changeset from the current changes",
+});
 
-const pr = await github.getPullRequest()
-if (!pr) cancel(`this command only works in a pull request branch`)
+
+
+const diff = await git.diff({
+  base: await git.defaultBranch(),
+  excludedPaths: [
+    "**/translations/**",
+    "README.*.md",
+    "docs/fr/**",
+    "docs/es/**",
+    "docs/ar/**",
+    "docs/pr-br/**",
+    "package*.json",
+  ],
+});
