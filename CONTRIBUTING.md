@@ -38,6 +38,8 @@ This repo is a “monorepo,” meaning it contains several projects in one. It c
 
 You can [develop locally](#developing-locally) or use an online coding development environment like [GitHub Codespaces](#developing-using-github-codespaces) to get started quickly.
 
+If you developer locally, you can also run in a [dev container](https://code.visualstudio.com/docs/devcontainers/containers).
+
 #### Developing locally
 
 **Prerequisites:** Developing Action Continuous Translation requires [Node.js](https://nodejs.org/en) and [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Make sure you have these installed before following these steps.
@@ -73,6 +75,14 @@ You can [develop locally](#developing-locally) or use an online coding developme
    ```
 
 The dev container used for GitHub Codespaces can also be used with [other supporting tools](https://containers.dev/supporting), including VS Code.
+
+### AI Instructions
+
+This project is configured to support most AI IDEs, including Copilot, Cursor, Claude, ... The instructions file at `.ruler/instructions.md` contains the instructions for the AI IDE to generate code in this project. The instructions are refreshed at installation time or run
+
+```sh
+npm run ruler
+```
 
 ## Showcase
 
