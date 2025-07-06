@@ -102,7 +102,7 @@ The changeset action will then automatically determine the biggest bump of all c
 If you are working in a **branch**, you can run the following command to let the LLM generate the description.
 
 ```sh
-npm run changeset
+npm run genai:changeset
 ```
 
 ## Showcase

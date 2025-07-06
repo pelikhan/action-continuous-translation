@@ -26,6 +26,7 @@
     "typecheck": "genaiscript scripts compile",
     "configure": "genaiscript configure action translator",
     "genai": "genaiscript run",
+    "genai:changeset": "genaiscript run changeset --no-run-trace --no-output-trace",
     "test": "npm run typecheck",
     "test:genai": "genaiscript test translator",
     "test:build": "cd docs && npm run build && cd ../test/root-no-base && npm run build",
