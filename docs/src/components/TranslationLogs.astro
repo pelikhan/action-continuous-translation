@@ -1,0 +1,316 @@
+---
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+interface LogEntry {
+  filename: string;
+  stage: 'translate' | 'validate';
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+  cost: number;
+  date: string;
+}
+
+let logs: LogEntry[] = [];
+let error: string | null = null;
+
+try {
+  // Read the log file from the repository root
+  const logPath = join(process.cwd(), '..', 'translations', 'log.json');
+  const logContent = readFileSync(logPath, 'utf-8');
+  
+  // Parse JSONL format (one JSON object per line)
+  logs = logContent
+    .split('\n')
+    .filter(line => line.trim())
+    .map(line => JSON.parse(line));
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Unknown error reading log file';
+}
+
+// Calculate aggregate statistics
+const totalCost = logs.reduce((sum, log) => sum + log.cost, 0);
+const totalInputTokens = logs.reduce((sum, log) => sum + log.inputTokens, 0);
+const totalOutputTokens = logs.reduce((sum, log) => sum + log.outputTokens, 0);
+const totalTokens = totalInputTokens + totalOutputTokens;
+const uniqueFiles = new Set(logs.map(log => log.filename)).size;
+const translationEntries = logs.filter(log => log.stage === 'translate').length;
+const validationEntries = logs.filter(log => log.stage === 'validate').length;
+
+// Get model usage statistics
+const modelStats = logs.reduce((acc, log) => {
+  if (!acc[log.model]) {
+    acc[log.model] = { count: 0, cost: 0, tokens: 0 };
+  }
+  acc[log.model].count++;
+  acc[log.model].cost += log.cost;
+  acc[log.model].tokens += log.inputTokens + log.outputTokens;
+  return acc;
+}, {} as Record<string, { count: number; cost: number; tokens: number }>);
+
+// Format date for display
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleString();
+};
+
+// Format currency
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 4
+  }).format(amount);
+};
+
+// Format numbers with commas
+const formatNumber = (num: number) => {
+  return new Intl.NumberFormat('en-US').format(num);
+};
+---
+
+<div class="translation-logs">
+  {error ? (
+    <div class="error">
+      <h3>Error loading translation logs</h3>
+      <p>{error}</p>
+      <p>Make sure the <code>translations/log.json</code> file exists in the repository root.</p>
+    </div>
+  ) : (
+    <>
+      <h2>Translation Statistics Overview</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Cost</h3>
+          <p class="stat-value">{formatCurrency(totalCost)}</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Tokens</h3>
+          <p class="stat-value">{formatNumber(totalTokens)}</p>
+          <p class="stat-detail">
+            Input: {formatNumber(totalInputTokens)} | Output: {formatNumber(totalOutputTokens)}
+          </p>
+        </div>
+        <div class="stat-card">
+          <h3>Files Processed</h3>
+          <p class="stat-value">{uniqueFiles}</p>
+        </div>
+        <div class="stat-card">
+          <h3>Operations</h3>
+          <p class="stat-value">{logs.length}</p>
+          <p class="stat-detail">
+            Translations: {translationEntries} | Validations: {validationEntries}
+          </p>
+        </div>
+      </div>
+
+      <h3>Model Usage</h3>
+      <div class="table-container">
+        <table class="model-stats">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Operations</th>
+              <th>Total Cost</th>
+              <th>Total Tokens</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(modelStats).map(([model, stats]) => (
+              <tr>
+                <td>{model}</td>
+                <td>{stats.count}</td>
+                <td>{formatCurrency(stats.cost)}</td>
+                <td>{formatNumber(stats.tokens)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Full Translation Log</h3>
+      <div class="table-container">
+        <table class="logs-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>File</th>
+              <th>Stage</th>
+              <th>Model</th>
+              <th>Input Tokens</th>
+              <th>Output Tokens</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {logs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((log) => (
+              <tr>
+                <td class="date-cell">{formatDate(log.date)}</td>
+                <td class="file-cell" title={log.filename}>
+                  {log.filename.length > 30 ? `...${log.filename.slice(-27)}` : log.filename}
+                </td>
+                <td class={`stage-cell stage-${log.stage}`}>{log.stage}</td>
+                <td class="model-cell">{log.model.replace('github:', '')}</td>
+                <td class="number-cell">{formatNumber(log.inputTokens)}</td>
+                <td class="number-cell">{formatNumber(log.outputTokens)}</td>
+                <td class="cost-cell">{formatCurrency(log.cost)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {logs.length === 0 && (
+        <p>No translation logs found. Logs will appear here after translation operations are performed.</p>
+      )}
+    </>
+  )}
+</div>
+
+<style>
+  .translation-logs {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .error {
+    background: #ffe6e6;
+    border: 1px solid #ff9999;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .error h3 {
+    color: #cc0000;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .stat-card {
+    background: var(--sl-color-bg-nav);
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .stat-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--sl-color-text-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: var(--sl-color-text);
+  }
+
+  .stat-detail {
+    font-size: 0.8rem;
+    color: var(--sl-color-text-invert);
+    margin: 0;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    margin: 1rem 0;
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--sl-color-hairline);
+  }
+
+  th {
+    background: var(--sl-color-bg-nav);
+    font-weight: 600;
+    color: var(--sl-color-text-accent);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+  }
+
+  tbody tr:hover {
+    background: var(--sl-color-bg-nav);
+  }
+
+  .date-cell {
+    white-space: nowrap;
+    font-family: monospace;
+    font-size: 0.8rem;
+  }
+
+  .file-cell {
+    max-width: 300px;
+    font-family: monospace;
+    font-size: 0.8rem;
+  }
+
+  .stage-cell {
+    text-transform: capitalize;
+    font-weight: 500;
+  }
+
+  .stage-translate {
+    color: #10b981;
+  }
+
+  .stage-validate {
+    color: #f59e0b;
+  }
+
+  .model-cell {
+    font-family: monospace;
+    font-size: 0.8rem;
+  }
+
+  .number-cell, .cost-cell {
+    text-align: right;
+    font-family: monospace;
+    font-size: 0.8rem;
+  }
+
+  .cost-cell {
+    font-weight: 500;
+    color: var(--sl-color-text-accent);
+  }
+
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+    }
+
+    th, td {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    .date-cell, .file-cell, .model-cell {
+      font-size: 0.7rem;
+    }
+  }
+</style>
