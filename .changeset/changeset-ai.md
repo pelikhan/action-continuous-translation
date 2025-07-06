@@ -2,9 +2,11 @@
 "action-continuous-translation": patch
 ---
 
-- ✨ Introduced a script to automate changeset generation based on current code changes
-- 📝 Automatically excludes translations, documentation in several languages, and package files from considered diffs
-- 🤖 Prompts an AI to create concise, emoji-enhanced, bullet-pointed changeset summaries following best practices
-- 💾 Creates a uniquely named changeset Markdown file within `.changeset/`, tagged by branch name
-- 🛠️ Adds console logging for transparency and debugging during script execution
-- ⚡ Commits the generated changeset automatically to version control
+- ✨ Added an automated script to generate changesets using AI, available via `npm run genai:changeset`
+- 🤖 Integrates LLM-powered summarization for creating concise, emoji-rich, bullet-pointed changeset descriptions
+- 🛡️ Excludes translation files, localized docs, and package manifests from the diff to keep summaries focused
+- 🗃️ Generates and names the changeset file after the current branch, saving it in `.changeset/`
+- 🌳 Enforces usage only on feature branches, preventing main branch usage
+- 🛠️ Adds detailed logging for debugging and transparency during execution
+- ⚡ Automatically stages and commits the generated changeset to version control
+- 📄 Updated contribution guidelines to document the new AI-powered changeset workflow
