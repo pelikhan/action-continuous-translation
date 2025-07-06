@@ -25,7 +25,7 @@ jobs:
         uses: changesets/action@v1.5.3
         with:
           commit: "ci: release"
-          title: "ci: release"
+          title: "ci: release [skip ci]"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
