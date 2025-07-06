@@ -31,7 +31,7 @@ import { Steps } from "@astrojs/starlight/components";
       إذا كنت قد قمت بتعيين خيار \[Astro `base`] أيضًا ([https://docs.astro.build/en/reference/configuration-reference/#base)،](https://docs.astro.build/en/reference/configuration-reference/#base\)،)
       فستحتاج إلى توفير إدخال `starlight_base` أيضًا.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_base: my_repo_name"
+      ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs
@@ -103,3 +103,10 @@ export default defineConfig({
   ],
 });
 ```
+
+## لوحة معلومات ترجمة Lunaria
+
+يمكنك استخدام [لوحة معلومات ترجمة Lunaria](https://lunaria.dev/integrations/starlight/) لإنشاء
+لوحة معلومات حالة الترجمة لموقع Starlight الخاص بك.
+
+يمكنك تجربة لوحة المعلومات من خلال الانتقال إلى رابط **لوحة معلومات الترجمة** في الشريط الجانبي لهذه الصفحة.
