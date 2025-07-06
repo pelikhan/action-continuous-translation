@@ -1,0 +1,57 @@
+{
+  "$schema": "./node_modules/@lunariajs/core/config.schema.json",
+  "repository": {
+    "name": "pelikhan/action-continuous-translation",
+    "rootDir": "docs"
+  },
+  "defaultLocale": {
+    "label": "English",
+    "lang": "en"
+  },
+  "locales": [
+    {
+      "label": "Arabic",
+      "lang": "ar"
+    },
+    {
+      "label": "French",
+      "lang": "fr"
+    },
+    {
+      "label": "Spanish",
+      "lang": "es"
+    },
+    {
+      "label": "Portuguese (Brazil)",
+      "lang": "pt-BR"
+    }
+  ],
+  "files": [
+    {
+      "location": "src/content/docs/**/*.{md,mdx}",
+      "pattern": "src/content/docs/@lang/@path",
+      "type": "universal"
+    }
+  ],
+  "dashboard": {
+    "title": "Action Continuous Translation Status",
+    "description": "Translation progress tracker for the Action Continuous Translation site. See how much has been translated by our GenAIScript!",
+    "favicon": {
+      "external": [
+        {
+          "link": "https://blog.trueberryless.org/favicon.svg",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    "customCss": ["./lunaria/styles.css"],
+    "basesToHide": ["src/content/docs/"],
+    "ui": {
+      "statusByLocale.heading": "Translation progress by locale",
+      "statusByLocale.incompleteLocalizationLink": "incomplete translation",
+      "statusByLocale.outdatedLocalizationLink": "outdated translation",
+      "statusByLocale.completeLocalization": "This translation is complete, amazing job! 🎉",
+      "statusByFile.heading": "Translation status by file"
+    }
+  }
+}
