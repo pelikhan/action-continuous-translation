@@ -151,7 +151,7 @@ export default async function main() {
   dbg(`starlightBase: %s`, starlightBase);
   if (starlightBase && !starlightDir) {
     throw new Error(
-      `"starlightDir" must be defined when "starlightBase" is defined.`,
+      `"starlightDir" must be defined when "starlightBase" is defined.`
     );
   }
   const starlightBaseRx = starlightBase
@@ -169,7 +169,7 @@ export default async function main() {
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
   dbg(
     `files (before filter): %O`,
-    env.files.map((f) => f.filename),
+    env.files.map((f) => f.filename)
   );
   const files = env.files
     .filter((f) => ignorer([f.filename]).length)
@@ -182,6 +182,8 @@ export default async function main() {
     const tokens = await tokenizers.count(file.content);
     output.itemValue(file.filename, tokens + "t");
   }
+
+  const logFn = "translations/log.json";
 
   for (const to of langs) {
     const langInfo = await resolveModels(to);
@@ -203,6 +205,26 @@ export default async function main() {
     for (const file of files) {
       const { filename } = file;
       output.heading(3, `${filename}`);
+
+      const logUsage = async (
+        stage: "translate" | "validate",
+        model: string,
+        usage: RunPromptUsage
+      ) => {
+        if (logFn)
+          await workspace.appendText(
+            logFn,
+            JSON.stringify({
+              filename,
+              stage: stage,
+              model,
+              inputTokens: usage?.prompt,
+              outputTokens: usage?.completion,
+              cost: usage?.cost,
+              date: new Date().toISOString(),
+            }) + "\n"
+          );
+      };
 
       const { visit, parse, stringify, SKIP } = await mdast({
         mdx: /\.mdx$/i.test(filename),
@@ -266,7 +288,7 @@ export default async function main() {
 
         // Extract instructions from frontmatter if not provided via parameters
         const frontmatterNode = root.children.find(
-          (child) => child.type === "yaml",
+          (child) => child.type === "yaml"
         );
         const frontmatter = parsers.YAML(frontmatterNode?.value, {
           schema: FrontmatterWithTranslatorSchema,
@@ -401,7 +423,7 @@ export default async function main() {
                 }
               }
               for (const field of FRONTMATTER_FIELDS.filter(
-                (field) => typeof data[field] === "string",
+                (field) => typeof data[field] === "string"
               )) {
                 const nhash = hashNode(data[field]);
                 const tr = translationCache[nhash];
@@ -472,7 +494,7 @@ export default async function main() {
 
           // run prompt to generate translations
           output.item(`validating translations`);
-          const { fences, error } = await runPrompt(
+          const { error, fences, usage } = await runPrompt(
             async (ctx) => {
               const originalRef = ctx.def("ORIGINAL", file.content, {
                 lineNumbers: false,
@@ -543,8 +565,9 @@ export default async function main() {
               system: [],
               cache: true,
               label: `translating ${filename} (${llmHashTodos.size} nodes)`,
-            },
+            }
           );
+          logUsage("translate", translationModel, usage);
 
           if (error) {
             // are we out of tokens?
@@ -603,8 +626,8 @@ export default async function main() {
                       action.link = patchFn(
                         action.link.replace(
                           starlightBaseRx,
-                          `/${starlightBase || ""}/${to.toLowerCase()}/`,
-                        ),
+                          `/${starlightBase || ""}/${to.toLowerCase()}/`
+                        )
                       );
                       dbgo(`yaml hero action link: %s`, action.link);
                     }
@@ -633,7 +656,7 @@ export default async function main() {
                 else unresolvedTranslations.add(nhash);
               }
               for (const field of FRONTMATTER_FIELDS.filter(
-                (field) => typeof data[field] === "string",
+                (field) => typeof data[field] === "string"
               )) {
                 const nhash = hashNode(data[field]);
                 const tr = translationCache[nhash];
@@ -713,7 +736,7 @@ export default async function main() {
             if (starlightBaseRx.test(node.url)) {
               node.url = patchFn(
                 node.url.replace(starlightBaseRx, "../"),
-                true,
+                true
               );
             }
           });
@@ -724,7 +747,7 @@ export default async function main() {
           output.fence(
             Array.from(unresolvedTranslations)
               .map((t) => t)
-              .join("\n"),
+              .join("\n")
           );
         }
 
@@ -738,7 +761,7 @@ export default async function main() {
             minTranslationsThreshold
         ) {
           output.warn(`not enough translations, try to translate more.`);
-          output.fence(contentTranslated, 'markdown')
+          output.fence(contentTranslated, "markdown");
           continue;
         }
 
@@ -773,7 +796,7 @@ export default async function main() {
           });
           const diffLinks = xor(
             Array.from(originalLinks),
-            Array.from(translatedLinks),
+            Array.from(translatedLinks)
           );
           if (diffLinks.length) {
             output.warn(`some links have changed`);
@@ -791,12 +814,12 @@ export default async function main() {
           } (${source}) to ${lang} (${to}).
           The original document is in ${ctx.def(
             "ORIGINAL",
-            content,
+            content
           )}, and the translated document is provided in ${ctx.def(
-            "TRANSLATED",
-            contentTranslated,
-            { lineNumbers: true },
-          )} (line numbers were added).`.role("system");
+                "TRANSLATED",
+                contentTranslated,
+                { lineNumbers: true }
+              )} (line numbers were added).`.role("system");
             },
             {
               ok: `Translation is faithful to the original document and conveys the same meaning.`,
@@ -808,8 +831,9 @@ export default async function main() {
               cache: true,
               systemSafety: true,
               model: classifyModel,
-            },
+            }
           );
+          logUsage("validate", classifyModel, res.usage);
 
           // are we out of tokens?
           if (/429/.test(res.error)) {
@@ -819,7 +843,7 @@ export default async function main() {
 
           output.resultItem(
             res.label === "ok",
-            `translation validation: ${res.label}`,
+            `translation validation: ${res.label}`
           );
           if (res.label !== "ok") {
             output.fence(res.answer);
@@ -835,12 +859,12 @@ export default async function main() {
         await workspace.writeText(translationFn, contentTranslated);
         await workspace.writeText(
           translationCacheFilename,
-          JSON.stringify(translationCache, null, 2),
+          JSON.stringify(translationCache, null, 2)
         );
 
         output.resultItem(
           true,
-          `translated chunks: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`,
+          `translated chunks: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`
         );
       } catch (error) {
         output.error(error);
