@@ -281,5 +281,13 @@
   "Update dependencies": "Actualizar dependencias",
   "Maintenance": "Mantenimiento",
   "Run local test suite": "Ejecutar pruebas locales",
-  "Quality assurance": "Aseguramiento de calidad"
+  "Quality assurance": "Aseguramiento de calidad",
+  "**Automatically translate your markdown documentation using AI** - powered by [G.B50AE2366F51DA1D9F14": "**Traduce automáticamente tu documentación en markdown utilizando IA** - impulsado por [GitHub Actions](https://github.com/actions) y [GitHub Models](https://github.com/models) con soporte integrado para [Astro Starlight](https://starlight.astro.build/)!",
+  "Action Continuous Translation Showcase": "Exposición de Action Continuous Translation",
+  "Discover sites that use Action Continuous Translation!": "¡Descubre sitios que utilizan Action Continuous Translation!",
+  "Add your own!": "¡Añade el tuyo!",
+  "Have you built a website that uses Action Continuous Translation?\n[Open a PR](ht.6BC3F4C3E5DDF7839413": "¿Has creado un sitio web que utiliza Action Continuous Translation? [Abre un PR](https://github.com/pelikhan/action-continuous-translation/blob/main/CONTRIBUTING.md#showcase) añadiendo un enlace a esta página.",
+  "## Sites": "Sitios",
+  "Action Continuous Translation is already being used in production. These are som.E67D1D0CEE4FFBAE10AA": "Action Continuous Translation ya se está utilizando en producción. Estos son algunos de los sitios en la web:",
+  "See all the [public project repos using Action Continuous Translation on GitHub].F4E3A2872F1F5A6088A6": "Consulta todos los [repositorios de proyectos públicos que utilizan Action Continuous Translation en GitHub](https://github.com/pelikhan/action-continuous-translation/network/dependents)."
 }

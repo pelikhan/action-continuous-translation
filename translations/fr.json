@@ -281,5 +281,13 @@
   "We also support frontmatter entries from [Starlight Blog](https://starlight-blog.5B51B20B57D70EEBA893": "Nous prenons également en charge les entrées frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/)",
   "`excerpt`: A short excerpt of the page.": "`excerpt` : Un court extrait de la page.",
   "You can also enable the `errorOnInconsistentLocale` option to ensure that all li.677537442D7ACC09B86B": "Vous pouvez également activer l'option `errorOnInconsistentLocale` pour garantir que tous les liens sont cohérents avec la locale actuelle.",
-  "### Complete Workflow Example": "Exemple Complet de Workflow"
+  "### Complete Workflow Example": "Exemple Complet de Workflow",
+  "**Automatically translate your markdown documentation using AI** - powered by [G.B50AE2366F51DA1D9F14": "**Traduisez automatiquement votre documentation en markdown à l'aide de l'IA** - alimentée par [GitHub Actions](https://github.com/actions) et [GitHub Models](https://github.com/models) avec un support intégré pour [Astro Starlight](https://starlight.astro.build/) !",
+  "Action Continuous Translation Showcase": "Présentation d'Action Continuous Translation",
+  "Discover sites that use Action Continuous Translation!": "Découvrez des sites qui utilisent Action Continuous Translation !",
+  "Add your own!": "Ajoutez le vôtre !",
+  "Have you built a website that uses Action Continuous Translation?\n[Open a PR](ht.6BC3F4C3E5DDF7839413": "Avez-vous créé un site web qui utilise Action Continuous Translation ?\n[Ouvrez une PR](https://github.com/pelikhan/action-continuous-translation/blob/main/CONTRIBUTING.md#showcase) pour ajouter un lien vers cette page !",
+  "## Sites": "Sites",
+  "Action Continuous Translation is already being used in production. These are som.E67D1D0CEE4FFBAE10AA": "Action Continuous Translation est déjà utilisé en production. Voici quelques-uns des sites sur le web :",
+  "See all the [public project repos using Action Continuous Translation on GitHub].F4E3A2872F1F5A6088A6": "Consultez tous les [dépôts de projets publics utilisant Action Continuous Translation sur GitHub](https://github.com/pelikhan/action-continuous-translation/network/dependents)."
 }

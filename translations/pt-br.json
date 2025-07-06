@@ -223,5 +223,13 @@
   "Run local test suite": "Executar suíte de testes local",
   "Quality assurance": "Garantia de qualidade",
   "**Made with ❤️ using [GenAIScript](https://microsoft.github.io/genaiscript/)**": "**Feito com ❤️ usando [GenAIScript](https://microsoft.github.io/genaiscript/)**",
-  "[📖 Documentation](https://pelikhan.github.io/action-continuous-translation/) • .D4C6E84907F29A2644E8": "[📖 Documentação](https://pelikhan.github.io/action-continuous-translation/) • [🐛 Problemas](https://github.com/pelikhan/action-continuous-translation/issues) • [💡 Discussões](https://github.com/pelikhan/action-continuous-translation/discussions)"
+  "[📖 Documentation](https://pelikhan.github.io/action-continuous-translation/) • .D4C6E84907F29A2644E8": "[📖 Documentação](https://pelikhan.github.io/action-continuous-translation/) • [🐛 Problemas](https://github.com/pelikhan/action-continuous-translation/issues) • [💡 Discussões](https://github.com/pelikhan/action-continuous-translation/discussions)",
+  "**Automatically translate your markdown documentation using AI** - powered by [G.B50AE2366F51DA1D9F14": "Traduza automaticamente sua documentação markdown usando IA - alimentado por [GitHub Actions](https://github.com/actions) e [GitHub Models](https://github.com/models) com suporte integrado para [Astro Starlight](https://starlight.astro.build/)!",
+  "Action Continuous Translation Showcase": "Vitrine de Tradução Contínua em Ação",
+  "Discover sites that use Action Continuous Translation!": "Descubra sites que utilizam o Action Continuous Translation!",
+  "Add your own!": "Adicione o seu!",
+  "Have you built a website that uses Action Continuous Translation?\n[Open a PR](ht.6BC3F4C3E5DDF7839413": "Você construiu um site que utiliza o Action Continuous Translation?\n[Abra um PR](https://github.com/pelikhan/action-continuous-translation/blob/main/CONTRIBUTING.md#showcase) adicionando um link para esta página!",
+  "## Sites": "Sites",
+  "Action Continuous Translation is already being used in production. These are som.E67D1D0CEE4FFBAE10AA": "O Action Continuous Translation já está sendo usado em produção. Esses são alguns dos sites ao redor da web:",
+  "See all the [public project repos using Action Continuous Translation on GitHub].F4E3A2872F1F5A6088A6": "Veja todos os [repositórios de projetos públicos que utilizam o Action Continuous Translation no GitHub](https://github.com/pelikhan/action-continuous-translation/network/dependents)."
 }

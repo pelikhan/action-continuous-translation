@@ -3,6 +3,7 @@ title: Astro Starlight
 description: Configurer votre site de documentation Starlight
 sidebar:
   order: 9
+
 ---
 
 import { Steps } from "@astrojs/starlight/components";
@@ -27,7 +28,6 @@ Elle nécessite une configuration spécifique de Starlight comme détaillé ci-d
         starlight_base: astro_base_option
       ```
     </li>
-
   </ol>
 </Steps>
 
@@ -35,20 +35,20 @@ Elle nécessite une configuration spécifique de Starlight comme détaillé ci-d
 
 En plus du Markdown/MDX, nous prenons en charge certaines des métadonnées frontmatter que Starlight prend en charge.
 
-- `title` : Le titre de la page.
-- `description` : La description de la page.
-- `hero.tagline` : Le slogan de la section héros.
-- `hero.actions.action.text` : Le texte du bouton d'action dans la section héros.
+* `title` : Le titre de la page.
+* `description` : La description de la page.
+* `hero.tagline` : Le slogan de la section héros.
+* `hero.actions.action.text` : Le texte du bouton d'action dans la section héros.
 
 Nous prenons également en charge les entrées frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/)
 
-- `excerpt` : Un court extrait de la page.
+* `excerpt` : Un court extrait de la page.
 
 ## Avis sur le contenu généré par l'IA
 
 Vous pouvez informer vos utilisateurs que la traduction a été générée par une IA en ajoutant un avis dans le titre. À ce jour, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis, il est donc nécessaire de remplacer quelques composants.
 
-- [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
+* [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -63,7 +63,7 @@ Vous pouvez informer vos utilisateurs que la traduction a été générée par u
   });
   ```
 
-- Ajoutez les composants dans votre répertoire `src/components` [à partir de `docs/src/components` dans ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+* Ajoutez les composants dans votre répertoire `src/components` [à partir de `docs/src/components` dans ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 N'hésitez pas à modifier la logique dans `AIGeneratedNotice.astro` pour répondre à vos besoins.
 
