@@ -14,6 +14,7 @@ export default defineConfig({
       plugins: [
         lunaria({
           sync: true,
+          route: "/dashboard",
         }),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
@@ -68,7 +69,7 @@ export default defineConfig({
         },
         {
           label: "Translation Dashboard",
-          link: "https://pelikhan.github.io/action-continous-translation/lunaria"
+          link: "/dashboard"
         }
       ],
       components: {
