@@ -1,2 +1,4 @@
 README.*.md merge=theirs
 translations/*.json merge=theirs
+translations/log.json merge=theirs
+translations/log.jsonl merge=theirs
