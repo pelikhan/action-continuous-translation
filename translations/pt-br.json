@@ -231,5 +231,13 @@
   "Have you built a website that uses Action Continuous Translation?\n[Open a PR](ht.6BC3F4C3E5DDF7839413": "Você construiu um site que utiliza o Action Continuous Translation?\n[Abra um PR](https://github.com/pelikhan/action-continuous-translation/blob/main/CONTRIBUTING.md#showcase) adicionando um link para esta página!",
   "## Sites": "Sites",
   "Action Continuous Translation is already being used in production. These are som.E67D1D0CEE4FFBAE10AA": "O Action Continuous Translation já está sendo usado em produção. Esses são alguns dos sites ao redor da web:",
-  "See all the [public project repos using Action Continuous Translation on GitHub].F4E3A2872F1F5A6088A6": "Veja todos os [repositórios de projetos públicos que utilizam o Action Continuous Translation no GitHub](https://github.com/pelikhan/action-continuous-translation/network/dependents)."
+  "See all the [public project repos using Action Continuous Translation on GitHub].F4E3A2872F1F5A6088A6": "Veja todos os [repositórios de projetos públicos que utilizam o Action Continuous Translation no GitHub](https://github.com/pelikhan/action-continuous-translation/network/dependents).",
+  "## Choosing models": "Escolhendo modelos",
+  "You can provide a full mapping of language to model id to control which model is.7A7B1264D6B7BB1504FA": "Você pode fornecer um mapeamento completo de idioma para ID do modelo para controlar qual modelo é usado para cada idioma através do parâmetro `model_alias`. Para cada idioma, você pode especificar um modelo de `translation` e de `validation` como um objeto YAML.",
+  "## Configuring secrets": "Configurando credenciais",
+  "The LLM provider secrets need to be explicitely passed as parameters to the acti.2F9B8CCA35055E5E1EF1": "As credenciais do provedor de LLM precisam ser explicitamente passadas como parâmetros para a ação.",
+  "**Type**: `string` (secret recommended)\\\n**Recommended**: `${{ secrets.GITHUB_TO.9BA5C0E148CCC3E94861": "**Tipo**: `string` (secreto recomendado)\\\n**Recomendado**: `${{ secrets.GITHUB_TOKEN }}`",
+  "The frontmatter configuration data is defined `types.ts`.\nIt can be added to a d.8788BD1CA4105086EAF4": "Os dados de configuração do frontmatter são definidos no arquivo `types.ts`.\nEles podem ser adicionados ao frontmatter de uma documentação como um objeto `translator`.",
+  "## Types": "Tipos",
+  "Configuration Types": "Tipos de Configuração"
 }

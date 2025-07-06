@@ -289,5 +289,13 @@
   "Have you built a website that uses Action Continuous Translation?\n[Open a PR](ht.6BC3F4C3E5DDF7839413": "هل قمت بإنشاء موقع يستخدم ترجمة العمل المستمرة؟ \n[افتح طلب دمج](https://github.com/pelikhan/action-continuous-translation/blob/main/CONTRIBUTING.md#showcase) وأضف رابطًا لهذه الصفحة!",
   "## Sites": "المواقع",
   "Action Continuous Translation is already being used in production. These are som.E67D1D0CEE4FFBAE10AA": "يتم بالفعل استخدام ترجمة العمل المستمرة في بيئات الإنتاج. هذه بعض المواقع على الإنترنت:",
-  "See all the [public project repos using Action Continuous Translation on GitHub].F4E3A2872F1F5A6088A6": "شاهد جميع [مستودعات المشاريع العامة التي تستخدم ترجمة العمل المستمرة على GitHub](https://github.com/pelikhan/action-continuous-translation/network/dependents)."
+  "See all the [public project repos using Action Continuous Translation on GitHub].F4E3A2872F1F5A6088A6": "شاهد جميع [مستودعات المشاريع العامة التي تستخدم ترجمة العمل المستمرة على GitHub](https://github.com/pelikhan/action-continuous-translation/network/dependents).",
+  "## Choosing models": "اختيار النماذج",
+  "You can provide a full mapping of language to model id to control which model is.7A7B1264D6B7BB1504FA": "يمكنك تقديم مخطط كامل يربط اللغة بمعرف النموذج للتحكم في النموذج المستخدم لكل لغة\nمن خلال معلمة `model_alias`.\nلكل لغة، يمكنك تحديد نموذجين، واحد للـ `translation` وآخر للـ `validation` ككائن YAML.",
+  "## Configuring secrets": "تهيئة الأسرار",
+  "The LLM provider secrets need to be explicitely passed as parameters to the acti.2F9B8CCA35055E5E1EF1": "يجب تمرير أسرار مزود LLM بشكل صريح كمعلمات للإجراء.",
+  "**Type**: `string` (secret recommended)\\\n**Recommended**: `${{ secrets.GITHUB_TO.9BA5C0E148CCC3E94861": "**النوع**: `string` (يُوصى بأن يكون سريًا)\\\n**موصى به**: `${{ secrets.GITHUB_TOKEN }}`",
+  "The frontmatter configuration data is defined `types.ts`.\nIt can be added to a d.8788BD1CA4105086EAF4": "يتم تعريف بيانات تكوين frontmatter في `types.ts`.\nيمكن إضافتها إلى تكوين frontmatter ككائن `translator`.",
+  "## Types": "أنواع",
+  "Configuration Types": "أنواع التكوين"
 }

@@ -8,6 +8,21 @@ sidebar:
 
 A ação do GitHub `pelikhan/action-continuous-translation` suporta muitos provedores de LLM diferentes através do [GenAIScript](https://microsoft.github.io/genaiscript/configuration/).
 
+## Escolhendo modelos
+
+Você pode fornecer um mapeamento completo de idioma para ID do modelo para controlar qual modelo é usado para cada idioma através do parâmetro `model_alias`. Para cada idioma, você pode especificar um modelo de `translation` e de `validation` como um objeto YAML.
+
+```yaml
+with:
+  model_alias: |
+    translation_fr: github:openai/gpt-4.1
+    validation_es: openai:gpt-4o
+```
+
+## Configurando credenciais
+
+As credenciais do provedor de LLM precisam ser explicitamente passadas como parâmetros para a ação.
+
 ```yaml
 with:
   github_token: ${{ secrets.GITHUB_TOKEN }}
