@@ -14,10 +14,11 @@
 - 🌐 **Multi-language Support** - Translate to multiple languages simultaneously
 - 🔍 **Quality Validation** - Automatic validation of translation quality
 - ⚡ **GitHub Actions Native** - Seamless integration with your CI/CD pipeline
+- 🤖 **AI-Powered** - Leverage GitHub Models for seamless high-quality translations
 
 ## 📚 Resources
 
-- 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Complete setup guide and API reference
+- 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Complete setup guide and API reference (translated by this action too)
 - ✍️ [**Blog Post**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Deep dive into the technology
 - 🌐 **Translations**: [Français](./README.fr.md) | [Español](./README.es.md) | [العربية](./README.ar.md)
 
@@ -36,54 +37,65 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 
 ### 📝 Basic Settings
 
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `lang` | Target language(s) for translation (ISO codes, comma-separated) | `fr` |
-| `source` | Source language (ISO code) | `en` |
-| `files` | Files to translate (semicolon-separated) | `README.md` |
-| `instructions` | Custom translation instructions | - |
-| `instructions_file` | Path to file with translation instructions | - |
+| Parameter           | Description                                                     | Default     |
+| ------------------- | --------------------------------------------------------------- | ----------- |
+| `lang`              | Target language(s) for translation (ISO codes, comma-separated) | `fr`        |
+| `source`            | Source language (ISO code)                                      | `en`        |
+| `files`             | Files to translate (semicolon-separated)                        | `README.md` |
+| `instructions`      | Custom translation instructions                                 | -           |
+| `instructions_file` | Path to file with translation instructions                      | -           |
 
 ### 🌟 Astro Starlight Integration
 
-| Parameter | Description | Required |
-|-----------|-------------|----------|
-| `starlight_dir` | Root folder of Astro Starlight documentation | Only for Starlight |
-| `starlight_base` | Base alias for Starlight documentation | Optional |
+| Parameter        | Description                                  | Required           |
+| ---------------- | -------------------------------------------- | ------------------ |
+| `starlight_dir`  | Root folder of Astro Starlight documentation | Only for Starlight |
+| `starlight_base` | Base alias for Starlight documentation       | Optional           |
 
 ### 🔧 Diagnostics & Debugging
 
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `force` | Force translation even if already translated | `false` |
-| `debug` | Enable debug logging ([learn more](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false` |
+| Parameter | Description                                                                                             | Default |
+| --------- | ------------------------------------------------------------------------------------------------------- | ------- |
+| `force`   | Force translation even if already translated                                                            | `false` |
+| `debug`   | Enable debug logging ([learn more](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false` |
 
 ### 🤖 AI Provider Configuration
 
 #### GitHub Models (Recommended)
-| Parameter | Description | Default |
-|-----------|-------------|---------|
+
+| Parameter      | Description                                                                                                                                              | Default                       |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | `github_token` | GitHub token with `models: read` permission ([setup guide](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
 
 #### OpenAI
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `openai_api_key` | OpenAI API key | `${{ secrets.OPENAI_API_KEY }}` |
-| `openai_api_base` | OpenAI API base URL | `${{ env.OPENAI_API_BASE }}` |
+
+| Parameter         | Description         | Default                         |
+| ----------------- | ------------------- | ------------------------------- |
+| `openai_api_key`  | OpenAI API key      | `${{ secrets.OPENAI_API_KEY }}` |
+| `openai_api_base` | OpenAI API base URL | `${{ env.OPENAI_API_BASE }}`    |
 
 #### Azure OpenAI
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `azure_openai_api_endpoint` | Azure OpenAI endpoint | `${{ env.AZURE_OPENAI_API_ENDPOINT }}` |
-| `azure_openai_api_key` | Azure OpenAI API key (not needed for Microsoft Entra ID) | `${{ secrets.AZURE_OPENAI_API_KEY }}` |
-| `azure_openai_subscription_id` | Subscription ID for deployment listing (Entra ID only) | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
-| `azure_openai_api_version` | Azure OpenAI API version | `${{ env.AZURE_OPENAI_API_VERSION }}` |
-| `azure_openai_api_credentials` | API credentials type | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
+
+| Parameter                      | Description                                              | Default                                   |
+| ------------------------------ | -------------------------------------------------------- | ----------------------------------------- |
+| `azure_openai_api_endpoint`    | Azure OpenAI endpoint                                    | `${{ env.AZURE_OPENAI_API_ENDPOINT }}`    |
+| `azure_openai_api_key`         | Azure OpenAI API key (not needed for Microsoft Entra ID) | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
+| `azure_openai_subscription_id` | Subscription ID for deployment listing (Entra ID only)   | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
+| `azure_openai_api_version`     | Azure OpenAI API version                                 | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
+| `azure_openai_api_credentials` | API credentials type                                     | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
+
+#### Model Alias
+
+| Parameter     | Description                                  | Default |
+| ------------- | -------------------------------------------- | ------- |
+| `model_alias` | A YAML-like string of `alias: modelid` pairs |         |
+
+See the [Models](/action-continuous-translation/models/) documentation for more details.
 
 ## 📤 Outputs
 
-| Output | Description |
-|--------|-------------|
+| Output | Description                           |
+| ------ | ------------------------------------- |
 | `text` | The generated translation text output |
 
 ## 🚀 Quick Start
@@ -141,40 +153,8 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## 🛠️ Development & Contributing
-
-### Project Architecture
-
-This action is automatically generated by GenAIScript from script metadata, ensuring consistency and reliability. We recommend updating the script metadata rather than editing action files directly.
-
-**Auto-generated components:**
-- ⚙️ Action inputs → inferred from script parameters
-- 📤 Action outputs → inferred from script output schema  
-- 📝 Action description → script description
-- 📖 README description → script description
-- 🎨 Action branding → script branding
-
-### 🧞 Development Commands
-
-All commands are run from the project root:
-
-| Command | Action | Use Case |
-| :------ | :----- | :------- |
-| `npm install` | Install dependencies | Initial setup |
-| `npm run dev` | Test translation of `README.md` → French | Quick testing |
-| `npm run dev:astro` | Translate entire Astro documentation | Full docs translation |
-| `npm run typecheck` | Validate TypeScript files | Code quality |
-| `npm run lint` | Format code with Prettier | Code style |
-| `npm run configure` | Regenerate `action.yml` | After parameter changes |
-| `npm run upgrade` | Update dependencies | Maintenance |
-| `npm run test:genai` | Run local test suite | Quality assurance |
-
----
-
 <div align="center">
 
 **Made with ❤️ using [GenAIScript](https://microsoft.github.io/genaiscript/)**
-
-[📖 Documentation](https://pelikhan.github.io/action-continuous-translation/) • [🐛 Issues](https://github.com/pelikhan/action-continuous-translation/issues) • [💡 Discussions](https://github.com/pelikhan/action-continuous-translation/discussions)
 
 </div>
