@@ -78,3 +78,4 @@ ${content}
 
 await git.exec(`add .`);
 await git.exec(`commit -m "[chore] add changeset for current changes"`);
+await git.exec(`push`);
