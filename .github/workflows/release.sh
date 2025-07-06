@@ -45,8 +45,18 @@ git add action.yml
 git commit -m "[chore] upgrade image in action.yml"
 git push origin HEAD
 
-# Step 4: Create GitHub release
-gh release create "$NEW_VERSION" --title "$NEW_VERSION" --notes "Patch release $NEW_VERSION"
+# Step 4.1: Extract changelog section for current version
+CHANGELOG_CONTENT=$(awk "/^##?\\s+$NEW_VERSION\\b/{flag=1; next} /^##?\\s+/{flag=0} flag" CHANGELOG.md)
+
+if [ -z "$CHANGELOG_CONTENT" ]; then
+  echo "❌ Could not find changelog entry for version $NEW_VERSION"
+  exit 1
+fi
+
+# Step 4.2: Create GitHub release with extracted changelog notes
+gh release create "$NEW_VERSION" \
+  --title "$NEW_VERSION" \
+  --notes "$CHANGELOG_CONTENT"
 
 # Step 5: update major tag if any
 git tag -f $MAJOR $NEW_VERSION
