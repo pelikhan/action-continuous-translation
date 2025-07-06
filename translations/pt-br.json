@@ -266,5 +266,6 @@
   "This website is translated using AI, check out the other languages via the dropd.7A9230551F177776812A": "Este site é traduzido usando IA, confira os outros idiomas através do menu suspenso no canto superior direito.\nVocê também pode conferir o **painel de tradução** para ver o progresso do GenAIScript.",
   "## Lunaria Translation Dashboard": "Painel de Tradução Lunaria",
   "You can use the [Lunaria Translation Dashboard](https://lunaria.dev/integrations.F453D787A04B27AD456E": "Você pode usar o [Painel de Tradução Lunaria](https://lunaria.dev/integrations/starlight/) para gerar\num painel de status de tradução para o seu site Starlight.",
-  "You can try the dashboard by naivagating to the **Translation Dashboard** link i.C659A1EF88B06BB19459": "Você pode experimentar o painel navegando até o link **Painel de Tradução** na barra lateral desta página."
+  "You can try the dashboard by naivagating to the **Translation Dashboard** link i.C659A1EF88B06BB19459": "Você pode experimentar o painel navegando até o link **Painel de Tradução** na barra lateral desta página.",
+  "📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/.2AA2D9DD6A55AD6DFFF7": "📖 [**Documentação**](https://pelikhan.github.io/action-continuous-translation/) - Guia completo de configuração e referência de API (traduzido por esta ação também - veja [painel de traduções](https://pelikhan.github.io/action-continuous-translation/dashboard/))"
 }
