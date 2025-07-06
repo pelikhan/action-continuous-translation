@@ -54,6 +54,7 @@ git push origin HEAD
 
 echo "Create a tag for the new version"
 git tag -a "$NEW_VERSION" -m "Release $NEW_VERSION"
+git push --tags
 
 echo "Create GitHub release with extracted changelog notes"
 gh release create "$NEW_VERSION" --title "$NEW_VERSION" --notes "$CHANGELOG_CONTENT"
