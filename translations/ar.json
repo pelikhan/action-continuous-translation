@@ -317,5 +317,8 @@
   "#### Model Alias": "الاسم المستعار للنموذج",
   "A YAML-like string of": "سلسلة تشبه YAML ",
   "pairs": "أزواج",
-  "See the [Models](/action-continuous-translation/models/) documentation for more .82C2260EAB1D798EB76E": "راجع وثائق [النماذج](/action-continuous-translation/models/) لمزيد من التفاصيل."
+  "See the [Models](/action-continuous-translation/models/) documentation for more .82C2260EAB1D798EB76E": "راجع وثائق [النماذج](/action-continuous-translation/models/) لمزيد من التفاصيل.",
+  "📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/.F4B3346A1E02256C8819": "📖 [**الوثائق**](https://pelikhan.github.io/action-continuous-translation/) - دليل الإعداد الكامل ومرجع واجهة برمجة التطبيقات (تمت الترجمة أيضًا بواسطة هذا الإجراء - انظر [لوحة الترجمة](https://pelikhan.github.io/action-continuous-translation/lunaria)).",
+  "🌐 **Translations**: [English](./README.md) | [Français](./README.fr.md) | [Espa.FEDDCFDC2E6A4C06888F": "🌐 **الترجمات**: [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)",
+  "This website is translated using AI, check out the other languages via the dropd.CD60C3CA5C8C7EC78DD3": "يتم ترجمة هذا الموقع باستخدام الذكاء الاصطناعي، تحقق من اللغات الأخرى عبر القائمة المنسدلة في الزاوية اليمنى العليا.\nيمكنك أيضًا التحقق من [لوحة معلومات الترجمة](/action-continuous-translation/lunaria/) لمعرفة تقدم GenAIScript."
 }
