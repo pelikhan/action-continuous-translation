@@ -1,5 +1,5 @@
 ---
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
 interface LogEntry {
@@ -17,7 +17,20 @@ let error: string | null = null;
 
 try {
   // Read the log file from the repository root
-  const logPath = join(process.cwd(), '..', 'translations', 'log.json');
+  // In dev mode, the cwd is the docs directory, in build mode it might be different
+  let logPath = join(process.cwd(), '..', 'translations', 'log.json');
+  
+  // Check if we can access the file from the parent directory
+  if (!existsSync(logPath)) {
+    // Try from the current directory (for different build contexts)
+    logPath = join(process.cwd(), 'translations', 'log.json');
+  }
+  
+  if (!existsSync(logPath)) {
+    // Try another common path structure 
+    logPath = join(process.cwd(), '..', '..', 'translations', 'log.json');
+  }
+  
   const logContent = readFileSync(logPath, 'utf-8');
   
   // Parse JSONL format (one JSON object per line)
@@ -26,7 +39,8 @@ try {
     .filter(line => line.trim())
     .map(line => JSON.parse(line));
 } catch (e) {
-  error = e instanceof Error ? e.message : 'Unknown error reading log file';
+  const cwd = process.cwd();
+  error = `Error reading log file. Current working directory: ${cwd}. Error: ${e instanceof Error ? e.message : 'Unknown error'}`;
 }
 
 // Calculate aggregate statistics
