@@ -66,11 +66,10 @@ You can [develop locally](#developing-locally) or use an online coding developme
 
 1. **Create a new codespace** via https://codespaces.new/pelikhan/action-continuous-translation
 
-2. If running the docs site, pass the `--host` flag to avoid “502 Bad Gateway” errors:
+2. Run the dev web site
 
    ```sh
-   cd docs
-   npm run dev --host
+   npm run dev:docs
    ```
 
 The dev container used for GitHub Codespaces can also be used with [other supporting tools](https://containers.dev/supporting), including VS Code.
