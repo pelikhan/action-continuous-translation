@@ -297,5 +297,12 @@
   "**Type**: `string` (secret recommended)\\\n**Recommended**: `${{ secrets.GITHUB_TO.9BA5C0E148CCC3E94861": "**Type** : `string` (secret recommandé)\\\n**Recommandé** : `${{ secrets.GITHUB_TOKEN }}`",
   "The frontmatter configuration data is defined `types.ts`.\nIt can be added to a d.8788BD1CA4105086EAF4": "Les données de configuration frontmatter sont définies dans `types.ts`.\nElles peuvent être ajoutées à un frontmatter de documentation en tant qu'objet `translator`.",
   "## Types": "Types",
-  "Configuration Types": "Types de configuration"
+  "Configuration Types": "Types de configuration",
+  "Target language(s) for translation (ISO codes, comma-separated)": "Langue(s) cible(s) pour la traduction (codes ISO, séparés par des virgules)",
+  "Source language (ISO code)": "Langue source (code ISO)",
+  "Files to translate (semicolon-separated)": "Fichiers à traduire (séparés par des points-virgules)",
+  "Enable debug logging (": "Activer les journaux de débogage",
+  "permission (": "autorisation",
+  "Azure OpenAI API key (not needed for Microsoft Entra ID)": "Clé API Azure OpenAI (non nécessaire pour l'ID Microsoft Entra)",
+  "Subscription ID for deployment listing (Entra ID only)": "ID d'abonnement pour la liste des déploiements (ID Entra uniquement)"
 }

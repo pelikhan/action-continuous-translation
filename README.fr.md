@@ -1,6 +1,6 @@
 # 🌍 Traduction Continue
 
-> **Traduisez automatiquement votre documentation Markdown à l'aide de l'IA** - propulsé par [GitHub Models](https://github.com/models) avec support intégré pour [Astro Starlight](https://starlight.astro.build/) !
+> **Traduisez automatiquement votre documentation en markdown à l'aide de l'IA** - alimentée par [GitHub Actions](https://github.com/actions) et [GitHub Models](https://github.com/models) avec un support intégré pour [Astro Starlight](https://starlight.astro.build/) !
 
 [![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)](https://github.com/marketplace/actions/continuous-translation)
 [![Documentation](https://img.shields.io/badge/📖-Documentation-green)](https://pelikhan.github.io/action-continuous-translation/)
@@ -36,13 +36,13 @@ Cette action s'appuie sur [GenAIScript](https://microsoft.github.io/genaiscript/
 
 ### 📝 Paramètres de Base
 
-| Paramètre           | Description                                                     | Par Défaut  |
-| ------------------- | --------------------------------------------------------------- | ----------- |
-| `lang`              | Target language(s) for translation (ISO codes, comma-separated) | `fr`        |
-| `source`            | Source language (ISO code)                                      | `en`        |
-| `files`             | Files to translate (semicolon-separated)                        | `README.md` |
-| `instructions`      | Instructions de traduction personnalisées                       | -           |
-| `instructions_file` | Chemin vers le fichier contenant des instructions de traduction | -           |
+| Paramètre           | Description                                                                 | Par Défaut  |
+| ------------------- | --------------------------------------------------------------------------- | ----------- |
+| `lang`              | Langue(s) cible(s) pour la traduction (codes ISO, séparés par des virgules) | `fr`        |
+| `source`            | Langue source (code ISO)                                                    | `en`        |
+| `files`             | Fichiers à traduire (séparés par des points-virgules)                       | `README.md` |
+| `instructions`      | Instructions de traduction personnalisées                                   | -           |
+| `instructions_file` | Chemin vers le fichier contenant des instructions de traduction             | -           |
 
 ### 🌟 Intégration Astro Starlight
 
@@ -53,18 +53,18 @@ Cette action s'appuie sur [GenAIScript](https://microsoft.github.io/genaiscript/
 
 ### 🔧 Diagnostics & Débogage
 
-| Paramètre | Description                                                                                                 | Par Défaut |
-| --------- | ----------------------------------------------------------------------------------------------------------- | ---------- |
-| `force`   | Force la traduction même si elle a déjà été effectuée                                                       | `false`    |
-| `debug`   | Enable debug logging ([en savoir plus](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`    |
+| Paramètre | Description                                                                                                           | Par Défaut |
+| --------- | --------------------------------------------------------------------------------------------------------------------- | ---------- |
+| `force`   | Force la traduction même si elle a déjà été effectuée                                                                 | `false`    |
+| `debug`   | Activer les journaux de débogage[en savoir plus](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`    |
 
 ### 🤖 Configuration du Fournisseur d'IA
 
 #### GitHub Models (Recommandé)
 
-| Paramètre      | Description                                                                                                                                                       | Par Défaut                    |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `github_token` | Jeton GitHub avec `models: read` permission ([guide d'installation](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
+| Paramètre      | Description                                                                                                                                                      | Par Défaut                    |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `github_token` | Jeton GitHub avec `models: read`autorisation[guide d'installation](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
 
 #### OpenAI
 
@@ -75,13 +75,13 @@ Cette action s'appuie sur [GenAIScript](https://microsoft.github.io/genaiscript/
 
 #### Azure OpenAI
 
-| Paramètre                      | Description                                              | Par Défaut                                |
-| ------------------------------ | -------------------------------------------------------- | ----------------------------------------- |
-| `azure_openai_api_endpoint`    | Point de terminaison Azure OpenAI                        | `${{ env.AZURE_OPENAI_API_ENDPOINT }}`    |
-| `azure_openai_api_key`         | Azure OpenAI API key (not needed for Microsoft Entra ID) | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
-| `azure_openai_subscription_id` | Subscription ID for deployment listing (Entra ID only)   | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
-| `azure_openai_api_version`     | Version de l'API Azure OpenAI                            | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
-| `azure_openai_api_credentials` | Type des identifiants API                                | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
+| Paramètre                      | Description                                                          | Par Défaut                                |
+| ------------------------------ | -------------------------------------------------------------------- | ----------------------------------------- |
+| `azure_openai_api_endpoint`    | Point de terminaison Azure OpenAI                                    | `${{ env.AZURE_OPENAI_API_ENDPOINT }}`    |
+| `azure_openai_api_key`         | Clé API Azure OpenAI (non nécessaire pour l'ID Microsoft Entra)      | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
+| `azure_openai_subscription_id` | ID d'abonnement pour la liste des déploiements (ID Entra uniquement) | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
+| `azure_openai_api_version`     | Version de l'API Azure OpenAI                                        | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
+| `azure_openai_api_credentials` | Type des identifiants API                                            | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
 
 ## 📤 Sorties
 
@@ -102,7 +102,7 @@ with:
   lang: fr,es
 ```
 
-### Complete Workflow Example
+### Exemple Complet de Workflow
 
 Enregistrez ce fichier dans le répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :
 

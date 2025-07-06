@@ -326,7 +326,7 @@ export default async function main() {
             // mark untranslated nodes with a unique identifier
             if (node.type === "text") {
               if (
-                !/^\s*[.,:;<>\]\[{}\(\)…]+\s*$/.test(node.value) &&
+                !/^\s*[-_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(node.value) &&
                 !isUri(node.value)
               ) {
                 dbga(`text node: %s`, nhash);

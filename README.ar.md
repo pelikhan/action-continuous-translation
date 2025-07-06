@@ -1,6 +1,6 @@
 # 🌍 الترجمة المستمرة
 
-> **الترجمة التلقائية لوثائق Markdown الخاصة بك باستخدام الذكاء الاصطناعي** - مدعومة بواسطة [GitHub Models](https://github.com/models) مع دعم مدمج لـ [Astro Starlight](https://starlight.astro.build/) !
+> **قم بترجمة مستندات Markdown الخاصة بك تلقائيًا باستخدام الذكاء الاصطناعي** - مدعوم من [GitHub Actions](https://github.com/actions) و [GitHub Models](https://github.com/models) مع دعم مدمج لـ [Astro Starlight](https://starlight.astro.build/)!
 
 [![إجراء GitHub](https://img.shields.io/badge/GitHub-Action-blue?logo=github)](https://github.com/marketplace/actions/continuous-translation)
 [![الوثائق](https://img.shields.io/badge/📖-Documentation-green)](https://pelikhan.github.io/action-continuous-translation/)
@@ -36,13 +36,13 @@
 
 ### 📝 الإعدادات الأساسية
 
-| المُعامل            | الوصف                                                           | القيمة الافتراضية |
-| ------------------- | --------------------------------------------------------------- | ----------------- |
-| `lang`              | Target language(s) for translation (ISO codes, comma-separated) | `fr`              |
-| `source`            | Source language (ISO code)                                      | `en`              |
-| `files`             | Files to translate (semicolon-separated)                        | `README.md`       |
-| `instructions`      | تعليمات ترجمة مخصصة                                             | -                 |
-| `instructions_file` | مسار الملف الذي يحتوي على تعليمات الترجمة                       | -                 |
+| المُعامل            | الوصف                                                         | القيمة الافتراضية |
+| ------------------- | ------------------------------------------------------------- | ----------------- |
+| `lang`              | اللغة (أو اللغات) المستهدفة للترجمة (أكواد ISO مفصولة بفاصلة) | `fr`              |
+| `source`            | اللغة المصدر (كود ISO)                                        | `en`              |
+| `files`             | الملفات التي سيتم ترجمتها (مفصولة بفاصلة منقوطة)              | `README.md`       |
+| `instructions`      | تعليمات ترجمة مخصصة                                           | -                 |
+| `instructions_file` | مسار الملف الذي يحتوي على تعليمات الترجمة                     | -                 |
 
 ### 🌟 تكامل Astro Starlight
 
@@ -53,18 +53,18 @@
 
 ### 🔧 التشخيص واستكشاف الأخطاء
 
-| المُعامل | الوصف                                                                                                        | القيمة الافتراضية |
-| -------- | ------------------------------------------------------------------------------------------------------------ | ----------------- |
-| `force`  | إجبار الترجمة حتى إذا كانت مترجمة بالفعل                                                                     | `false`           |
-| `debug`  | Enable debug logging ([تعرف على المزيد](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
+| المُعامل | الوصف                                                                                                           | القيمة الافتراضية |
+| -------- | --------------------------------------------------------------------------------------------------------------- | ----------------- |
+| `force`  | إجبار الترجمة حتى إذا كانت مترجمة بالفعل                                                                        | `false`           |
+| `debug`  | تمكين تسجيل تصحيح الأخطاء[تعرف على المزيد](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
 
 ### 🤖 إعداد مقدم الخدمة الخاص بالذكاء الاصطناعي
 
 #### نماذج GitHub (موصى بها)
 
-| المُعامل       | الوصف                                                                                                                                                                      | القيمة الافتراضية             |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `github_token` | رمز GitHub مع إذن \`models: read\` `models: read` permission ([دليل الإعداد](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
+| المُعامل       | الوصف                                                                                                                                                                                          | القيمة الافتراضية             |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `github_token` | رمز GitHub مع إذن \`models: read\` `models: read`إذن (models: read) (دليل الإعداد)[دليل الإعداد](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
 
 #### OpenAI
 
@@ -78,8 +78,8 @@
 | المُعامل                       | الوصف                                                    | القيمة الافتراضية                         |
 | ------------------------------ | -------------------------------------------------------- | ----------------------------------------- |
 | `azure_openai_api_endpoint`    | نقطة النهاية لـ Azure OpenAI                             | `${{ env.AZURE_OPENAI_API_ENDPOINT }}`    |
-| `azure_openai_api_key`         | Azure OpenAI API key (not needed for Microsoft Entra ID) | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
-| `azure_openai_subscription_id` | Subscription ID for deployment listing (Entra ID only)   | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
+| `azure_openai_api_key`         | مفتاح Azure OpenAI API (غير مطلوب مع Microsoft Entra ID) | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
+| `azure_openai_subscription_id` | معرّف الاشتراك لقائمة النشر (خاص بـ Entra ID فقط)        | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
 | `azure_openai_api_version`     | إصدار واجهة برمجة التطبيقات Azure OpenAI                 | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
 | `azure_openai_api_credentials` | نوع بيانات الاعتماد الخاصة بـ API                        | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
 
