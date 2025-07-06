@@ -15,7 +15,10 @@
     "mdast-util-mdxjs-esm": "^2.0.1"
   },
   "scripts": {
+    "postinstall": "ruler apply",
     "upgrade": "npx -y npm-check-updates -u && npm install && npm run fix",
+    "ruler": "ruler",
+    "ruler:apply": "ruler apply",
     "lint": "npm run lint:genaisrc && npm run lint:docs",
     "lint:genaisrc": "npx --yes prettier --write genaisrc/",
     "lint:docs": "npx --yes prettier --write docs/src/content/",
@@ -32,5 +35,8 @@
     "dev:astro:root-no-base": "genaiscript run translator \"test/root-no-base/src/content/**/*\" -x \"lang=fr\" --no-run-trace -x starlightDir=test/root-no-base",
     "translate": "genaiscript run translator README.md \"docs/src/content/**/*\" -x \"lang=fr,es,pt-br,ar\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation",
     "start": "genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY"
+  },
+  "devDependencies": {
+    "@intellectronica/ruler": "^0.2.6"
   }
 }
