@@ -15,7 +15,7 @@
     "mdast-util-mdxjs-esm": "^2.0.1"
   },
   "scripts": {
-    "postinstall": "ruler apply",
+    "postinstall": "npm run fix && npm run ruler:apply",
     "upgrade": "npx -y npm-check-updates -u && npm install && npm run fix",
     "ruler": "ruler",
     "ruler:apply": "ruler apply",
