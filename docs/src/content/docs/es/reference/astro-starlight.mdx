@@ -31,7 +31,7 @@ Requiere una configuración específica de Starlight como se detalla a continuac
       Si también has configurado la [opción `base` de Astro](https://docs.astro.build/en/reference/configuration-reference/#base),
       necesitas proporcionar también la entrada `starlight_base`.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_base: my_repo_name"
+      ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs
@@ -103,3 +103,10 @@ export default defineConfig({
   ],
 });
 ```
+
+## Panel de Traducción de Lunaria
+
+Puedes usar el [Panel de Traducción de Lunaria](https://lunaria.dev/integrations/starlight/) para generar
+un panel de estado de traducción para tu sitio Starlight.
+
+Puedes probar el panel navegando al enlace **Panel de Traducción** en la barra lateral de esta página.
