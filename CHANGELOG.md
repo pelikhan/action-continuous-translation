@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.0.19
+
+### Patch Changes
+
+- [`d0a8fda`](https://github.com/pelikhan/action-continuous-translation/commit/d0a8fda1e9e08fd17d2a1df5ff68ef651a609699) Thanks [@pelikhan](https://github.com/pelikhan)! - One more attempt at fixing changesets
+
 ## 0.0.18
 
 ### Patch Changes
