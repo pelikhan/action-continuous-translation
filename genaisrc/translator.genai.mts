@@ -134,7 +134,7 @@ export default async function main() {
     instructionsFile?: string;
   };
 
-  output.heading(1, "Continous Translation");
+  output.heading(1, "Continuous Translation");
 
   const { force } = parameters;
   let { instructions } = parameters;
