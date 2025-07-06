@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.0.20
+
+### Patch Changes
+
+- [`111ac12`](https://github.com/pelikhan/action-continuous-translation/commit/111ac127ed5ccb525551dac832cfcd131bcdf719) Thanks [@pelikhan](https://github.com/pelikhan)! - missing tag
+
 ## 0.0.19
 
 ### Patch Changes
