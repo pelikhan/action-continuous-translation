@@ -34,10 +34,10 @@ with:
 
 <li>
 
-If you have set the [Astro `base` option as well](https://docs.astro.build/en/reference/configuration-reference/#base), 
+If you have set the [Astro `base` option as well](https://docs.astro.build/en/reference/configuration-reference/#base),
 you need to provide the `starlight_base` input as well.
 
-```yaml title=".github/workflows/ct.yml" "starlight_base: my_repo_name"
+```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
 uses: pelikhan/action-continuous-translation@v0
 with:
   starlight_dir: ./docs
@@ -112,3 +112,10 @@ export default defineConfig({
   ],
 });
 ```
+
+## Lunaria Translation Dashboard
+
+You can use the [Lunaria Translation Dashboard](https://lunaria.dev/integrations/starlight/) to generate
+a translation status dashboard for your Starlight site.
+
+You can try the dashboard by naivagating to the **Translation Dashboard** link in the sidebar of this page.
