@@ -2,6 +2,7 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
+import lunaria from '@lunariajs/starlight';
 import { title } from "./resources.json" assert { type: "json" };
 
 // https://astro.build/config
@@ -11,6 +12,9 @@ export default defineConfig({
   integrations: [
     starlight({
       plugins: [
+        lunaria({
+          sync: true,
+        }),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
           errorOnInconsistentLocale: true,
@@ -62,6 +66,10 @@ export default defineConfig({
           label: "Resources",
           autogenerate: { directory: "resources" },
         },
+        {
+          label: "Translation Status",
+          link: "/lunaria"
+        }
       ],
       components: {
         PageTitle: "./src/components/PageTitle.astro",

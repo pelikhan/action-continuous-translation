@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: pelikhan/action-add-reaction@v0
+        continue-on-error: true
   describe_pull_request:
     needs: add_reaction
     runs-on: ubuntu-latest

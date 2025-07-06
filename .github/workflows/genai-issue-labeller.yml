@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: pelikhan/action-add-reaction@v0
+        continue-on-error: true
   label:
     needs: add_reaction
     runs-on: ubuntu-latest

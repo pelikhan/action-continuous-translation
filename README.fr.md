@@ -18,9 +18,9 @@
 
 ## 📚 Ressources
 
-* 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet de configuration et référence API (traduit également par cette action)
+* 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet d'installation et référence API (également traduit par cette action - voir [tableau de bord de traduction](https://pelikhan.github.io/action-continuous-translation/lunaria))
 * ✍️ [**Article de Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Exploration approfondie de la technologie
-* 🌐 **Traductions** : [Français](./README.fr.md) | [Español](./README.es.md) | [العربية](./README.ar.md)
+* 🌐 **Traductions**: [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
 ## 🔧 Comment ça marche
 
