@@ -23,6 +23,11 @@ export default defineConfig({
           label: "GitHub",
           href: "https://github.com/pelikhan/action-continuous-translation",
         },
+        {
+          icon: "discord",
+          label: "Discord",
+          href: "https://discord.gg/QFXXBkNZ",
+        }
       ],
       defaultLocale: "root",
       locales: {
