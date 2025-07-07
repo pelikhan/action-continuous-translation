@@ -11,6 +11,7 @@ import type {
   Paragraph,
   PhrasingContent,
   Yaml,
+  Html,
 } from "mdast";
 import { basename, dirname, join, relative } from "path";
 import { URL } from "url";
@@ -90,10 +91,10 @@ const HASH_TEXT_LENGTH = 80;
 const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
 const minTranslationsThreshold = 0.9;
-const nodeTypes = ["text", "paragraph", "heading", "yaml"];
+const nodeTypes = ["text", "paragraph", "heading", "yaml", "html"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
-type NodeType = Text | Paragraph | Heading | Yaml;
+type NodeType = Text | Paragraph | Heading | Yaml | Html;
 const FRONTMATTER_FIELDS = [
   "title",
   "description",
@@ -122,6 +123,28 @@ const isUri = (str: string): URL => {
 
 const hasMarker = (str: string): boolean => {
   return str.includes(MARKER_START) || str.includes(MARKER_END);
+};
+
+const parseDetailsElement = (htmlValue: string, parse: (content: string) => any) => {
+  const detailsMatch = htmlValue.match(/<details[^>]*>(.*?)<\/details>/is);
+  if (!detailsMatch) return null;
+  
+  const detailsContent = detailsMatch[1];
+  const summaryMatch = detailsContent.match(/<summary[^>]*>(.*?)<\/summary>/is);
+  
+  if (!summaryMatch) return null;
+  
+  const summaryText = summaryMatch[1].trim();
+  const contentAfterSummary = detailsContent.substring(summaryMatch.index + summaryMatch[0].length).trim();
+  
+  // Parse the content after summary as markdown
+  const parsedContent = parse(contentAfterSummary);
+  
+  return {
+    summary: summaryText,
+    content: parsedContent,
+    originalHtml: htmlValue
+  };
 };
 
 export default async function main() {
@@ -460,6 +483,71 @@ export default async function main() {
               node.value = YAML.stringify(data);
               dbgfm(`patched: %s`, node.value);
               return SKIP;
+            } else if (node.type === "html") {
+              // Check if this HTML node contains a <details> element
+              const detailsInfo = parseDetailsElement(node.value, parse);
+              if (detailsInfo) {
+                dbga(`details element found: %s`, detailsInfo.summary);
+                
+                // Handle summary text
+                const summaryHash = hashNode(detailsInfo.summary);
+                const summaryTranslation = translationCache[summaryHash];
+                nTranslatable++;
+                if (!summaryTranslation) {
+                  const llmHash = `T${Object.keys(llmHashes)
+                    .length.toString()
+                    .padStart(3, "0")}`;
+                  llmHashes[llmHash] = summaryHash;
+                  llmHashTodos.add(llmHash);
+                  detailsInfo.summary = `┌${llmHash}┐${detailsInfo.summary}└${llmHash}┘`;
+                }
+                
+                // Process content nodes within details
+                visit(detailsInfo.content, nodeTypes, (contentNode) => {
+                  if (contentNode.type === "text") {
+                    if (
+                      !/^\s*[-_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(contentNode.value) &&
+                      !isUri(contentNode.value)
+                    ) {
+                      const nhash = hashNode(contentNode);
+                      const tr = translationCache[nhash];
+                      nTranslatable++;
+                      if (!tr) {
+                        const llmHash = `T${Object.keys(llmHashes)
+                          .length.toString()
+                          .padStart(3, "0")}`;
+                        llmHashes[llmHash] = nhash;
+                        llmHashTodos.add(llmHash);
+                        contentNode.value = `┌${llmHash}┐${contentNode.value}└${llmHash}┘`;
+                      }
+                    }
+                  } else if (contentNode.type === "paragraph" || contentNode.type === "heading") {
+                    const nhash = hashNode(contentNode);
+                    const tr = translationCache[nhash];
+                    nTranslatable++;
+                    if (!tr) {
+                      const llmHash = `P${Object.keys(llmHashes)
+                        .length.toString()
+                        .padStart(3, "0")}`;
+                      llmHashes[llmHash] = nhash;
+                      llmHashTodos.add(llmHash);
+                      contentNode.children.unshift({
+                        type: "text",
+                        value: `┌${llmHash}┐`,
+                      } as Text);
+                      contentNode.children.push({
+                        type: "text",
+                        value: `└${llmHash}┘`,
+                      });
+                    }
+                  }
+                });
+                
+                // Reconstruct the HTML with marked content
+                const markedContent = stringify(detailsInfo.content);
+                node.value = `<details>\n<summary>${detailsInfo.summary}</summary>\n\n${markedContent}\n</details>`;
+                return SKIP;
+              }
             } else {
               dbga(`untranslated node type: %s`, node.type);
             }
@@ -703,6 +791,49 @@ export default async function main() {
                   output.error(`error parsing paragraph translation`, error);
                   output.fence(node, "json");
                   output.fence(translation);
+                }
+              } else if (node.type === "html") {
+                // Check if this HTML node contains a <details> element
+                const detailsInfo = parseDetailsElement(node.value, parse);
+                if (detailsInfo) {
+                  dbgo(`applying translations to details element`);
+                  
+                  // Apply translation to summary
+                  const summaryHash = hashNode(detailsInfo.summary);
+                  const summaryTranslation = translationCache[summaryHash];
+                  const finalSummary = summaryTranslation || detailsInfo.summary;
+                  
+                  // Apply translations to content nodes
+                  visit(detailsInfo.content, nodeTypes, (contentNode) => {
+                    if (contentNode.type === "text") {
+                      const nhash = hashNode(contentNode);
+                      const tr = translationCache[nhash];
+                      if (tr) {
+                        contentNode.value = tr;
+                      } else {
+                        unresolvedTranslations.add(nhash);
+                      }
+                    } else if (contentNode.type === "paragraph" || contentNode.type === "heading") {
+                      const nhash = hashNode(contentNode);
+                      const tr = translationCache[nhash];
+                      if (tr) {
+                        try {
+                          const newNodes = parse(tr).children as PhrasingContent[];
+                          contentNode.children.splice(0, contentNode.children.length, ...newNodes);
+                        } catch (error) {
+                          output.error(`error parsing details content translation`, error);
+                          unresolvedTranslations.add(nhash);
+                        }
+                      } else {
+                        unresolvedTranslations.add(nhash);
+                      }
+                    }
+                  });
+                  
+                  // Reconstruct the HTML with translated content
+                  const translatedContent = stringify(detailsInfo.content);
+                  node.value = `<details>\n<summary>${finalSummary}</summary>\n\n${translatedContent}\n</details>`;
+                  return SKIP;
                 }
               } else {
                 dbg(`untranslated node type: %s`, node.type);
