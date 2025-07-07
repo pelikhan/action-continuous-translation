@@ -271,5 +271,8 @@
   "### `model_alias`": "`model_alias`",
   "**Type**: `string`\\\n**Example**: `translate: github:gpt-4o-mini`": "**Tipo**: `string`\\\n**Exemplo**: `translate: github:gpt-4o-mini`",
   "A mapping of model names to their aliases as a YAML object. This can be used to .002640104FCEE8D4360F": "Um mapeamento de nomes de modelos para seus aliases como um objeto YAML. Isso pode ser usado para especificar qual modelo utilizar para uma tradução específica.",
-  "**Type**: `string` (secret recommended)\\\n**Example**: `${{ secrets.GITHUB_TOKEN .BAFC7562A73F1226E3B3": "**Tipo**: `string` (recomendado como secreto)\\\n**Exemplo**: `${{ secrets.GITHUB_TOKEN }}`"
+  "**Type**: `string` (secret recommended)\\\n**Example**: `${{ secrets.GITHUB_TOKEN .BAFC7562A73F1226E3B3": "**Tipo**: `string` (recomendado como secreto)\\\n**Exemplo**: `${{ secrets.GITHUB_TOKEN }}`",
+  "GenAI Usage": "Uso do GenAI",
+  "View translation usage logs and statistics": "Visualizar registros e estatísticas de uso da tradução",
+  "This page displays translation usage logs and statistics from the continuous tra.1B40F4C0D6A57397EF2A": "Esta página exibe registros e estatísticas de uso da tradução do fluxo de trabalho contínuo de tradução para este projeto."
 }
