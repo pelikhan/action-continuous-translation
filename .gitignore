@@ -1,3 +1,25 @@
 node_modules/
 .genaiscript/
 test/*.*.md
+
+# START Ruler Generated Files
+.aider.conf.yml
+.clinerules
+.cursor/rules/ruler_cursor_instructions.mdc
+.github/copilot-instructions.md
+.idx/airules.md
+.openhands/config.toml
+.openhands/microagents/repo.md
+.windsurf/rules/ruler_windsurf_instructions.md
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+ruler_aider_instructions.md
+# END Ruler Generated Files
+
+*.bak
+.vscode/mcp.json
+claude_desktop_config.json
+.gemini/settings.json
+.cursor/mcp.json
+.mcp.json

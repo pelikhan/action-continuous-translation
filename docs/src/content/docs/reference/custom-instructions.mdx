@@ -4,6 +4,8 @@ description: Custom instructions for the translation
 sidebar:
   order: 10
 ---
+import { Code } from "@astrojs/starlight/components";
+import types from "../../../../../genaisrc/src/types.mjs?raw";
 
 You can inject custom prompting instructions for the translation task.
 This can be used to insert additional instructions, glossary or other guidance to improve
@@ -43,8 +45,10 @@ translator:
 This document will be translated using the instructions specified in the frontmatter.
 ```
 
-The `translator` object is a [configuration](/action-continuous-translation/reference/configuration) instance and validated at runtime.
+The `translator` types are defined `types.ts`.
 It is removed from the frontmatter before the translation starts, so it does not affect the final output.
+
+<Code lang="ts" code={types} title="Configuration Types" />
 
 ## Priority Order
 

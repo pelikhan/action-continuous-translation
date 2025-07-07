@@ -3,6 +3,7 @@ title: Referencia
 description: Documentación de referencia para la acción
 sidebar:
   order: 8
+
 ---
 
 La acción personalizada utiliza [GitHub Models](https://github.com/models) para traducir archivos markdown en tu repositorio.
@@ -70,10 +71,6 @@ La acción de GitHub `pelikhan/action-continuous-translation` admite los siguien
 Todos los parámetros son opcionales.
 Los valores predeterminados se muestran en la referencia a continuación.
 
-:::caution
-Esta acción está actualmente en desarrollo. ¡Los parámetros podrían cambiar en cualquier momento!
-:::
-
 ```yaml
 with:
   lang: fr
@@ -84,6 +81,8 @@ with:
   starlight_dir:
   starlight_base:
   force: false
+  model_alias: |
+    translate: github:gpt-4o-mini
   debug: false
 ```
 
@@ -152,9 +151,23 @@ Forzar la traducción incluso si el archivo ya ha sido traducido.
 Habilitar el registro de depuración.
 Lee más detalles en la [documentación de registro de GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
+### `model_alias`
+
+**Tipo**: `string`\
+**Ejemplo**: `translate: github:gpt-4o-mini`
+
+Un mapeo de nombres de modelos a sus alias como un objeto YAML. Esto se puede usar para especificar qué modelo utilizar para una traducción en particular.
+
 ### `github_token`
 
-**Tipo**: `string` (se recomienda mantener en secreto)\
-**Por defecto**: `${{ secrets.GITHUB_TOKEN }}`
+**Tipo**: `string` (se recomienda secreto)\
+**Ejemplo**: `${{ secrets.GITHUB_TOKEN }}`
 
-Tu [token de GitHub](https://github.com/settings/tokens) con al menos el permiso `models: read`. Lee más detalles en la [documentación sobre permisos de modelos en GenAIScript GitHub](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+Tu [token de GitHub](https://github.com/settings/tokens) con al menos permiso de `models: read`.
+
+Lee más detalles en la [documentación de permisos de GitHub Models de GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+### Otros proveedores de LLM
+
+También puedes utilizar otros proveedores de LLM como OpenAI, Azure OpenAI, etc.
+Consulta [Models](../../reference/models/) para más detalles sobre otros proveedores.

@@ -3,6 +3,7 @@ title: المرجع
 description: وثائق المرجع للإجراء
 sidebar:
   order: 8
+
 ---
 
 الإجراء المخصص يستخدم [نماذج GitHub](https://github.com/models) لترجمة ملفات Markdown في مستودعك.
@@ -70,10 +71,6 @@ jobs:
 جميع المعلمات اختيارية.
 القيم الافتراضية موضحة في المرجع أدناه.
 
-:::caution
-هذا الإجراء قيد التقدم حاليًا. يمكن أن تتغير المعلمات في أي وقت!
-:::
-
 ```yaml
 with:
   lang: fr
@@ -84,6 +81,8 @@ with:
   starlight_dir:
   starlight_base:
   force: false
+  model_alias: |
+    translate: github:gpt-4o-mini
   debug: false
 ```
 
@@ -152,10 +151,23 @@ with:
 تمكين تسجيل التصحيح.
 اقرأ المزيد من التفاصيل في [وثائق تسجيل GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
+### الاسم المستعار للنموذج
+
+**النوع**: `string`\
+**المثال**: `translate: github:gpt-4o-mini`
+
+تعيين أسماء النماذج إلى ألقابها ككائن YAML. يمكن استخدام ذلك لتحديد النموذج الذي سيتم استخدامه للترجمة المحددة.
+
 ### `github_token`
 
-**النوع**: `string` (يفضل أن يكون سريًا)\
-**القيمة الافتراضية**: `${{ secrets.GITHUB_TOKEN }}`
+**النوع**: `string` (يفضل أن يكون سرًا)\
+**المثال**: `${{ secrets.GITHUB_TOKEN }}`
 
-رمز [GitHub token](https://github.com/settings/tokens) الخاص بك مع إذن `models: read` على الأقل.
-اقرأ المزيد من التفاصيل ضمن [وثائق أذونات نماذج GitHub في GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+رمز GitHub الخاص بك [GitHub token](https://github.com/settings/tokens) مع إذن `models: read` على الأقل.
+
+اقرأ المزيد من التفاصيل في [وثائق أذونات نماذج GitHub الخاصة بـ GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+### مزودي LLM الآخرين
+
+يمكنك أيضًا استخدام مزودي LLM الآخرين مثل OpenAI وAzure OpenAI وما إلى ذلك.
+راجع [النماذج](../../reference/models/) للحصول على مزيد من التفاصيل حول الموفرين الآخرين.

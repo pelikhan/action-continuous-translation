@@ -10,7 +10,15 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 jobs:
-  dedup:
+  add_reaction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: pelikhan/action-add-reaction@v0
+        continue-on-error: true
+        with:
+          reaction: rocket
+  label:
+    needs: add_reaction
     runs-on: ubuntu-latest
     steps:
       - uses: pelikhan/action-genai-issue-dedup@v0

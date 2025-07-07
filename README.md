@@ -1,59 +1,108 @@
-# Continuous Translation
+# 🌍 Continuous Translation
 
-This action uses translate incrementally markdown document using [GitHub Models](https://github.com/models).
-Builtin support for [Astro Starlight](https://starlight.astro.build/)!
+> **Automatically translate your markdown documentation using AI** - powered by [GitHub Actions](https://github.com/actions) and [GitHub Models](https://github.com/models) with built-in support for [Astro Starlight](https://starlight.astro.build/)!
 
-- [Documentation](https://pelikhan.github.io/action-continuous-translation/)
-- [Blog post](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
-- [French](./README.fr.md)
-- [Spanish](./README.es.md)
-- [Arabic](./README.ar.md)
+[![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)](https://github.com/marketplace/actions/continuous-translation)
+[![Documentation](https://img.shields.io/badge/📖-Documentation-green)](https://pelikhan.github.io/action-continuous-translation/)
 
-## How does it work?
+## ✨ Features
 
-This action uses [GenAIScript](https://microsoft.github.io/genaiscript/) to programmatically analyze and translate markdown documents. The translation process works as follows:
+- 🚀 **Incremental Translation** - Only translates changed content, saving time and API costs
+- 🎯 **Smart AST Parsing** - Preserves markdown structure and formatting
+- 🔄 **Cache Management** - Intelligent caching to avoid redundant translations
+- 📚 **Astro Starlight Ready** - Built-in support for documentation sites
+- 🌐 **Multi-language Support** - Translate to multiple languages simultaneously
+- 🔍 **Quality Validation** - Automatic validation of translation quality
+- ⚡ **GitHub Actions Native** - Seamless integration with your CI/CD pipeline
+- 🤖 **AI-Powered** - Leverage GitHub Models for seamless high-quality translations
 
-- parse markdown file to AST (abstract syntax tree)
-- visit tree and lookup existing translation or mark node that needs translation
-- run LLM inference to collect new translations
-- inject new translations in document and validate quality
-- save translations to file cache
-- commit changes
+## 📚 Resources
 
-## Inputs
+- 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Complete setup guide and API reference (translated by this action too - see [translation dashboard](https://pelikhan.github.io/action-continuous-translation/dashboard/))
+- ✍️ [**Blog Post**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Deep dive into the technology
+- 🌐 **Translations**: [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
-- `lang`: The iso-code target language for translation. (default: `fr`)
-- `source`: The iso-code source language for translation. (default: `en`)
-- `files`: Files to process, separated by semi colons. Default is `README.md`.
-- `instructions`: Extra instructions for the LLM to use when translating.
-- `instructions_file`: Path to a file containing extra instructions for the LLM to use when translating.
-- `starlight_dir`: root folder of the Astro Starlight documentation. (only set when using Starlight)
-- `starlight_base`: base alias for the Starlight documentation. (optional, even when using Starlight)
+## 🔧 How It Works
 
-### Diagnostics
+This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to intelligently analyze and translate your markdown documents. Here's the magic behind the scenes:
 
-- `force`: Force translation even if the file has already been translated.
-- `debug`: Enable debug logging (https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+1. **📄 Parse** - Convert markdown to AST (Abstract Syntax Tree)
+2. **🔍 Analyze** - Identify content that needs translation vs. existing translations
+3. **🤖 Translate** - Use AI to generate high-quality translations
+4. **✅ Validate** - Ensure translation quality and inject into document
+5. **💾 Cache** - Save translations for future incremental updates
+6. **📝 Commit** - Automatically commit changes to your repository
 
-### LLM configuration
+## ⚙️ Configuration
 
-- `github_token`: GitHub token with `models: read` permission at least (https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions). (default: `${{ secrets.GITHUB_TOKEN }}`)
+### 📝 Basic Settings
 
-- `openai_api_key`: OpenAI API key (default: `${{ secrets.OPENAI_API_KEY }}`)
-- `openai_api_base`: OpenAI API base URL (default: `${{ env.OPENAI_API_BASE }}`)
-- `azure_openai_api_endpoint`: Azure OpenAI endpoint. In the Azure Portal, open your Azure OpenAI resource, Keys and Endpoints, copy Endpoint. (default: `${{ env.AZURE_OPENAI_API_ENDPOINT }}`)
-- `azure_openai_api_key`: Azure OpenAI API key. \*\*You do NOT need this if you are using Microsoft Entra ID. (default: `${{ secrets.AZURE_OPENAI_API_KEY }}`)
-- `azure_openai_subscription_id`: Azure OpenAI subscription ID to list available deployments (Microsoft Entra only). (default: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
-- `azure_openai_api_version`: Azure OpenAI API version. (default: `${{ env.AZURE_OPENAI_API_VERSION }}`)
-- `azure_openai_api_credentials`: Azure OpenAI API credentials type. Leave as 'default' unless you have a special Azure setup. (default: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
+| Parameter           | Description                                                     | Default     |
+| ------------------- | --------------------------------------------------------------- | ----------- |
+| `lang`              | Target language(s) for translation (ISO codes, comma-separated) | `fr`        |
+| `source`            | Source language (ISO code)                                      | `en`        |
+| `files`             | Files to translate (semicolon-separated)                        | `README.md` |
+| `instructions`      | Custom translation instructions                                 | -           |
+| `instructions_file` | Path to file with translation instructions                      | -           |
 
-## Outputs
+### 🌟 Astro Starlight Integration
 
-- `text`: The generated text output.
+| Parameter        | Description                                  | Required           |
+| ---------------- | -------------------------------------------- | ------------------ |
+| `starlight_dir`  | Root folder of Astro Starlight documentation | Only for Starlight |
+| `starlight_base` | Base alias for Starlight documentation       | Optional           |
 
-## Usage
+### 🔧 Diagnostics & Debugging
 
-Add the following to your step in your workflow file:
+| Parameter | Description                                                                                             | Default |
+| --------- | ------------------------------------------------------------------------------------------------------- | ------- |
+| `force`   | Force translation even if already translated                                                            | `false` |
+| `debug`   | Enable debug logging ([learn more](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false` |
+
+### 🤖 AI Provider Configuration
+
+#### GitHub Models (Recommended)
+
+| Parameter      | Description                                                                                                                                              | Default                       |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `github_token` | GitHub token with `models: read` permission ([setup guide](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
+
+#### OpenAI
+
+| Parameter         | Description         | Default                         |
+| ----------------- | ------------------- | ------------------------------- |
+| `openai_api_key`  | OpenAI API key      | `${{ secrets.OPENAI_API_KEY }}` |
+| `openai_api_base` | OpenAI API base URL | `${{ env.OPENAI_API_BASE }}`    |
+
+#### Azure OpenAI
+
+| Parameter                      | Description                                              | Default                                   |
+| ------------------------------ | -------------------------------------------------------- | ----------------------------------------- |
+| `azure_openai_api_endpoint`    | Azure OpenAI endpoint                                    | `${{ env.AZURE_OPENAI_API_ENDPOINT }}`    |
+| `azure_openai_api_key`         | Azure OpenAI API key (not needed for Microsoft Entra ID) | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
+| `azure_openai_subscription_id` | Subscription ID for deployment listing (Entra ID only)   | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
+| `azure_openai_api_version`     | Azure OpenAI API version                                 | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
+| `azure_openai_api_credentials` | API credentials type                                     | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
+
+#### Model Alias
+
+| Parameter     | Description                                  | Default |
+| ------------- | -------------------------------------------- | ------- |
+| `model_alias` | A YAML-like string of `alias: modelid` pairs |         |
+
+See the [Models](/action-continuous-translation/models/) documentation for more details.
+
+## 📤 Outputs
+
+| Output | Description                           |
+| ------ | ------------------------------------- |
+| `text` | The generated translation text output |
+
+## 🚀 Quick Start
+
+### Simple Setup
+
+Add this step to your GitHub Actions workflow to translate your README to French and Spanish:
 
 ```yaml
 uses: pelikhan/action-continuous-translation@v0
@@ -62,7 +111,7 @@ with:
   lang: fr,es
 ```
 
-## Example
+### Complete Workflow Example
 
 Save this file in your `.github/workflows/` directory as `continuous-translation.yml`:
 
@@ -104,28 +153,8 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## Development
+<div align="center">
 
-This action was automatically generated by GenAIScript from the script metadata.
-We recommend updating the script metadata instead of editing the action files directly.
+**Made with ❤️ using [GenAIScript](https://microsoft.github.io/genaiscript/)**
 
-- the action inputs are inferred from the script parameters
-- the action outputs are inferred from the script output schema
-- the action description is the script description
-- the readme description is the script description
-- the action branding is the script branding
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command              | Action                                                             |
-| :------------------- | :----------------------------------------------------------------- |
-| `npm install`        | Installs dependencies                                              |
-| `npm run dev`        | Runs a translation test of `README.md` in `fr`                     |
-| `npm run dev:astro`  | Translates the entire Astro docs                                   |
-| `npm run typecheck`  | Typecheck TypeScript files                                         |
-| `npm run lint`       | Run prettier against all files in the repo                         |
-| `npm run configure`  | Regenerate `action.yml` when changing the parameters in the script |
-| `npm run upgrade`    | Refresh dependencies                                               |
-| `npm run test:genai` | local test suite                                                   |
+</div>

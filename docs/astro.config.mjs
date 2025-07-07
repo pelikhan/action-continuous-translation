@@ -2,26 +2,37 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
+import lunaria from '@lunariajs/starlight';
+import { title } from "./resources.json" assert { type: "json" };
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://microsoft.github.io",
+  site: "https://pelikhan.github.io",
   base: "/action-continuous-translation",
   integrations: [
     starlight({
       plugins: [
+        lunaria({
+          sync: true,
+          route: "/dashboard",
+        }),
         starlightLinksValidator({
           errorOnRelativeLinks: false,
           errorOnInconsistentLocale: true,
         }),
       ],
-      title: "Continuous Translation",
+      title,
       social: [
         {
           icon: "github",
           label: "GitHub",
           href: "https://github.com/pelikhan/action-continuous-translation",
         },
+        {
+          icon: "discord",
+          label: "Discord",
+          href: "https://discord.gg/QFXXBkNZ",
+        }
       ],
       defaultLocale: "root",
       locales: {
@@ -52,6 +63,14 @@ export default defineConfig({
           label: "Reference",
           autogenerate: { directory: "reference" },
         },
+        {
+          label: "Resources",
+          autogenerate: { directory: "resources" },
+        },
+        {
+          label: "Translation Dashboard",
+          link: "/dashboard/"
+        }
       ],
       components: {
         PageTitle: "./src/components/PageTitle.astro",

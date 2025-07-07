@@ -3,7 +3,11 @@ title: Instrucciones Personalizadas
 description: Instrucciones personalizadas para la traducción
 sidebar:
   order: 10
+
 ---
+
+import { Code } from "@astrojs/starlight/components";
+import types from "../../../../../../genaisrc/src/types.mjs?raw";
 
 Puedes inyectar instrucciones personalizadas para la tarea de traducción.
 Esto se puede usar para insertar instrucciones adicionales, un glosario u otra orientación para mejorar
@@ -43,8 +47,10 @@ translator:
 This document will be translated using the instructions specified in the frontmatter.
 ```
 
-El objeto `translator` es una instancia de [configuración](../../reference/configuration/) y se valida en tiempo de ejecución.
-Se elimina del frontmatter antes de que comience la traducción, por lo que no afecta al resultado final.
+Los tipos de `translator` están definidos en `types.ts`.
+Se elimina del frontmatter antes de que comience la traducción, por lo que no afecta el resultado final.
+
+<Code lang="ts" code={types} title="Tipos de Configuración" />
 
 ## Orden de Prioridad
 

@@ -3,6 +3,7 @@ title: Astro Starlight
 description: Configurando tu sitio de documentación Starlight
 sidebar:
   order: 9
+
 ---
 
 import { Steps } from "@astrojs/starlight/components";
@@ -18,18 +19,40 @@ Requiere una configuración específica de Starlight como se detalla a continuac
 
     <li>
       Para habilitar el modo Starlight, necesitas proporcionar la entrada `starlight_dir` en la acción.
-      Si también has configurado la [opción `base` de Astro](https://docs.astro.build/en/reference/configuration-reference/#base), debes proporcionar la entrada `starlight_base` también.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs" "starlight_base: my_repo_name"
+      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
+      uses: pelikhan/action-continuous-translation@v0
+      with:
+        starlight_dir: ./docs
+      ```
+    </li>
+
+    <li>
+      Si también has configurado la [opción `base` de Astro](https://docs.astro.build/en/reference/configuration-reference/#base),
+      necesitas proporcionar también la entrada `starlight_base`.
+
+      ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
       uses: pelikhan/action-continuous-translation@v0
       with:
         starlight_dir: ./docs
         starlight_base: astro_base_option
       ```
     </li>
-
   </ol>
 </Steps>
+
+## Entradas Frontmatter Soportadas
+
+Además de Markdown/MDX, admitimos algunos de los posibles metadatos de frontmatter que Starlight admite.
+
+* `title`: El título de la página.
+* `description`: La descripción de la página.
+* `hero.tagline`: El eslogan de la sección del héroe.
+* `hero.actions.action.text`: El texto del botón de acción en la sección del héroe.
+
+También admitimos entradas de frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/)
+
+* `excerpt`: Un breve extracto de la página.
 
 ## Aviso de Contenido de IA
 
@@ -37,7 +60,7 @@ Puedes informar a tus usuarios que la traducción fue generada por GenAI
 añadiendo un aviso en el título. Actualmente, Astro Starlight no admite una función incorporada para añadir avisos,
 por lo que es necesario sobrescribir algunos componentes.
 
-- [Sobrescribe](https://starlight.astro.build/guides/overriding-components/#how-to-override) los componentes `PageTitle` y `Hero` en tu archivo `astro.config.mjs`:
+* [Sobrescribe](https://starlight.astro.build/guides/overriding-components/#how-to-override) los componentes `PageTitle` y `Hero` en tu archivo `astro.config.mjs`:
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -52,7 +75,7 @@ por lo que es necesario sobrescribir algunos componentes.
   });
   ```
 
-- Añade los componentes en tu directorio `src/components` [desde `docs/src/components` en este repositorio](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+* Añade los componentes en tu directorio `src/components` [desde `docs/src/components` en este repositorio](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 Siéntete libre de modificar la lógica en `AIGeneratedNotice.astro` para ajustarla a tus necesidades.
 
@@ -61,6 +84,8 @@ Siéntete libre de modificar la lógica en `AIGeneratedNotice.astro` para ajusta
 Si utilizas el [Validador de Enlaces de Astro](https://github.com/HiDeoo/starlight-links-validator),
 asegúrate de desactivar la opción `errorOnRelativeLinks` en tu archivo `astro.config.mjs`
 ya que los enlaces localizados son relativos al idioma raíz.
+
+También puedes habilitar la opción `errorOnInconsistentLocale` para garantizar que todos los enlaces sean coherentes con el idioma actual.
 
 ```js title="astro.config.mjs" "errorOnRelativeLinks: false"
 import starlightLinksValidator from "starlight-links-validator";
@@ -78,3 +103,10 @@ export default defineConfig({
   ],
 });
 ```
+
+## Panel de Traducción de Lunaria
+
+Puedes usar el [Panel de Traducción de Lunaria](https://lunaria.dev/integrations/starlight/) para generar
+un panel de estado de traducción para tu sitio Starlight.
+
+Puedes probar el panel navegando al enlace **Panel de Traducción** en la barra lateral de esta página.

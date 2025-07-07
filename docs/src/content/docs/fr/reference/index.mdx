@@ -3,9 +3,10 @@ title: Référence
 description: Documentation de référence pour l'action
 sidebar:
   order: 8
+
 ---
 
-L'action personnalisée utilise [GitHub Models](https://github.com/models) pour traduire les fichiers markdown dans votre dépôt.
+L'action personnalisée utilise [les modèles GitHub](https://github.com/models) pour traduire les fichiers Markdown dans votre dépôt.
 Elle est conçue pour être utilisée dans un workflow [GitHub Actions](https://docs.github.com/en/actions) afin de traduire automatiquement les fichiers de documentation lorsqu'ils sont mis à jour.
 
 ```yaml title=".github/workflows/ct.yml"
@@ -70,10 +71,6 @@ L'action GitHub `pelikhan/action-continuous-translation` prend en charge les par
 Tous les paramètres sont facultatifs.
 Les valeurs par défaut sont indiquées dans la référence ci-dessous.
 
-:::caution
-Cette action est actuellement en cours de développement. Les paramètres peuvent changer à tout moment !
-:::
-
 ```yaml
 with:
   lang: fr
@@ -84,17 +81,19 @@ with:
   starlight_dir:
   starlight_base:
   force: false
+  model_alias: |
+    translate: github:gpt-4o-mini
   debug: false
 ```
 
-Consultez [Models](../../reference/models/) pour plus de détails sur d'autres fournisseurs comme OpenAI, Azure OpenAI, etc.
+Voir [Modèles](../../reference/models/) pour plus de détails sur d'autres fournisseurs comme OpenAI, Azure OpenAI, etc.
 
 ### `lang`
 
 **Type** : `string`\
 **Par défaut** : `fr`
 
-Une liste des codes ISO des langues cibles, séparés par des virgules (`,`), vers lesquelles la documentation doit être traduite à partir de la [langue source](#source).
+Une liste de codes ISO des langues cibles, séparée par des virgules (`,`), vers lesquelles la documentation doit être traduite à partir de la [langue source](#source).
 Voir une liste de toutes les langues prises en charge [dans le fichier `models.mts` du dépôt](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
 
 ### `source`
@@ -102,26 +101,26 @@ Voir une liste de toutes les langues prises en charge [dans le fichier `models.m
 **Type** : `string`\
 **Par défaut** : `en`
 
-Le code ISO de la langue source dans laquelle le contenu principal est écrit.
+Le code ISO de la langue source dans laquelle le contenu principal est rédigé.
 
 ### `files`
 
 **Type** : `string`\
 **Par défaut** : `README.md`
 
-Une liste de fichiers à traiter, séparés par des virgules.
+Une liste de fichiers à traiter, séparée par des virgules.
 
 ### `instructions`
 
 **Type** : `string`
 
-Instructions supplémentaires pour que le LLM les utilise lors de la traduction.
+Instructions supplémentaires pour l'LLM à utiliser lors de la traduction.
 
 ### `instructions_file`
 
 **Type** : `string`
 
-Chemin vers un fichier contenant des instructions supplémentaires pour que le LLM les utilise lors de la traduction.
+Chemin vers un fichier contenant des instructions supplémentaires pour l'LLM à utiliser lors de la traduction.
 
 ### `starlight_dir`
 
@@ -150,12 +149,25 @@ Forcer la traduction même si le fichier a déjà été traduit.
 **Par défaut** : `false`
 
 Activer la journalisation de débogage.
-Lisez plus de détails dans la documentation [GenAIScript Logging docs](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+Lire plus de détails dans la documentation [GenAIScript Logging](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+
+### `model_alias`
+
+**Type** : `string`\
+**Exemple** : `translate: github:gpt-4o-mini`
+
+Un mappage des noms de modèles à leurs alias sous forme d'objet YAML. Cela peut être utilisé pour spécifier le modèle à utiliser pour une traduction particulière.
 
 ### `github_token`
 
-**Type** : `string` (secret recommandé)\
-**Par défaut** : `${{ secrets.GITHUB_TOKEN }}`
+**Type** : `string` (recommandé : secret)\
+**Exemple** : `${{ secrets.GITHUB_TOKEN }}`
 
 Votre [jeton GitHub](https://github.com/settings/tokens) avec au moins la permission `models: read`.
-Lisez les détails supplémentaires dans la documentation [les permissions des modèles GitHub pour GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+Lire plus de détails dans la documentation [GenAIScript GitHub Models Permissions](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+### Autres fournisseurs de LLM
+
+Vous pouvez également utiliser d'autres fournisseurs de LLM comme OpenAI, Azure OpenAI, etc.
+Voir [Modèles](../../reference/models/) pour plus de détails sur d'autres fournisseurs.

@@ -1,65 +1,108 @@
-# Traduction continue
+# 🌍 Traduction Continue
 
-Cette action utilise la traduction incrémentielle des documents Markdown en utilisant [GitHub Models](https://github.com/models).
-Prise en charge intégrée pour [Astro Starlight](https://starlight.astro.build/) !
+> **Traduisez automatiquement votre documentation markdown à l'aide de l'IA** - alimenté par [GitHub Actions](https://github.com/actions) et [GitHub Models](https://github.com/models) avec support intégré pour [Astro Starlight](https://starlight.astro.build/) !
 
-* [Documentation](https://pelikhan.github.io/action-continuous-translation/)
-* [Article de blog](https://microsoft.github.io/genaiscript/blog/continuous-translations/)
-* [Français](./README.fr.md)
-* [Espagnol](./README.es.md)
-* [Arabe](./README.ar.md)
+[![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)](https://github.com/marketplace/actions/continuous-translation)
+[![Documentation](https://img.shields.io/badge/📖-Documentation-green)](https://pelikhan.github.io/action-continuous-translation/)
 
-## Comment ça marche ?
+## ✨ Fonctionnalités
 
-Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pour analyser et traduire les documents Markdown de manière programmatique. Le processus de traduction fonctionne comme suit :
+* 🚀 **Traduction incrémentielle** - Traduisez uniquement le contenu modifié, économisant ainsi du temps et des coûts API
+* 🎯 **Analyse AST intelligente** - Préserve la structure et le formatage du markdown
+* 🔄 **Gestion du Cache** - Mise en cache intelligente pour éviter les traductions redondantes
+* 📚 **Prêt pour Astro Starlight** - Support intégré pour les sites de documentation
+* 🌐 **Support Multilingue** - Traduisez simultanément dans plusieurs langues
+* 🔍 **Validation de Qualité** - Validation automatique de la qualité de la traduction
+* ⚡ **Natif avec GitHub Actions** - Intégration fluide avec votre pipeline CI/CD
+* 🤖 **Alimenté par l'IA** - Exploitez GitHub Models pour des traductions fluides et de haute qualité
 
-* analyser le fichier Markdown en AST (arbre syntaxique abstrait)
-* visiter l’arbre et rechercher une traduction existante ou marquer le nœud nécessitant une traduction
-* exécuter l’inférence avec le LLM pour collecter de nouvelles traductions
-* injecter les nouvelles traductions dans le document et valider leur qualité
-* enregistrer les traductions dans une mémoire cache de fichiers
-* valider et enregistrer les modifications
+## 📚 Ressources
 
-## Entrées
+* 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet d'installation et référence API (également traduit par cette action - voir [tableau de bord de traduction](https://pelikhan.github.io/action-continuous-translation/dashboard/))
+* ✍️ [**Article de Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Exploration approfondie de la technologie
+* 🌐 **Traductions** : [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
-* `lang` : Le code ISO de la langue cible pour la traduction. (par défaut : `fr`)
-* `source` : Le code ISO de la langue source pour la traduction. (par défaut : `en`)
-* `files` : Fichiers à traiter, séparés par des points-virgules. Par défaut `README.md`.
-* `instructions` : Instructions supplémentaires pour le LLM à utiliser lors de la traduction.
-* `instructions_file` : Chemin vers un fichier contenant des instructions supplémentaires pour le LLM à utiliser lors de la traduction.
-* `starlight_dir` : Dossier racine de la documentation Astro Starlight. (à définir uniquement si vous utilisez Starlight)
-* `starlight_base` : Alias de base pour la documentation Starlight. (facultatif, même avec Starlight)
+## 🔧 Comment ça fonctionne
 
-### Diagnostics
+Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pour analyser intelligemment et traduire vos documents markdown. Voici comment cela fonctionne en coulisses :
 
-* `force` : Forcer la traduction même si le fichier a déjà été traduit.
-* `debug` : Activer le journal de débogage (<https://microsoft.github.io/genaiscript/reference/scripts/logging/>).
+1. **📄 Analyse** - Convertir le markdown en AST (Arbre Syntaxique Abstrait)
+2. **🔍 Analyse** - Identifier le contenu nécessitant une traduction par rapport aux traductions existantes
+3. **🤖 Traduction** - Utiliser l'IA pour générer des traductions de haute qualité
+4. **✅ Validation** - Garantir la qualité de la traduction et l'intégrer dans le document
+5. **💾 Cache** - Enregistrer les traductions pour des mises à jour incrémentielles futures
+6. **📝 Validation** - Valider automatiquement les changements dans votre dépôt
 
-### Configuration LLM
+## ⚙️ Configuration
 
-* `github_token` : Jeton GitHub avec au moins l’autorisation `models:read` (<https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions>). (par défaut : `${{ secrets.GITHUB_TOKEN }}`)
+### 📝 Paramètres de base
 
-* `openai_api_key` : Clé API OpenAI (par défaut : `${{ secrets.OPENAI_API_KEY }}`)
+| Paramètre           | Description                                                                 | Valeur par défaut |
+| ------------------- | --------------------------------------------------------------------------- | ----------------- |
+| `lang`              | Langue(s) cible(s) pour la traduction (codes ISO, séparés par des virgules) | `fr`              |
+| `source`            | Langue source (code ISO)                                                    | `en`              |
+| `files`             | Fichiers à traduire (séparés par des points-virgules)                       | `README.md`       |
+| `instructions`      | Instructions de traduction personnalisées                                   | -                 |
+| `instructions_file` | Chemin vers le fichier contenant les instructions de traduction             | -                 |
 
-* `openai_api_base` : URL de base de l'API OpenAI (par défaut : `${{ env.OPENAI_API_BASE }}`)
+### 🌟 Intégration Astro Starlight
 
-* `azure_openai_api_endpoint` : Point de terminaison Azure OpenAI. Dans le portail Azure, ouvrez votre ressource Azure OpenAI, sélectionnez "Clés et points de terminaison", copiez le point de terminaison. (par défaut : `${{ env.AZURE_OPENAI_API_ENDPOINT }}`)
+| Paramètre        | Description                                        | Requis                    |
+| ---------------- | -------------------------------------------------- | ------------------------- |
+| `starlight_dir`  | Dossier racine de la documentation Astro Starlight | Uniquement pour Starlight |
+| `starlight_base` | Alias de base pour la documentation Starlight      | Optionnel                 |
 
-* `azure_openai_api_key` : Clé API Azure OpenAI. \*\*Vous n'avez PAS besoin de ceci si vous utilisez Microsoft Entra ID. (par défaut : `${{ secrets.AZURE_OPENAI_API_KEY }}`)
+### 🔧 Diagnostics & Débogage
 
-* `azure_openai_subscription_id` : ID d'abonnement Azure OpenAI pour répertorier les déploiements disponibles (Microsoft Entra uniquement). (par défaut : `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`)
+| Paramètre | Description                                                                                                         | Valeur par défaut |
+| --------- | ------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| `force`   | Forcer la traduction même si elle est déjà effectuée                                                                | `false`           |
+| `debug`   | Activer le journal de débogage[en savoir plus](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
 
-* `azure_openai_api_version` : Version de l'API Azure OpenAI. (par défaut : `${{ env.AZURE_OPENAI_API_VERSION }}`)
+### 🤖 Configuration du fournisseur d'IA
 
-* `azure_openai_api_credentials` : Type d'identifiants pour l'API Azure OpenAI. Laissez sur 'default', sauf si vous disposez d'une configuration spéciale Azure. (par défaut : `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`)
+#### Modèles GitHub (recommandé)
 
-## Sorties
+| Paramètre      | Description                                                                                                                                                                                          | Valeur par défaut             |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `github_token` | Jeton GitHub avec permission \`models: read\` `models: read`guide d'installation[guide d'installation](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
 
-* `text` : Le texte généré en sortie.
+#### OpenAI
 
-## Utilisation
+| Paramètre         | Description                 | Valeur par défaut               |
+| ----------------- | --------------------------- | ------------------------------- |
+| `openai_api_key`  | Clé API OpenAI              | `${{ secrets.OPENAI_API_KEY }}` |
+| `openai_api_base` | URL de base de l'API OpenAI | `${{ env.OPENAI_API_BASE }}`    |
 
-Ajoutez ce qui suit à votre étape dans le fichier de workflow :
+#### Azure OpenAI
+
+| Paramètre                      | Description                                                        | Valeur par défaut                         |
+| ------------------------------ | ------------------------------------------------------------------ | ----------------------------------------- |
+| `azure_openai_api_endpoint`    | Point de terminaison Azure OpenAI                                  | `${{ env.AZURE_OPENAI_API_ENDPOINT }}`    |
+| `azure_openai_api_key`         | Clé API Azure OpenAI (non nécessaire pour Microsoft Entra ID)      | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
+| `azure_openai_subscription_id` | ID d'abonnement pour lister les déploiements (Entra ID uniquement) | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
+| `azure_openai_api_version`     | Version de l'API Azure OpenAI                                      | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
+| `azure_openai_api_credentials` | Type de credentials API                                            | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
+
+#### Alias Modèle
+
+| Paramètre     | Description                                                          | Valeur par défaut |
+| ------------- | -------------------------------------------------------------------- | ----------------- |
+| `model_alias` | Une chaîne YAML-like de paires \`alias: modelid\` `alias: modelid`\` |                   |
+
+Voir la documentation des [modèles](/action-continuous-translation/models/) pour plus de détails.
+
+## 📤 Sorties
+
+| Sortie | Description                    |
+| ------ | ------------------------------ |
+| `text` | Texte généré par la traduction |
+
+## 🚀 Démarrage rapide
+
+### Configuration Simple
+
+Ajoutez cette étape à votre workflow GitHub Actions pour traduire votre README en français et en espagnol :
 
 ```yaml
 uses: pelikhan/action-continuous-translation@v0
@@ -68,9 +111,9 @@ with:
   lang: fr,es
 ```
 
-## Exemple
+### Exemple de Workflow Complet
 
-Enregistrez ce fichier dans le répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :
+Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :
 
 ```yaml
 name: Continuous Translation
@@ -110,27 +153,8 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## Développement
+<div align="center">
 
-Cette action a été générée automatiquement par GenAIScript à partir des métadonnées du script. Nous vous recommandons de mettre à jour les métadonnées du script au lieu de modifier directement les fichiers de l'action.
+**Fait avec ❤️ grâce à [GenAIScript](https://microsoft.github.io/genaiscript/)**
 
-* les entrées de l’action sont déduites des paramètres du script
-* les sorties de l’action sont déduites du schéma de sortie du script
-* la description de l’action est la description du script
-* la description du fichier README est la description du script
-* le branding de l’action est le branding du script
-
-## 🧞 Commandes
-
-Toutes les commandes sont exécutées depuis la racine du projet, dans un terminal :
-
-| Commande             | Action                                                                                    |
-| :------------------- | :---------------------------------------------------------------------------------------- |
-| `npm install`        | Installe les dépendances                                                                  |
-| `npm run dev`        | Exécute un test de traduction de `README.md`\`README.md\` en `fr`                         |
-| `npm run dev:astro`  | Traduit toute la documentation Astro                                                      |
-| `npm run typecheck`  | Vérifies les fichiers TypeScript                                                          |
-| `npm run lint`       | Lance prettier sur tous les fichiers du dépôt                                             |
-| `npm run configure`  | Régénère `action.yml`\`action.yml\` lors de la modification des paramètres dans le script |
-| `npm run upgrade`    | Met à jour les dépendances                                                                |
-| `npm run test:genai` | Suite de tests locale                                                                     |
+</div>

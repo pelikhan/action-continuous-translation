@@ -4,22 +4,38 @@ export async function resolveModels(lang: string): Promise<LangConfiguration> {
   const config = LANGS[lang];
   if (!config)
     throw new Error(`Language configuration for "${lang}" not found.`);
-  const res = structuredClone(config);
-  if (!res.models) res.models = {};
-  res.models.translation ??= DEFAULT_MODELS.translation;
-  res.models.classify ??= DEFAULT_MODELS.classify;
+  const res: LangConfiguration = {
+    name: config.name,
+    models: {},
+  };
+  // try to resolve user defined models
+  for (const suffix of ["_" + lang.replace("-", "_").toLowerCase(), ""]) {
+    if (!res.models.translation) {
+      const alias = "translation" + suffix;
+      dbg(`resolve alias %s`, alias);
+      const info = await host.resolveLanguageModel(alias);
+      if (info?.provider) {
+        dbg(`translation alias %s: %o`, alias, info);
+        res.models.translation = `${info.provider}:${info.model}`;
+        res.alias = alias;
+      }
+    }
+    if (!res.models.classify) {
+      const alias = "validation" + suffix;
+      dbg(`resolve alias %s`, alias);
+      const info = await host.resolveLanguageModel(alias);
+      if (info?.provider) {
+        dbg(`validate alias %s: %o`, alias, info);
+        res.models.classify = `${info.provider}:${info.model}`;
+        res.alias = alias;
+      }
+    }
+  }
 
-  dbg(`unresolved: %s -> %O`, lang, res.models);
-
-  // resolve models
-  const tinfo = await host.resolveLanguageModel(res.models.translation);
-  if (!tinfo)
-    throw new Error(`Unable to resolve translation model for "${lang}"`);
-  res.models.translation = tinfo.modelId;
-  const cinfo = await host.resolveLanguageModel(res.models.classify);
-  if (!cinfo)
-    throw new Error(`Unable to resolve classification model for "${lang}"`);
-  res.models.classify = cinfo.modelId;
+  // apply defaults if not found
+  res.models.translation ??=
+    config.models?.translation ?? DEFAULT_MODELS.translation;
+  res.models.classify ??= config.models?.classify ?? DEFAULT_MODELS.classify;
 
   dbg(`resolved: %s -> %O`, lang, res.models);
   return res;
@@ -27,6 +43,7 @@ export async function resolveModels(lang: string): Promise<LangConfiguration> {
 
 export interface LangConfiguration {
   name: string;
+  alias?: string;
   models?: {
     translation?: string;
     classify?: string;
