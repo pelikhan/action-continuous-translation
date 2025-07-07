@@ -178,12 +178,14 @@ export default async function main() {
     .filter(({ filename }) => !/\/\w\w(-\w\w\w?)?\//i.test(filename));
   if (!files.length) cancel("No files or not matching languages selected.");
 
+  const fileTokens: Record<string, number> = {};
   for (const file of files) {
     const tokens = await tokenizers.count(file.content);
     output.itemValue(file.filename, tokens + "t");
+    fileTokens[file.filename] = tokens;
   }
 
-  const logFn = "translations/log.json";
+  const usageFn = "translations/usage.jsonl";
 
   for (const to of langs) {
     const langInfo = await resolveModels(to);
@@ -211,17 +213,17 @@ export default async function main() {
         model: string,
         usage: RunPromptUsage
       ) => {
-        if (logFn)
+        if (usageFn)
           await workspace.appendText(
-            logFn,
+            usageFn,
             JSON.stringify({
               filename,
+              lang: to,
+              tokens: fileTokens[filename] || 0,
               stage: stage,
               model,
-              inputTokens: usage?.prompt,
-              outputTokens: usage?.completion,
-              cost: usage?.cost,
               date: new Date().toISOString(),
+              ...(usage || {}),
             }) + "\n"
           );
       };

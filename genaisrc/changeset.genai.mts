@@ -46,7 +46,8 @@ const { text: content } = await runPrompt(
     You are an expert code reviewer with great English technical writing skills.
 
 ## Task
-Your task is to generate a **changeset** description of the changes in ${diffRef}.
+Your task is to generate a **changeset** description of the changes in ${diffRef},
+it will be added to CHANGELOG.md.
 
 ## Instructions
 
@@ -58,6 +59,7 @@ Your task is to generate a **changeset** description of the changes in ${diffRef
 - focus on the most important changes
 - do not try to fix issues, only describe the changes
 - ignore comments about imports (like added, remove, changed, etc.)
+- keep it short, follow the CHANGELOG.md style
 `.role("system");
   },
   {

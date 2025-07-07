@@ -267,5 +267,9 @@
   "## Lunaria Translation Dashboard": "Painel de Tradução Lunaria",
   "You can use the [Lunaria Translation Dashboard](https://lunaria.dev/integrations.F453D787A04B27AD456E": "Você pode usar o [Painel de Tradução Lunaria](https://lunaria.dev/integrations/starlight/) para gerar\num painel de status de tradução para o seu site Starlight.",
   "You can try the dashboard by naivagating to the **Translation Dashboard** link i.C659A1EF88B06BB19459": "Você pode experimentar o painel navegando até o link **Painel de Tradução** na barra lateral desta página.",
-  "📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/.2AA2D9DD6A55AD6DFFF7": "📖 [**Documentação**](https://pelikhan.github.io/action-continuous-translation/) - Guia completo de configuração e referência de API (traduzido por esta ação também - veja [painel de traduções](https://pelikhan.github.io/action-continuous-translation/dashboard/))"
+  "📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/.2AA2D9DD6A55AD6DFFF7": "📖 [**Documentação**](https://pelikhan.github.io/action-continuous-translation/) - Guia completo de configuração e referência de API (traduzido por esta ação também - veja [painel de traduções](https://pelikhan.github.io/action-continuous-translation/dashboard/))",
+  "### `model_alias`": "`model_alias`",
+  "**Type**: `string`\\\n**Example**: `translate: github:gpt-4o-mini`": "**Tipo**: `string`\\\n**Exemplo**: `translate: github:gpt-4o-mini`",
+  "A mapping of model names to their aliases as a YAML object. This can be used to .002640104FCEE8D4360F": "Um mapeamento de nomes de modelos para seus aliases como um objeto YAML. Isso pode ser usado para especificar qual modelo utilizar para uma tradução específica.",
+  "**Type**: `string` (secret recommended)\\\n**Example**: `${{ secrets.GITHUB_TOKEN .BAFC7562A73F1226E3B3": "**Tipo**: `string` (recomendado como secreto)\\\n**Exemplo**: `${{ secrets.GITHUB_TOKEN }}`"
 }
