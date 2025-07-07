@@ -18,7 +18,7 @@
 
 ## 📚 Recursos
 
-* 📖 [**Documentação**](https://pelikhan.github.io/action-continuous-translation/) - Guia completo de configuração e referência da API (traduzido por esta ação também - veja o [painel de tradução](https://pelikhan.github.io/action-continuous-translation/lunaria))
+* 📖 [**Documentação**](https://pelikhan.github.io/action-continuous-translation/) - Guia completo de configuração e referência de API (traduzido por esta ação também - veja [painel de traduções](https://pelikhan.github.io/action-continuous-translation/dashboard/))
 * ✍️ [**Post no Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Análise detalhada da tecnologia
 * 🌐 **Traduções**: [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Português (Brasil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
@@ -37,13 +37,14 @@ Esta ação utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) para
 
 ### 📝 Configurações Básicas
 
-| Parâmetro           | Descrição                                                               | Padrão      |
-| ------------------- | ----------------------------------------------------------------------- | ----------- |
-| `lang`              | Idioma(s) de destino para tradução (códigos ISO, separados por vírgula) | `fr`        |
-| `source`            | Idioma de origem (código ISO)                                           | `en`        |
-| `files`             | Arquivos para traduzir (separados por ponto e vírgula)                  | `README.md` |
-| `instructions`      | Instruções personalizadas de tradução                                   | -           |
-| `instructions_file` | Caminho para o arquivo com instruções de tradução                       | -           |
+| Parâmetro           | Descrição                                                               | Padrão         |
+| ------------------- | ----------------------------------------------------------------------- | -------------- |
+| `lang`              | Idioma(s) de destino para tradução (códigos ISO, separados por vírgula) | `fr`           |
+| `source`            | Idioma de origem (código ISO)                                           | `en`           |
+| `files`             | Arquivos para traduzir (separados por ponto e vírgula)                  | `README.md`    |
+| `instructions`      | Instruções personalizadas de tradução                                   | -              |
+| `instructions_file` | Caminho para o arquivo com instruções de tradução                       | -              |
+| `translations_dir`  | Pasta para armazenar traduções                                          | `translations` |
 
 ### 🌟 Integração com Astro Starlight
 

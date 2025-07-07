@@ -39,7 +39,7 @@
     "favicon": {
       "external": [
         {
-          "link": "https://blog.trueberryless.org/favicon.svg",
+          "link": "https://pelikhan.github.io/action-continuous-translation/favicon.svg",
           "type": "image/svg+xml"
         }
       ]

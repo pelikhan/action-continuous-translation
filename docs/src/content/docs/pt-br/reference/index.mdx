@@ -71,10 +71,6 @@ A ação do GitHub `pelikhan/action-continuous-translation` suporta os seguintes
 Todos os parâmetros são opcionais.
 Os valores padrão estão mostrados na referência abaixo.
 
-:::caution
-Esta ação está atualmente em progresso. Os parâmetros podem mudar a qualquer momento!
-:::
-
 ```yaml
 with:
   lang: fr
@@ -85,6 +81,8 @@ with:
   starlight_dir:
   starlight_base:
   force: false
+  model_alias: |
+    translate: github:gpt-4o-mini
   debug: false
 ```
 
@@ -124,6 +122,13 @@ Instruções extras para o LLM usar durante a tradução.
 
 Caminho para um arquivo contendo instruções extras para o LLM usar durante a tradução.
 
+### `translations_dir`
+
+**Tipo**: `string`
+**Padrão**: `translations`
+
+Pasta onde as traduções serão armazenadas.
+
 ### `starlight_dir`
 
 **Tipo**: `string`
@@ -153,10 +158,17 @@ Força a tradução mesmo que o arquivo já tenha sido traduzido.
 Ativa o registro de depuração.
 Leia mais detalhes em [os documentos de logs do GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
+### `model_alias`
+
+**Tipo**: `string`\
+**Exemplo**: `translate: github:gpt-4o-mini`
+
+Um mapeamento de nomes de modelos para seus aliases como um objeto YAML. Isso pode ser usado para especificar qual modelo utilizar para uma tradução específica.
+
 ### `github_token`
 
-**Tipo**: `string` (secreto recomendado)\
-**Recomendado**: `${{ secrets.GITHUB_TOKEN }}`
+**Tipo**: `string` (recomendado como secreto)\
+**Exemplo**: `${{ secrets.GITHUB_TOKEN }}`
 
 Seu [token do GitHub](https://github.com/settings/tokens) com pelo menos permissão de `models: read`.
 

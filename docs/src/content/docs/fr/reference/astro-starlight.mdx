@@ -1,6 +1,6 @@
 ---
 title: Astro Starlight
-description: Configurer votre site de documentation Starlight
+description: Configuration de votre site de documentation Starlight
 sidebar:
   order: 9
 
@@ -8,8 +8,7 @@ sidebar:
 
 import { Steps } from "@astrojs/starlight/components";
 
-Cette action peut être utilisée pour traduire le contenu d'un site de documentation [Astro Starlight](https://starlight.astro.build/).
-Elle nécessite une configuration spécifique de Starlight comme détaillé ci-dessous.
+Cette action peut être utilisée pour traduire le contenu d'un site de documentation [Astro Starlight](https://starlight.astro.build/). Elle nécessite une configuration spécifique de Starlight, comme détaillé ci-dessous.
 
 <Steps>
   <ol>
@@ -28,8 +27,7 @@ Elle nécessite une configuration spécifique de Starlight comme détaillé ci-d
     </li>
 
     <li>
-      Si vous avez également défini l'option [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base),
-      vous devez également fournir l'entrée `starlight_base`.
+      Si vous avez également défini l'option [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base), vous devez aussi fournir l'entrée `starlight_base`.
 
       ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
       uses: pelikhan/action-continuous-translation@v0
@@ -43,7 +41,7 @@ Elle nécessite une configuration spécifique de Starlight comme détaillé ci-d
 
 ## Entrées Frontmatter prises en charge
 
-En plus du Markdown/MDX, nous prenons en charge certaines des métadonnées frontmatter que Starlight prend en charge.
+Outre le Markdown/MDX, nous prenons en charge certaines métadonnées frontmatter prises en charge par Starlight.
 
 * `title` : Le titre de la page.
 * `description` : La description de la page.
@@ -54,11 +52,11 @@ Nous prenons également en charge les entrées frontmatter de [Starlight Blog](h
 
 * `excerpt` : Un court extrait de la page.
 
-## Avis sur le contenu généré par l'IA
+## Avis concernant le contenu généré par IA
 
-Vous pouvez informer vos utilisateurs que la traduction a été générée par une IA en ajoutant un avis dans le titre. À ce jour, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis, il est donc nécessaire de remplacer quelques composants.
+Vous pouvez informer vos utilisateurs que la traduction a été générée par GenAI en ajoutant un avis dans le titre. À l'heure actuelle, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis, il est donc nécessaire de remplacer certains composants.
 
-* [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
+* [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -73,13 +71,13 @@ Vous pouvez informer vos utilisateurs que la traduction a été générée par u
   });
   ```
 
-* Ajoutez les composants dans votre répertoire `src/components` [à partir de `docs/src/components` dans ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+* Ajoutez les composants dans votre répertoire `src/components` [à partir du `docs/src/components` de ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 N'hésitez pas à modifier la logique dans `AIGeneratedNotice.astro` pour répondre à vos besoins.
 
 ## Validateur de liens Astro
 
-Si vous utilisez le [validateur de liens Astro](https://github.com/HiDeoo/starlight-links-validator), assurez-vous de désactiver l'option `errorOnRelativeLinks` dans votre fichier `astro.config.mjs`, car les liens localisés sont relatifs à la racine de la locale.
+Si vous utilisez le [Validateur de liens Astro](https://github.com/HiDeoo/starlight-links-validator), assurez-vous de désactiver l'option `errorOnRelativeLinks` dans votre fichier `astro.config.mjs`, car les liens localisés sont relatifs à la locale racine.
 
 Vous pouvez également activer l'option `errorOnInconsistentLocale` pour garantir que tous les liens sont cohérents avec la locale actuelle.
 
@@ -102,7 +100,6 @@ export default defineConfig({
 
 ## Tableau de bord de traduction Lunaria
 
-Vous pouvez utiliser le [Tableau de bord de traduction Lunaria](https://lunaria.dev/integrations/starlight/) pour générer
-un tableau de bord de statut de traduction pour votre site Starlight.
+Vous pouvez utiliser le [Tableau de bord de traduction Lunaria](https://lunaria.dev/integrations/starlight/) pour générer un tableau de bord du statut de traduction pour votre site Starlight.
 
 Vous pouvez essayer le tableau de bord en naviguant vers le lien **Tableau de bord de traduction** dans la barre latérale de cette page.

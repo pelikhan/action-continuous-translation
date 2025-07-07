@@ -23,3 +23,5 @@ claude_desktop_config.json
 .gemini/settings.json
 .cursor/mcp.json
 .mcp.json
+
+test/generative-ai-with-javascript/

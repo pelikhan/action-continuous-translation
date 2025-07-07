@@ -32,7 +32,7 @@ We encourage you to:
 
 ## About this repo
 
-This repo is a “monorepo,” meaning it contains several projects in one. It contains the Action Continuous Translation docs site in [`docs/`](./docs/) and the action itself that make up Action Continuous Translation in [`genaisrc/`](./genaisrc/).
+This repo is a “monorepo,” meaning it contains several projects in one. It contains the Action Continuous Translation docs site in [`docs/`](./docs/) and the action itself that make up Action Continuous Translation in [`genaisrc/`](./genaisrc/). We release new versions with the changeset convention. Read more under [Writing changesets](#writing-changesets).
 
 ### Setting up a development environment
 
@@ -82,6 +82,27 @@ This project is configured to support most AI IDEs, including Copilot, Cursor, C
 
 ```sh
 npm run ruler
+```
+
+### Writing changesets
+
+This monorepo uses the [changeset action](https://github.com/changesets/action). If you want to release a new version, you do not need to manipulate any version by yourself, just execute the following command in the root of the repo:
+
+```sh
+npx changeset
+```
+
+You will be prompted to choose between a `patch`, `minor` or `major` version upgrade and asked to add a short summary of you changed about the core code.
+If you have changed multiple unrelated features or fixes, just run `npx changeset` as often as you want, each one with it's own version bump and summary.
+
+The changeset action will then automatically determine the biggest bump of all changeset in the next release, so the correct version is set. 🎉
+
+#### AI Generated changesets
+
+If you are working in a **branch**, you can run the following command to let the LLM generate the description.
+
+```sh
+npm run genai:changeset
 ```
 
 ## Showcase

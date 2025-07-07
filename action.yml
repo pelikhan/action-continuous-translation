@@ -20,6 +20,11 @@ inputs:
     description: File containing additional prompting instructions that will be
       injected in the translation prompt.
     required: false
+  translations_dir:
+    description: Directory where the translations will be stored. Defaults to
+      'translations'.
+    required: false
+    default: translations
   starlight_dir:
     description: Root directory for the Astro Starlight documentation.
     required: false

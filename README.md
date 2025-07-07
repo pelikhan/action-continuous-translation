@@ -18,7 +18,7 @@
 
 ## 📚 Resources
 
-- 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Complete setup guide and API reference (translated by this action too - see [translation dashboard](https://pelikhan.github.io/action-continuous-translation/lunaria))
+- 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Complete setup guide and API reference (translated by this action too - see [translation dashboard](https://pelikhan.github.io/action-continuous-translation/dashboard/))
 - ✍️ [**Blog Post**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Deep dive into the technology
 - 🌐 **Translations**: [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
@@ -44,6 +44,7 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 | `files`             | Files to translate (semicolon-separated)                        | `README.md` |
 | `instructions`      | Custom translation instructions                                 | -           |
 | `instructions_file` | Path to file with translation instructions                      | -           |
+| `translations_dir`   | Folder to store translations                                    | `translations` |
 
 ### 🌟 Astro Starlight Integration
 

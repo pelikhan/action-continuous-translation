@@ -1,0 +1,186 @@
+---
+import { readFile } from "fs/promises";
+import { join } from "path";
+
+interface LogEntry {
+  filename: string;
+  stage: "translate" | "validate";
+  model: string;
+  prompt?: number;
+  completion?: number;
+  total?: number;
+  cost?: number;
+  date: string;
+}
+
+function parse(content: string): LogEntry[] {
+  return content
+    .split(/\n/g)
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((l) => JSON.parse(l)) as LogEntry[];
+}
+
+const logPath = join(process.cwd(), "..", "translations", "usage.jsonl");
+const logContent = await readFile(logPath, "utf-8");
+const logs = parse(logContent);
+
+// Calculate aggregate statistics
+const totalCost = logs.reduce((sum, log) => sum + (log.cost ?? 0), 0);
+const totalPromptTokens = logs.reduce((sum, log) => sum + (log.prompt ?? 0), 0);
+const totalCompletionTokens = logs.reduce(
+  (sum, log) => sum + (log.completion ?? 0),
+  0
+);
+const totalTokens = logs.reduce((sum, log) => sum + (log.total ?? 0), 0);
+const uniqueFiles = new Set(logs.map((log) => log.filename)).size;
+const translationEntries = logs.filter(
+  (log) => log.stage === "translate"
+).length;
+const validationEntries = logs.filter((log) => log.stage === "validate").length;
+
+// Get model usage statistics
+const modelStats = logs.reduce(
+  (acc, log) => {
+    if (!acc[log.model]) {
+      acc[log.model] = {
+        count: 0,
+        cost: 0,
+        tokens: 0,
+        prompt: 0,
+        completion: 0,
+      };
+    }
+    acc[log.model].count++;
+    acc[log.model].cost += log.cost ?? 0;
+    acc[log.model].tokens += log.total ?? 0;
+    acc[log.model].prompt += log.prompt ?? 0;
+    acc[log.model].completion = log.completion ?? 0;
+    return acc;
+  },
+  {} as Record<
+    string,
+    {
+      count: number;
+      cost: number;
+      tokens: number;
+      prompt: number;
+      completion: number;
+    }
+  >
+);
+
+// Format date for display
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleString();
+};
+
+// Format currency
+const formatCurrency = (amount: number | undefined) => {
+  return amount === undefined
+    ? ""
+    : new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 4,
+      }).format(amount);
+};
+
+// Format numbers with commas
+const formatNumber = (num: number | undefined) => {
+  return num === undefined || isNaN(num)
+    ? ""
+    : new Intl.NumberFormat("en-US").format(num);
+};
+---
+
+<h2>Overview</h2>
+
+<ul>
+  <li>total cost: {formatCurrency(totalCost)}</li>
+  <li>unique files: {uniqueFiles}</li>
+  <li>translation entries: {translationEntries}</li>
+  <li>validation entries: {validationEntries}</li>
+  <li>total tokens: {formatNumber(totalTokens)}</li>
+  <li>total prompt tokens: {formatNumber(totalPromptTokens)}</li>
+  <li>total completion tokens: {formatNumber(totalCompletionTokens)}</li>
+</ul>
+
+<h2>Models</h2>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>Operations</th>
+        <th>Cost</th>
+        <th>Tokens</th>
+        <th>Prompt Tokens</th>
+        <th>Completion Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        Object.entries(modelStats).map(([model, stats]) => (
+          <tr>
+            <td>{model}</td>
+            <td>{stats.count}</td>
+            <td>{formatCurrency(stats.cost)}</td>
+            <td>{formatNumber(stats.tokens)}</td>
+            <td>{formatNumber(stats.prompt)}</td>
+            <td>{formatNumber(stats.completion)}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<h2>Translation Log</h2>
+<div style="font-size: 80%;">
+  <table>
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Stage</th>
+        <th>Model</th>
+        <th>Total Tokens</th>
+        <th>Prompt Tokens</th>
+        <th>Completion Tokens</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        logs
+          .sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          )
+          .map((log) => (
+            <tr>
+              <td title={log.filename}>
+                {log.filename.length > 23
+                  ? `...${log.filename.slice(-20)}`
+                  : log.filename}
+              </td>
+              <td>{log.stage}</td>
+              <td>{log.model}</td>
+              <td>{formatNumber(log.total)}</td>
+              <td>{formatNumber(log.prompt)}</td>
+              <td>{formatNumber(log.completion)}</td>
+              <td>{formatCurrency(log.cost)}</td>
+            </tr>
+          ))
+      }
+    </tbody>
+  </table>
+</div>
+
+{
+  logs.length === 0 && (
+    <p>
+      No translation logs found. Logs will appear here after translation
+      operations are performed.
+    </p>
+  )
+}

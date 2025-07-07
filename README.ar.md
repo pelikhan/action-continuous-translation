@@ -18,7 +18,7 @@
 
 ## 📚 المصادر
 
-* 📖 [**الوثائق**](https://pelikhan.github.io/action-continuous-translation/) - دليل الإعداد الكامل ومرجع واجهة برمجة التطبيقات (تمت الترجمة أيضًا بواسطة هذا الإجراء - انظر [لوحة الترجمة](https://pelikhan.github.io/action-continuous-translation/lunaria)).
+* 📖 [**الوثائق**](https://pelikhan.github.io/action-continuous-translation/) - دليل الإعداد الكامل ومرجع واجهة برمجة التطبيقات (تمت ترجمته أيضًا بواسطة هذا الإجراء - انظر [لوحة تحكم الترجمة](https://pelikhan.github.io/action-continuous-translation/dashboard/))
 * ✍️ [**المقالة**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - تحليل معمق للتكنولوجيا.
 * 🌐 **الترجمات**: [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
@@ -44,6 +44,7 @@
 | `files`             | الملفات التي سيتم ترجمتها (مفصولة بفاصلة منقوطة)              | `README.md`       |
 | `instructions`      | تعليمات ترجمة مخصصة                                           | -                 |
 | `instructions_file` | مسار الملف الذي يحتوي على تعليمات الترجمة                     | -                 |
+| `translations_dir`  | المجلد لتخزين الترجمات                                        | `translations`    |
 
 ### 🌟 تكامل Astro Starlight
 

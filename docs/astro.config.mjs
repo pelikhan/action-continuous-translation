@@ -69,7 +69,7 @@ export default defineConfig({
         },
         {
           label: "Translation Dashboard",
-          link: "/dashboard"
+          link: "/dashboard/"
         }
       ],
       components: {

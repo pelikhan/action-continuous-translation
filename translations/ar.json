@@ -324,5 +324,17 @@
   "This website is translated using AI, check out the other languages via the dropd.7A9230551F177776812A": "يتم ترجمة هذا الموقع باستخدام الذكاء الاصطناعي، تحقق من اللغات الأخرى عبر القائمة المنسدلة في الزاوية العلوية اليمنى.\nيمكنك أيضًا الاطلاع على **لوحة معلومات الترجمة** لمتابعة تقدم GenAIScript.",
   "## Lunaria Translation Dashboard": "لوحة معلومات ترجمة Lunaria",
   "You can use the [Lunaria Translation Dashboard](https://lunaria.dev/integrations.F453D787A04B27AD456E": "يمكنك استخدام [لوحة معلومات ترجمة Lunaria](https://lunaria.dev/integrations/starlight/) لإنشاء\nلوحة معلومات حالة الترجمة لموقع Starlight الخاص بك.",
-  "You can try the dashboard by naivagating to the **Translation Dashboard** link i.C659A1EF88B06BB19459": "يمكنك تجربة لوحة المعلومات من خلال الانتقال إلى رابط **لوحة معلومات الترجمة** في الشريط الجانبي لهذه الصفحة."
+  "You can try the dashboard by naivagating to the **Translation Dashboard** link i.C659A1EF88B06BB19459": "يمكنك تجربة لوحة المعلومات من خلال الانتقال إلى رابط **لوحة معلومات الترجمة** في الشريط الجانبي لهذه الصفحة.",
+  "📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/.2AA2D9DD6A55AD6DFFF7": "📖 [**الوثائق**](https://pelikhan.github.io/action-continuous-translation/) - دليل الإعداد الكامل ومرجع واجهة برمجة التطبيقات (تمت ترجمته أيضًا بواسطة هذا الإجراء - انظر [لوحة تحكم الترجمة](https://pelikhan.github.io/action-continuous-translation/dashboard/))",
+  "### `model_alias`": "الاسم المستعار للنموذج",
+  "**Type**: `string`\\\n**Example**: `translate: github:gpt-4o-mini`": "**النوع**: `string`\\\n**المثال**: `translate: github:gpt-4o-mini`",
+  "A mapping of model names to their aliases as a YAML object. This can be used to .002640104FCEE8D4360F": "تعيين أسماء النماذج إلى ألقابها ككائن YAML. يمكن استخدام ذلك لتحديد النموذج الذي سيتم استخدامه للترجمة المحددة.",
+  "**Type**: `string` (secret recommended)\\\n**Example**: `${{ secrets.GITHUB_TOKEN .BAFC7562A73F1226E3B3": "**النوع**: `string` (يفضل أن يكون سرًا)\\\n**المثال**: `${{ secrets.GITHUB_TOKEN }}`",
+  "GenAI Usage": "استخدام GenAI",
+  "View translation usage logs and statistics": "عرض سجلات وإحصائيات استخدام الترجمة",
+  "This page displays translation usage logs and statistics from the continuous tra.1B40F4C0D6A57397EF2A": "تعرض هذه الصفحة سجلات وإحصائيات استخدام الترجمة من سير عمل الترجمة المستمر لهذا المشروع.",
+  "Folder to store translations": "المجلد لتخزين الترجمات",
+  "### `translations_dir`": "`translations_dir`",
+  "**Type**: `string`\n**Default**: `translations`": "**النوع**: `string`\n**القيمة الافتراضية**: `translations`",
+  "Folder where the translations will be stored.": "المجلد حيث سيتم تخزين الترجمات."
 }

@@ -71,10 +71,6 @@ jobs:
 جميع المعلمات اختيارية.
 القيم الافتراضية موضحة في المرجع أدناه.
 
-:::caution
-هذا الإجراء قيد التقدم حاليًا. يمكن أن تتغير المعلمات في أي وقت!
-:::
-
 ```yaml
 with:
   lang: fr
@@ -85,6 +81,8 @@ with:
   starlight_dir:
   starlight_base:
   force: false
+  model_alias: |
+    translate: github:gpt-4o-mini
   debug: false
 ```
 
@@ -124,6 +122,13 @@ with:
 
 مسار إلى ملف يحتوي على تعليمات إضافية لاستخدام LLM أثناء الترجمة.
 
+### `translations_dir`
+
+**النوع**: `string`
+**القيمة الافتراضية**: `translations`
+
+المجلد حيث سيتم تخزين الترجمات.
+
 ### `starlight_dir`
 
 **النوع**: `string`
@@ -153,10 +158,17 @@ with:
 تمكين تسجيل التصحيح.
 اقرأ المزيد من التفاصيل في [وثائق تسجيل GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
+### الاسم المستعار للنموذج
+
+**النوع**: `string`\
+**المثال**: `translate: github:gpt-4o-mini`
+
+تعيين أسماء النماذج إلى ألقابها ككائن YAML. يمكن استخدام ذلك لتحديد النموذج الذي سيتم استخدامه للترجمة المحددة.
+
 ### `github_token`
 
-**النوع**: `string` (يُوصى بأن يكون سريًا)\
-**موصى به**: `${{ secrets.GITHUB_TOKEN }}`
+**النوع**: `string` (يفضل أن يكون سرًا)\
+**المثال**: `${{ secrets.GITHUB_TOKEN }}`
 
 رمز GitHub الخاص بك [GitHub token](https://github.com/settings/tokens) مع إذن `models: read` على الأقل.
 
