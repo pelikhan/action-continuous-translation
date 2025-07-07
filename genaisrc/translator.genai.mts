@@ -53,6 +53,12 @@ script({
       description:
         "File containing additional prompting instructions that will be injected in the translation prompt.",
     },
+    translationsDir: {
+      type: "string",
+      default: "translations",
+      description:
+        "Directory where the translations will be stored. Defaults to 'translations'.",
+    },
     starlightDir: {
       type: "string",
       description: "Root directory for the Astro Starlight documentation.",
@@ -132,11 +138,13 @@ export default async function main() {
     starlightBase?: string;
     instructions?: string;
     instructionsFile?: string;
+    translationsDir?: string;
   };
 
   output.heading(1, "Continuous Translation");
 
-  const { force } = parameters;
+  const { force, translationsDir } = parameters;
+  dbg(`translationsDir: %s`, translationsDir);
   let { instructions } = parameters;
   const source = parameters.source;
   const sourceInfo = await resolveModels(source);
@@ -185,7 +193,7 @@ export default async function main() {
     fileTokens[file.filename] = tokens;
   }
 
-  const usageFn = "translations/usage.jsonl";
+  const usageFn = join(translationsDir, `usage.jsonl`);
 
   for (const to of langs) {
     const langInfo = await resolveModels(to);
@@ -193,7 +201,10 @@ export default async function main() {
     const translationModel = langInfo.models.translation;
     const classifyModel = langInfo.models.classify;
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
-    const translationCacheFilename = `translations/${to.toLowerCase()}.json`;
+    const translationCacheFilename = join(
+      translationsDir,
+      `${to.toLowerCase()}.json`
+    );
     dbg(`cache: %s`, translationCacheFilename);
     output.itemValue(`translation model`, translationModel);
     output.itemValue(`validation model`, classifyModel);
@@ -746,11 +757,7 @@ export default async function main() {
 
         if (unresolvedTranslations.size) {
           output.itemValue(`unresolved translations`, unresolvedTranslations);
-          output.fence(
-            Array.from(unresolvedTranslations)
-              .map((t) => t)
-              .join("\n")
-          );
+          Array.from(unresolvedTranslations).forEach((t) => output.fence(t));
         }
 
         dbgt(`stringifying %O`, translated.children);
