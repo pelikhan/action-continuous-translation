@@ -19,6 +19,7 @@
     "@lunariajs/starlight": "^0.1.1",
     "astro": "^5.11.0",
     "sharp": "^0.34.2",
-    "starlight-links-validator": "^0.17.0"
+    "starlight-links-validator": "^0.17.0",
+    "starlight-theme-rapide": "^0.5.1"
   }
 }

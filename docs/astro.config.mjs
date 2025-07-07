@@ -2,6 +2,7 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
+import starlightThemeRapide from 'starlight-theme-rapide'
 import lunaria from '@lunariajs/starlight';
 import { title, resources, references, dashboard } from "./resources.json" assert { type: "json" };
 
@@ -20,6 +21,7 @@ export default defineConfig({
           errorOnRelativeLinks: false,
           errorOnInconsistentLocale: true,
         }),
+        starlightThemeRapide(),
       ],
       title,
       social: [
