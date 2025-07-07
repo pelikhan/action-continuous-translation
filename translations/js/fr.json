@@ -69,5 +69,14 @@
   "Add this step to your GitHub Actions workflow to translate your README to French.FD1F14D87F50896DDBB9": "Ajoutez cette étape à votre workflow GitHub Actions pour traduire votre README en français et en espagnol :",
   "### Complete Workflow Example": "Exemple de Workflow Complet",
   "Save this file in your `.github/workflows/` directory as `continuous-translation.7422C439A36005DB9C08": "Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :",
-  "**Made with ❤️ using [GenAIScript](https://microsoft.github.io/genaiscript/)**": "**Réalisé avec ❤️ grâce à [GenAIScript](https://microsoft.github.io/genaiscript/)**"
+  "**Made with ❤️ using [GenAIScript](https://microsoft.github.io/genaiscript/)**": "**Réalisé avec ❤️ grâce à [GenAIScript](https://microsoft.github.io/genaiscript/)**",
+  "Lessons": "Leçons",
+  "[01 - Intro to Gen AI](/lessons/01-intro-to-genai/README.md)": "[01 - Introduction à l'IA Générative](/lessons/01-intro-to-genai/README.md)",
+  "[02 - First AI App](/lessons/02-first-ai-app/README.md)": "[02 - Première Application IA](/lessons/02-first-ai-app/README.md)",
+  "[03 - Prompt Engineering](/lessons/03-prompt-engineering/README.md)": "[03 - Ingénierie des Prompts](/lessons/03-prompt-engineering/README.md)",
+  "[04 - Structured Output](/lessons/04-structured-output/README.md)": "[04 - Sortie Structurée](/lessons/04-structured-output/README.md)",
+  "[05 - Retrieval Augmented Generation](/lessons/05-rag/README.md)": "[05 - Génération Augmentée par Recherche](/lessons/05-rag/README.md)",
+  "[06 - Tool Calling](/lessons/06-tool-calling/README.md)": "[06 - Appel d'Outil](/lessons/06-tool-calling/README.md)",
+  "[07 - MCP](/lessons/07-mcp/README.md)": "[07 - MCP](/lessons/07-mcp/README.md)",
+  "[08 - MCP, improving Client with LLM](/lessons/08-mcp-advanced/README.md)": "[08 - MCP, amélioration du Client avec LLM](/lessons/08-mcp-advanced/README.md)"
 }
