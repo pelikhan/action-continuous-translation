@@ -3,7 +3,6 @@ title: أسترو ستارلايت
 description: تكوين موقع وثائق Starlight الخاص بك
 sidebar:
   order: 9
-
 ---
 
 import { Steps } from "@astrojs/starlight/components";
@@ -38,6 +37,7 @@ import { Steps } from "@astrojs/starlight/components";
         starlight_base: astro_base_option
       ```
     </li>
+
   </ol>
 </Steps>
 
@@ -45,14 +45,14 @@ import { Steps } from "@astrojs/starlight/components";
 
 إلى جانب Markdown/MDX، نحن ندعم بعض بيانات frontmatter الوصفية التي يدعمها Starlight.
 
-* `title`: عنوان الصفحة.
-* `description`: وصف الصفحة.
-* `hero.tagline`: الشعار الخاص بقسم البطل.
-* `hero.actions.action.text`: نص زر الإجراء في قسم البطل.
+- `title`: عنوان الصفحة.
+- `description`: وصف الصفحة.
+- `hero.tagline`: الشعار الخاص بقسم البطل.
+- `hero.actions.action.text`: نص زر الإجراء في قسم البطل.
 
 نحن ندعم أيضًا مدخلات frontmatter من [مدونة Starlight](https://starlight-blog-docs.vercel.app/)
 
-* `excerpt`: مقتطف قصير عن الصفحة.
+- `excerpt`: مقتطف قصير عن الصفحة.
 
 ## العنوان والشريط الجانبي
 
@@ -71,8 +71,8 @@ export default defineConfig({
   ]);
 ```
 
-* [وثائق العنوان](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
-* [وثائق الشريط الجانبي](https://starlight.astro.build/guides/sidebar/)
+- [وثائق العنوان](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
+- [وثائق الشريط الجانبي](https://starlight.astro.build/guides/sidebar/)
 
 ## إشعار محتوى الذكاء الاصطناعي
 
@@ -80,7 +80,7 @@ export default defineConfig({
 إضافة إشعار في العنوان. في الوقت الحالي، لا يدعم Astro Starlight ميزة مضمنة لإضافة الإشعارات
 لذلك يتطلب تجاوز بعض المكونات.
 
-* [تجاوز](https://starlight.astro.build/guides/overriding-components/#how-to-override) مكوني `PageTitle` و`Hero` في ملف `astro.config.mjs` الخاص بك:
+- [تجاوز](https://starlight.astro.build/guides/overriding-components/#how-to-override) مكوني `PageTitle` و`Hero` في ملف `astro.config.mjs` الخاص بك:
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -95,7 +95,7 @@ export default defineConfig({
   });
   ```
 
-* أضف المكونات إلى دليل `src/components` الخاص بك [من `docs/src/components` في هذا المستودع](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+- أضف المكونات إلى دليل `src/components` الخاص بك [من `docs/src/components` في هذا المستودع](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 لا تتردد في تعديل المنطق في ملف `AIGeneratedNotice.astro` ليتناسب مع احتياجاتك.
 

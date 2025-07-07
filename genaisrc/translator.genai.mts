@@ -125,25 +125,30 @@ const hasMarker = (str: string): boolean => {
   return str.includes(MARKER_START) || str.includes(MARKER_END);
 };
 
-const parseDetailsElement = (htmlValue: string, parse: (content: string) => any) => {
+const parseDetailsElement = (
+  htmlValue: string,
+  parse: (content: string) => any
+) => {
   const detailsMatch = htmlValue.match(/<details[^>]*>(.*?)<\/details>/is);
   if (!detailsMatch) return null;
-  
+
   const detailsContent = detailsMatch[1];
   const summaryMatch = detailsContent.match(/<summary[^>]*>(.*?)<\/summary>/is);
-  
+
   if (!summaryMatch) return null;
-  
+
   const summaryText = summaryMatch[1].trim();
-  const contentAfterSummary = detailsContent.substring(summaryMatch.index + summaryMatch[0].length).trim();
-  
+  const contentAfterSummary = detailsContent
+    .substring(summaryMatch.index + summaryMatch[0].length)
+    .trim();
+
   // Parse the content after summary as markdown
   const parsedContent = parse(contentAfterSummary);
-  
+
   return {
     summary: summaryText,
     content: parsedContent,
-    originalHtml: htmlValue
+    originalHtml: htmlValue,
   };
 };
 
@@ -488,7 +493,7 @@ export default async function main() {
               const detailsInfo = parseDetailsElement(node.value, parse);
               if (detailsInfo) {
                 dbga(`details element found: %s`, detailsInfo.summary);
-                
+
                 // Handle summary text
                 const summaryHash = hashNode(detailsInfo.summary);
                 const summaryTranslation = translationCache[summaryHash];
@@ -501,12 +506,14 @@ export default async function main() {
                   llmHashTodos.add(llmHash);
                   detailsInfo.summary = `┌${llmHash}┐${detailsInfo.summary}└${llmHash}┘`;
                 }
-                
+
                 // Process content nodes within details
                 visit(detailsInfo.content, nodeTypes, (contentNode) => {
                   if (contentNode.type === "text") {
                     if (
-                      !/^\s*[-_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(contentNode.value) &&
+                      !/^\s*[-_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(
+                        contentNode.value
+                      ) &&
                       !isUri(contentNode.value)
                     ) {
                       const nhash = hashNode(contentNode);
@@ -521,7 +528,10 @@ export default async function main() {
                         contentNode.value = `┌${llmHash}┐${contentNode.value}└${llmHash}┘`;
                       }
                     }
-                  } else if (contentNode.type === "paragraph" || contentNode.type === "heading") {
+                  } else if (
+                    contentNode.type === "paragraph" ||
+                    contentNode.type === "heading"
+                  ) {
                     const nhash = hashNode(contentNode);
                     const tr = translationCache[nhash];
                     nTranslatable++;
@@ -542,7 +552,7 @@ export default async function main() {
                     }
                   }
                 });
-                
+
                 // Reconstruct the HTML with marked content
                 const markedContent = stringify(detailsInfo.content);
                 node.value = `<details>\n<summary>${detailsInfo.summary}</summary>\n\n${markedContent}\n</details>`;
@@ -797,12 +807,13 @@ export default async function main() {
                 const detailsInfo = parseDetailsElement(node.value, parse);
                 if (detailsInfo) {
                   dbgo(`applying translations to details element`);
-                  
+
                   // Apply translation to summary
                   const summaryHash = hashNode(detailsInfo.summary);
                   const summaryTranslation = translationCache[summaryHash];
-                  const finalSummary = summaryTranslation || detailsInfo.summary;
-                  
+                  const finalSummary =
+                    summaryTranslation || detailsInfo.summary;
+
                   // Apply translations to content nodes
                   visit(detailsInfo.content, nodeTypes, (contentNode) => {
                     if (contentNode.type === "text") {
@@ -813,15 +824,26 @@ export default async function main() {
                       } else {
                         unresolvedTranslations.add(nhash);
                       }
-                    } else if (contentNode.type === "paragraph" || contentNode.type === "heading") {
+                    } else if (
+                      contentNode.type === "paragraph" ||
+                      contentNode.type === "heading"
+                    ) {
                       const nhash = hashNode(contentNode);
                       const tr = translationCache[nhash];
                       if (tr) {
                         try {
-                          const newNodes = parse(tr).children as PhrasingContent[];
-                          contentNode.children.splice(0, contentNode.children.length, ...newNodes);
+                          const newNodes = parse(tr)
+                            .children as PhrasingContent[];
+                          contentNode.children.splice(
+                            0,
+                            contentNode.children.length,
+                            ...newNodes
+                          );
                         } catch (error) {
-                          output.error(`error parsing details content translation`, error);
+                          output.error(
+                            `error parsing details content translation`,
+                            error
+                          );
                           unresolvedTranslations.add(nhash);
                         }
                       } else {
@@ -829,7 +851,7 @@ export default async function main() {
                       }
                     }
                   });
-                  
+
                   // Reconstruct the HTML with translated content
                   const translatedContent = stringify(detailsInfo.content);
                   node.value = `<details>\n<summary>${finalSummary}</summary>\n\n${translatedContent}\n</details>`;

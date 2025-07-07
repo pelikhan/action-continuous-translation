@@ -54,3 +54,4 @@
 {"filename":"docs/src/content/docs/reference/astro-starlight.mdx","lang":"ar","tokens":1070,"stage":"validate","model":"github:core42/jais-30b-chat","date":"2025-07-07T18:36:43.976Z","cost":0,"duration":4429.012711000003,"total":3542,"prompt":3442,"completion":100}
 {"filename":"/tmp/test-details.md","lang":"fr","tokens":54,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-07T19:49:15.694Z"}
 {"filename":"test/markdown.md","lang":"fr","tokens":1635,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-07T19:52:49.713Z"}
+{"filename":"/tmp/test-details-demo.md","lang":"fr","tokens":38,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-07T19:55:43.814Z"}

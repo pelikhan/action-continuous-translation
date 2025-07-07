@@ -3,7 +3,6 @@ title: Astro Starlight
 description: Configuration de votre site de documentation Starlight
 sidebar:
   order: 9
-
 ---
 
 import { Steps } from "@astrojs/starlight/components";
@@ -36,6 +35,7 @@ Cette action peut être utilisée pour traduire le contenu d'un site de document
         starlight_base: astro_base_option
       ```
     </li>
+
   </ol>
 </Steps>
 
@@ -43,14 +43,14 @@ Cette action peut être utilisée pour traduire le contenu d'un site de document
 
 Outre le Markdown/MDX, nous prenons en charge certaines métadonnées frontmatter prises en charge par Starlight.
 
-* `title` : Le titre de la page.
-* `description` : La description de la page.
-* `hero.tagline` : Le slogan de la section héros.
-* `hero.actions.action.text` : Le texte du bouton d'action dans la section héros.
+- `title` : Le titre de la page.
+- `description` : La description de la page.
+- `hero.tagline` : Le slogan de la section héros.
+- `hero.actions.action.text` : Le texte du bouton d'action dans la section héros.
 
 Nous prenons également en charge les entrées frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/)
 
-* `excerpt` : Un court extrait de la page.
+- `excerpt` : Un court extrait de la page.
 
 ## Titre et barre latérale
 
@@ -69,14 +69,14 @@ export default defineConfig({
   ]);
 ```
 
-* [Documentation sur le titre](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
-* [Documentation sur la barre latérale](https://starlight.astro.build/guides/sidebar/)
+- [Documentation sur le titre](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
+- [Documentation sur la barre latérale](https://starlight.astro.build/guides/sidebar/)
 
 ## Avis concernant le contenu généré par IA
 
 Vous pouvez informer vos utilisateurs que la traduction a été générée par GenAI en ajoutant un avis dans le titre. À l'heure actuelle, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis, il est donc nécessaire de remplacer certains composants.
 
-* [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
+- [Remplacez](https://starlight.astro.build/guides/overriding-components/#how-to-override) les composants `PageTitle` et `Hero` dans votre fichier `astro.config.mjs` :
 
   ```ts title="astro.config.mjs"
   export default defineConfig({
@@ -91,7 +91,7 @@ Vous pouvez informer vos utilisateurs que la traduction a été générée par G
   });
   ```
 
-* Ajoutez les composants dans votre répertoire `src/components` [à partir du `docs/src/components` de ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+- Ajoutez les composants dans votre répertoire `src/components` [à partir du `docs/src/components` de ce dépôt](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
 
 N'hésitez pas à modifier la logique dans `AIGeneratedNotice.astro` pour répondre à vos besoins.
 
