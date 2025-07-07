@@ -2,5 +2,26 @@
   "title": {
     "en": "Continuous Translation",
     "fr": "Traduction Continue"
+  },
+  "references": {
+    "en": "References",
+    "fr": "Références",
+    "es": "Referencias",
+    "pt-br": "Referências",
+    "ar": "المراجع"
+  },
+  "resources": {
+    "en": "Resources",
+    "fr": "Resources",
+    "es": "Recursos",
+    "pt-br": "Recursos",
+    "ar": "الموارد"
+  },
+  "dashboard": {
+    "en": "Translation Dashboard",
+    "fr": "Tableau de bord",
+    "es": "Panel de control",
+    "pt-br": "Painel de controle",
+    "ar": "لوحة القيادة"
   }
 }

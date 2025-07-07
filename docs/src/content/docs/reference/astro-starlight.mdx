@@ -12,56 +12,66 @@ It requires a specific setup of Starlight as detailed below.
 
 <Steps>
 
-<ol>
+1.  Follow the Starlight guide to use a [root locale](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
 
-<li>
+2.  To enable the Starlight mode, you need to provide the `starlight_dir` input in the action.
 
-Follow the Starlight guide to use a [root locale](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+    ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
+    uses: pelikhan/action-continuous-translation@v0
+    with:
+      starlight_dir: ./docs
+    ```
 
-</li>
+3.  If you have set the [Astro `base` option as well](https://docs.astro.build/en/reference/configuration-reference/#base),
+    you need to provide the `starlight_base` input as well.
 
-<li>
-
-To enable the Starlight mode, you need to provide the `starlight_dir` input in the action.
-
-```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
-uses: pelikhan/action-continuous-translation@v0
-with:
-  starlight_dir: ./docs
-```
-
-</li>
-
-<li>
-
-If you have set the [Astro `base` option as well](https://docs.astro.build/en/reference/configuration-reference/#base),
-you need to provide the `starlight_base` input as well.
-
-```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
-uses: pelikhan/action-continuous-translation@v0
-with:
-  starlight_dir: ./docs
-  starlight_base: astro_base_option
-```
-
-</li>
-
-</ol>
+    ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
+    uses: pelikhan/action-continuous-translation@v0
+    with:
+      starlight_dir: ./docs
+      starlight_base: astro_base_option
+    ```
 
 </Steps>
 
 ## Supported Frontmatter entries
 
-Aside from the Markdown/MDX, we support some of the possible frontmatter metadata that Starlight supports.
+Aside from the Markdown/MDX, we support some of the possible frontmatter metadata that Starlight supports:
 
-- `title`: The title of the page.
-- `description`: The description of the page.
-- `hero.tagline`: The tagline of the hero section.
-- `hero.actions.action.text`: The text of the action button in the hero section.
+- [`title`](https://starlight.astro.build/reference/frontmatter/#title-required): The title of the page.
+- [`description`](https://starlight.astro.build/reference/frontmatter/#description): The description of the page.
+- [`head.content`](https://starlight.astro.build/reference/frontmatter/#head): The content of `<head>` tags for specific pages.
+- [`hero.tagline`](https://starlight.astro.build/reference/frontmatter/#hero): The tagline of the hero section.
+- [`hero.actions.text`](https://starlight.astro.build/reference/frontmatter/#hero): The text of the action button in the hero section.
+- [`banner.content`](https://starlight.astro.build/reference/frontmatter/#banner): The content of a page specific banner.
+- [`prev` / `prev.label`](https://starlight.astro.build/reference/frontmatter/#prev): The link text of the previous page.
+- [`next` / `next.label`](https://starlight.astro.build/reference/frontmatter/#next): The link text of the next page.
+- [`sidebar.label`](https://starlight.astro.build/reference/frontmatter/#sidebar): Custom text in the sidebar (by default `title`).
+- [`sidebar.badge` / `sidebar.badge.text`](https://starlight.astro.build/reference/frontmatter/#badge): Badge text for the sidebar.
 
-We also support frontmatter entries from [Starlight Blog](https://starlight-blog-docs.vercel.app/)
+We also support frontmatter entries from [Starlight Blog](https://starlight-blog-docs.vercel.app/):
 
-- `excerpt`: A short excerpt of the page.
+- [`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt): The excerpt of the blog post.
+
+## Title and Sidebar
+
+The `title` and `sidebar` entries in the frontmatter are not automatically translated by the action.
+We recommend moving those entries to a JSON file and importing it into your `astro.config.mjs` file.
+
+```ts title="astro.config.mjs" {2} /title(?=,)/
+// other imports
+import { title } from "./resources.json" assert { type: "json" };
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      title,
+    }),
+  ],
+});
+```
+
+Follow the specific [title docs](https://starlight.astro.build/guides/i18n/#translate-the-site-title) and [sidebar docs](https://starlight.astro.build/guides/sidebar/) from Starlight for further details.
 
 ## AI Content Notice
 
@@ -118,4 +128,4 @@ export default defineConfig({
 You can use the [Lunaria Translation Dashboard](https://lunaria.dev/integrations/starlight/) to generate
 a translation status dashboard for your Starlight site.
 
-You can try the dashboard by naivagating to the **Translation Dashboard** link in the sidebar of this page.
+You can try the dashboard by navigating to the **Translation Dashboard** link in the sidebar of this page.

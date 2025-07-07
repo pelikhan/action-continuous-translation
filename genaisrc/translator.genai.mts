@@ -102,6 +102,11 @@ const FRONTMATTER_FIELDS = [
   "caption",
   "text",
   "tagline",
+  "content",
+  "label",
+  "prev",
+  "next",
+  "badge",
   "og_title",
   "og_description",
 ];
