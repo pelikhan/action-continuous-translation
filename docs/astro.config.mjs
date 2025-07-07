@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
 import lunaria from '@lunariajs/starlight';
-import { title } from "./resources.json" assert { type: "json" };
+import { title, resources, references, dashboard } from "./resources.json" assert { type: "json" };
 
 // https://astro.build/config
 export default defineConfig({
@@ -61,14 +61,17 @@ export default defineConfig({
       sidebar: [
         {
           label: "Reference",
+          translations: references,
           autogenerate: { directory: "reference" },
         },
         {
           label: "Resources",
+          translations: resources,
           autogenerate: { directory: "resources" },
         },
         {
           label: "Translation Dashboard",
+          translations: dashboard,
           link: "/dashboard/"
         }
       ],
