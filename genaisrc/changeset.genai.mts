@@ -23,6 +23,7 @@ const diff = await git.diff({
     "docs/ar/**",
     "docs/pr-br/**",
     "package*.json",
+    "translations/**",
   ],
 });
 console.debug(diff);
