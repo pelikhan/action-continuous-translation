@@ -54,6 +54,26 @@ import { Steps } from "@astrojs/starlight/components";
 
 * `excerpt`: مقتطف قصير عن الصفحة.
 
+## العنوان والشريط الجانبي
+
+مدخلات `title` و`sidebar` في frontmatter لا يتم ترجمتها تلقائيًا بواسطة الإجراء.
+نوصي بنقل هذه المدخلات إلى ملف JSON واستيراده إلى ملف `astro.config.mjs` الخاص بك.
+
+```ts title="astro.config.mjs" "resources.json" "import { title, } from "./resources.json" assert { type: "json" };" "title"
+...
+import { title, } from "./resources.json" assert { type: "json" };
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      title,
+    })
+  ]);
+```
+
+* [وثائق العنوان](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
+* [وثائق الشريط الجانبي](https://starlight.astro.build/guides/sidebar/)
+
 ## إشعار محتوى الذكاء الاصطناعي
 
 يمكنك إعلام المستخدمين بأن الترجمة قد تم إنشاؤها بواسطة الذكاء الاصطناعي من خلال

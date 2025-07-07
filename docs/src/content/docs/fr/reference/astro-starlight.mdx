@@ -52,6 +52,26 @@ Nous prenons également en charge les entrées frontmatter de [Starlight Blog](h
 
 * `excerpt` : Un court extrait de la page.
 
+## Titre et barre latérale
+
+Les entrées `title` et `sidebar` dans les métadonnées frontmatter ne sont pas automatiquement traduites par l'action.
+Nous recommandons de déplacer ces entrées dans un fichier JSON et de les importer dans votre fichier `astro.config.mjs`.
+
+```ts title="astro.config.mjs" "resources.json" "import { title, } from "./resources.json" assert { type: "json" };" "title"
+...
+import { title, } from "./resources.json" assert { type: "json" };
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      title,
+    })
+  ]);
+```
+
+* [Documentation sur le titre](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
+* [Documentation sur la barre latérale](https://starlight.astro.build/guides/sidebar/)
+
 ## Avis concernant le contenu généré par IA
 
 Vous pouvez informer vos utilisateurs que la traduction a été générée par GenAI en ajoutant un avis dans le titre. À l'heure actuelle, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis, il est donc nécessaire de remplacer certains composants.

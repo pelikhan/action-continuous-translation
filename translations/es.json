@@ -336,5 +336,9 @@
   "Folder to store translations": "Carpeta para almacenar las traducciones",
   "### `translations_dir`": "`translations_dir`",
   "**Type**: `string`\n**Default**: `translations`": "**Tipo**: `string`\n**Por defecto**: `translations`",
-  "Folder where the translations will be stored.": "Carpeta donde se almacenarán las traducciones."
+  "Folder where the translations will be stored.": "Carpeta donde se almacenarán las traducciones.",
+  "## Title and Sidebar": "Título y Barra Lateral",
+  "The `title` and `sidebar` entries in the frontmatter are not automatically trans.B4EC17E1D274C4C40D30": "Las entradas `title` y `sidebar` en el frontmatter no se traducen automáticamente mediante la acción.\nRecomendamos mover esas entradas a un archivo JSON e importarlas en tu archivo `astro.config.mjs`.",
+  "[Title documentation](https://starlight.astro.build/guides/i18n/#translate-the-s.CF7F21E91E7D6720E2DD": "[Documentación del Título](https://starlight.astro.build/guides/i18n/#translate-the-site-title)",
+  "[Sidebar documentation](https://starlight.astro.build/guides/sidebar/)": "[Documentación de la Barra Lateral](https://starlight.astro.build/guides/sidebar/)"
 }

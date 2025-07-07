@@ -336,5 +336,9 @@
   "Folder to store translations": "المجلد لتخزين الترجمات",
   "### `translations_dir`": "`translations_dir`",
   "**Type**: `string`\n**Default**: `translations`": "**النوع**: `string`\n**القيمة الافتراضية**: `translations`",
-  "Folder where the translations will be stored.": "المجلد حيث سيتم تخزين الترجمات."
+  "Folder where the translations will be stored.": "المجلد حيث سيتم تخزين الترجمات.",
+  "## Title and Sidebar": "العنوان والشريط الجانبي",
+  "The `title` and `sidebar` entries in the frontmatter are not automatically trans.B4EC17E1D274C4C40D30": "مدخلات `title` و`sidebar` في frontmatter لا يتم ترجمتها تلقائيًا بواسطة الإجراء.\nنوصي بنقل هذه المدخلات إلى ملف JSON واستيراده إلى ملف `astro.config.mjs` الخاص بك.",
+  "[Title documentation](https://starlight.astro.build/guides/i18n/#translate-the-s.CF7F21E91E7D6720E2DD": "[وثائق العنوان](https://starlight.astro.build/guides/i18n/#translate-the-site-title)",
+  "[Sidebar documentation](https://starlight.astro.build/guides/sidebar/)": "[وثائق الشريط الجانبي](https://starlight.astro.build/guides/sidebar/)"
 }

@@ -54,6 +54,26 @@ También admitimos entradas de frontmatter de [Starlight Blog](https://starlight
 
 * `excerpt`: Un breve extracto de la página.
 
+## Título y Barra Lateral
+
+Las entradas `title` y `sidebar` en el frontmatter no se traducen automáticamente mediante la acción.
+Recomendamos mover esas entradas a un archivo JSON e importarlas en tu archivo `astro.config.mjs`.
+
+```ts title="astro.config.mjs" "resources.json" "import { title, } from "./resources.json" assert { type: "json" };" "title"
+...
+import { title, } from "./resources.json" assert { type: "json" };
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      title,
+    })
+  ]);
+```
+
+* [Documentación del Título](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
+* [Documentación de la Barra Lateral](https://starlight.astro.build/guides/sidebar/)
+
 ## Aviso de Contenido de IA
 
 Puedes informar a tus usuarios que la traducción fue generada por GenAI
