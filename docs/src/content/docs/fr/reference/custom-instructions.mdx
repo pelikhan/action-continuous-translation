@@ -44,7 +44,7 @@ translator:
 This document will be translated using the instructions specified in the frontmatter.
 ```
 
-Les types `translator` sont définis dans `types.ts`. Ils sont supprimés du frontmatter avant le début de la traduction, de sorte qu'ils n'affectent pas le résultat final.
+Les types de `translator` sont définis dans `types.ts`. Ils sont supprimés du frontmatter avant que la traduction ne commence, de sorte qu'ils n'affectent pas le résultat final.
 
 <Code lang="ts" code={types} title="Types de configuration" />
 
@@ -52,8 +52,8 @@ Les types `translator` sont définis dans `types.ts`. Ils sont supprimés du fro
 
 Les instructions sont appliquées dans l'ordre de priorité suivant :
 
-1. Paramètre `instructions` (priorité la plus haute)
+1. Paramètre `instructions` (priorité la plus élevée)
 2. Paramètre `instructions_file`
-3. `translator.instructions` du frontmatter du document (priorité la plus basse)
+3. `translator.instructions` provenant du frontmatter du document (priorité la plus basse)
 
 Si plusieurs méthodes sont utilisées, seule celle avec la priorité la plus élevée sera appliquée.
