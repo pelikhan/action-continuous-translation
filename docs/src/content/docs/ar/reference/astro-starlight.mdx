@@ -12,47 +12,45 @@ import { Steps } from "@astrojs/starlight/components";
 يتطلب إعدادًا محددًا لـ Starlight كما هو مفصل أدناه.
 
 <Steps>
-  <ol>
-    <li>
-      اتبع دليل Starlight لاستخدام [إعداد الجذر للغة](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
-    </li>
+  1. اتبع دليل Starlight لاستخدام [إعداد الجذر للغة](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
 
-    <li>
-      لتمكين وضع Starlight، تحتاج إلى توفير إدخال `starlight_dir` في الإجراء.
+  2. لتمكين وضع Starlight، تحتاج إلى توفير إدخال `starlight_dir` في الإجراء.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
-      uses: pelikhan/action-continuous-translation@v0
-      with:
-        starlight_dir: ./docs
-      ```
-    </li>
+     ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
+     uses: pelikhan/action-continuous-translation@v0
+     with:
+       starlight_dir: ./docs
+     ```
 
-    <li>
-      إذا كنت قد قمت بتعيين خيار \[Astro `base`] أيضًا ([https://docs.astro.build/en/reference/configuration-reference/#base)،](https://docs.astro.build/en/reference/configuration-reference/#base\)،)
-      فستحتاج إلى توفير إدخال `starlight_base` أيضًا.
+  3. إذا كنت قد قمت بتعيين خيار \[Astro `base`] أيضًا ([https://docs.astro.build/en/reference/configuration-reference/#base)،](https://docs.astro.build/en/reference/configuration-reference/#base\)،)
+     فستحتاج إلى توفير إدخال `starlight_base` أيضًا.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
-      uses: pelikhan/action-continuous-translation@v0
-      with:
-        starlight_dir: ./docs
-        starlight_base: astro_base_option
-      ```
-    </li>
-  </ol>
+     ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
+     uses: pelikhan/action-continuous-translation@v0
+     with:
+       starlight_dir: ./docs
+       starlight_base: astro_base_option
+     ```
 </Steps>
 
 ## مدخلات Frontmatter المدعومة
 
-إلى جانب Markdown/MDX، نحن ندعم بعض بيانات frontmatter الوصفية التي يدعمها Starlight.
+بالإضافة إلى Markdown/MDX، ندعم بعض البيانات الوصفية الممكنة لـ frontmatter التي يدعمها Starlight:
 
-* `title`: عنوان الصفحة.
-* `description`: وصف الصفحة.
-* `hero.tagline`: الشعار الخاص بقسم البطل.
-* `hero.actions.action.text`: نص زر الإجراء في قسم البطل.
+* [`title`](https://starlight.astro.build/reference/frontmatter/#title-required): عنوان الصفحة.
+* [`description`](https://starlight.astro.build/reference/frontmatter/#description): وصف الصفحة.
+* [`head.content`](https://starlight.astro.build/reference/frontmatter/#head): محتوى علامات `<head>` لصفحات محددة.
+* [`hero.tagline`](https://starlight.astro.build/reference/frontmatter/#hero): شعار القسم الرئيسي.
+* [`hero.actions.text`](https://starlight.astro.build/reference/frontmatter/#hero): نص زر الإجراء في القسم الرئيسي.
+* [`banner.content`](https://starlight.astro.build/reference/frontmatter/#banner): محتوى شريط لافتة محدد للصفحة.
+* [`prev` / `prev.label`](https://starlight.astro.build/reference/frontmatter/#prev): نص الرابط للصفحة السابقة.
+* [`next` / `next.label`](https://starlight.astro.build/reference/frontmatter/#next): نص الرابط للصفحة التالية.
+* [`sidebar.label`](https://starlight.astro.build/reference/frontmatter/#sidebar): نص مخصص في الشريط الجانبي (افتراضيًا `title`).
+* [`sidebar.badge` / `sidebar.badge.text`](https://starlight.astro.build/reference/frontmatter/#badge): نص الشارة للشريط الجانبي.
 
-نحن ندعم أيضًا مدخلات frontmatter من [مدونة Starlight](https://starlight-blog-docs.vercel.app/)
+ندعم أيضًا مدخلات frontmatter من [Starlight Blog](https://starlight-blog-docs.vercel.app/):
 
-* `excerpt`: مقتطف قصير عن الصفحة.
+* [`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt): ملخص منشور المدونة.
 
 ## العنوان والشريط الجانبي
 
@@ -67,12 +65,12 @@ export default defineConfig({
   integrations: [
     starlight({
       title,
-    })
-  ]);
+    }),
+  ],
+});
 ```
 
-* [وثائق العنوان](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
-* [وثائق الشريط الجانبي](https://starlight.astro.build/guides/sidebar/)
+اتبع وثائق [العنوان](https://starlight.astro.build/guides/i18n/#translate-the-site-title) المحددة و[وثائق الشريط الجانبي](https://starlight.astro.build/guides/sidebar/) من Starlight للحصول على مزيد من التفاصيل.
 
 ## إشعار محتوى الذكاء الاصطناعي
 
@@ -129,4 +127,4 @@ export default defineConfig({
 يمكنك استخدام [لوحة معلومات ترجمة Lunaria](https://lunaria.dev/integrations/starlight/) لإنشاء
 لوحة معلومات حالة الترجمة لموقع Starlight الخاص بك.
 
-يمكنك تجربة لوحة المعلومات من خلال الانتقال إلى رابط **لوحة معلومات الترجمة** في الشريط الجانبي لهذه الصفحة.
+يمكنك تجربة لوحة المعلومات عبر التنقل إلى رابط **لوحة معلومات الترجمة** في الشريط الجانبي لهذه الصفحة.

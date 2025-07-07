@@ -12,47 +12,45 @@ Esta acción se puede usar para traducir el contenido de un sitio de documentaci
 Requiere una configuración específica de Starlight como se detalla a continuación.
 
 <Steps>
-  <ol>
-    <li>
-      Sigue la guía de Starlight para usar un [idioma raíz](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
-    </li>
+  1. Sigue la guía de Starlight para usar un [idioma raíz](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
 
-    <li>
-      Para habilitar el modo Starlight, necesitas proporcionar la entrada `starlight_dir` en la acción.
+  2. Para habilitar el modo Starlight, necesitas proporcionar la entrada `starlight_dir` en la acción.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
-      uses: pelikhan/action-continuous-translation@v0
-      with:
-        starlight_dir: ./docs
-      ```
-    </li>
+     ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
+     uses: pelikhan/action-continuous-translation@v0
+     with:
+       starlight_dir: ./docs
+     ```
 
-    <li>
-      Si también has configurado la [opción `base` de Astro](https://docs.astro.build/en/reference/configuration-reference/#base),
-      necesitas proporcionar también la entrada `starlight_base`.
+  3. Si también has configurado la [opción `base` de Astro](https://docs.astro.build/en/reference/configuration-reference/#base),
+     necesitas proporcionar también la entrada `starlight_base`.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
-      uses: pelikhan/action-continuous-translation@v0
-      with:
-        starlight_dir: ./docs
-        starlight_base: astro_base_option
-      ```
-    </li>
-  </ol>
+     ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
+     uses: pelikhan/action-continuous-translation@v0
+     with:
+       starlight_dir: ./docs
+       starlight_base: astro_base_option
+     ```
 </Steps>
 
 ## Entradas Frontmatter Soportadas
 
-Además de Markdown/MDX, admitimos algunos de los posibles metadatos de frontmatter que Starlight admite.
+Además del Markdown/MDX, soportamos algunos de los metadatos frontmatter que Starlight admite:
 
-* `title`: El título de la página.
-* `description`: La descripción de la página.
-* `hero.tagline`: El eslogan de la sección del héroe.
-* `hero.actions.action.text`: El texto del botón de acción en la sección del héroe.
+* [`title`](https://starlight.astro.build/reference/frontmatter/#title-required): El título de la página.
+* [`description`](https://starlight.astro.build/reference/frontmatter/#description): La descripción de la página.
+* [`head.content`](https://starlight.astro.build/reference/frontmatter/#head): El contenido de las etiquetas `<head>` para páginas específicas.
+* [`hero.tagline`](https://starlight.astro.build/reference/frontmatter/#hero): El eslogan de la sección principal.
+* [`hero.actions.text`](https://starlight.astro.build/reference/frontmatter/#hero): El texto del botón de acción en la sección principal.
+* [`banner.content`](https://starlight.astro.build/reference/frontmatter/#banner): El contenido de un banner específico de la página.
+* [`prev` / `prev.label`](https://starlight.astro.build/reference/frontmatter/#prev): El texto del enlace a la página anterior.
+* [`next` / `next.label`](https://starlight.astro.build/reference/frontmatter/#next): El texto del enlace a la siguiente página.
+* [`sidebar.label`](https://starlight.astro.build/reference/frontmatter/#sidebar): Texto personalizado en la barra lateral (por defecto `title`).
+* [`sidebar.badge` / `sidebar.badge.text`](https://starlight.astro.build/reference/frontmatter/#badge): Texto de la insignia para la barra lateral.
 
-También admitimos entradas de frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/)
+También soportamos entradas frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/):
 
-* `excerpt`: Un breve extracto de la página.
+* [`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt): El extracto de la publicación del blog.
 
 ## Título y Barra Lateral
 
@@ -67,12 +65,12 @@ export default defineConfig({
   integrations: [
     starlight({
       title,
-    })
-  ]);
+    }),
+  ],
+});
 ```
 
-* [Documentación del Título](https://starlight.astro.build/guides/i18n/#translate-the-site-title)
-* [Documentación de la Barra Lateral](https://starlight.astro.build/guides/sidebar/)
+Consulta la documentación específica sobre [title](https://starlight.astro.build/guides/i18n/#translate-the-site-title) y [sidebar](https://starlight.astro.build/guides/sidebar/) en Starlight para más detalles.
 
 ## Aviso de Contenido de IA
 
@@ -129,4 +127,4 @@ export default defineConfig({
 Puedes usar el [Panel de Traducción de Lunaria](https://lunaria.dev/integrations/starlight/) para generar
 un panel de estado de traducción para tu sitio Starlight.
 
-Puedes probar el panel navegando al enlace **Panel de Traducción** en la barra lateral de esta página.
+Puedes probar el panel navegando al enlace **Translation Dashboard** en la barra lateral de esta página.
