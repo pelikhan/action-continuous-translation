@@ -83,9 +83,9 @@ const formatNumber = (num: number) => {
 };
 ---
 
-<div class="translation-logs">
+<div>
   {error ? (
-    <div class="error">
+    <div>
       <h3>Error loading translation logs</h3>
       <p>{error}</p>
       <p>Make sure the <code>translations/log.json</code> file exists in the repository root.</p>
@@ -93,34 +93,34 @@ const formatNumber = (num: number) => {
   ) : (
     <>
       <h2>Translation Statistics Overview</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
+      <div>
+        <div>
           <h3>Total Cost</h3>
-          <p class="stat-value">{formatCurrency(totalCost)}</p>
+          <p>{formatCurrency(totalCost)}</p>
         </div>
-        <div class="stat-card">
+        <div>
           <h3>Total Tokens</h3>
-          <p class="stat-value">{formatNumber(totalTokens)}</p>
-          <p class="stat-detail">
+          <p>{formatNumber(totalTokens)}</p>
+          <p>
             Input: {formatNumber(totalInputTokens)} | Output: {formatNumber(totalOutputTokens)}
           </p>
         </div>
-        <div class="stat-card">
+        <div>
           <h3>Files Processed</h3>
-          <p class="stat-value">{uniqueFiles}</p>
+          <p>{uniqueFiles}</p>
         </div>
-        <div class="stat-card">
+        <div>
           <h3>Operations</h3>
-          <p class="stat-value">{logs.length}</p>
-          <p class="stat-detail">
+          <p>{logs.length}</p>
+          <p>
             Translations: {translationEntries} | Validations: {validationEntries}
           </p>
         </div>
       </div>
 
       <h3>Model Usage</h3>
-      <div class="table-container">
-        <table class="model-stats">
+      <div>
+        <table>
           <thead>
             <tr>
               <th>Model</th>
@@ -143,8 +143,8 @@ const formatNumber = (num: number) => {
       </div>
 
       <h3>Full Translation Log</h3>
-      <div class="table-container">
-        <table class="logs-table">
+      <div>
+        <table>
           <thead>
             <tr>
               <th>Date</th>
@@ -159,15 +159,15 @@ const formatNumber = (num: number) => {
           <tbody>
             {logs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((log) => (
               <tr>
-                <td class="date-cell">{formatDate(log.date)}</td>
-                <td class="file-cell" title={log.filename}>
+                <td>{formatDate(log.date)}</td>
+                <td title={log.filename}>
                   {log.filename.length > 30 ? `...${log.filename.slice(-27)}` : log.filename}
                 </td>
-                <td class={`stage-cell stage-${log.stage}`}>{log.stage}</td>
-                <td class="model-cell">{log.model.replace('github:', '')}</td>
-                <td class="number-cell">{formatNumber(log.inputTokens)}</td>
-                <td class="number-cell">{formatNumber(log.outputTokens)}</td>
-                <td class="cost-cell">{formatCurrency(log.cost)}</td>
+                <td>{log.stage}</td>
+                <td>{log.model.replace('github:', '')}</td>
+                <td>{formatNumber(log.inputTokens)}</td>
+                <td>{formatNumber(log.outputTokens)}</td>
+                <td>{formatCurrency(log.cost)}</td>
               </tr>
             ))}
           </tbody>
@@ -181,150 +181,3 @@ const formatNumber = (num: number) => {
   )}
 </div>
 
-<style>
-  .translation-logs {
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .error {
-    background: #ffe6e6;
-    border: 1px solid #ff9999;
-    border-radius: 8px;
-    padding: 1rem;
-    margin: 1rem 0;
-  }
-
-  .error h3 {
-    color: #cc0000;
-    margin: 0 0 0.5rem 0;
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin: 1.5rem 0;
-  }
-
-  .stat-card {
-    background: var(--sl-color-bg-nav);
-    border: 1px solid var(--sl-color-hairline);
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .stat-card h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
-    color: var(--sl-color-text-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .stat-value {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 0.5rem 0;
-    color: var(--sl-color-text);
-  }
-
-  .stat-detail {
-    font-size: 0.8rem;
-    color: var(--sl-color-text-invert);
-    margin: 0;
-  }
-
-  .table-container {
-    overflow-x: auto;
-    margin: 1rem 0;
-    border: 1px solid var(--sl-color-hairline);
-    border-radius: 8px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-  }
-
-  th, td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid var(--sl-color-hairline);
-  }
-
-  th {
-    background: var(--sl-color-bg-nav);
-    font-weight: 600;
-    color: var(--sl-color-text-accent);
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 0.5px;
-  }
-
-  tbody tr:hover {
-    background: var(--sl-color-bg-nav);
-  }
-
-  .date-cell {
-    white-space: nowrap;
-    font-family: monospace;
-    font-size: 0.8rem;
-  }
-
-  .file-cell {
-    max-width: 300px;
-    font-family: monospace;
-    font-size: 0.8rem;
-  }
-
-  .stage-cell {
-    text-transform: capitalize;
-    font-weight: 500;
-  }
-
-  .stage-translate {
-    color: #10b981;
-  }
-
-  .stage-validate {
-    color: #f59e0b;
-  }
-
-  .model-cell {
-    font-family: monospace;
-    font-size: 0.8rem;
-  }
-
-  .number-cell, .cost-cell {
-    text-align: right;
-    font-family: monospace;
-    font-size: 0.8rem;
-  }
-
-  .cost-cell {
-    font-weight: 500;
-    color: var(--sl-color-text-accent);
-  }
-
-  @media (max-width: 768px) {
-    .stats-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .stat-value {
-      font-size: 1.4rem;
-    }
-
-    th, td {
-      padding: 0.5rem;
-      font-size: 0.8rem;
-    }
-
-    .date-cell, .file-cell, .model-cell {
-      font-size: 0.7rem;
-    }
-  }
-</style>
