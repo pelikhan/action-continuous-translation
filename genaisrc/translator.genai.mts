@@ -338,7 +338,7 @@ export default async function main() {
         const nodes: Record<string, NodeType> = {};
         visit(root, nodeTypes, (node) => {
           const hash = hashNode(node);
-          dbgn(`%s -> %s`, node.type, hash);
+          dbgn(`%s -> %s`, hash, inspect(node));
           nodes[hash] = node as NodeType;
         });
 
@@ -375,7 +375,7 @@ export default async function main() {
             // mark untranslated nodes with a unique identifier
             if (node.type === "text") {
               if (
-                !/^\s*[0-9-_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(node.value) &&
+                !/^\s*[0-9-"'`_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(node.value) &&
                 !isUri(node.value)
               ) {
                 dbga(`text node: %s`, nhash);
@@ -413,6 +413,7 @@ export default async function main() {
                   if (typeof data.hero.tagline === "string") {
                     const nhash = hashNode(data.hero.tagline);
                     const tr = translationCache[nhash];
+                    dbga(`yaml hero.tagline: %s -> %s`, nhash, tr);
                     nTranslatable++;
                     if (tr) data.hero.tagline = tr;
                     else {
