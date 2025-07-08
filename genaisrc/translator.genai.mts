@@ -366,8 +366,8 @@ export default async function main() {
                 return SKIP; // don't process children of paragraphs
               } catch (error) {
                 output.error(`error parsing paragraph translation`, error);
-                output.fence(node, "json");
-                output.fence(translation);
+                output.detailsFenced(`ast`, inspect(node, { color: false }));
+                output.detailsFenced(`translation`, translation);
               }
             }
           } else {
@@ -807,7 +807,7 @@ export default async function main() {
               1
             )}% < ${minTranslationsThreshold * 100}%), try to translate more.`
           );
-          output.fence(contentTranslated, "markdown");
+          output.detailsFenced(`translated`, contentTranslated, "markdown");
           // Save cache even if translation is incomplete
           await workspace.writeText(
             translationCacheFilename,
