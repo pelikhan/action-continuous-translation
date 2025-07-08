@@ -253,7 +253,7 @@ export default async function main() {
           );
       };
 
-      const { visit, parse, stringify, SKIP } = await mdast({
+      const { visit, parse, stringify, inspect, SKIP } = await mdast({
         mdx: /\.mdx$/i.test(filename),
       });
       const hashNode = (node: Node | string) => {
@@ -311,7 +311,7 @@ export default async function main() {
         // parse to tree
         dbgc(`parsing %s`, filename);
         const root = parse(content);
-        dbgt(`original %O`, root.children);
+        dbgt(`original\n%s`, inspect(root.children));
 
         // Extract instructions from frontmatter if not provided via parameters
         const frontmatterNode = root.children.find(
@@ -338,7 +338,7 @@ export default async function main() {
         const nodes: Record<string, NodeType> = {};
         visit(root, nodeTypes, (node) => {
           const hash = hashNode(node);
-          dbgn(`%s -> %s`, node.type, hash);
+          dbgn(`%s -> %s`, hash, inspect(node));
           nodes[hash] = node as NodeType;
         });
 
@@ -366,8 +366,8 @@ export default async function main() {
                 return SKIP; // don't process children of paragraphs
               } catch (error) {
                 output.error(`error parsing paragraph translation`, error);
-                output.fence(node, "json");
-                output.fence(translation);
+                output.detailsFenced(`ast`, inspect(node, { color: false }));
+                output.detailsFenced(`translation`, translation);
               }
             }
           } else {
@@ -375,7 +375,7 @@ export default async function main() {
             // mark untranslated nodes with a unique identifier
             if (node.type === "text") {
               if (
-                !/^\s*[0-9-_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(node.value) &&
+                !/^\s*[0-9-"'`_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(node.value) &&
                 !isUri(node.value)
               ) {
                 dbga(`text node: %s`, nhash);
@@ -413,6 +413,7 @@ export default async function main() {
                   if (typeof data.hero.tagline === "string") {
                     const nhash = hashNode(data.hero.tagline);
                     const tr = translationCache[nhash];
+                    dbga(`yaml hero.tagline: %s -> %s`, nhash, tr);
                     nTranslatable++;
                     if (tr) data.hero.tagline = tr;
                     else {
@@ -505,7 +506,7 @@ export default async function main() {
           }
         });
 
-        dbgt(`translated %O`, translated.children);
+        dbgt(`translated\n%s`, inspect(translated.children));
         let attempts = 0;
         let lastLLmHashTodos = llmHashTodos.size + 1;
         while (
@@ -782,7 +783,7 @@ export default async function main() {
           Array.from(unresolvedTranslations).forEach((t) => output.fence(t));
         }
 
-        dbgt(`stringifying %O`, translated.children);
+        dbgt(`stringifying\n%s`, inspect(translated.children));
         let contentTranslated = await stringify(translated);
 
         const nTranslations = Object.keys(llmHashes).length;
@@ -807,7 +808,7 @@ export default async function main() {
               1
             )}% < ${minTranslationsThreshold * 100}%), try to translate more.`
           );
-          output.fence(contentTranslated, "markdown");
+          output.detailsFenced(`translated`, contentTranslated, "markdown");
           // Save cache even if translation is incomplete
           await workspace.writeText(
             translationCacheFilename,

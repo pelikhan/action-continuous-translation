@@ -4,13 +4,12 @@
   "version": "0.0.21",
   "description": "This action uses GitHub Models and remark to translate markdown document incrementally in your repository.",
   "dependencies": {
-    "@anthropic-ai/claude-code": "^1.0.43",
-    "@genaiscript/core": "^2.2.9",
-    "@genaiscript/plugin-mdast": "^2.2.9",
-    "@genaiscript/runtime": "^2.2.9",
+    "@genaiscript/core": "^2.2.12",
+    "@genaiscript/plugin-mdast": "^2.2.12",
+    "@genaiscript/runtime": "^2.2.12",
     "@types/mdast": "^4.0.4",
-    "es-toolkit": "^1.39.6",
-    "genaiscript": "2.2.9",
+    "es-toolkit": "^1.39.7",
+    "genaiscript": "2.2.12",
     "mdast-util-mdx": "^3.0.0",
     "mdast-util-mdx-jsx": "^3.2.0",
     "mdast-util-mdxjs-esm": "^2.0.1"
@@ -30,7 +29,7 @@
     "test": "npm run typecheck",
     "test:genai": "genaiscript test translator",
     "test:build": "cd docs && npm run build && cd ../test/root-no-base && npm run build",
-    "dev": "genaiscript run translator README.md",
+    "dev": "genaiscript run translator",
     "dev:docs": "cd docs && npm run dev",
     "dev:astro": "genaiscript run translator \"docs/src/content/docs/index.mdx\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation",
     "dev:astro:root-no-base": "genaiscript run translator \"test/root-no-base/src/content/**/*\" -x \"lang=fr\" --no-run-trace -x starlightDir=test/root-no-base",
@@ -40,8 +39,8 @@
     "start": "genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.11",
-    "@intellectronica/ruler": "^0.2.6"
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.5",
+    "@intellectronica/ruler": "^0.2.7"
   }
 }
