@@ -21,7 +21,7 @@ const diff = await git.diff({
     "docs/fr/**",
     "docs/es/**",
     "docs/ar/**",
-    "docs/pr-br/**",
+    "docs/pt-br/**",
     "package*.json",
     "translations/**",
   ],
