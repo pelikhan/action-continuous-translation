@@ -253,7 +253,7 @@ export default async function main() {
           );
       };
 
-      const { visit, parse, stringify, SKIP } = await mdast({
+      const { visit, parse, stringify, inspect, SKIP } = await mdast({
         mdx: /\.mdx$/i.test(filename),
       });
       const hashNode = (node: Node | string) => {
@@ -311,7 +311,7 @@ export default async function main() {
         // parse to tree
         dbgc(`parsing %s`, filename);
         const root = parse(content);
-        dbgt(`original %O`, root.children);
+        dbgt(`original\n%s`, inspect(root.children));
 
         // Extract instructions from frontmatter if not provided via parameters
         const frontmatterNode = root.children.find(
@@ -505,7 +505,7 @@ export default async function main() {
           }
         });
 
-        dbgt(`translated %O`, translated.children);
+        dbgt(`translated\n%s`, inspect(translated.children));
         let attempts = 0;
         let lastLLmHashTodos = llmHashTodos.size + 1;
         while (
@@ -782,7 +782,7 @@ export default async function main() {
           Array.from(unresolvedTranslations).forEach((t) => output.fence(t));
         }
 
-        dbgt(`stringifying %O`, translated.children);
+        dbgt(`stringifying\n%s`, inspect(translated.children));
         let contentTranslated = await stringify(translated);
 
         const nTranslations = Object.keys(llmHashes).length;
