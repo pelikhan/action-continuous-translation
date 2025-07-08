@@ -1,3 +1,3 @@
 README.*.md merge=theirs
-translations/**/*.json merge=theirs
-translations/**/*.jsonl merge=theirs
+translations/*.json merge=theirs
+translations/*.jsonl merge=theirs
