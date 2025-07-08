@@ -199,6 +199,9 @@ export default async function main() {
 
   const usageFn = join(translationsDir, `usage.jsonl`);
 
+  // hash -> original text mapping for en.json (shared across all languages)
+  const originalStrings: Record<string, string> = {};
+
   for (const to of langs) {
     const langInfo = await resolveModels(to);
     const lang = langInfo.name;
@@ -330,6 +333,14 @@ export default async function main() {
           const hash = hashNode(node);
           dbgn(`%s -> %s`, node.type, hash);
           nodes[hash] = node as NodeType;
+          // Store original text for en.json
+          if (node.type === "text") {
+            originalStrings[hash] = node.value;
+          } else if (node.type === "paragraph" || node.type === "heading") {
+            originalStrings[hash] = stringify({ type: "root", children: [node] }).trim();
+          } else if (node.type === "yaml") {
+            originalStrings[hash] = node.value;
+          }
         });
 
         dbg(`nodes: %d`, Object.keys(nodes).length);
@@ -403,6 +414,7 @@ export default async function main() {
                   if (typeof data.hero.tagline === "string") {
                     const nhash = hashNode(data.hero.tagline);
                     const tr = translationCache[nhash];
+                    originalStrings[nhash] = data.hero.tagline;
                     nTranslatable++;
                     if (tr) data.hero.tagline = tr;
                     else {
@@ -420,6 +432,7 @@ export default async function main() {
                         const nhash = hashNode(action.text);
                         const tr = translationCache[nhash];
                         dbga(`hero.action: %s -> %s`, nhash, tr);
+                        originalStrings[nhash] = action.text;
                         nTranslatable++;
                         if (tr) action.text = tr;
                         else {
@@ -445,6 +458,7 @@ export default async function main() {
                 const nhash = hashNode(data[field]);
                 const tr = translationCache[nhash];
                 dbga(`%s: %s -> %s`, field, nhash, tr);
+                originalStrings[nhash] = data[field];
                 nTranslatable++;
                 if (tr) data[field] = tr;
                 else {
@@ -476,20 +490,23 @@ export default async function main() {
               // collect title attributes
               dbgm(`attribute title: %s`, attribute.value);
               let title = attribute.value;
-              const nhash = hashNode(title);
-              const tr = translationCache[nhash];
-              nTranslatable++;
-              if (tr) {
-                title = tr;
-              } else {
-                const llmHash = `T${Object.keys(llmHashes)
-                  .length.toString()
-                  .padStart(3, "0")}`;
-                llmHashes[llmHash] = nhash;
-                llmHashTodos.add(llmHash);
-                title = `┌${llmHash}┐${title}└${llmHash}┘`;
+              if (typeof title === "string") {
+                const nhash = hashNode(title);
+                const tr = translationCache[nhash];
+                originalStrings[nhash] = title;
+                nTranslatable++;
+                if (tr) {
+                  title = tr;
+                } else {
+                  const llmHash = `T${Object.keys(llmHashes)
+                    .length.toString()
+                    .padStart(3, "0")}`;
+                  llmHashes[llmHash] = nhash;
+                  llmHashTodos.add(llmHash);
+                  title = `┌${llmHash}┐${title}└${llmHash}┘`;
+                }
+                attribute.value = title;
               }
-              attribute.value = title;
               return SKIP;
             }
           }
@@ -893,4 +910,12 @@ export default async function main() {
       }
     }
   }
+
+  // Save the original strings mapping as en.json
+  const originalStringsFilename = join(translationsDir, "en.json");
+  await workspace.writeText(
+    originalStringsFilename,
+    JSON.stringify(originalStrings, null, 2)
+  );
+  output.resultItem(true, `saved original strings: ${originalStringsFilename}`);
 }
