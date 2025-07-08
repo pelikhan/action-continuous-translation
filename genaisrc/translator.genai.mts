@@ -11,6 +11,8 @@ import type {
   Paragraph,
   PhrasingContent,
   Yaml,
+  Blockquote,
+  BlockContent,
 } from "mdast";
 import { basename, dirname, join, relative } from "path";
 import { URL } from "url";
@@ -83,6 +85,10 @@ script({
       files: "test/example-with-instructions.md",
       keywords: ["translator"],
     },
+    {
+      files: "test/alerts.md",
+      keywords: ["blockquote"],
+    },
   ],
 });
 
@@ -90,10 +96,10 @@ const HASH_TEXT_LENGTH = 80;
 const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
 const minTranslationsThreshold = 0.9;
-const nodeTypes = ["text", "paragraph", "heading", "yaml"];
+const nodeTypes = ["text", "paragraph", "heading", "yaml", "blockquote"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
-type NodeType = Text | Paragraph | Heading | Yaml;
+type NodeType = Text | Paragraph | Heading | Yaml | Blockquote;
 const FRONTMATTER_FIELDS = [
   "title",
   "description",
@@ -360,6 +366,19 @@ export default async function main() {
                 output.fence(node, "json");
                 output.fence(translation);
               }
+            } else if (node.type === "blockquote") {
+              dbgo(`%s: %s -> %s`, node.type, nhash, translation);
+              try {
+                const newNodes = parse(translation).children.filter(
+                  (child) => child.type !== "text" || child.value.trim() !== ""
+                ) as BlockContent[];
+                node.children.splice(0, node.children.length, ...newNodes);
+                return SKIP; // don't process children of blockquotes
+              } catch (error) {
+                output.error(`error parsing blockquote translation`, error);
+                output.fence(node, "json");
+                output.fence(translation);
+              }
             }
           } else {
             dbgo(`missing %s %s`, node.type, nhash);
@@ -396,6 +415,27 @@ export default async function main() {
                 value: `└${llmHash}┘`,
               });
               return SKIP; // don't process children of paragraphs
+            } else if (node.type === "blockquote") {
+              dbga(`blockquote node: %s`, nhash);
+              const llmHash = `B${Object.keys(llmHashes)
+                .length.toString()
+                .padStart(3, "0")}`;
+              llmHashes[llmHash] = nhash;
+              llmHashTodos.add(llmHash);
+              nTranslatable++;
+              // Add marker to the first paragraph inside the blockquote
+              if (node.children.length > 0 && node.children[0].type === "paragraph") {
+                const firstParagraph = node.children[0] as Paragraph;
+                firstParagraph.children.unshift({
+                  type: "text",
+                  value: `┌${llmHash}┐`,
+                } as Text);
+                firstParagraph.children.push({
+                  type: "text",
+                  value: `└${llmHash}┘`,
+                });
+              }
+              return SKIP; // don't process children of blockquotes
             } else if (node.type === "yaml") {
               dbgfm(`%s`, node.value);
               const data = parsers.YAML(node.value);
@@ -573,6 +613,7 @@ export default async function main() {
       - Always make sure that the URLs are not modified by the translation.
       - Translate each node individually, preserving the original meaning and context.
       - If you are unsure about the translation, skip the translation.
+      - For GitHub alerts (blockquotes starting with [!NOTE], [!TIP], [!IMPORTANT], [!WARNING], or [!CAUTION]), preserve the alert type syntax exactly and only translate the content text. Example: "[!NOTE]\\nThis is a note." should become "[!NOTE]\\nCeci est une note." in French.
       ${instructions || ""}
       ${instructionsFile || ""}`.role("system");
             },
@@ -701,6 +742,19 @@ export default async function main() {
                   return SKIP;
                 } catch (error) {
                   output.error(`error parsing paragraph translation`, error);
+                  output.fence(node, "json");
+                  output.fence(translation);
+                }
+              } else if (node.type === "blockquote") {
+                dbgo(`%s: %s -> %s`, node.type, nhash, translation);
+                try {
+                  const newNodes = parse(translation).children.filter(
+                    (child) => child.type !== "text" || child.value.trim() !== ""
+                  ) as BlockContent[];
+                  node.children.splice(0, node.children.length, ...newNodes);
+                  return SKIP;
+                } catch (error) {
+                  output.error(`error parsing blockquote translation`, error);
                   output.fence(node, "json");
                   output.fence(translation);
                 }
