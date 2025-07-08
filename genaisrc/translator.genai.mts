@@ -88,6 +88,10 @@ script({
       files: "test/alerts.md",
       keywords: ["blockquote"],
     },
+    {
+      files: "test/comprehensive-blockquotes.md",
+      keywords: ["blockquote", "paragraph"],
+    },
   ],
 });
 
@@ -366,17 +370,34 @@ export default async function main() {
                 output.fence(translation);
               }
             } else if (node.type === "blockquote") {
-              dbgo(`%s: %s -> %s`, node.type, nhash, translation);
-              try {
-                const newNodes = parse(translation).children.filter(
-                  (child) => child.type !== "text" || child.value.trim() !== ""
-                ) as BlockContent[];
-                node.children.splice(0, node.children.length, ...newNodes);
-                return SKIP; // don't process children of blockquotes
-              } catch (error) {
-                output.error(`error parsing blockquote translation`, error);
-                output.fence(node, "json");
-                output.fence(translation);
+              // Check if this is a GitHub alert
+              let isGithubAlert = false;
+              if (node.children.length > 0 && node.children[0].type === "paragraph") {
+                const firstParagraph = node.children[0] as Paragraph;
+                if (firstParagraph.children.length > 0 && firstParagraph.children[0].type === "text") {
+                  const firstText = firstParagraph.children[0].value;
+                  isGithubAlert = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/.test(firstText);
+                }
+              }
+              
+              if (isGithubAlert) {
+                // For GitHub alerts, replace the entire blockquote content
+                dbgo(`%s: %s -> %s`, node.type, nhash, translation);
+                try {
+                  const newNodes = parse(translation).children.filter(
+                    (child) => child.type !== "text" || child.value.trim() !== ""
+                  ) as BlockContent[];
+                  node.children.splice(0, node.children.length, ...newNodes);
+                  return SKIP; // don't process children of GitHub alert blockquotes
+                } catch (error) {
+                  output.error(`error parsing blockquote translation`, error);
+                  output.fence(node, "json");
+                  output.fence(translation);
+                }
+              } else {
+                // For regular blockquotes, let the visitor process children individually
+                // Don't apply blockquote-level translation for regular blockquotes
+                return undefined;
               }
             }
           } else {
@@ -416,25 +437,43 @@ export default async function main() {
               return SKIP; // don't process children of paragraphs
             } else if (node.type === "blockquote") {
               dbga(`blockquote node: %s`, nhash);
-              const llmHash = `B${Object.keys(llmHashes)
-                .length.toString()
-                .padStart(3, "0")}`;
-              llmHashes[llmHash] = nhash;
-              llmHashTodos.add(llmHash);
-              nTranslatable++;
-              // Add marker to the first paragraph inside the blockquote
+              
+              // Check if this is a GitHub alert by looking at the first paragraph
+              let isGithubAlert = false;
               if (node.children.length > 0 && node.children[0].type === "paragraph") {
                 const firstParagraph = node.children[0] as Paragraph;
-                firstParagraph.children.unshift({
-                  type: "text",
-                  value: `┌${llmHash}┐`,
-                } as Text);
-                firstParagraph.children.push({
-                  type: "text",
-                  value: `└${llmHash}┘`,
-                });
+                if (firstParagraph.children.length > 0 && firstParagraph.children[0].type === "text") {
+                  const firstText = firstParagraph.children[0].value;
+                  isGithubAlert = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/.test(firstText);
+                }
               }
-              return SKIP; // don't process children of blockquotes
+              
+              if (isGithubAlert) {
+                // For GitHub alerts, treat the entire blockquote as one unit
+                const llmHash = `B${Object.keys(llmHashes)
+                  .length.toString()
+                  .padStart(3, "0")}`;
+                llmHashes[llmHash] = nhash;
+                llmHashTodos.add(llmHash);
+                nTranslatable++;
+                // Add marker to the first paragraph inside the blockquote
+                if (node.children.length > 0 && node.children[0].type === "paragraph") {
+                  const firstParagraph = node.children[0] as Paragraph;
+                  firstParagraph.children.unshift({
+                    type: "text",
+                    value: `┌${llmHash}┐`,
+                  } as Text);
+                  firstParagraph.children.push({
+                    type: "text",
+                    value: `└${llmHash}┘`,
+                  });
+                }
+                return SKIP; // don't process children of GitHub alert blockquotes
+              } else {
+                // For regular blockquotes, process each child individually
+                // Don't return SKIP here - let the visitor process the children
+                return undefined;
+              }
             } else if (node.type === "yaml") {
               dbgfm(`%s`, node.value);
               const data = parsers.YAML(node.value);
@@ -753,17 +792,34 @@ export default async function main() {
                   output.fence(translation);
                 }
               } else if (node.type === "blockquote") {
-                dbgo(`%s: %s -> %s`, node.type, nhash, translation);
-                try {
-                  const newNodes = parse(translation).children.filter(
-                    (child) => child.type !== "text" || child.value.trim() !== ""
-                  ) as BlockContent[];
-                  node.children.splice(0, node.children.length, ...newNodes);
-                  return SKIP;
-                } catch (error) {
-                  output.error(`error parsing blockquote translation`, error);
-                  output.fence(node, "json");
-                  output.fence(translation);
+                // Check if this is a GitHub alert
+                let isGithubAlert = false;
+                if (node.children.length > 0 && node.children[0].type === "paragraph") {
+                  const firstParagraph = node.children[0] as Paragraph;
+                  if (firstParagraph.children.length > 0 && firstParagraph.children[0].type === "text") {
+                    const firstText = firstParagraph.children[0].value;
+                    isGithubAlert = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/.test(firstText);
+                  }
+                }
+                
+                if (isGithubAlert) {
+                  // For GitHub alerts, replace the entire blockquote content
+                  dbgo(`%s: %s -> %s`, node.type, nhash, translation);
+                  try {
+                    const newNodes = parse(translation).children.filter(
+                      (child) => child.type !== "text" || child.value.trim() !== ""
+                    ) as BlockContent[];
+                    node.children.splice(0, node.children.length, ...newNodes);
+                    return SKIP;
+                  } catch (error) {
+                    output.error(`error parsing blockquote translation`, error);
+                    output.fence(node, "json");
+                    output.fence(translation);
+                  }
+                } else {
+                  // For regular blockquotes, let the visitor process children individually
+                  // Don't apply blockquote-level translation for regular blockquotes
+                  return undefined;
                 }
               } else {
                 dbg(`untranslated node type: %s`, node.type);
