@@ -19,6 +19,7 @@ import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
 import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
 import { resolveModels } from "./src/models.mts";
+import { sanitizeFilename } from "@genaiscript/core" 
 
 script({
   title: "Automatic Markdown Translations using GenAI",
@@ -195,19 +196,16 @@ export default async function main() {
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
 
     // Resolve the translation model from the host
-    const resolvedModel = await host.resolveLanguageModel(translationModel);
-    const modelId = resolvedModel?.modelId || translationModel;
+    const modelId = translationModel;
 
     dbg(`Using translation model: %s`, modelId);
 
     // Sanitize language and model IDs for safe use in filenames
-    const sanitizedLangId = to.toLowerCase().replace(/[\/\\:*?"<>|]/g, '_');
-    const sanitizedModelId = modelId.toLowerCase().replace(/[\/\\:*?"<>|]/g, '_');
+    const sanitizedLangId = to.toLowerCase();
+    const sanitizedModelId = sanitizeFilename(modelId.toLowerCase());
 
     // Build safe filename for translation cache
     const translationCacheFilename = `translations/${sanitizedLangId}/${sanitizedModelId}.json`;
-
-    dbg(`Resolved cache filename: %s`, translationCacheFilename);
 
     dbg(`cache: %s`, translationCacheFilename);
     output.itemValue(`translation model`, translationModel);
