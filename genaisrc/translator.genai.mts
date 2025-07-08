@@ -12,7 +12,8 @@ import type {
   PhrasingContent,
   Yaml,
 } from "mdast";
-import { basename, dirname, join, relative } from "path";
+import { basename, dirname, relative } from "path";
+import { join as pathJoin } from "path";
 import { URL } from "url";
 import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
@@ -123,6 +124,185 @@ const hasMarker = (str: string): boolean => {
   return str.includes(MARKER_START) || str.includes(MARKER_END);
 };
 
+/**
+ * Process Starlight i18n JSON files for translation
+ */
+async function processStarlightI18nFiles(
+  starlightI18nDir: string,
+  source: string,
+  to: string,
+  lang: string,
+  translationModel: string,
+  classifyModel: string,
+  translationCache: Record<string, string>,
+  translationCacheFilename: string,
+  logUsage: (stage: "translate" | "validate", model: string, usage: RunPromptUsage) => Promise<void>,
+  output: any,
+  dbg: any
+) {
+  output.heading(3, `Processing Starlight i18n files for ${lang} (${to})`);
+  
+  const sourceI18nFilename = `${starlightI18nDir}/${source}.json`;
+  const targetI18nFilename = `${starlightI18nDir}/${to}.json`;
+  
+  dbg(`source i18n file: %s`, sourceI18nFilename);
+  dbg(`target i18n file: %s`, targetI18nFilename);
+  
+  // Check if source i18n file exists
+  let sourceI18nContent: Record<string, string> = {};
+  try {
+    const sourceContentFile = await workspace.readText(sourceI18nFilename);
+    const sourceContent = typeof sourceContentFile === 'string' ? sourceContentFile : sourceContentFile.content;
+    sourceI18nContent = JSON.parse(sourceContent);
+  } catch (error) {
+    dbg(`Source i18n file not found: %s`, sourceI18nFilename);
+    return;
+  }
+  
+  // Check if target i18n file exists
+  let targetI18nContent: Record<string, string> = {};
+  try {
+    const targetContentFile = await workspace.readText(targetI18nFilename);
+    const targetContent = typeof targetContentFile === 'string' ? targetContentFile : targetContentFile.content;
+    targetI18nContent = JSON.parse(targetContent);
+  } catch (error) {
+    dbg(`Target i18n file not found, will create: %s`, targetI18nFilename);
+  }
+  
+  const sourceKeys = Object.keys(sourceI18nContent);
+  if (sourceKeys.length === 0) {
+    output.item(`No i18n keys found in source file`);
+    return;
+  }
+  
+  output.itemValue(`source i18n keys`, sourceKeys.length);
+  
+  const hashNode = (text: string) => {
+    const chunkHash = hash("sha-256", text);
+    if (text.length < HASH_TEXT_LENGTH) return text;
+    else
+      return (
+        text.slice(0, HASH_TEXT_LENGTH) +
+        "." +
+        chunkHash.slice(0, HASH_LENGTH).toUpperCase()
+      );
+  };
+  
+  const untranslatedKeys: string[] = [];
+  const translationsToProcess: Record<string, string> = {};
+  
+  // Check which keys need translation
+  for (const key of sourceKeys) {
+    const sourceValue = sourceI18nContent[key];
+    const hash = hashNode(sourceValue);
+    
+    if (translationCache[hash]) {
+      targetI18nContent[key] = translationCache[hash];
+      dbg(`cached translation for key %s: %s`, key, translationCache[hash]);
+    } else {
+      untranslatedKeys.push(key);
+      translationsToProcess[key] = sourceValue;
+      dbg(`needs translation for key %s: %s`, key, sourceValue);
+    }
+  }
+  
+  if (untranslatedKeys.length === 0) {
+    output.item(`All i18n keys already translated`);
+    await workspace.writeText(targetI18nFilename, JSON.stringify(targetI18nContent, null, 2));
+    return;
+  }
+  
+  output.itemValue(`untranslated keys`, untranslatedKeys.length);
+  
+  // Create translation prompt
+  const translationPrompt = Object.entries(translationsToProcess)
+    .map(([key, value]) => `${key}: "${value}"`)
+    .join('\n');
+  
+  output.item(`generating i18n translations`);
+  
+  const { error, text, usage } = await runPrompt(
+    async (ctx) => {
+      const sourceRef = ctx.def("SOURCE_I18N", translationPrompt, {
+        lineNumbers: false,
+      });
+      ctx.$`You are an expert at translating user interface text into ${lang} (${to}).
+
+## Task
+Your task is to translate Starlight UI element strings from ${source} to ${lang} (${to}).
+
+You will receive a list of key-value pairs in the format:
+key: "value to translate"
+
+## Input
+${sourceRef}
+
+## Output format
+Respond with the translated key-value pairs in the same format:
+key: "translated value"
+
+## Instructions
+- Keep the keys exactly the same, only translate the values
+- Preserve any HTML tags, placeholders, or special characters in the values
+- Maintain the same formatting and structure
+- Use consistent terminology for UI elements
+- Do not translate technical terms or product names unless they have established translations
+- If a string contains an arrow (→), keep it at the end of the translation
+- Ensure the translations are appropriate for user interface context`.role("system");
+    },
+    {
+      model: translationModel,
+      responseType: "text",
+      systemSafety: true,
+      system: [],
+      cache: true,
+      label: `translating i18n keys (${untranslatedKeys.length} keys)`,
+    }
+  );
+  
+  await logUsage("translate", translationModel, usage);
+  
+  if (error) {
+    output.error(`Error translating i18n keys: ${error.message}`);
+    return;
+  }
+  
+  // Parse the translation response
+  const translatedLines = text.split('\n').filter(line => line.trim());
+  let translatedCount = 0;
+  
+  for (const line of translatedLines) {
+    const match = line.match(/^([^:]+):\s*"(.+)"$/);
+    if (match) {
+      const [, key, translatedValue] = match;
+      const trimmedKey = key.trim();
+      const originalValue = translationsToProcess[trimmedKey];
+      
+      if (originalValue) {
+        const hash = hashNode(originalValue);
+        translationCache[hash] = translatedValue;
+        targetI18nContent[trimmedKey] = translatedValue;
+        translatedCount++;
+        dbg(`translated key %s: %s -> %s`, trimmedKey, originalValue, translatedValue);
+      }
+    }
+  }
+  
+  output.itemValue(`translated i18n keys`, translatedCount);
+  
+  // Write the updated files
+  await workspace.writeText(targetI18nFilename, JSON.stringify(targetI18nContent, null, 2));
+  await workspace.writeText(
+    translationCacheFilename,
+    JSON.stringify(translationCache, null, 2)
+  );
+  
+  output.resultItem(
+    true,
+    `i18n translation complete: ${translatedCount}/${untranslatedKeys.length} keys translated`
+  );
+}
+
 export default async function main() {
   const { dbg, output, vars } = env;
   const dbgn = host.logger(`ct:node`);
@@ -159,6 +339,10 @@ export default async function main() {
     ? `${parameters.starlightDir}/src/content/docs`
     : undefined;
   dbg(`starlightDir: %s`, starlightDir);
+  const starlightI18nDir = parameters.starlightDir
+    ? `${parameters.starlightDir}/src/content/i18n`
+    : undefined;
+  dbg(`starlightI18nDir: %s`, starlightI18nDir);
   const starlightBase = parameters.starlightBase;
   dbg(`starlightBase: %s`, starlightBase);
   if (starlightBase && !starlightDir) {
@@ -197,7 +381,7 @@ export default async function main() {
     fileTokens[file.filename] = tokens;
   }
 
-  const usageFn = join(translationsDir, `usage.jsonl`);
+  const usageFn = pathJoin(translationsDir, `usage.jsonl`);
 
   for (const to of langs) {
     const langInfo = await resolveModels(to);
@@ -205,7 +389,7 @@ export default async function main() {
     const translationModel = langInfo.models.translation;
     const classifyModel = langInfo.models.classify;
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
-    const translationCacheFilename = join(
+    const translationCacheFilename = pathJoin(
       translationsDir,
       `${to.toLowerCase()}.json`
     );
@@ -269,7 +453,7 @@ export default async function main() {
       const starlight = starlightDir && filename.startsWith(starlightDir);
       dbg(`starlight: %s`, starlight);
       const translationFn = starlight
-        ? filename.replace(starlightDir, join(starlightDir, to.toLowerCase()))
+        ? filename.replace(starlightDir, pathJoin(starlightDir, to.toLowerCase()))
         : path.changeext(filename, `.${to.toLowerCase()}.md`);
       dbg(`translation %s`, translationFn);
 
@@ -282,7 +466,7 @@ export default async function main() {
           const originalDir = dirname(filename);
           const translationDir = dirname(translationFn);
           const relativeToOriginal = relative(translationDir, originalDir);
-          let r = join(relativeToOriginal, fn);
+          let r = pathJoin(relativeToOriginal, fn);
           if (trailingSlash && !r.endsWith("/")) r += "/";
           dbgp(`patching %s -> %s`, fn, r);
           return r;
@@ -890,6 +1074,47 @@ export default async function main() {
       } catch (error) {
         output.error(error);
         break;
+      }
+    }
+
+    // Process Starlight i18n JSON files
+    if (starlightI18nDir) {
+      try {
+        const logUsageI18n = async (
+          stage: "translate" | "validate",
+          model: string,
+          usage: RunPromptUsage
+        ) => {
+          if (usageFn)
+            await workspace.appendText(
+              usageFn,
+              JSON.stringify({
+                filename: "i18n",
+                lang: to,
+                tokens: 0,
+                stage: stage,
+                model,
+                date: new Date().toISOString(),
+                ...(usage || {}),
+              }) + "\n"
+            );
+        };
+
+        await processStarlightI18nFiles(
+          starlightI18nDir,
+          source,
+          to,
+          lang,
+          translationModel,
+          classifyModel,
+          translationCache,
+          translationCacheFilename,
+          logUsageI18n,
+          output,
+          dbg
+        );
+      } catch (error) {
+        output.error(`Error processing i18n files: ${error.message}`);
       }
     }
   }

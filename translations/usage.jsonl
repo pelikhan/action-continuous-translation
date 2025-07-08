@@ -60,3 +60,6 @@
 {"filename":"docs/src/content/docs/reference/astro-starlight.mdx","lang":"pt-br","tokens":1332,"stage":"validate","model":"github:openai/gpt-4o","date":"2025-07-07T19:51:19.380Z","cost":0.0093525,"duration":919.2582950000069,"total":3648,"prompt":3617,"completion":31}
 {"filename":"docs/src/content/docs/reference/astro-starlight.mdx","lang":"ar","tokens":1332,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-07T19:51:25.475Z","cost":0.0140875,"duration":5491.317698999992,"total":3991,"prompt":3443,"completion":548}
 {"filename":"docs/src/content/docs/reference/astro-starlight.mdx","lang":"ar","tokens":1332,"stage":"validate","model":"github:core42/jais-30b-chat","date":"2025-07-07T19:51:30.301Z","cost":0,"duration":4721.314245000001,"total":4149,"prompt":4049,"completion":100}
+{"filename":"test/root-no-base/src/content/docs/index.mdx","lang":"fr","tokens":283,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T07:20:48.092Z"}
+{"filename":"test/root-no-base/src/content/docs/reference/example.md","lang":"fr","tokens":88,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T07:20:48.196Z"}
+{"filename":"test/root-no-base/src/content/docs/guides/example.md","lang":"fr","tokens":88,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T07:20:48.286Z"}
