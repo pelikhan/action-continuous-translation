@@ -19,6 +19,7 @@ import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
 import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
 import { resolveModels } from "./src/models.mts";
+import { sanitizeFilename } from "@genaiscript/core";
 
 script({
   title: "Automatic Markdown Translations using GenAI",
@@ -88,7 +89,7 @@ script({
 const HASH_TEXT_LENGTH = 80;
 const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
-const minTranslationsThreshold = 0.9;
+const minTranslationsThreshold = 0.7;
 const nodeTypes = ["text", "paragraph", "heading", "yaml"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
@@ -205,9 +206,18 @@ export default async function main() {
     const translationModel = langInfo.models.translation;
     const classifyModel = langInfo.models.classify;
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
+
+    dbg(`Using translation model: %s`, translationModel);
+    // Sanitize language and model IDs for safe use in filenames
+    const sanitizedLangId = to.toLowerCase();
+    const sanitizedModelId = sanitizeFilename(translationModel.toLowerCase());
+    dbg(`sanitized lang: %s, model: %s`, sanitizedLangId, sanitizedModelId);
+
+    // Build safe filename for translation cache
     const translationCacheFilename = join(
       translationsDir,
-      `${to.toLowerCase()}.json`
+      sanitizedLangId,
+      `${sanitizedModelId}.json`
     );
     dbg(`cache: %s`, translationCacheFilename);
     output.itemValue(`translation model`, translationModel);
@@ -776,18 +786,40 @@ export default async function main() {
         let contentTranslated = await stringify(translated);
 
         const nTranslations = Object.keys(llmHashes).length;
+        const successfulTranslations =
+          nTranslations - unresolvedTranslations.size;
+        const translationRatio =
+          nTranslations > 0 ? successfulTranslations / nTranslations : 1;
+
+        output.itemValue(`total nodes to translate`, nTranslations);
+        output.itemValue(`successful translations`, successfulTranslations);
+        output.itemValue(
+          `translation success ratio`,
+          `${(translationRatio * 100).toFixed(1)}%`
+        );
+
         if (
           unresolvedTranslations.size > 5 &&
-          (nTranslations - unresolvedTranslations.size) / nTranslations <
-            minTranslationsThreshold
+          translationRatio < minTranslationsThreshold
         ) {
-          output.warn(`not enough translations, try to translate more.`);
+          output.warn(
+            `not enough translations (${(translationRatio * 100).toFixed(
+              1
+            )}% < ${minTranslationsThreshold * 100}%), try to translate more.`
+          );
           output.fence(contentTranslated, "markdown");
+          // Save cache even if translation is incomplete
+          await workspace.writeText(
+            translationCacheFilename,
+            JSON.stringify(translationCache, null, 2)
+          );
           continue;
         }
 
         if (content === contentTranslated) {
-          output.warn(`Unable to translate anything, skipping file.`);
+          output.warn(
+            `Unable to translate anything, skipping file. Original content length: ${content.length}, translated length: ${contentTranslated.length}`
+          );
           continue;
         }
 
