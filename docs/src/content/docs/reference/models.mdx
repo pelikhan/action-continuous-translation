@@ -39,7 +39,7 @@ with:
 
 ### `github_token`
 
-**Type**: `string` (secret recommended)  
+**Type**: `string` (secret recommended)\
 **Default**: `${{ secrets.GITHUB_TOKEN }}`
 
 Your [GitHub token](https://github.com/settings/tokens) with at least `models: read` permission.
@@ -47,7 +47,7 @@ Read further details under [the GenAIScript GitHub Models Permissions docs](http
 
 ### `openai_api_key`
 
-**Type**: `string` (secret recommended)  
+**Type**: `string` (secret recommended)\
 **Default**: `${{ secrets.OPENAI_API_KEY }}`
 
 Your OpenAI API key.
@@ -55,14 +55,14 @@ Read more [here](https://help.openai.com/en/articles/4936850-where-do-i-find-my-
 
 ### `openai_api_base`
 
-**Type**: `string` (environment variable recommended)  
+**Type**: `string` (environment variable recommended)\
 **Default**: `${{ env.OPENAI_API_BASE }}`
 
 The OpenAI API base URL.
 
 ### `azure_openai_api_endpoint`
 
-**Type**: `string` (environment variable recommended)  
+**Type**: `string` (environment variable recommended)\
 **Default**: `${{ env.AZURE_OPENAI_API_ENDPOINT }}`
 
 The Azure OpenAI endpoint.
@@ -71,7 +71,7 @@ Find Keys and Endpoints and finally copy the Endpoint.
 
 ### `azure_openai_api_key`
 
-**Type**: `string` (secret recommended)  
+**Type**: `string` (secret recommended)\
 **Default**: `${{ secrets.AZURE_OPENAI_API_KEY }}`
 
 The Azure OpenAI API key.
@@ -82,7 +82,7 @@ You do NOT need this if you are using Microsoft Entra ID.
 
 ### `azure_openai_subscription_id`
 
-**Type**: `string` (environment variable recommended)  
+**Type**: `string` (environment variable recommended)\
 **Default**: `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}`
 
 The Azure OpenAI subscription ID to list available deployments.
@@ -93,14 +93,14 @@ You ONLY need this if you are using Microsoft Entra ID.
 
 ### `azure_openai_api_version`
 
-**Type**: `string` (environment variable recommended)  
+**Type**: `string` (environment variable recommended)\
 **Default**: `${{ env.AZURE_OPENAI_API_VERSION }}`
 
 The Azure OpenAI API version.
 
 ### `azure_openai_api_credentials`
 
-**Type**: `string` (environment variable recommended)  
+**Type**: `string` (environment variable recommended)\
 **Default**: `${{ env.AZURE_OPENAI_API_CREDENTIALS }}`
 
 The Azure OpenAI API credentials type.

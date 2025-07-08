@@ -4,43 +4,46 @@ This document demonstrates all the major syntactic constructs available in Markd
 
 ## Table of Contents
 
-- [Headers](#headers)
-- [Text Formatting](#text-formatting)
-- [Lists](#lists)
-- [Links and Images](#links-and-images)
-- [Code](#code)
-- [Tables](#tables)
-- [Blockquotes](#blockquotes)
-- [Horizontal Rules](#horizontal-rules)
-- [Line Breaks](#line-breaks)
-- [HTML Elements](#html-elements)
-- [Advanced Features](#advanced-features)
+* [Headers](#headers)
+* [Text Formatting](#text-formatting)
+* [Lists](#lists)
+* [Links and Images](#links-and-images)
+* [Code](#code)
+* [Tables](#tables)
+* [Blockquotes](#blockquotes)
+* [Horizontal Rules](#horizontal-rules)
+* [Line Breaks](#line-breaks)
+* [HTML Elements](#html-elements)
+* [Advanced Features](#advanced-features)
 
 ## Headers
 
 # H1 Header
+
 ## H2 Header
+
 ### H3 Header
+
 #### H4 Header
+
 ##### H5 Header
+
 ###### H6 Header
 
-Alternative H1
-==============
+# Alternative H1
 
-Alternative H2
---------------
+## Alternative H2
 
 ## Text Formatting
 
 **Bold text using asterisks**
-__Bold text using underscores__
+**Bold text using underscores**
 
 *Italic text using asterisks*
-_Italic text using underscores_
+*Italic text using underscores*
 
 ***Bold and italic using asterisks***
-___Bold and italic using underscores___
+***Bold and italic using underscores***
 
 ~~Strikethrough text~~
 
@@ -52,23 +55,25 @@ Regular text with **bold**, *italic*, and `code` mixed together.
 
 ### Unordered Lists
 
-- Item 1
-- Item 2
-  - Nested item 2.1
-  - Nested item 2.2
-    - Deeply nested item 2.2.1
-- Item 3
+* Item 1
+* Item 2
+  * Nested item 2.1
+  * Nested item 2.2
+    * Deeply nested item 2.2.1
+* Item 3
 
 Alternative syntax:
+
 * Item A
 * Item B
   * Nested item B.1
   * Nested item B.2
 
 Another alternative:
-+ Item X
-+ Item Y
-  + Nested item Y.1
+
+* Item X
+* Item Y
+  * Nested item Y.1
 
 ### Ordered Lists
 
@@ -80,26 +85,27 @@ Another alternative:
 3. Third item
 
 Alternative numbering:
+
 1. Item one
-1. Item two (auto-numbered)
-1. Item three (auto-numbered)
+2. Item two (auto-numbered)
+3. Item three (auto-numbered)
 
 ### Mixed Lists
 
 1. Ordered item
-   - Unordered nested item
-   - Another unordered nested item
+   * Unordered nested item
+   * Another unordered nested item
 2. Another ordered item
    1. Nested ordered item
    2. Another nested ordered item
 
 ### Task Lists
 
-- [x] Completed task
-- [ ] Incomplete task
-- [x] Another completed task
-  - [x] Nested completed task
-  - [ ] Nested incomplete task
+* [x] Completed task
+* [ ] Incomplete task
+* [x] Another completed task
+  * [x] Nested completed task
+  * [ ] Nested incomplete task
 
 ## Links and Images
 
@@ -110,7 +116,7 @@ Alternative numbering:
 [Link with title](https://www.example.com "Example Website")
 
 // TODO turn off MDX
-< https://www.autolink.com>
+< [https://www.autolink.com>](https://www.autolink.com>)
 
 [Reference link][ref1]
 
@@ -129,7 +135,9 @@ You can also link to [local files](./README.md).
 ### Reference Definitions
 
 [ref1]: https://www.reference1.com "Reference 1 Title"
+
 [ref2]: https://www.reference2.com
+
 [img1]: https://via.placeholder.com/200x150 "Reference Image"
 
 ## Code
@@ -184,27 +192,28 @@ done
 
 Indented code block (4 spaces):
 TODO: fix this parse issue
+
 ## Tables
 
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Row 1    | Data     | More data|
-| Row 2    | Info     | Details  |
+| Column 1 | Column 2 | Column 3  |
+| -------- | -------- | --------- |
+| Row 1    | Data     | More data |
+| Row 2    | Info     | Details   |
 
 ### Table with Alignment
 
 | Left Aligned | Center Aligned | Right Aligned |
-|:-------------|:--------------:|--------------:|
-| Left         | Center         | Right         |
-| Text         | Text           | Text          |
-| More         | Data           | Here          |
+| :----------- | :------------: | ------------: |
+| Left         |     Center     |         Right |
+| Text         |      Text      |          Text |
+| More         |      Data      |          Here |
 
 ### Simple Table
 
-First Header | Second Header
------------- | -------------
-Content cell 1 | Content cell 2
-Content cell 3 | Content cell 4
+| First Header   | Second Header  |
+| -------------- | -------------- |
+| Content cell 1 | Content cell 2 |
+| Content cell 3 | Content cell 4 |
 
 ## Blockquotes
 
@@ -216,33 +225,33 @@ Content cell 3 | Content cell 4
 > Nested blockquotes:
 >
 > > This is a nested blockquote.
-> > 
+> >
 > > > And this is deeply nested.
 
 > ### Blockquote with other elements
-> 
-> - List item in blockquote
-> - Another item
-> 
+>
+> * List item in blockquote
+> * Another item
+>
 > **Bold text** in blockquote with `inline code`.
 
 ## Horizontal Rules
 
----
+***
 
 ***
 
-___
+***
 
-- - -
+***
 
-* * *
+***
 
-_ _ _
+***
 
 ## Line Breaks
 
-This is the first line.  
+This is the first line.\
 This is the second line (two spaces at end of previous line).
 
 This is the third line.
@@ -273,8 +282,8 @@ You can use <em>HTML tags</em> in Markdown.
 
 This content is hidden by default and can be expanded.
 
-- List item
-- Another item
+* List item
+* Another item
 
 ```javascript
 console.log("Code in details");
@@ -291,6 +300,7 @@ Here's a sentence with a footnote[^1].
 Another sentence with a footnote[^note].
 
 [^1]: This is the first footnote.
+
 [^note]: This is a named footnote with more details.
 
 ### Definition Lists
@@ -304,8 +314,8 @@ Term 2
 
 ### Abbreviations
 
-*[HTML]: Hyper Text Markup Language
-*[CSS]: Cascading Style Sheets
+\*\[HTML]: Hyper Text Markup Language
+\*\[CSS]: Cascading Style Sheets
 
 HTML and CSS are important web technologies.
 
@@ -314,6 +324,7 @@ HTML and CSS are important web technologies.
 Inline math: $E = mc^2$
 
 Block math:
+
 $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 $$
@@ -324,20 +335,18 @@ Use backslashes to escape special characters:
 
 \*Not italic\*
 \#Not a header
-\[Not a link\]
+\[Not a link]
 \`Not code\`
 
 ### Comments
 
-<!-- This is a comment and will not be rendered in the output -->
-
 ### Emojis
 
-:smile: :heart: :thumbsup: :rocket: :computer:
+\:smile: \:heart: \:thumbsup: \:rocket: \:computer:
 
 😀 😍 👍 🚀 💻
 
----
+***
 
 ## Conclusion
 

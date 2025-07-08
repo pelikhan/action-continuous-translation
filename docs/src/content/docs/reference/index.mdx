@@ -89,7 +89,7 @@ See [Models](/action-continuous-translation/reference/models/) for more details 
 
 ### `lang`
 
-**Type**: `string`  
+**Type**: `string`\
 **Default**: `fr`
 
 A list of ISO-codes of the target languages separated by colon (`,`) to which the documentation should be translated to from the [source language](#source).
@@ -97,14 +97,14 @@ See a list of all supported languages [in the `models.mts` file in the repositor
 
 ### `source`
 
-**Type**: `string`  
+**Type**: `string`\
 **Default**: `en`
 
 The ISO-code of the source language the main content is written in.
 
 ### `files`
 
-**Type**: `string`  
+**Type**: `string`\
 **Default**: `README.md`
 
 A list of files to process separated by colons.
@@ -122,6 +122,7 @@ Extra instructions for the LLM to use when translating.
 Path to a file containing extra instructions for the LLM to use when translating.
 
 ### `translations_dir`
+
 **Type**: `string`
 **Default**: `translations`
 
@@ -143,14 +144,14 @@ If you do not define the [Astro `base` option](https://docs.astro.build/en/refer
 
 ### `force`
 
-**Type**: `boolean`  
+**Type**: `boolean`\
 **Default**: `false`
 
 Force translation even if the file has already been translated.
 
 ### `debug`
 
-**Type**: `boolean`  
+**Type**: `boolean`\
 **Default**: `false`
 
 Enable debug logging.
@@ -158,14 +159,14 @@ Read further details under [the GenAIScript Logging docs](https://microsoft.gith
 
 ### `model_alias`
 
-**Type**: `string`  
+**Type**: `string`\
 **Example**: `translate: github:gpt-4o-mini`
 
 A mapping of model names to their aliases as a YAML object. This can be used to specify which model to use for a particular translation.
 
 ### `github_token`
 
-**Type**: `string` (secret recommended)  
+**Type**: `string` (secret recommended)\
 **Example**: `${{ secrets.GITHUB_TOKEN }}`
 
 Your [GitHub token](https://github.com/settings/tokens) with at least `models: read` permission.
