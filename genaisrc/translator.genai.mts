@@ -133,6 +133,21 @@ const hasMarker = (str: string): boolean => {
   return str.includes(MARKER_START) || str.includes(MARKER_END);
 };
 
+const isGithubAlert = (blockquoteNode: Blockquote): boolean => {
+  if (blockquoteNode.children.length === 0) return false;
+  
+  const firstChild = blockquoteNode.children[0];
+  if (firstChild.type !== "paragraph") return false;
+  
+  const firstParagraph = firstChild as Paragraph;
+  if (firstParagraph.children.length === 0) return false;
+  
+  const firstTextNode = firstParagraph.children[0];
+  if (firstTextNode.type !== "text") return false;
+  
+  return /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/.test(firstTextNode.value);
+};
+
 export default async function main() {
   const { dbg, output, vars } = env;
   const dbgn = host.logger(`ct:node`);
@@ -370,17 +385,7 @@ export default async function main() {
                 output.fence(translation);
               }
             } else if (node.type === "blockquote") {
-              // Check if this is a GitHub alert
-              let isGithubAlert = false;
-              if (node.children.length > 0 && node.children[0].type === "paragraph") {
-                const firstParagraph = node.children[0] as Paragraph;
-                if (firstParagraph.children.length > 0 && firstParagraph.children[0].type === "text") {
-                  const firstText = firstParagraph.children[0].value;
-                  isGithubAlert = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/.test(firstText);
-                }
-              }
-              
-              if (isGithubAlert) {
+              if (isGithubAlert(node)) {
                 // For GitHub alerts, replace the entire blockquote content
                 dbgo(`%s: %s -> %s`, node.type, nhash, translation);
                 try {
@@ -438,17 +443,7 @@ export default async function main() {
             } else if (node.type === "blockquote") {
               dbga(`blockquote node: %s`, nhash);
               
-              // Check if this is a GitHub alert by looking at the first paragraph
-              let isGithubAlert = false;
-              if (node.children.length > 0 && node.children[0].type === "paragraph") {
-                const firstParagraph = node.children[0] as Paragraph;
-                if (firstParagraph.children.length > 0 && firstParagraph.children[0].type === "text") {
-                  const firstText = firstParagraph.children[0].value;
-                  isGithubAlert = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/.test(firstText);
-                }
-              }
-              
-              if (isGithubAlert) {
+              if (isGithubAlert(node)) {
                 // For GitHub alerts, treat the entire blockquote as one unit
                 const llmHash = `B${Object.keys(llmHashes)
                   .length.toString()
@@ -792,17 +787,7 @@ export default async function main() {
                   output.fence(translation);
                 }
               } else if (node.type === "blockquote") {
-                // Check if this is a GitHub alert
-                let isGithubAlert = false;
-                if (node.children.length > 0 && node.children[0].type === "paragraph") {
-                  const firstParagraph = node.children[0] as Paragraph;
-                  if (firstParagraph.children.length > 0 && firstParagraph.children[0].type === "text") {
-                    const firstText = firstParagraph.children[0].value;
-                    isGithubAlert = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/.test(firstText);
-                  }
-                }
-                
-                if (isGithubAlert) {
+                if (isGithubAlert(node)) {
                   // For GitHub alerts, replace the entire blockquote content
                   dbgo(`%s: %s -> %s`, node.type, nhash, translation);
                   try {

@@ -64,3 +64,6 @@
 {"filename":"test/simple-alert.md","lang":"fr","tokens":24,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T01:49:46.781Z"}
 {"filename":"stdin.md","lang":"fr","tokens":4,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T01:49:46.885Z"}
 {"filename":"test/markdown.md","lang":"fr","tokens":1635,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T01:50:19.352Z"}
+{"filename":"test/markdown.md","lang":"fr","tokens":1635,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T13:40:09.550Z"}
+{"filename":"test/alerts.md","lang":"fr","tokens":181,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T13:40:16.244Z"}
+{"filename":"test/comprehensive-blockquotes.md","lang":"fr","tokens":250,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-08T13:40:19.673Z"}
