@@ -44,6 +44,7 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 | `files`             | Files to translate (semicolon-separated)                        | `README.md` |
 | `instructions`      | Custom translation instructions                                 | -           |
 | `instructions_file` | Path to file with translation instructions                      | -           |
+| `translations_dir`   | Folder to store translations                                    | `translations` |
 
 ### 🌟 Astro Starlight Integration
 

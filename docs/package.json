@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "postinstall": "astro telemetry disable",
+    "upgrade": "npx -y npm-check-updates -u && npm install",
     "dev": "astro dev --host",
     "start": "astro dev",
     "build": "astro build",
@@ -16,8 +17,9 @@
     "@astrojs/starlight": "^0.34.4",
     "@lunariajs/core": "^0.1.1",
     "@lunariajs/starlight": "^0.1.1",
-    "astro": "^5.6.1",
+    "astro": "^5.11.0",
     "sharp": "^0.34.2",
-    "starlight-links-validator": "^0.17.0"
+    "starlight-links-validator": "^0.17.0",
+    "starlight-theme-rapide": "^0.5.1"
   }
 }

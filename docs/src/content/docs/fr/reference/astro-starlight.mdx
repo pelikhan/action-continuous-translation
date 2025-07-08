@@ -11,46 +11,64 @@ import { Steps } from "@astrojs/starlight/components";
 Cette action peut être utilisée pour traduire le contenu d'un site de documentation [Astro Starlight](https://starlight.astro.build/). Elle nécessite une configuration spécifique de Starlight, comme détaillé ci-dessous.
 
 <Steps>
-  <ol>
-    <li>
-      Suivez le guide Starlight pour utiliser une [locale racine](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
-    </li>
+  1. Suivez le guide Starlight pour utiliser une [locale racine](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
 
-    <li>
-      Pour activer le mode Starlight, vous devez fournir l'entrée `starlight_dir` dans l'action.
+  2. Pour activer le mode Starlight, vous devez fournir l'entrée `starlight_dir` dans l'action.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
-      uses: pelikhan/action-continuous-translation@v0
-      with:
-        starlight_dir: ./docs
-      ```
-    </li>
+     ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
+     uses: pelikhan/action-continuous-translation@v0
+     with:
+       starlight_dir: ./docs
+     ```
 
-    <li>
-      Si vous avez également défini l'option [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base), vous devez aussi fournir l'entrée `starlight_base`.
+  3. Si vous avez également défini l'option [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base), vous devez aussi fournir l'entrée `starlight_base`.
 
-      ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
-      uses: pelikhan/action-continuous-translation@v0
-      with:
-        starlight_dir: ./docs
-        starlight_base: astro_base_option
-      ```
-    </li>
-  </ol>
+     ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
+     uses: pelikhan/action-continuous-translation@v0
+     with:
+       starlight_dir: ./docs
+       starlight_base: astro_base_option
+     ```
 </Steps>
 
 ## Entrées Frontmatter prises en charge
 
-Outre le Markdown/MDX, nous prenons en charge certaines métadonnées frontmatter prises en charge par Starlight.
+En plus des fichiers Markdown/MDX, nous prenons en charge certaines des métadonnées frontmatter possibles supportées par Starlight :
 
-* `title` : Le titre de la page.
-* `description` : La description de la page.
-* `hero.tagline` : Le slogan de la section héros.
-* `hero.actions.action.text` : Le texte du bouton d'action dans la section héros.
+* [`title`](https://starlight.astro.build/reference/frontmatter/#title-required) : Le titre de la page.
+* [`description`](https://starlight.astro.build/reference/frontmatter/#description) : La description de la page.
+* [`head.content`](https://starlight.astro.build/reference/frontmatter/#head) : Le contenu des balises `<head>` pour des pages spécifiques.
+* [`hero.tagline`](https://starlight.astro.build/reference/frontmatter/#hero) : La tagline de la section héros.
+* [`hero.actions.text`](https://starlight.astro.build/reference/frontmatter/#hero) : Le texte du bouton d'action dans la section héros.
+* [`banner.content`](https://starlight.astro.build/reference/frontmatter/#banner) : Le contenu d'une bannière spécifique à une page.
+* [`prev` / `prev.label`](https://starlight.astro.build/reference/frontmatter/#prev) : Le texte du lien de la page précédente.
+* [`next` / `next.label`](https://starlight.astro.build/reference/frontmatter/#next) : Le texte du lien de la page suivante.
+* [`sidebar.label`](https://starlight.astro.build/reference/frontmatter/#sidebar) : Texte personnalisé dans la barre latérale (par défaut `title`).
+* [`sidebar.badge` / `sidebar.badge.text`](https://starlight.astro.build/reference/frontmatter/#badge) : Texte du badge pour la barre latérale.
 
-Nous prenons également en charge les entrées frontmatter de [Starlight Blog](https://starlight-blog-docs.vercel.app/)
+Nous soutenons également des entrées frontmatter provenant de [Starlight Blog](https://starlight-blog-docs.vercel.app/) :
 
-* `excerpt` : Un court extrait de la page.
+* [`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt) : L'extrait de l'article de blog.
+
+## Titre et barre latérale
+
+Les entrées `title` et `sidebar` dans les métadonnées frontmatter ne sont pas automatiquement traduites par l'action.
+Nous recommandons de déplacer ces entrées dans un fichier JSON et de les importer dans votre fichier `astro.config.mjs`.
+
+```ts title="astro.config.mjs" "resources.json" "import { title, } from "./resources.json" assert { type: "json" };" "title"
+...
+import { title, } from "./resources.json" assert { type: "json" };
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      title,
+    }),
+  ],
+});
+```
+
+Consultez la documentation spécifique pour le [titre](https://starlight.astro.build/guides/i18n/#translate-the-site-title) et la [barre latérale](https://starlight.astro.build/guides/sidebar/) de Starlight pour plus de détails.
 
 ## Avis concernant le contenu généré par IA
 
@@ -102,4 +120,4 @@ export default defineConfig({
 
 Vous pouvez utiliser le [Tableau de bord de traduction Lunaria](https://lunaria.dev/integrations/starlight/) pour générer un tableau de bord du statut de traduction pour votre site Starlight.
 
-Vous pouvez essayer le tableau de bord en naviguant vers le lien **Tableau de bord de traduction** dans la barre latérale de cette page.
+Vous pouvez essayer le tableau de bord en accédant au lien **Tableau de bord de traduction** dans la barre latérale de cette page.
