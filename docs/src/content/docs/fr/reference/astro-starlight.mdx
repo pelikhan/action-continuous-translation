@@ -55,9 +55,9 @@ Nous soutenons également des entrées frontmatter provenant de [Starlight Blog]
 Les entrées `title` et `sidebar` dans les métadonnées frontmatter ne sont pas automatiquement traduites par l'action.
 Nous recommandons de déplacer ces entrées dans un fichier JSON et de les importer dans votre fichier `astro.config.mjs`.
 
-```ts title="astro.config.mjs" "resources.json" "import { title, } from "./resources.json" assert { type: "json" };" "title"
-...
-import { title, } from "./resources.json" assert { type: "json" };
+```ts title="astro.config.mjs" {2} /title(?=,)/
+// other imports
+import { title } from "./resources.json" assert { type: "json" };
 
 export default defineConfig({
   integrations: [

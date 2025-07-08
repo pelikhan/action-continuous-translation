@@ -57,9 +57,9 @@ import { Steps } from "@astrojs/starlight/components";
 مدخلات `title` و`sidebar` في frontmatter لا يتم ترجمتها تلقائيًا بواسطة الإجراء.
 نوصي بنقل هذه المدخلات إلى ملف JSON واستيراده إلى ملف `astro.config.mjs` الخاص بك.
 
-```ts title="astro.config.mjs" "resources.json" "import { title, } from "./resources.json" assert { type: "json" };" "title"
-...
-import { title, } from "./resources.json" assert { type: "json" };
+```ts title="astro.config.mjs" {2} /title(?=,)/
+// other imports
+import { title } from "./resources.json" assert { type: "json" };
 
 export default defineConfig({
   integrations: [
