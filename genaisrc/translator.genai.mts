@@ -29,7 +29,6 @@ script({
     color: "yellow",
     icon: "globe",
   },
-  files: ["README.md"],
   parameters: {
     lang: {
       type: "string",
@@ -366,7 +365,7 @@ export default async function main() {
             // mark untranslated nodes with a unique identifier
             if (node.type === "text") {
               if (
-                !/^\s*[-_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(node.value) &&
+                !/^\s*[0-9-_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(node.value) &&
                 !isUri(node.value)
               ) {
                 dbga(`text node: %s`, nhash);
@@ -511,8 +510,8 @@ export default async function main() {
           dbgc(`translatable content: %s`, contentMix);
 
           // run prompt to generate translations
-          output.item(`validating translations`);
-          const { error, fences, usage } = await runPrompt(
+          output.item(`generating translations`);
+          const { error, fences, text, usage } = await runPrompt(
             async (ctx) => {
               const originalRef = ctx.def("ORIGINAL", file.content, {
                 lineNumbers: false,
@@ -595,6 +594,14 @@ export default async function main() {
             }
 
             output.error(`Error translating ${filename}: ${error.message}`);
+            break;
+          }
+
+          output.itemValue(`translations`, fences.length);
+
+          if (!fences.length) {
+            output.warn(`No translations found`);
+            output.fence(text, "markdown");
             break;
           }
 
