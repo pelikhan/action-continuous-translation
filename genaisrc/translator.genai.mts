@@ -86,6 +86,10 @@ script({
   ],
 });
 
+const IGNORE_RX = /^\s*[0-9-"'`=+\/~_.,:;<>\]\[{}\(\)…\s]+\s*$/;
+function isTranslatable(text: string) {
+  return !IGNORE_RX.test(text) && !isUri(text);
+}
 const HASH_TEXT_LENGTH = 80;
 const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
@@ -374,10 +378,7 @@ export default async function main() {
             dbgo(`missing %s %s`, node.type, nhash);
             // mark untranslated nodes with a unique identifier
             if (node.type === "text") {
-              if (
-                !/^\s*[0-9-"'`_.,:;<>\]\[{}\(\)…\s]+\s*$/.test(node.value) &&
-                !isUri(node.value)
-              ) {
+              if (isTranslatable(node.value)) {
                 dbga(`text node: %s`, nhash);
                 // compress long hash into LLM friendly short hash
                 const llmHash = `T${Object.keys(llmHashes)
@@ -725,6 +726,8 @@ export default async function main() {
               } else {
                 dbg(`untranslated node type: %s`, node.type);
               }
+            } else if (node.type === "text" && !isTranslatable(node.value)) {
+              // ignore
             } else unresolvedTranslations.add(nhash);
           }
         });
@@ -779,8 +782,15 @@ export default async function main() {
         }
 
         if (unresolvedTranslations.size) {
-          output.itemValue(`unresolved translations`, unresolvedTranslations);
-          Array.from(unresolvedTranslations).forEach((t) => output.fence(t));
+          output.itemValue(
+            `unresolved translations`,
+            unresolvedTranslations.size
+          );
+          output.fence(
+            Array.from(unresolvedTranslations)
+              .map((t) => inspect(nodes[t], { color: false }))
+              .join("\n\n")
+          );
         }
 
         dbgt(`stringifying\n%s`, inspect(translated.children));
