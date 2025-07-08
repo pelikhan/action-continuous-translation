@@ -207,13 +207,10 @@ export default async function main() {
     const classifyModel = langInfo.models.classify;
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
 
-    // Resolve the translation model from the host
-    const modelId = translationModel;
-    dbg(`Using translation model: %s`, modelId);
-
+    dbg(`Using translation model: %s`, translationModel);
     // Sanitize language and model IDs for safe use in filenames
     const sanitizedLangId = to.toLowerCase();
-    const sanitizedModelId = sanitizeFilename(modelId.toLowerCase());
+    const sanitizedModelId = sanitizeFilename(translationModel.toLowerCase());
     dbg(`sanitized lang: %s, model: %s`, sanitizedLangId, sanitizedModelId);
       
     // Build safe filename for translation cache
