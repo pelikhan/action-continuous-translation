@@ -89,6 +89,7 @@ const HASH_TEXT_LENGTH = 80;
 const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
 const minTranslationsThreshold = 0.9;
+const maxTokensPerChunk = 3000;
 const nodeTypes = ["text", "paragraph", "heading", "yaml"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
@@ -264,6 +265,45 @@ export default async function main() {
             "." +
             chunkHash.slice(0, HASH_LENGTH).toUpperCase()
           );
+      };
+
+      const chunkNodesByTokens = async (
+        llmHashTodos: Set<string>,
+        llmHashes: Record<string, string>,
+        nodes: Record<string, NodeType>
+      ): Promise<string[][]> => {
+        const chunks: string[][] = [];
+        let currentChunk: string[] = [];
+        let currentTokenCount = 0;
+
+        for (const llmHash of llmHashTodos) {
+          const hash = llmHashes[llmHash];
+          const node = nodes[hash];
+          if (!node) continue;
+
+          // Estimate token count for this node
+          const nodeText = typeof node === 'string' ? node : 
+            (node.type === 'text' ? node.value : 
+             stringify({ type: 'root', children: [node as any] }));
+          const nodeTokens = await tokenizers.count(nodeText);
+
+          // If adding this node would exceed the limit and we have items, start a new chunk
+          if (currentTokenCount + nodeTokens > maxTokensPerChunk && currentChunk.length > 0) {
+            chunks.push([...currentChunk]);
+            currentChunk = [];
+            currentTokenCount = 0;
+          }
+
+          currentChunk.push(llmHash);
+          currentTokenCount += nodeTokens;
+        }
+
+        // Add the last chunk if it has items
+        if (currentChunk.length > 0) {
+          chunks.push(currentChunk);
+        }
+
+        return chunks;
       };
 
       const starlight = starlightDir && filename.startsWith(starlightDir);
@@ -509,6 +549,193 @@ export default async function main() {
           const contentMix = stringify(translated);
           dbgc(`translatable content: %s`, contentMix);
 
+          // Check if we need to chunk the content
+          const contentTokens = await tokenizers.count(contentMix);
+          const shouldChunk = contentTokens > maxTokensPerChunk;
+          
+          if (shouldChunk) {
+            // Split todos into chunks
+            const chunks = await chunkNodesByTokens(
+              llmHashTodos,
+              llmHashes,
+              nodes
+            );
+            
+            output.itemValue(`translation chunks`, chunks.length);
+            
+            for (let chunkIndex = 0; chunkIndex < chunks.length; chunkIndex++) {
+              const chunk = chunks[chunkIndex];
+              if (chunk.length === 0) continue;
+              
+              // Create a subset of the translated content for this chunk
+              const chunkLlmHashTodos = new Set(chunk);
+              const chunkTranslated = structuredClone(translated);
+              
+              // Remove markers for nodes not in this chunk
+              visit(chunkTranslated, nodeTypes, (node) => {
+                if (node.type === "text") {
+                  // Remove markers for hashes not in this chunk
+                  let updatedValue = node.value;
+                  const markerRegex = /┌([A-Z]\d{3,5})┐(.*?)└\1┘/g;
+                  let match;
+                  while ((match = markerRegex.exec(node.value)) !== null) {
+                    const hash = match[1];
+                    if (!chunkLlmHashTodos.has(hash)) {
+                      updatedValue = updatedValue.replace(match[0], match[2]);
+                    }
+                  }
+                  node.value = updatedValue;
+                } else if (node.type === "paragraph" || node.type === "heading") {
+                  // Handle paragraph/heading nodes
+                  for (const child of node.children) {
+                    if (child.type === "text") {
+                      let updatedValue = child.value;
+                      const markerRegex = /┌([A-Z]\d{3,5})┐/g;
+                      let match;
+                      while ((match = markerRegex.exec(child.value)) !== null) {
+                        const hash = match[1];
+                        if (!chunkLlmHashTodos.has(hash)) {
+                          updatedValue = updatedValue.replace(match[0], '');
+                        }
+                      }
+                      const endMarkerRegex = /└([A-Z]\d{3,5})┘/g;
+                      while ((match = endMarkerRegex.exec(child.value)) !== null) {
+                        const hash = match[1];
+                        if (!chunkLlmHashTodos.has(hash)) {
+                          updatedValue = updatedValue.replace(match[0], '');
+                        }
+                      }
+                      child.value = updatedValue;
+                    }
+                  }
+                }
+              });
+              
+              const chunkContentMix = stringify(chunkTranslated);
+              dbgc(`chunk ${chunkIndex + 1}/${chunks.length} content: %s`, chunkContentMix);
+              
+              // run prompt to generate translations for this chunk
+              output.item(`generating translations for chunk ${chunkIndex + 1}/${chunks.length} (${chunk.length} nodes)`);
+              const { error, fences, text, usage } = await runPrompt(
+                async (ctx) => {
+                  const originalRef = ctx.def("ORIGINAL", file.content, {
+                    lineNumbers: false,
+                  });
+                  const translatedRef = ctx.def("TRANSLATED", chunkContentMix, {
+                    lineNumbers: false,
+                  });
+                  ctx.$`You are an expert at translating technical documentation into ${lang} (${to}).
+          
+          ## Task
+          Your task is to translate a Markdown (GFM) document to ${lang} (${to}) while preserving the structure and formatting of the original document.
+          You will receive the original document as a variable named ${originalRef} and the currently translated document as a variable named ${translatedRef}.
+
+          Each Markdown AST node in the translated document that has not been translated yet will be enclosed with a unique identifier in the form 
+          of \`┌node_identifier┐\` at the start and \`└node_identifier┘\` at the end of the node.
+          You should translate the content of each these nodes individually.
+          Example:
+
+          \`\`\`markdown
+          ┌T001┐
+          This is the content to be translated.
+          └T001┘
+
+          This is some other content that does not need translation.
+
+          ┌T002┐
+          This is another piece of content to be translated.
+          └T002┘
+          \`\`\`
+
+          ## Output format
+
+          Respond using code regions where the language string is the HASH value
+          For example:
+          
+          \`\`\`T001
+          translated content of text enclosed in T001 here (only T001 content!)
+          \`\`\`
+
+          \`\`\`T002
+          translated content of text enclosed in T002 here (only T002 content!)
+          \`\`\`
+
+          \`\`\`T003
+          translated content of text enclosed in T003 here (only T003 content!)
+          \`\`\`
+          ...
+
+          ## Instructions
+
+          - Be extremely careful about the HASH names. They are unique identifiers for each node and should not be changed.
+          - Always use code regions to respond with the translated content. 
+          - Do not translate the text outside of the HASH tags.
+          - Do not change the structure of the document.
+          - As much as possible, maintain the original formatting and structure of the document.
+          - Do not translate inline code blocks, code blocks, or any other code-related content.
+          - Use ' instead of '
+          - Always make sure that the URLs are not modified by the translation.
+          - Translate each node individually, preserving the original meaning and context.
+          - If you are unsure about the translation, skip the translation.
+          ${instructions || ""}
+          ${instructionsFile || ""}`.role("system");
+                },
+                {
+                  model: translationModel,
+                  responseType: "text",
+                  systemSafety: true,
+                  system: [],
+                  cache: true,
+                  label: `translating ${filename} chunk ${chunkIndex + 1}/${chunks.length} (${chunk.length} nodes)`,
+                }
+              );
+              logUsage("translate", translationModel, usage);
+
+              if (error) {
+                // are we out of tokens?
+                if (/429/.test(error.message)) {
+                  output.error(`Rate limit exceeded: ${error.message}`);
+                  cancel(`rate limit exceeded`);
+                }
+
+                output.error(`Error translating ${filename} chunk ${chunkIndex + 1}: ${error.message}`);
+                break;
+              }
+
+              output.itemValue(`chunk ${chunkIndex + 1} translations`, fences.length);
+
+              if (!fences.length) {
+                output.warn(`No translations found in chunk ${chunkIndex + 1}`);
+                output.fence(text, "markdown");
+                continue;
+              }
+
+              // collect translations from this chunk
+              for (const fence of fences) {
+                const llmHash = fence.language;
+                if (llmHashTodos.has(llmHash)) {
+                  llmHashTodos.delete(llmHash);
+                  const hash = llmHashes[llmHash];
+                  dbg(`translation: %s - %s`, llmHash, hash);
+                  let chunkTranslated = fence.content.replace(/\r?\n$/, "").trim();
+                  const node = nodes[hash];
+                  dbg(`original node: %O`, node);
+                  if (node?.type === "text" && /\s$/.test(node.value)) {
+                    // preserve trailing space if original text had it
+                    dbg(`patch trailing space for %s`, hash);
+                    chunkTranslated += " ";
+                  }
+                  chunkTranslated = chunkTranslated
+                    .replace(/┌[A-Z]\d{3,5}┐/g, "")
+                    .replace(/└[A-Z]\d{3,5}┘/g, "");
+                  dbg(`content: %s`, chunkTranslated);
+                  translationCache[hash] = chunkTranslated;
+                }
+              }
+            }
+          } else {
+            // Original single-pass translation for smaller files
+
           // run prompt to generate translations
           output.item(`generating translations`);
           const { error, fences, text, usage } = await runPrompt(
@@ -626,6 +853,7 @@ export default async function main() {
               dbg(`content: %s`, chunkTranslated);
               translationCache[hash] = chunkTranslated;
             }
+          }
           }
 
           lastLLmHashTodos = llmHashTodos.size;
