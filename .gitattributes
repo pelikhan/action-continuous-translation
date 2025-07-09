@@ -1,3 +1,7 @@
 README.*.md merge=theirs
 translations/*.json merge=theirs
 translations/*.jsonl merge=theirs
+* text eol=lf
+*.jpg binary
+*.png binary
+*.webp binary
