@@ -1,12 +1,9 @@
 /* Import Fontsource fonts */
-@import '@fontsource/atkinson-hyperlegible/400.css';
-@import '@fontsource/atkinson-hyperlegible/700.css';
-@import '@fontsource/jetbrains-mono/400.css';
-@import '@fontsource/jetbrains-mono/500.css';
-@import '@fontsource/jetbrains-mono/700.css';
+@import "@fontsource-variable/atkinson-hyperlegible-next/wght.css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
 
 /* Configure custom fonts */
 :root {
-  --sl-font: 'Atkinson Hyperlegible', system-ui, sans-serif;
-  --sl-font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --sl-font: "Atkinson Hyperlegible Next Variable", system-ui, sans-serif;
+  --sl-font-mono: "JetBrains Mono Variable", monospace;
 }
