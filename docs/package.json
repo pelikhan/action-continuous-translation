@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.34.4",
+    "@fontsource-variable/atkinson-hyperlegible-next": "^5.2.4",
+    "@fontsource-variable/jetbrains-mono": "^5.2.6",
     "@lunariajs/core": "^0.1.1",
     "@lunariajs/starlight": "^0.1.1",
     "astro": "^5.11.0",

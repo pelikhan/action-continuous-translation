@@ -1,0 +1,9 @@
+/* Import Fontsource fonts */
+@import "@fontsource-variable/atkinson-hyperlegible-next/wght.css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
+
+/* Configure custom fonts */
+:root {
+  --sl-font: "Atkinson Hyperlegible Next Variable", system-ui, sans-serif;
+  --sl-font-mono: "JetBrains Mono Variable", monospace;
+}

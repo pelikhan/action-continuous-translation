@@ -81,6 +81,9 @@ export default defineConfig({
         PageTitle: "./src/components/PageTitle.astro",
         Hero: "./src/components/Hero.astro",
       },
+      customCss: [
+        './src/styles/global.css',
+      ],
     }),
   ],
 });
