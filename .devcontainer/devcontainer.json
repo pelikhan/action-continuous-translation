@@ -27,5 +27,5 @@
       ]
     }
   },
-  "postCreateCommand": "git config --global --add safe.directory \"$(pwd)\" && npm ci"
+  "postCreateCommand": "git config --global --add safe.directory \"$(pwd)\" &&  git config pull.rebase false && npm ci"
 }
