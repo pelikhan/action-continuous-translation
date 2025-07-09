@@ -11,6 +11,7 @@ interface LogEntry {
   total?: number;
   cost?: number;
   date: string;
+  lang?: string;
 }
 
 function parse(content: string): LogEntry[] {
@@ -144,6 +145,7 @@ const formatNumber = (num: number | undefined) => {
         <th>File</th>
         <th>Stage</th>
         <th>Model</th>
+        <th>Locale</th>
         <th>Total Tokens</th>
         <th>Prompt Tokens</th>
         <th>Completion Tokens</th>
@@ -165,6 +167,7 @@ const formatNumber = (num: number | undefined) => {
               </td>
               <td>{log.stage}</td>
               <td>{log.model}</td>
+              <td>{log.lang || ""}</td>
               <td>{formatNumber(log.total)}</td>
               <td>{formatNumber(log.prompt)}</td>
               <td>{formatNumber(log.completion)}</td>
