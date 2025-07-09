@@ -6,8 +6,7 @@ on:
       - main
     paths:
       - "README.md"
-      - "docs/src/content/**/*.md"
-      - "docs/src/content/**/*.mdx"
+      - "docs/**/*"
       - "!docs/src/content/docs/fr/**"
       - "!docs/src/content/docs/es/**"
       - "!docs/src/content/docs/pt-br/**"
