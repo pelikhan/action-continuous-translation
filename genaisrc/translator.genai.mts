@@ -129,7 +129,8 @@ const hasMarker = (str: string): boolean => {
 };
 
 export default async function main() {
-  const { dbg, output, vars } = env;
+  const { output, vars } = env;
+  const dbg = host.logger(`ct`);
   const dbgn = host.logger(`ct:node`);
   const dbgc = host.logger(`ct:md`);
   const dbgo = host.logger(`ct:target`);

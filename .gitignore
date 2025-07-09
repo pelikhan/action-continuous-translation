@@ -1,6 +1,7 @@
 node_modules/
 .genaiscript/
 test/*.*.md
+.env
 
 # START Ruler Generated Files
 .aider.conf.yml
