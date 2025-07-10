@@ -67,6 +67,10 @@ script({
       type: "string",
       description: "Base path for the Astro Starlight documentation.",
     },
+    glossaryFile: {
+      type: "string",
+      description: "A markdown file containing the glossary of the project",
+    },
     force: {
       type: "boolean",
       default: false,
@@ -124,10 +128,6 @@ const isUri = (str: string): URL => {
   }
 };
 
-const hasMarker = (str: string): boolean => {
-  return str.includes(MARKER_START) || str.includes(MARKER_END);
-};
-
 export default async function main() {
   const { output, vars } = env;
   const dbg = host.logger(`ct`);
@@ -149,6 +149,7 @@ export default async function main() {
     instructions?: string;
     instructionsFile?: string;
     translationsDir?: string;
+    glossaryFile?: string;
   };
 
   output.heading(1, "Continuous Translation");
@@ -182,6 +183,11 @@ export default async function main() {
     .filter(Boolean);
   output.itemValue(`locales`, langs.join(", "));
   langs.forEach((l) => resolveModels(l)); // validate languages
+
+  const glossary = parameters.glossaryFile
+    ? (await workspace.readText(parameters.glossaryFile))?.content
+    : undefined;
+  dbg(`glossary: %s`, glossary || "");
 
   const ignorer = await parsers.ignore(".ctignore");
   dbg(`ignorer: %s`, ignorer ? "loaded" : "no .ctignore found");
@@ -532,59 +538,64 @@ export default async function main() {
               const translatedRef = ctx.def("TRANSLATED", contentMix, {
                 lineNumbers: false,
               });
+              const glossaryRef = glossary
+                ? ctx.def("GLOSSARY", glossary)
+                : undefined;
               ctx.$`You are an expert at translating technical documentation into ${lang} (${to}).
-      
-      ## Task
-      Your task is to translate a Markdown (GFM) document to ${lang} (${to}) while preserving the structure and formatting of the original document.
-      You will receive the original document as a variable named ${originalRef} and the currently translated document as a variable named ${translatedRef}.
+## Task
+Your task is to translate a Markdown (GFM) document to ${lang} (${to}) while preserving the structure and formatting of the original document.
+You will receive the original document as a variable named ${originalRef} and the currently translated document as a variable named ${translatedRef}.`;
+              if (glossary)
+                ctx.$`## Glossary
+You also have a glossary ${glossaryRef} to maintain a consistent terminology accross all translations.`;
+              ctx.$`## Input Format
 
-      Each Markdown AST node in the translated document that has not been translated yet will be enclosed with a unique identifier in the form 
-      of \`┌node_identifier┐\` at the start and \`└node_identifier┘\` at the end of the node.
-      You should translate the content of each these nodes individually.
-      Example:
+Each translatable text chunk that needs to be translated is be 
+enclosed with a unique identifier in the form  of \`┌node_identifier┐\` at the start and \`└node_identifier┘\` at the end of the node.
+You should translate the content of each these text chunks individually.
+Example:
 
-      \`\`\`markdown
-      ┌T001┐
-      This is the content to be translated.
-      └T001┘
+\`\`\`markdown
+┌T001┐
+This is the content to be translated.
+└T001┘
 
-      This is some other content that does not need translation.
+This is some other content that does not need translation.
 
-      ┌T002┐
-      This is another piece of content to be translated.
-      └T002┘
-      \`\`\`
+┌T002┐
+This is another piece of content to be translated.
+└T002┘
+\`\`\`
 
-      ## Output format
+## Output format
 
-      Respond using code regions where the language string is the HASH value
-      For example:
-      
-      \`\`\`T001
-      translated content of text enclosed in T001 here (only T001 content!)
-      \`\`\`
+Respond using code regions where the language string is the HASH value
+For example:
 
-      \`\`\`T002
-      translated content of text enclosed in T002 here (only T002 content!)
-      \`\`\`
+\`\`\`T001
+translated content of text enclosed in T001 here (only T001 content!)
+\`\`\`
 
-      \`\`\`T003
-      translated content of text enclosed in T003 here (only T003 content!)
-      \`\`\`
-      ...
+\`\`\`T002
+translated content of text enclosed in T002 here (only T002 content!)
+\`\`\`
 
-      ## Instructions
+\`\`\`T003
+translated content of text enclosed in T003 here (only T003 content!)
+\`\`\`
+...
 
-      - Be extremely careful about the HASH names. They are unique identifiers for each node and should not be changed.
-      - Always use code regions to respond with the translated content. 
-      - Do not translate the text outside of the HASH tags.
-      - Do not change the structure of the document.
-      - As much as possible, maintain the original formatting and structure of the document.
-      - Do not translate inline code blocks, code blocks, or any other code-related content.
-      - Use ' instead of ’
-      - Always make sure that the URLs are not modified by the translation.
-      - Translate each node individually, preserving the original meaning and context.
-      - If you are unsure about the translation, skip the translation.
+## Instructions
+- Be extremely careful about the HASH names. They are unique identifiers for each node and should not be changed.
+- Always use code regions to respond with the translated content. 
+- Do not translate the text outside of the HASH tags.
+- Do not change the structure of the document.
+- As much as possible, maintain the original formatting and structure of the document.
+- Do not translate inline code blocks, code blocks, or any other code-related content.
+- Use ' instead of ’
+- Always make sure that the URLs are not modified by the translation.
+- Translate each node individually, preserving the original meaning and context.
+- If you are unsure about the translation, skip the translation.
       ${instructions || ""}
       ${instructionsFile || ""}`.role("system");
             },
