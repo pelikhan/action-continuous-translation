@@ -865,7 +865,16 @@ export default async function main() {
           );
           if (diffLinks.length) {
             output.warn(`some links have changed`);
-            output.fence(diffLinks, "yaml");
+            output.diff(
+              {
+                filename: "original",
+                content: Array.from(originalLinks).sort().join("\n"),
+              },
+              {
+                filename: "translated",
+                content: Array.from(translatedLinks).sort().join("\n"),
+              }
+            );
           }
         }
 
