@@ -124,10 +124,6 @@ const isUri = (str: string): URL => {
   }
 };
 
-const hasMarker = (str: string): boolean => {
-  return str.includes(MARKER_START) || str.includes(MARKER_END);
-};
-
 export default async function main() {
   const { output, vars } = env;
   const dbg = host.logger(`ct`);
@@ -315,8 +311,26 @@ export default async function main() {
 
         // parse to tree
         dbgc(`parsing %s`, filename);
-        const root = parse(content);
-        dbgt(`original\n%s`, inspect(root.children));
+        const original = parse(content);
+        dbgt(`original\n%s`, inspect(original.children));
+
+        // before any other operations,
+        // collect all links and replace them with identifiers
+        // so that the LLM nevers sees the link and does not
+        // try to translate them.
+        const root = structuredClone(original);
+        const uriLinks: Record<string, string> = {};
+        visit(root, "link", (node) => {
+          if (isUri(node.url)) {
+            const id =
+              uriLinks[node.url] ||
+              (uriLinks[node.url] = `L${Object.keys(uriLinks)
+                .length.toString()
+                .padStart(3, "0")}`);
+            node.url = id;
+          }
+        });
+        dbgt(`uri links: %O`, uriLinks);
 
         // Extract instructions from frontmatter if not provided via parameters
         const frontmatterNode = root.children.find(
@@ -770,6 +784,12 @@ export default async function main() {
           }
         });
 
+        // patch external links back
+        visit(translated, "link", (node) => {
+          const url = uriLinks[node.url];
+          if (url) node.url = url;
+        });
+
         // patch links
         if (starlight) {
           visit(translated, "link", (node) => {
@@ -795,7 +815,7 @@ export default async function main() {
         }
 
         dbgt(`stringifying\n%s`, inspect(translated.children));
-        let contentTranslated = await stringify(translated);
+        let contentTranslated = stringify(translated);
 
         const nTranslations = Object.keys(llmHashes).length;
         const successfulTranslations =
@@ -809,24 +829,6 @@ export default async function main() {
           `translation success ratio`,
           `${(translationRatio * 100).toFixed(1)}%`
         );
-
-        if (
-          unresolvedTranslations.size > 5 &&
-          translationRatio < minTranslationsThreshold
-        ) {
-          output.warn(
-            `not enough translations (${(translationRatio * 100).toFixed(
-              1
-            )}% < ${minTranslationsThreshold * 100}%), try to translate more.`
-          );
-          output.detailsFenced(`translated`, contentTranslated, "markdown");
-          // Save cache even if translation is incomplete
-          await workspace.writeText(
-            translationCacheFilename,
-            JSON.stringify(translationCache, null, 2)
-          );
-          continue;
-        }
 
         if (content === contentTranslated) {
           output.warn(
@@ -864,7 +866,7 @@ export default async function main() {
             Array.from(translatedLinks)
           );
           if (diffLinks.length) {
-            output.warn(`some links have changed`);
+            output.error(`External links have changed`);
             output.diff(
               {
                 filename: "original",
@@ -875,7 +877,29 @@ export default async function main() {
                 content: Array.from(translatedLinks).sort().join("\n"),
               }
             );
+            continue;
           }
+        }
+
+        // Save cache even if translation is incomplete
+        await workspace.writeText(
+          translationCacheFilename,
+          JSON.stringify(translationCache, null, 2)
+        );
+
+        // make sure we have enough translations to even
+        // attempt a quality check
+        if (
+          unresolvedTranslations.size > 5 &&
+          translationRatio < minTranslationsThreshold
+        ) {
+          output.warn(
+            `not enough translations (${(translationRatio * 100).toFixed(
+              1
+            )}% < ${minTranslationsThreshold * 100}%), try to translate more.`
+          );
+          output.detailsFenced(`translated`, contentTranslated, "markdown");
+          continue;
         }
 
         if (attempts) {
