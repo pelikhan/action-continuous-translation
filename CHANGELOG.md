@@ -1,5 +1,43 @@
 # action-continuous-translation
 
+## 0.0.22
+
+### Patch Changes
+
+- [#47](https://github.com/pelikhan/action-continuous-translation/pull/47) [`d692757`](https://github.com/pelikhan/action-continuous-translation/commit/d69275788fddc35acf1410e2c9c368001adb2487) Thanks [@pelikhan](https://github.com/pelikhan)! - - ✨ Added support for a configurable `translations_dir` parameter to specify where translations are saved
+
+  - 📁 Updated documentation and examples to describe the new `translations_dir` option
+  - 🛠️ Refactored translator script to use the provided translations directory in all relevant file paths
+  - 📝 Enhanced French translations with a new entry for "Folder to store translations"
+  - 🗂️ Updated translation usage logs to include new French README translation records
+  - ✅ Added `.gitignore` entry to exclude `test/generative-ai-with-javascript/` directory
+
+- [`1bc8025`](https://github.com/pelikhan/action-continuous-translation/commit/1bc80258dd573fe0117258ccba6b620aea19983b) Thanks [@pelikhan](https://github.com/pelikhan)! - better genai summary page
+
+- [#41](https://github.com/pelikhan/action-continuous-translation/pull/41) [`76885e0`](https://github.com/pelikhan/action-continuous-translation/commit/76885e0b76d883948c618546fdb64cdb43117ce1) Thanks [@pelikhan](https://github.com/pelikhan)! - - 🗒️ **Added translation usage logging:**
+
+  - Introduced a `logUsage` function within the translation workflow.
+  - Logs prompt usage details such as file name, stage (translate/validate), model, token counts, cost, and timestamp to `translations/log.json`.
+  - Ensures both translation and validation steps are logged.
+
+  - 📊 **New log file:**
+
+    - Created `translations/log.json` to keep a record of prompt usage for each processed document.
+
+  - 🔎 **Minor refactoring for clarity:**
+
+    - Modernized some in-line functional syntax.
+    - Consistently cleaned up function argument formatting for readability.
+
+  - 🌐 **Translation sample data update:**
+    - Replaced the verbose `translations/fr.json` sample/fixture file with a concise one focused on example paragraph and feature strings relevant to document-level translation instruction testing and demo.
+    - Removed large documentation strings in favor of direct translation test cases and examples.
+
+  **Impact:**
+
+  - Easier tracking and analysis of translation operation costs and API usage.
+  - Improved maintainability and focus of translation example data.
+
 ## 0.0.21
 
 ### Patch Changes
