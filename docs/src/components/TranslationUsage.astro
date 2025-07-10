@@ -11,7 +11,7 @@ interface LogEntry {
   total?: number;
   cost?: number;
   date: string;
-  lang?: string;
+  lang: string;
 }
 
 function parse(content: string): LogEntry[] {
@@ -56,7 +56,7 @@ const modelStats = logs.reduce(
     acc[log.model].cost += log.cost ?? 0;
     acc[log.model].tokens += log.total ?? 0;
     acc[log.model].prompt += log.prompt ?? 0;
-    acc[log.model].completion = log.completion ?? 0;
+    acc[log.model].completion += log.completion ?? 0;
     return acc;
   },
   {} as Record<
@@ -70,11 +70,37 @@ const modelStats = logs.reduce(
     }
   >
 );
-
-// Format date for display
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleString();
-};
+const localeStats = logs
+  .filter(({ lang }) => !!lang)
+  .reduce(
+    (acc, log) => {
+      if (!acc[log.lang]) {
+        acc[log.lang] = {
+          count: 0,
+          cost: 0,
+          tokens: 0,
+          prompt: 0,
+          completion: 0,
+        };
+      }
+      acc[log.lang].count++;
+      acc[log.lang].cost += log.cost ?? 0;
+      acc[log.lang].tokens += log.total ?? 0;
+      acc[log.lang].prompt += log.prompt ?? 0;
+      acc[log.lang].completion += log.completion ?? 0;
+      return acc;
+    },
+    {} as Record<
+      string,
+      {
+        count: number;
+        cost: number;
+        tokens: number;
+        prompt: number;
+        completion: number;
+      }
+    >
+  );
 
 // Format currency
 const formatCurrency = (amount: number | undefined) => {
@@ -93,19 +119,48 @@ const formatNumber = (num: number | undefined) => {
     ? ""
     : new Intl.NumberFormat("en-US").format(num);
 };
+
+const formatTokens = (num: number | undefined) => {
+  if (num === undefined || isNaN(num)) return "";
+  if (num > 1e6)
+    return `${new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 2,
+    }).format(num / 1e6)}M`;
+  if (num > 1e3)
+    return `${new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 1,
+    }).format(num / 1e3)}k`;
+  return new Intl.NumberFormat("en-US").format(num);
+};
 ---
 
 <h2>Overview</h2>
-
-<ul>
-  <li>total cost: {formatCurrency(totalCost)}</li>
-  <li>unique files: {uniqueFiles}</li>
-  <li>translation entries: {translationEntries}</li>
-  <li>validation entries: {validationEntries}</li>
-  <li>total tokens: {formatNumber(totalTokens)}</li>
-  <li>total prompt tokens: {formatNumber(totalPromptTokens)}</li>
-  <li>total completion tokens: {formatNumber(totalCompletionTokens)}</li>
-</ul>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Files</th>
+        <th>Cost</th>
+        <th>Tokens</th>
+        <th>Prompt</th>
+        <th>Completion</th>
+        <th>Translations</th>
+        <th>Validations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{formatNumber(uniqueFiles)}</td>
+        <td>{formatCurrency(totalCost)}</td>
+        <td>{formatTokens(totalTokens)}</td>
+        <td>{formatTokens(totalPromptTokens)}</td>
+        <td>{formatTokens(totalCompletionTokens)}</td>
+        <td>{formatNumber(translationEntries)}</td>
+        <td>{formatNumber(validationEntries)}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <h2>Models</h2>
 <div>
@@ -125,11 +180,41 @@ const formatNumber = (num: number | undefined) => {
         Object.entries(modelStats).map(([model, stats]) => (
           <tr>
             <td>{model}</td>
-            <td>{stats.count}</td>
+            <td>{formatNumber(stats.count)}</td>
             <td>{formatCurrency(stats.cost)}</td>
-            <td>{formatNumber(stats.tokens)}</td>
-            <td>{formatNumber(stats.prompt)}</td>
-            <td>{formatNumber(stats.completion)}</td>
+            <td>{formatTokens(stats.tokens)}</td>
+            <td>{formatTokens(stats.prompt)}</td>
+            <td>{formatTokens(stats.completion)}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<h2>Locales</h2>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Locale</th>
+        <th>Operations</th>
+        <th>Cost</th>
+        <th>Tokens</th>
+        <th>Prompt Tokens</th>
+        <th>Completion Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        Object.entries(localeStats).map(([locale, stats]) => (
+          <tr>
+            <td>{locale}</td>
+            <td>{formatNumber(stats.count)}</td>
+            <td>{formatCurrency(stats.cost)}</td>
+            <td>{formatTokens(stats.tokens)}</td>
+            <td>{formatTokens(stats.prompt)}</td>
+            <td>{formatTokens(stats.completion)}</td>
           </tr>
         ))
       }
@@ -168,9 +253,9 @@ const formatNumber = (num: number | undefined) => {
               <td>{log.stage}</td>
               <td>{log.model}</td>
               <td>{log.lang || ""}</td>
-              <td>{formatNumber(log.total)}</td>
-              <td>{formatNumber(log.prompt)}</td>
-              <td>{formatNumber(log.completion)}</td>
+              <td>{formatTokens(log.total)}</td>
+              <td>{formatTokens(log.prompt)}</td>
+              <td>{formatTokens(log.completion)}</td>
               <td>{formatCurrency(log.cost)}</td>
             </tr>
           ))
