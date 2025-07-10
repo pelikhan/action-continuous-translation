@@ -19,7 +19,7 @@ import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
 import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
 import { resolveModels } from "./src/models.mts";
-import { sanitizeFilename } from "@genaiscript/core";
+import { changeext, sanitizeFilename } from "@genaiscript/core";
 
 script({
   title: "Automatic Markdown Translations using GenAI",
@@ -200,7 +200,6 @@ export default async function main() {
   }
 
   const usageFn = join(translationsDir, `usage.jsonl`);
-
   for (const to of langs) {
     const langInfo = await resolveModels(to);
     const lang = langInfo.name;
@@ -234,6 +233,12 @@ export default async function main() {
       const { filename } = file;
       output.heading(3, `${filename}`);
 
+      const translationKeys: Record<string, Record<string, string>> = {
+        [source]: {},
+        [to]: {},
+      };
+
+      // lang => key -> value
       const logUsage = async (
         stage: "translate" | "validate",
         model: string,
@@ -262,19 +267,22 @@ export default async function main() {
           node = structuredClone(node);
           visit(node, (node) => delete node.position);
         }
-        const text = (
+        const ntext = (
           typeof node === "string"
             ? node
             : stringify({ type: "root", children: [node as any] })
         ).trim();
-        const chunkHash = hash("sha-256", text);
-        if (text.length < HASH_TEXT_LENGTH) return text;
+        const chunkHash = hash("sha-256", ntext);
+        if (ntext.length < HASH_TEXT_LENGTH)
+          return { text: ntext, nhash: chunkHash };
         else
-          return (
-            text.slice(0, HASH_TEXT_LENGTH) +
-            "." +
-            chunkHash.slice(0, HASH_LENGTH).toUpperCase()
-          );
+          return {
+            ntext,
+            nhash:
+              ntext.slice(0, HASH_TEXT_LENGTH) +
+              "." +
+              chunkHash.slice(0, HASH_LENGTH).toUpperCase(),
+          };
       };
 
       const starlight = starlightDir && filename.startsWith(starlightDir);
@@ -356,25 +364,25 @@ export default async function main() {
         // collect original nodes nodes
         const nodes: Record<string, NodeType> = {};
         visit(root, nodeTypes, (node) => {
-          const hash = hashNode(node);
+          const { nhash } = hashNode(node);
           dbgn(`%s -> %s`, hash, inspect(node));
-          nodes[hash] = node as NodeType;
+          nodes[nhash] = node as NodeType;
         });
 
         dbg(`nodes: %d`, Object.keys(nodes).length);
 
         const llmHashes: Record<string, string> = {};
         const llmHashTodos = new Set<string>();
-        let nTranslatable = 0;
 
         // apply translations and mark untranslated nodes with id
         let translated = structuredClone(root);
         visit(translated, nodeTypes, (node) => {
-          const nhash = hashNode(node);
+          const { ntext, nhash } = hashNode(node);
           const translation = translationCache[nhash];
           if (translation) {
             dbgo(`%s`, nhash);
-            nTranslatable++;
+            translationKeys[source][nhash] = ntext;
+            translationKeys[to][nhash] = translation;
             if (node.type === "text") node.value = translation;
             else if (node.type === "heading" || node.type === "paragraph") {
               dbgo(`%s: %s -> %s`, node.type, nhash, translation);
@@ -401,7 +409,7 @@ export default async function main() {
                   .padStart(3, "0")}`;
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
-                nTranslatable++;
+                translationKeys[source][nhash] = ntext;
                 node.value = `┌${llmHash}┐${node.value}└${llmHash}┘`;
               }
             } else if (node.type === "paragraph" || node.type === "heading") {
@@ -411,7 +419,7 @@ export default async function main() {
                 .padStart(3, "0")}`;
               llmHashes[llmHash] = nhash;
               llmHashTodos.add(llmHash);
-              nTranslatable++;
+              translationKeys[source][nhash] = ntext;
               node.children.unshift({
                 type: "text",
                 value: `┌${llmHash}┐`,
@@ -427,10 +435,10 @@ export default async function main() {
               if (data && starlight) {
                 if (data.hero) {
                   if (typeof data.hero.tagline === "string") {
-                    const nhash = hashNode(data.hero.tagline);
+                    const { ntext, nhash } = hashNode(data.hero.tagline);
                     const tr = translationCache[nhash];
                     dbga(`yaml hero.tagline: %s -> %s`, nhash, tr);
-                    nTranslatable++;
+                    translationKeys[source][nhash] = ntext;
                     if (tr) data.hero.tagline = tr;
                     else {
                       const llmHash = `T${Object.keys(llmHashes)
@@ -444,10 +452,10 @@ export default async function main() {
                   if (Array.isArray(data.hero.actions)) {
                     for (const action of data.hero.actions) {
                       if (typeof action.text === "string") {
-                        const nhash = hashNode(action.text);
+                        const { ntext, nhash } = hashNode(action.text);
                         const tr = translationCache[nhash];
                         dbga(`hero.action: %s -> %s`, nhash, tr);
-                        nTranslatable++;
+                        translationKeys[source][nhash] = ntext;
                         if (tr) action.text = tr;
                         else {
                           const llmHash = `T${Object.keys(llmHashes)
@@ -469,10 +477,10 @@ export default async function main() {
               for (const field of FRONTMATTER_FIELDS.filter(
                 (field) => typeof data[field] === "string"
               )) {
-                const nhash = hashNode(data[field]);
+                const { ntext, nhash } = hashNode(data[field]);
                 const tr = translationCache[nhash];
                 dbga(`%s: %s -> %s`, field, nhash, tr);
-                nTranslatable++;
+                translationKeys[source][nhash] = ntext;
                 if (tr) data[field] = tr;
                 else {
                   const llmHash = `T${Object.keys(llmHashes)
@@ -503,9 +511,9 @@ export default async function main() {
               // collect title attributes
               dbgm(`attribute title: %s`, attribute.value);
               let title = attribute.value;
-              const nhash = hashNode(title);
+              const { ntext, nhash } = hashNode(title);
               const tr = translationCache[nhash];
-              nTranslatable++;
+              translationKeys[source][nhash] = ntext;
               if (tr) {
                 title = tr;
               } else {
@@ -652,6 +660,7 @@ export default async function main() {
                 .replace(/└[A-Z]\d{3,5}┘/g, "");
               dbg(`content: %s`, chunkTranslated);
               translationCache[hash] = chunkTranslated;
+              translationKeys[to][hash] = chunkTranslated;
             }
           }
 
@@ -684,7 +693,7 @@ export default async function main() {
                       dbgo(`yaml hero action link: %s`, action.link);
                     }
                     if (typeof action.text === "string") {
-                      const nhash = hashNode(action.text);
+                      const { nhash } = hashNode(action.text);
                       const tr = translationCache[nhash];
                       dbgo(`yaml hero.action: %s -> %s`, nhash, tr);
                       if (tr) action.text = tr;
@@ -702,7 +711,7 @@ export default async function main() {
                 }
               }
               if (data.hero && typeof data.hero.tagline === "string") {
-                const nhash = hashNode(data.hero.tagline);
+                const { nhash } = hashNode(data.hero.tagline);
                 const tr = translationCache[nhash];
                 if (tr) data.hero.tagline = tr;
                 else unresolvedTranslations.add(nhash);
@@ -710,7 +719,7 @@ export default async function main() {
               for (const field of FRONTMATTER_FIELDS.filter(
                 (field) => typeof data[field] === "string"
               )) {
-                const nhash = hashNode(data[field]);
+                const { nhash } = hashNode(data[field]);
                 const tr = translationCache[nhash];
                 dbgo(`yaml %s: %s -> %s`, field, nhash, tr);
                 if (tr) data[field] = tr;
@@ -720,7 +729,7 @@ export default async function main() {
               return SKIP;
             }
           } else {
-            const nhash = hashNode(node);
+            const { nhash } = hashNode(node);
             const translation = translationCache[nhash];
             if (translation) {
               if (node.type === "text") {
@@ -774,7 +783,7 @@ export default async function main() {
               attribute.type === "mdxJsxAttribute" &&
               attribute.name === "title"
             ) {
-              const nhash = hashNode(attribute.value);
+              const { nhash } = hashNode(attribute.value);
               const tr = translationCache[nhash];
               if (tr) {
                 dbgo(`%s -> %s`, nhash, tr);
@@ -953,17 +962,25 @@ export default async function main() {
         // apply translations and save
         dbgc(`translated: %s`, contentTranslated);
         dbg(`writing translation to %s`, translationFn);
+        const nTranslatable = Object.keys(translationKeys[source]).length;
+        output.resultItem(
+          true,
+          `translated chunks: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`
+        );
 
         await workspace.writeText(translationFn, contentTranslated);
         await workspace.writeText(
           translationCacheFilename,
           JSON.stringify(translationCache, null, 2)
         );
-
-        output.resultItem(
-          true,
-          `translated chunks: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`
-        );
+        if (starlight) {
+          await workspace.writeFiles(
+            Object.entries(translationKeys).map(([loc, keys]) => ({
+              filename: changeext(filename, `.${loc}.json`),
+              content: JSON.stringify(keys, null, 2),
+            }))
+          );
+        }
       } catch (error) {
         output.error(error);
         break;
