@@ -6,6 +6,7 @@ interface LogEntry {
   filename: string;
   stage: "translate" | "validate";
   model: string;
+  tokens: number;
   prompt?: number;
   completion?: number;
   total?: number;
@@ -101,7 +102,38 @@ const localeStats = logs
       }
     >
   );
-
+const fileStats = logs
+  .filter(({ filename }) => !!filename)
+  .sort((l, r) => l.filename.localeCompare(r.filename))
+  .reduce(
+    (acc, log) => {
+      if (!acc[log.filename]) {
+        acc[log.filename] = {
+          count: 0,
+          cost: 0,
+          tokens: 0,
+          prompt: 0,
+          completion: 0,
+        };
+      }
+      acc[log.filename].count++;
+      acc[log.filename].cost += log.cost ?? 0;
+      acc[log.filename].tokens += log.total ?? 0;
+      acc[log.filename].prompt += log.prompt ?? 0;
+      acc[log.filename].completion += log.completion ?? 0;
+      return acc;
+    },
+    {} as Record<
+      string,
+      {
+        count: number;
+        cost: number;
+        tokens: number;
+        prompt: number;
+        completion: number;
+      }
+    >
+  );
 // Format currency
 const formatCurrency = (amount: number | undefined) => {
   return amount === undefined
@@ -132,6 +164,8 @@ const formatTokens = (num: number | undefined) => {
     }).format(num / 1e3)}k`;
   return new Intl.NumberFormat("en-US").format(num);
 };
+
+const tableStyle = "font-size: 80%;";
 ---
 
 <h2>Overview</h2>
@@ -222,8 +256,38 @@ const formatTokens = (num: number | undefined) => {
   </table>
 </div>
 
+<h2>Locales</h2>
+<div style={tableStyle}>
+  <table>
+    <thead>
+      <tr>
+        <th>Filename</th>
+        <th>Operations</th>
+        <th>Cost</th>
+        <th>Tokens</th>
+        <th>Prompt Tokens</th>
+        <th>Completion Tokens</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        Object.entries(fileStats).map(([filename, stats]) => (
+          <tr>
+            <td>{filename}</td>
+            <td>{formatNumber(stats.count)}</td>
+            <td>{formatCurrency(stats.cost)}</td>
+            <td>{formatTokens(stats.tokens)}</td>
+            <td>{formatTokens(stats.prompt)}</td>
+            <td>{formatTokens(stats.completion)}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
 <h2>Translation Log</h2>
-<div style="font-size: 80%;">
+<div style={tableStyle}>
   <table>
     <thead>
       <tr>
@@ -231,6 +295,7 @@ const formatTokens = (num: number | undefined) => {
         <th>Stage</th>
         <th>Model</th>
         <th>Locale</th>
+        <th>Source Tokens</th>
         <th>Total Tokens</th>
         <th>Prompt Tokens</th>
         <th>Completion Tokens</th>
@@ -253,6 +318,7 @@ const formatTokens = (num: number | undefined) => {
               <td>{log.stage}</td>
               <td>{log.model}</td>
               <td>{log.lang || ""}</td>
+              <td>{formatTokens(log.tokens)}</td>
               <td>{formatTokens(log.total)}</td>
               <td>{formatTokens(log.prompt)}</td>
               <td>{formatTokens(log.completion)}</td>
