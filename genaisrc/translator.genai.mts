@@ -889,52 +889,45 @@ translated content of text enclosed in T003 here (only T003 content!)
           }
         }
 
-        if (attempts) {
-          // judge quality is good enough
-          const res = await classify(
-            (ctx) => {
-              ctx.$`You are an expert at judging the quality of translations. 
-          Your task is to determine the quality of the translation of a Markdown document from ${
-            sourceInfo.name
-          } (${source}) to ${lang} (${to}).
-          The original document is in ${ctx.def(
-            "ORIGINAL",
-            content
-          )}, and the translated document is provided in ${ctx.def(
-                "TRANSLATED",
-                contentTranslated,
-                { lineNumbers: true }
-              )} (line numbers were added).`.role("system");
-            },
-            {
-              ok: `Translation is faithful to the original document and conveys the same meaning.`,
-              bad: `Translation is of low quality or has a different meaning from the original.`,
-            },
-            {
-              label: `judge translation ${to} ${basename(filename)}`,
-              explanations: true,
-              cache: true,
-              systemSafety: true,
-              model: classifyModel,
-            }
-          );
-          logUsage("validate", classifyModel, res.usage);
-
-          // are we out of tokens?
-          if (/429/.test(res.error)) {
-            output.error(`Rate limit exceeded: ${res.error}`);
-            cancel(`rate limit exceeded`);
+        // judge quality is good enough
+        const validation = await classify(
+          (ctx) => {
+            const originalRef = ctx.def("ORIGINAL", content);
+            const translatedRef = ctx.def("TRANSLATED", contentTranslated);
+            ctx.$`
+You are an expert at judging the quality of translations. 
+Your task is to determine the quality of the translation of a Markdown document from ${sourceInfo.name} (${source}) to ${lang} (${to}).
+The original document is in ${originalRef}, and the translated document is provided in ${translatedRef}.
+`.role("system");
+          },
+          {
+            ok: `Translation is faithful to the original document and conveys the same meaning.`,
+            bad: `Translation is of low quality or has a different meaning from the original.`,
+          },
+          {
+            label: `judge translation ${to} ${basename(filename)}`,
+            explanations: true,
+            cache: true,
+            systemSafety: true,
+            model: classifyModel,
           }
+        );
+        logUsage("validate", classifyModel, validation.usage);
 
-          output.resultItem(
-            res.label === "ok",
-            `translation validation: ${res.label}`
-          );
-          if (res.label !== "ok") {
-            output.fence(res.answer);
-            output.diff(content, contentTranslated);
-            continue;
-          }
+        // are we out of tokens?
+        if (/429/.test(validation.error)) {
+          output.error(`Rate limit exceeded: ${validation.error}`);
+          cancel(`rate limit exceeded`);
+        }
+
+        output.resultItem(
+          validation.label === "ok",
+          `translation validation: ${validation.label}`
+        );
+        if (validation.label !== "ok") {
+          output.fence(validation.answer);
+          output.diff(content, contentTranslated);
+          continue;
         }
 
         // apply translations and save
