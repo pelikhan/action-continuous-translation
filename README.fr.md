@@ -47,9 +47,9 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 | `glossary_file`     | Chemin vers le fichier contenant les termes du glossaire                    | -                 |
 | `translations_dir`  | Dossier pour stocker les traductions                                        | `translations`    |
 
-### 🌟 Intégration Astro Starlight
+### 🌟 Intégration avec Astro Starlight
 
-| Paramètre        | Description                                        | Requis                    |
+| Paramètre        | Description                                        | Obligatoire               |
 | ---------------- | -------------------------------------------------- | ------------------------- |
 | `starlight_dir`  | Dossier racine de la documentation Astro Starlight | Uniquement pour Starlight |
 | `starlight_base` | Alias de base pour la documentation Starlight      | Optionnel                 |

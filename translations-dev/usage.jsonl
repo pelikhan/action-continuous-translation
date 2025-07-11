@@ -1,0 +1,2 @@
+{"filename":"README.md","lang":"fr","tokens":1692,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-11T01:02:37.360Z","cost":0.027595,"duration":42441.400601999994,"total":6986,"prompt":5294,"completion":1692}
+{"filename":"README.md","lang":"fr","tokens":1692,"stage":"validate","model":"github:openai/gpt-4o","date":"2025-07-11T01:02:40.107Z","cost":0.0101775,"duration":1784.8781989999989,"total":3987,"prompt":3959,"completion":28}
