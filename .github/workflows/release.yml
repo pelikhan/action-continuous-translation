@@ -52,7 +52,8 @@ jobs:
         with:
           path: .genaiscript/cache/**
           key: continuous-translation-${{ github.run_id }}
-          restore-keys: continuous-translation-
+          restore-keys: |
+            continuous-translation-
       - uses: pelikhan/action-continuous-translation@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,6 +61,6 @@ jobs:
       - run: git pull --ff-only
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          file_pattern: "**.md* translations/**/*.json"
+          file_pattern: "**.md* translations/**"
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
