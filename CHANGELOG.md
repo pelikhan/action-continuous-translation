@@ -1,5 +1,13 @@
 # action-continuous-translation
 
+## 0.0.24
+
+### Patch Changes
+
+- [#79](https://github.com/pelikhan/action-continuous-translation/pull/79) [`16ffbc8`](https://github.com/pelikhan/action-continuous-translation/commit/16ffbc8a946b6e6e537805380390fab790e0bba1) Thanks [@pelikhan](https://github.com/pelikhan)! - - 🧠 Improved detection of translatable content in paragraphs and headings to skip nodes containing only links or non-translatable text
+  - 🔎 Updated French translations for increased accuracy, consistency, and clarity across UI and docs
+  - 📈 Added new usage metrics for translation and validation steps in usage logs
+
 ## 0.0.23
 
 ### Patch Changes
