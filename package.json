@@ -34,7 +34,7 @@
     "dev:astro": "genaiscript run translator \"docs/src/content/docs/index.mdx\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation -x translationsDir=translations-dev",
     "dev:astro:root-no-base": "genaiscript run translator \"test/root-no-base/src/content/**/*\" -x \"lang=fr\" --no-run-trace -x starlightDir=test/root-no-base -x translationsDir=translations-dev",
     "dev:js": "genaiscript run translator \"test/generative-ai-with-javascript/*.md\" --ignore-git-ignore -x \"lang=fr\" --no-run-trace -x \"translationsDir=translations/js\"",
-    "release": "npx changeset version && git add . && git commit -m \"[chore] release\" && git push",
+    "release": "npx changeset version && npm install && git add . && git commit -m \"[chore] release\" && git push",
     "translate": "genaiscript run translator README.md \"docs/src/content/**/*\" -x \"lang=fr,es,pt-br,ar\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation -x glossaryFile=./glossary.md -x instructionsFile=./instructions.md",
     "start": "genaiscript run translator --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY"
   },
