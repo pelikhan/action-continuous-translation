@@ -223,16 +223,10 @@ export default async function main() {
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
 
     dbg(`Using translation model: %s`, translationModel);
-    // Sanitize language and model IDs for safe use in filenames
-    const sanitizedLangId = to.toLowerCase();
-    const sanitizedModelId = sanitizeFilename(translationModel.toLowerCase());
-    dbg(`sanitized lang: %s, model: %s`, sanitizedLangId, sanitizedModelId);
-
     // Build safe filename for translation cache
     const translationCacheFilename = join(
       translationsDir,
-      sanitizedLangId,
-      `${sanitizedModelId}.json`
+      `${to.toLowerCase()}.json`
     );
     dbg(`cache: %s`, translationCacheFilename);
     output.itemValue(`translation model`, translationModel);
@@ -548,10 +542,14 @@ export default async function main() {
               ctx.$`You are an expert at translating technical documentation into ${lang} (${to}).
 ## Task
 Your task is to translate a Markdown (GFM) document to ${lang} (${to}) while preserving the structure and formatting of the original document.
-You will receive the original document as a variable named ${originalRef} and the currently translated document as a variable named ${translatedRef}.`.role("system");
+You will receive the original document as a variable named ${originalRef} and the currently translated document as a variable named ${translatedRef}.`.role(
+                "system"
+              );
               if (glossary)
                 ctx.$`## Glossary
-You also have a glossary ${glossaryRef} to maintain a consistent terminology accross all translations.`.role("system");
+You also have a glossary ${glossaryRef} to maintain a consistent terminology accross all translations.`.role(
+                  "system"
+                );
               ctx.$`## Input Format
 
 Each translatable text chunk that needs to be translated is be 

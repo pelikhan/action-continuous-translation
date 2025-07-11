@@ -70,6 +70,9 @@ You thrive at summarizing the changes in one clear, sentence that captures the m
   }
 );
 
+const extra = await host.input(`Do you want to add to this changeset?
+${content}`);
+
 console.log(`Writing changeset to ${filename}...`);
 await workspace.writeText(
   filename,
@@ -77,6 +80,7 @@ await workspace.writeText(
 "action-continuous-translation": ${type}
 ---
 
+${extra || ""}
 ${content}
 `
 );
