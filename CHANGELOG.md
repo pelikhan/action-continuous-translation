@@ -1,5 +1,23 @@
 # action-continuous-translation
 
+## 0.0.23
+
+### Patch Changes
+
+- [#77](https://github.com/pelikhan/action-continuous-translation/pull/77) [`8e0eac4`](https://github.com/pelikhan/action-continuous-translation/commit/8e0eac42137510787c01d65d06b50b4ce1bc5307) Thanks [@pelikhan](https://github.com/pelikhan)! - - ✨ Added support for glossary markdown file to improve translation consistency and referenced it in translation prompts
+
+  - 📝 Enhanced and clarified translation task instructions and prompt structure for better usability and detail
+  - 🧹 Removed unused helper function for marker detection
+  - ➕ Introduced new action and workflow parameters for specifying a glossary file
+  - 📝 Added comprehensive Markdown feature test file, glossary, and translation style instructions for documentation and testing
+
+- [#78](https://github.com/pelikhan/action-continuous-translation/pull/78) [`d6042fd`](https://github.com/pelikhan/action-continuous-translation/commit/d6042fd095370b0336ab482ce02b4f9f790a0177) Thanks [@pelikhan](https://github.com/pelikhan)! - we want to be able to run the translation job locally with models with more tokens, and maintain it with github mmodels. so the mmodel name in the file is not useful. the user can change the cache fodlder if needed.
+  - ✨ Added prompt for extra user input when generating a changeset for more flexible descriptions
+  - 🐛 Fixed translation cache to use only the language code in filenames, improving consistency
+  - 🇫🇷 Added French translations for documentation in `translations-dev/fr.json`
+  - 📊 Introduced translation usage tracking with `translations-dev/usage.jsonl` for audit and analytics
+  - 💬 Improved formatting of translation instructions and prompts for better clarity
+
 ## 0.0.22
 
 ### Patch Changes
