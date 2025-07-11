@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.1.0
+
+### Minor Changes
+
+- [`3d27165`](https://github.com/pelikhan/action-continuous-translation/commit/3d2716542054f889b533e769e578e6f5953bd95e) Thanks [@pelikhan](https://github.com/pelikhan)! - Updated storage strategy for translation files.
+
 ## 0.0.24
 
 ### Patch Changes
