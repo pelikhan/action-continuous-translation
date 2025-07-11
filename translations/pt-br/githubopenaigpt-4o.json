@@ -297,5 +297,8 @@
   "We also support frontmatter entries from [Starlight Blog](https://starlight-blog.6496DF41DBF0222B2396": "Também oferecemos suporte às entradas frontmatter do [Starlight Blog](https://starlight-blog-docs.vercel.app/):",
   "[`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt):.BCF92DC882C788305E57": "[`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt): O resumo do post do blog.",
   "Follow the specific [title docs](https://starlight.astro.build/guides/i18n/#tran.2BE7F344264AE0D9C61B": "Siga a documentação específica de [título](https://starlight.astro.build/guides/i18n/#translate-the-site-title) e [barra lateral](https://starlight.astro.build/guides/sidebar/) do Starlight para mais detalhes.",
-  "You can try the dashboard by navigating to the **Translation Dashboard** link in.EC5106918BBBEE51FF97": "Você pode experimentar o painel navegando até o link **Painel de Tradução** na barra lateral desta página."
+  "You can try the dashboard by navigating to the **Translation Dashboard** link in.EC5106918BBBEE51FF97": "Você pode experimentar o painel navegando até o link **Painel de Tradução** na barra lateral desta página.",
+  "Path to file with glossary terms": "Caminho para o arquivo com termos do glossário",
+  "### `glossary_file`": "`glossary_file`",
+  "Path to a file containing glossary terms to use when translating.": "Caminho para um arquivo contendo termos do glossário para serem usados durante a tradução."
 }

@@ -44,6 +44,7 @@ Esta ação utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) para
 | `files`             | Arquivos para traduzir (separados por ponto e vírgula)                  | `README.md`    |
 | `instructions`      | Instruções personalizadas de tradução                                   | -              |
 | `instructions_file` | Caminho para o arquivo com instruções de tradução                       | -              |
+| `glossary_file`     | Caminho para o arquivo com termos do glossário                          | -              |
 | `translations_dir`  | Pasta para armazenar traduções                                          | `translations` |
 
 ### 🌟 Integração com Astro Starlight
