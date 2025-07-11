@@ -154,7 +154,7 @@ export default async function main() {
 
   output.heading(1, "Continuous Translation");
 
-  const { force, translationsDir } = parameters;
+  const { force, translationsDir, glossaryFile } = parameters;
   dbg(`translationsDir: %s`, translationsDir);
   let { instructions } = parameters;
   const source = parameters.source;
@@ -187,6 +187,10 @@ export default async function main() {
   const glossary = parameters.glossaryFile
     ? (await workspace.readText(parameters.glossaryFile))?.content
     : undefined;
+  if (glossaryFile) {
+    output.itemValue(`glossary file`, glossaryFile);
+    output.itemValue(`glossary`, await tokenizers.count(glossary || ""));
+  }
   dbg(`glossary: %s`, glossary || "");
 
   const ignorer = await parsers.ignore(".ctignore");
@@ -544,10 +548,10 @@ export default async function main() {
               ctx.$`You are an expert at translating technical documentation into ${lang} (${to}).
 ## Task
 Your task is to translate a Markdown (GFM) document to ${lang} (${to}) while preserving the structure and formatting of the original document.
-You will receive the original document as a variable named ${originalRef} and the currently translated document as a variable named ${translatedRef}.`;
+You will receive the original document as a variable named ${originalRef} and the currently translated document as a variable named ${translatedRef}.`.role("system");
               if (glossary)
                 ctx.$`## Glossary
-You also have a glossary ${glossaryRef} to maintain a consistent terminology accross all translations.`;
+You also have a glossary ${glossaryRef} to maintain a consistent terminology accross all translations.`.role("system");
               ctx.$`## Input Format
 
 Each translatable text chunk that needs to be translated is be 
@@ -596,8 +600,8 @@ translated content of text enclosed in T003 here (only T003 content!)
 - Always make sure that the URLs are not modified by the translation.
 - Translate each node individually, preserving the original meaning and context.
 - If you are unsure about the translation, skip the translation.
-      ${instructions || ""}
-      ${instructionsFile || ""}`.role("system");
+${instructions || ""}
+${instructionsFile || ""}`.role("system");
             },
             {
               model: translationModel,
@@ -908,7 +912,8 @@ The original document is in ${originalRef}, and the translated document is provi
             label: `judge translation ${to} ${basename(filename)}`,
             explanations: true,
             cache: true,
-            systemSafety: true,
+            systemSafety: false,
+            system: ["system.safety_jailbreak"],
             model: classifyModel,
           }
         );

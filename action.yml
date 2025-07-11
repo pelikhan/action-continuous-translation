@@ -31,6 +31,9 @@ inputs:
   starlight_base:
     description: Base path for the Astro Starlight documentation.
     required: false
+  glossary_file:
+    description: A markdown file containing the glossary of the project
+    required: false
   force:
     description: Force translation even if the file has already been translated.
     required: false
