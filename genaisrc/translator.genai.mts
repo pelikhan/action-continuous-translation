@@ -11,6 +11,7 @@ import type {
   Paragraph,
   PhrasingContent,
   Yaml,
+  Parent,
 } from "mdast";
 import { basename, dirname, join, relative } from "path";
 import { URL } from "url";
@@ -19,7 +20,6 @@ import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
 import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
 import { resolveModels } from "./src/models.mts";
-import { sanitizeFilename } from "@genaiscript/core";
 
 script({
   title: "Automatic Markdown Translations using GenAI",
@@ -91,9 +91,17 @@ script({
 });
 
 const IGNORE_RX = /^\s*[0-9-"'`=+\/~_.,:;<>\]\[{}\(\)…\s]+\s*$/;
-function isTranslatable(text: string) {
-  return !IGNORE_RX.test(text) && !isUri(text);
-}
+const isTranslatable = (text: string) => !IGNORE_RX.test(text) && !isUri(text);
+const hasTranslatableTextChildren = (
+  node: Parent // list of links with untranslatable text
+) =>
+  node.children.length > 1 &&
+  !node.children.every(
+    (c) =>
+      c.type === "link" ||
+      c.type === "linkReference" ||
+      (c.type === "text" && !isTranslatable(c.value))
+  );
 const HASH_TEXT_LENGTH = 80;
 const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
@@ -395,22 +403,25 @@ export default async function main() {
                 node.value = `┌${llmHash}┐${node.value}└${llmHash}┘`;
               }
             } else if (node.type === "paragraph" || node.type === "heading") {
-              dbga(`paragraph/heading node: %s`, nhash);
-              const llmHash = `P${Object.keys(llmHashes)
-                .length.toString()
-                .padStart(3, "0")}`;
-              llmHashes[llmHash] = nhash;
-              llmHashTodos.add(llmHash);
-              nTranslatable++;
-              node.children.unshift({
-                type: "text",
-                value: `┌${llmHash}┐`,
-              } as Text);
-              node.children.push({
-                type: "text",
-                value: `└${llmHash}┘`,
-              });
-              return SKIP; // don't process children of paragraphs
+              // some paragraphs only contain links, with white spaces
+              if (hasTranslatableTextChildren(node)) {
+                dbga(`paragraph/heading node: %s`, nhash);
+                const llmHash = `P${Object.keys(llmHashes)
+                  .length.toString()
+                  .padStart(3, "0")}`;
+                llmHashes[llmHash] = nhash;
+                llmHashTodos.add(llmHash);
+                nTranslatable++;
+                node.children.unshift({
+                  type: "text",
+                  value: `┌${llmHash}┐`,
+                } as Text);
+                node.children.push({
+                  type: "text",
+                  value: `└${llmHash}┘`,
+                });
+                return SKIP; // don't process children of paragraphs
+              }
             } else if (node.type === "yaml") {
               dbgfm(`%s`, node.value);
               const data = parsers.YAML(node.value);
@@ -741,6 +752,11 @@ ${instructionsFile || ""}`.role("system");
                 dbg(`untranslated node type: %s`, node.type);
               }
             } else if (node.type === "text" && !isTranslatable(node.value)) {
+              // ignore
+            } else if (
+              (node.type === "paragraph" || node.type === "heading") &&
+              !hasTranslatableTextChildren(node)
+            ) {
               // ignore
             } else unresolvedTranslations.add(nhash);
           }
