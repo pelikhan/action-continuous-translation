@@ -1,43 +1,43 @@
 # 🌍 Traduction Continue
 
-> **Traduisez automatiquement votre documentation markdown à l'aide de l'IA** - alimenté par [GitHub Actions](https://github.com/actions) et [GitHub Models](https://github.com/models) avec support intégré pour [Astro Starlight](https://starlight.astro.build/) !
+> **Traduisez automatiquement votre documentation markdown avec l'IA** - propulsé par [GitHub Actions](https://github.com/actions) et [GitHub Models](https://github.com/models) avec une prise en charge intégrée pour [Astro Starlight](https://starlight.astro.build/) !
 
 [![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)](https://github.com/marketplace/actions/continuous-translation)
 [![Documentation](https://img.shields.io/badge/📖-Documentation-green)](https://pelikhan.github.io/action-continuous-translation/)
 
 ## ✨ Fonctionnalités
 
-* 🚀 **Traduction incrémentielle** - Traduisez uniquement le contenu modifié, économisant ainsi du temps et des coûts API
-* 🎯 **Analyse AST intelligente** - Préserve la structure et le formatage du markdown
+* 🚀 **Traduction Incrémentale** - Ne traduit que le contenu modifié, économisant du temps et des coûts API
+* 🎯 **Analyse AST Intelligente** - Préserve la structure et le formatage du markdown
 * 🔄 **Gestion du Cache** - Mise en cache intelligente pour éviter les traductions redondantes
-* 📚 **Prêt pour Astro Starlight** - Support intégré pour les sites de documentation
-* 🌐 **Support Multilingue** - Traduisez simultanément dans plusieurs langues
-* 🔍 **Validation de Qualité** - Validation automatique de la qualité de la traduction
-* ⚡ **Natif avec GitHub Actions** - Intégration fluide avec votre pipeline CI/CD
-* 🤖 **Alimenté par l'IA** - Exploitez GitHub Models pour des traductions fluides et de haute qualité
+* 📚 **Compatible Astro Starlight** - Prise en charge intégrée pour les sites de documentation
+* 🌐 **Support Multilingue** - Traduisez dans plusieurs langues simultanément
+* 🔍 **Validation de la Qualité** - Validation automatique de la qualité des traductions
+* ⚡ **Natif GitHub Actions** - Intégration fluide avec votre pipeline CI/CD
+* 🤖 **Propulsé par l'IA** - Utilise GitHub Models pour des traductions de haute qualité
 
 ## 📚 Ressources
 
-* 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet d'installation et référence API (également traduit par cette action - voir [tableau de bord de traduction](https://pelikhan.github.io/action-continuous-translation/dashboard/))
+* 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet d'installation et de référence API (également traduit par cette action - voir le [tableau de bord de traduction](https://pelikhan.github.io/action-continuous-translation/dashboard/))
 * ✍️ [**Article de Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Exploration approfondie de la technologie
 * 🌐 **Traductions** : [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
-## 🔧 Comment ça fonctionne
+## 🔧 Comment ça marche
 
-Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pour analyser intelligemment et traduire vos documents markdown. Voici comment cela fonctionne en coulisses :
+Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pour analyser et traduire intelligemment vos documents markdown. Voici le processus derrière la magie :
 
-1. **📄 Analyse** - Convertir le markdown en AST (Arbre Syntaxique Abstrait)
-2. **🔍 Analyse** - Identifier le contenu nécessitant une traduction par rapport aux traductions existantes
-3. **🤖 Traduction** - Utiliser l'IA pour générer des traductions de haute qualité
-4. **✅ Validation** - Garantir la qualité de la traduction et l'intégrer dans le document
-5. **💾 Cache** - Enregistrer les traductions pour des mises à jour incrémentielles futures
-6. **📝 Validation** - Valider automatiquement les changements dans votre dépôt
+1. **📄 Analyse** - Convertit le markdown en AST (Abstract Syntax Tree)
+2. **🔍 Analyse** - Identifie le contenu à traduire par rapport aux traductions existantes
+3. **🤖 Traduire** - Utilise l'IA pour générer des traductions de haute qualité
+4. **✅ Valider** - Assure la qualité des traductions et les injecte dans le document
+5. **💾 Mise en Cache** - Enregistre les traductions pour des mises à jour incrémentales futures
+6. **📝 Commit** - Effectue automatiquement les changements dans votre dépôt
 
 ## ⚙️ Configuration
 
-### 📝 Paramètres de base
+### 📝 Paramètres de Base
 
-| Paramètre           | Description                                                                 | Valeur par défaut |
+| Paramètre           | Description                                                                 | Valeur par Défaut |
 | ------------------- | --------------------------------------------------------------------------- | ----------------- |
 | `lang`              | Langue(s) cible(s) pour la traduction (codes ISO, séparés par des virgules) | `fr`              |
 | `source`            | Langue source (code ISO)                                                    | `en`              |
@@ -53,53 +53,53 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 | `starlight_dir`  | Dossier racine de la documentation Astro Starlight | Uniquement pour Starlight |
 | `starlight_base` | Alias de base pour la documentation Starlight      | Optionnel                 |
 
-### 🔧 Diagnostics & Débogage
+### 🔧 Diagnostics et Débogage
 
-| Paramètre | Description                                                                                                         | Valeur par défaut |
-| --------- | ------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| `force`   | Forcer la traduction même si elle est déjà effectuée                                                                | `false`           |
-| `debug`   | Activer le journal de débogage[en savoir plus](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
+| Paramètre | Description                                                                                                                                                                                                  | Valeur par Défaut |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------- |
+| `force`   | Force la traduction même si elle a déjà été réalisée                                                                                                                                                         | `false`           |
+| `debug`   | Active le journal de débogage (\[en savoir plus]\(https\://microsoft.github.io/genaiscript/reference/scripts/logging/))[en savoir plus](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
 
-### 🤖 Configuration du fournisseur d'IA
+### 🤖 Configuration du Fournisseur IA
 
-#### Modèles GitHub (recommandé)
+#### GitHub Models (Recommandé)
 
-| Paramètre      | Description                                                                                                                                                                                          | Valeur par défaut             |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `github_token` | Jeton GitHub avec permission \`models: read\` `models: read`guide d'installation[guide d'installation](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
+| Paramètre      | Description                                                                                                                                                                                                                                                                                                  | Valeur par Défaut             |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- |
+| `github_token` | Token GitHub avec `models: read`l'autorisation \`models: read\` (\[guide d'installation]\(https\://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions))[guide d'installation](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
 
 #### OpenAI
 
-| Paramètre         | Description                 | Valeur par défaut               |
+| Paramètre         | Description                 | Valeur par Défaut               |
 | ----------------- | --------------------------- | ------------------------------- |
 | `openai_api_key`  | Clé API OpenAI              | `${{ secrets.OPENAI_API_KEY }}` |
 | `openai_api_base` | URL de base de l'API OpenAI | `${{ env.OPENAI_API_BASE }}`    |
 
 #### Azure OpenAI
 
-| Paramètre                      | Description                                                        | Valeur par défaut                         |
+| Paramètre                      | Description                                                        | Valeur par Défaut                         |
 | ------------------------------ | ------------------------------------------------------------------ | ----------------------------------------- |
 | `azure_openai_api_endpoint`    | Point de terminaison Azure OpenAI                                  | `${{ env.AZURE_OPENAI_API_ENDPOINT }}`    |
-| `azure_openai_api_key`         | Clé API Azure OpenAI (non nécessaire pour Microsoft Entra ID)      | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
-| `azure_openai_subscription_id` | ID d'abonnement pour lister les déploiements (Entra ID uniquement) | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
+| `azure_openai_api_key`         | Clé API Azure OpenAI (non requise pour Microsoft Entra ID)         | `${{ secrets.AZURE_OPENAI_API_KEY }}`     |
+| `azure_openai_subscription_id` | ID d'abonnement pour la liste de déploiement (uniquement Entra ID) | `${{ env.AZURE_OPENAI_SUBSCRIPTION_ID }}` |
 | `azure_openai_api_version`     | Version de l'API Azure OpenAI                                      | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
-| `azure_openai_api_credentials` | Type de credentials API                                            | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
+| `azure_openai_api_credentials` | Type d'identifiants API                                            | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
 
-#### Alias Modèle
+#### Alias de Modèles
 
-| Paramètre     | Description                                                          | Valeur par défaut |
-| ------------- | -------------------------------------------------------------------- | ----------------- |
-| `model_alias` | Une chaîne YAML-like de paires \`alias: modelid\` `alias: modelid`\` |                   |
+| Paramètre     | Description                                           | Valeur par Défaut |
+| ------------- | ----------------------------------------------------- | ----------------- |
+| `model_alias` | Une chaîne YAML de `alias: modelid`\`alias: modelid\` |                   |
 
-Voir la documentation des [modèles](/action-continuous-translation/models/) pour plus de détails.
+Consultez la documentation sur les [Modèles](/action-continuous-translation/models/) pour plus de détails.
 
 ## 📤 Sorties
 
-| Sortie | Description                    |
-| ------ | ------------------------------ |
-| `text` | Texte généré par la traduction |
+| Sortie | Description                             |
+| ------ | --------------------------------------- |
+| `text` | Le texte de traduction généré en sortie |
 
-## 🚀 Démarrage rapide
+## 🚀 Démarrage Rapide
 
 ### Configuration Simple
 
@@ -156,6 +156,6 @@ jobs:
 
 <div align="center">
 
-**Fait avec ❤️ grâce à [GenAIScript](https://microsoft.github.io/genaiscript/)**
+**Créé avec ❤️ grâce à [GenAIScript](https://microsoft.github.io/genaiscript/)**
 
 </div>

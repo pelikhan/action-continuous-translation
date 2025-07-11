@@ -44,11 +44,13 @@ const { text: content } = await runPrompt(
   (ctx) => {
     const diffRef = ctx.def("GIT_DIFF", diff);
     ctx.$`## Role
-    You are an expert code reviewer with great English technical writing skills.
+You are an expert code reviewer with great English technical writing skills.
 
 ## Task
 Your task is to generate a **changeset** description of the changes in ${diffRef},
 it will be added to CHANGELOG.md.
+
+You thrive at summarizing the changes in one clear, sentence that captures the most important changes.
 
 ## Instructions
 

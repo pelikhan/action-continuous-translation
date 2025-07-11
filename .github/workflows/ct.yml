@@ -52,6 +52,8 @@ jobs:
           lang: fr,es,pt-br,ar
           starlight_dir: docs
           starlight_base: action-continuous-translation
+          instructions_file: ./instructions.md
+          glossary_file: ./glossary.md
           files: |
             README.md
             docs/src/content/**/*
