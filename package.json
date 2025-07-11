@@ -41,6 +41,6 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.29.5",
-    "@intellectronica/ruler": "^0.2.7"
+    "@intellectronica/ruler": "^0.2.9"
   }
 }

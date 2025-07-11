@@ -6,6 +6,10 @@ test/*.*.md
 # START Ruler Generated Files
 .aider.conf.yml
 .aider.conf.yml.bak
+.augment-guidelines
+.augment-guidelines.bak
+.augmentcode/config.json
+.augmentcode/config.json.bak
 .clinerules
 .clinerules.bak
 .cursor/mcp.json.bak
@@ -16,6 +20,8 @@ test/*.*.md
 .github/copilot-instructions.md.bak
 .idx/airules.md
 .idx/airules.md.bak
+.junie/guidelines.md
+.junie/guidelines.md.bak
 .mcp.json.bak
 .openhands/config.toml
 .openhands/config.toml.bak
