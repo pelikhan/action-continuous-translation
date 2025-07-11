@@ -37,14 +37,15 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 
 ### 📝 Basic Settings
 
-| Parameter           | Description                                                     | Default     |
-| ------------------- | --------------------------------------------------------------- | ----------- |
-| `lang`              | Target language(s) for translation (ISO codes, comma-separated) | `fr`        |
-| `source`            | Source language (ISO code)                                      | `en`        |
-| `files`             | Files to translate (semicolon-separated)                        | `README.md` |
-| `instructions`      | Custom translation instructions                                 | -           |
-| `instructions_file` | Path to file with translation instructions                      | -           |
-| `translations_dir`   | Folder to store translations                                    | `translations` |
+| Parameter           | Description                                                     | Default        |
+| ------------------- | --------------------------------------------------------------- | -------------- |
+| `lang`              | Target language(s) for translation (ISO codes, comma-separated) | `fr`           |
+| `source`            | Source language (ISO code)                                      | `en`           |
+| `files`             | Files to translate (semicolon-separated)                        | `README.md`    |
+| `instructions`      | Custom translation instructions                                 | -              |
+| `instructions_file` | Path to file with translation instructions                      | -              |
+| `glossary_file`     | Path to file with glossary terms                                | -              |
+| `translations_dir`  | Folder to store translations                                    | `translations` |
 
 ### 🌟 Astro Starlight Integration
 
