@@ -37,15 +37,16 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 
 ### 📝 Paramètres de base
 
-| Paramètre           | Description                                                                 | Valeur par défaut |
-| ------------------- | --------------------------------------------------------------------------- | ----------------- |
-| `lang`              | Langue(s) cible(s) pour la traduction (codes ISO, séparés par des virgules) | `fr`              |
-| `source`            | Langue source (code ISO)                                                    | `en`              |
-| `files`             | Fichiers à traduire (séparés par des points-virgules)                       | `README.md`       |
-| `instructions`      | Instructions de traduction personnalisées                                   | -                 |
-| `instructions_file` | Chemin vers le fichier contenant les instructions de traduction             | -                 |
-| `glossary_file`     | Chemin vers le fichier contenant les termes du glossaire                    | -                 |
-| `translations_dir`  | Dossier pour stocker les traductions                                        | `translations`    |
+| Paramètre           | Description                                                                 | Valeur par défaut                              |
+| ------------------- | --------------------------------------------------------------------------- | ---------------------------------------------- |
+| `lang`              | Langue(s) cible(s) pour la traduction (codes ISO, séparés par des virgules) | `fr`                                           |
+| `source`            | Langue source (code ISO)                                                    | `en`                                           |
+| `files`             | Fichiers à traduire (séparés par des points-virgules)                       | `README.md`                                    |
+| `instructions`      | Instructions de traduction personnalisées                                   | -                                              |
+| `instructions_file` | Chemin vers le fichier contenant les instructions de traduction             | -                                              |
+| `glossary_file`     | Chemin vers le fichier contenant les termes du glossaire                    | -                                              |
+| `translations_dir`  | Dossier pour stocker les traductions                                        | `translations`                                 |
+| `filename_template` | Modèle Jinja pour générer le chemin du fichier traduit                      | `{{dirname}}/{{basename}}.{{lang}}{{extname}}` |
 
 ### 🌟 Intégration Astro Starlight
 

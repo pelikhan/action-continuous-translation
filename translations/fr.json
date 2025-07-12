@@ -379,5 +379,6 @@
   "## Interact with community": "Interagissez avec la communauté",
   "Path to file with glossary terms": "Chemin vers le fichier contenant les termes du glossaire",
   "### `glossary_file`": "`glossary_file`",
-  "Path to a file containing glossary terms to use when translating.": "Chemin vers un fichier contenant des termes de glossaire à utiliser lors de la traduction."
+  "Path to a file containing glossary terms to use when translating.": "Chemin vers un fichier contenant des termes de glossaire à utiliser lors de la traduction.",
+  "Jinja template to generate the translated filepath": "Modèle Jinja pour générer le chemin du fichier traduit"
 }

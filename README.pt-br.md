@@ -37,15 +37,16 @@ Esta ação utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) para
 
 ### 📝 Configurações Básicas
 
-| Parâmetro           | Descrição                                                               | Padrão         |
-| ------------------- | ----------------------------------------------------------------------- | -------------- |
-| `lang`              | Idioma(s) de destino para tradução (códigos ISO, separados por vírgula) | `fr`           |
-| `source`            | Idioma de origem (código ISO)                                           | `en`           |
-| `files`             | Arquivos para traduzir (separados por ponto e vírgula)                  | `README.md`    |
-| `instructions`      | Instruções personalizadas de tradução                                   | -              |
-| `instructions_file` | Caminho para o arquivo com instruções de tradução                       | -              |
-| `glossary_file`     | Caminho para o arquivo com termos do glossário                          | -              |
-| `translations_dir`  | Pasta para armazenar traduções                                          | `translations` |
+| Parâmetro           | Descrição                                                               | Padrão                                         |
+| ------------------- | ----------------------------------------------------------------------- | ---------------------------------------------- |
+| `lang`              | Idioma(s) de destino para tradução (códigos ISO, separados por vírgula) | `fr`                                           |
+| `source`            | Idioma de origem (código ISO)                                           | `en`                                           |
+| `files`             | Arquivos para traduzir (separados por ponto e vírgula)                  | `README.md`                                    |
+| `instructions`      | Instruções personalizadas de tradução                                   | -                                              |
+| `instructions_file` | Caminho para o arquivo com instruções de tradução                       | -                                              |
+| `glossary_file`     | Caminho para o arquivo com termos do glossário                          | -                                              |
+| `translations_dir`  | Pasta para armazenar traduções                                          | `translations`                                 |
+| `filename_template` | Modelo Jinja para gerar o caminho do arquivo traduzido                  | `{{dirname}}/{{basename}}.{{lang}}{{extname}}` |
 
 ### 🌟 Integração com Astro Starlight
 

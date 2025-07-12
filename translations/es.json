@@ -358,5 +358,6 @@
   "You can try the dashboard by navigating to the **Translation Dashboard** link in.EC5106918BBBEE51FF97": "Puedes probar el panel navegando al enlace **Translation Dashboard** en la barra lateral de esta página.",
   "Path to file with glossary terms": "Ruta al archivo con términos del glosario",
   "### `glossary_file`": "`glossary_file`",
-  "Path to a file containing glossary terms to use when translating.": "Ruta a un archivo que contiene términos de glosario para usar al traducir."
+  "Path to a file containing glossary terms to use when translating.": "Ruta a un archivo que contiene términos de glosario para usar al traducir.",
+  "Jinja template to generate the translated filepath": "Plantilla Jinja para generar la ruta de archivo traducida"
 }
