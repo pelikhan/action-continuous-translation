@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.1.2
+
+### Patch Changes
+
+- [`19b4e6a`](https://github.com/pelikhan/action-continuous-translation/commit/19b4e6af86dd6be8dee78837c1db1250596cc86e) Thanks [@pelikhan](https://github.com/pelikhan)! - trigger release
+
 ## 0.1.1
 
 ### Patch Changes
