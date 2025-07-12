@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.1.3
+
+### Patch Changes
+
+- [`9dba52a`](https://github.com/pelikhan/action-continuous-translation/commit/9dba52a7e17eb0552fccc87acc0316eb7c3c6a72) Thanks [@pelikhan](https://github.com/pelikhan)! - fix filtering of folders
+
 ## 0.1.2
 
 ### Patch Changes
