@@ -217,8 +217,8 @@ export default async function main() {
   const files = env.files
     .filter((f) => ignorer([f.filename]).length)
     // Filter files that match the ISO language code pattern in the filename
-    .filter(({ filename }) => !/\.\w\w(-\w\w\w?)?\.mdx?$/i.test(filename))
-    .filter(({ filename }) => !/\/\w\w(-\w\w\w?)?\//i.test(filename));
+    .filter(({ filename }) => !/\.[a-z](-[a-zA-Z]{2,3})?\.mdx?$/.test(filename))
+    .filter(({ filename }) => !/\/[a-z](-[a-zA-Z]{2,3})?\//.test(filename));
   if (!files.length) cancel("No files or not matching languages selected.");
 
   const fileTokens: Record<string, number> = {};
