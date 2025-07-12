@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.1.1
+
+### Patch Changes
+
+- [`36f7ef1`](https://github.com/pelikhan/action-continuous-translation/commit/36f7ef11b6461f444f65fd151b6da2075177c461) Thanks [@pelikhan](https://github.com/pelikhan)! - add filename-template to customize the output path of translated files
+
 ## 0.1.0
 
 ### Minor Changes
