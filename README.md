@@ -46,6 +46,7 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 | `instructions_file` | Path to file with translation instructions                      | -              |
 | `glossary_file`     | Path to file with glossary terms                                | -              |
 | `translations_dir`  | Folder to store translations                                    | `translations` |
+| `filename_template` | Jinja template to generate the translated filepath              | `{{dirname}}/{{basename}}.{{lang}}{{extname}}` |
 
 ### 🌟 Astro Starlight Integration
 

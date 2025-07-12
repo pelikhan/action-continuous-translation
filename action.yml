@@ -12,6 +12,10 @@ inputs:
       'en' (English).
     required: false
     default: en
+  filename_template:
+    description: Template (jinja) for the translated file names.
+    required: false
+    default: "{{dirname}}/{{basename}}.{{lang}}{{extname}}"
   instructions:
     description: Additional prompting instructions that will be injected in the
       translation prompt.

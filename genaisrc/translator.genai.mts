@@ -13,7 +13,7 @@ import type {
   Yaml,
   Parent,
 } from "mdast";
-import { basename, dirname, join, relative } from "path";
+import { basename, dirname, extname, join, relative } from "path";
 import { URL } from "url";
 import { xor } from "es-toolkit";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
@@ -42,6 +42,11 @@ script({
       default: "en",
       description:
         "The ISO code of the source language for translation. Defaults to 'en' (English).",
+    },
+    filenameTemplate: {
+      type: "string",
+      default: "{{dirname}}/{{basename}}.{{lang}}{{extname}}",
+      description: "Template (jinja) for the translated file names.",
     },
     instructions: {
       type: "string",
@@ -158,12 +163,14 @@ export default async function main() {
     instructionsFile?: string;
     translationsDir?: string;
     glossaryFile?: string;
+    filenameTemplate?: string;
   };
 
   output.heading(1, "Continuous Translation");
 
-  const { force, translationsDir, glossaryFile } = parameters;
+  const { force, translationsDir, glossaryFile, filenameTemplate } = parameters;
   dbg(`translationsDir: %s`, translationsDir);
+  if (filenameTemplate) output.itemValue(`filename template`, filenameTemplate);
   let { instructions } = parameters;
   const source = parameters.source;
   const sourceInfo = await resolveModels(source);
@@ -297,8 +304,14 @@ export default async function main() {
       dbg(`starlight: %s`, starlight);
       const translationFn = starlight
         ? filename.replace(starlightDir, join(starlightDir, to.toLowerCase()))
-        : path.changeext(filename, `.${to.toLowerCase()}.md`);
-      dbg(`translation %s`, translationFn);
+        : parsers.jinja(filenameTemplate, {
+            filename,
+            basename: basename(path.changeext(filename, "")),
+            extname: extname(filename),
+            dirname: dirname(filename),
+            lang: to.toLowerCase(),
+          });
+      output.itemValue(`translated file`, translationFn);
 
       const patchFn = (fn: string, trailingSlash?: boolean) => {
         if (typeof fn === "string" && /^\./.test(fn) && starlight) {
