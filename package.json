@@ -1,7 +1,7 @@
 {
   "name": "action-continuous-translation",
   "private": true,
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "This action uses GitHub Models and remark to translate markdown document incrementally in your repository.",
   "dependencies": {
     "@genaiscript/core": "^2.2.16",

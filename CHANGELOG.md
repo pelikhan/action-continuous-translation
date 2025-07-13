@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.0
+
+### Minor Changes
+
+- [`ce6c2c2`](https://github.com/pelikhan/action-continuous-translation/commit/ce6c2c22e80d8493adb2c9f20dd1cbc72d2a3505) Thanks [@pelikhan](https://github.com/pelikhan)! - Support for chunking large documents
+
 ## 0.1.3
 
 ### Patch Changes
