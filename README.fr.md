@@ -48,7 +48,7 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 | `translations_dir`  | Dossier pour stocker les traductions                                        | `translations`                                 |
 | `filename_template` | Modèle Jinja pour générer le chemin du fichier traduit                      | `{{dirname}}/{{basename}}.{{lang}}{{extname}}` |
 
-### Fractionnement et limites
+### Limites
 
 | Paramètre                | Description                                                                                           | Valeur par défaut |
 | ------------------------ | ----------------------------------------------------------------------------------------------------- | ----------------- |

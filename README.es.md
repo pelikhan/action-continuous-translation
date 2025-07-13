@@ -48,7 +48,7 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 | `translations_dir`  | Carpeta para almacenar las traducciones                                | `translations`                                 |
 | `filename_template` | Plantilla Jinja para generar la ruta de archivo traducida              | `{{dirname}}/{{basename}}.{{lang}}{{extname}}` |
 
-### Limits
+### Límites
 
 | Parámetro                | Descripción                                                                                                      | Por defecto |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------- | ----------- |
