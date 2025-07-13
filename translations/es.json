@@ -515,5 +515,20 @@
   "يمكنك أيضًا تفعيل خيار `errorOnInconsistentLocale` لضمان أن تكون جميع الروابط مت.034071AB7A91704787B2": "También puedes habilitar la opción `errorOnInconsistentLocale` para garantizar que todos los enlaces sean consistentes con el idioma actual.",
   "لوحة معلومات ترجمة Lunaria": "Panel de traducciones de Lunaria",
   "يمكنك استخدام [لوحة معلومات ترجمة Lunaria](https://lunaria.dev/integrations/star.E31B929B1D920BBD8B92": "Puedes utilizar el [Panel de Traducciones de Lunaria](https://lunaria.dev/integrations/starlight/) para generar un tablero de estado de traducciones para tu sitio de Starlight.",
-  "يمكنك تجربة لوحة المعلومات عبر التنقل إلى رابط **لوحة معلومات الترجمة** في الشري.E099E1ADB3EA0F223865": "Prueba el panel de traducciones navegando al enlace **Panel de Traducciones** en la barra lateral de esta página."
+  "يمكنك تجربة لوحة المعلومات عبر التنقل إلى رابط **لوحة معلومات الترجمة** في الشري.E099E1ADB3EA0F223865": "Prueba el panel de traducciones navegando al enlace **Panel de Traducciones** en la barra lateral de esta página.",
+  "Limits": "Límites",
+  "How it works?": "¿Cómo funciona?",
+  "The translation workflow uses a mix of Markdown parsers, AST manipulation\nand LL.A510B052BA32A23DD011": "El flujo de trabajo de traducción utiliza una combinación de analizadores de Markdown, manipulación de AST e inferencia LLM para traducir y validar tus archivos de documentación de manera incremental.",
+  "**📄 التحليل** - تحويل Markdown إلى AST (شجرة البنية المجردة).": "**📄 Análisis** - Convertir Markdown a AST (árbol de sintaxis abstracta).",
+  "**🔍 التحليل** - التعرف على المحتوى الذي يحتاج إلى ترجمة مقابل الترجمات الموجودة.0F43BEA15168DFF1EEAE": "**🔍 Análisis** - Identificar el contenido que necesita traducción frente a las traducciones existentes.",
+  "**🤖 الترجمة** - استخدام الذكاء الاصطناعي لإنتاج ترجمات عالية الجودة.": "**🤖 Traducción** - Usar inteligencia artificial para generar traducciones de alta calidad.",
+  "**✅ التحقق** - ضمان جودة الترجمة ودمجها في الوثيقة.": "**✅ Verificación** - Garantizar la calidad de la traducción e integrarla en el documento.",
+  "**💾 التخزين المؤقت** - حفظ الترجمات للتحديثات التراكمية المستقبلية.": "**💾 Caché** - Almacenar las traducciones para futuras actualizaciones incrementales.",
+  "**📝 الالتزام** - الالتزام بالتغييرات تلقائيًا في المستودع الخاص بك.": "**📝 Confirmación** - Confirmar automáticamente los cambios en tu repositorio.",
+  "**Type**: `integer`\n**القيمة الافتراضية**: `8000`": "**Tipo**: `integer`\n**Valor predeterminado**: `8000`",
+  "أقصى عدد من الرموز (Tokens) التي يمكن معالجتها في مكالمة ترجمة باستخدام LLM.": "Número máximo de tokens que se pueden procesar en una llamada de traducción utilizando el modelo LLM.",
+  "**Type**: `integer`\n**القيمة الافتراضية**: `2000`": "**Tipo**: `integer`\n**Valor predeterminado**: `2000`",
+  "أقصى عدد من الرموز (Tokens) التي يمكن معالجتها في مكالمة تحقق باستخدام LLM.": "Número máximo de tokens que se pueden procesar en una llamada de validación utilizando el modelo LLM.",
+  "يتم ترجمة هذا الموقع باستخدام الذكاء الاصطناعي، تحقق من اللغات الأخرى عبر القائم.DDC869C30FC16A18A410": "Este sitio se traduce utilizando inteligencia artificial. Revisa los otros idiomas disponibles mediante el menú desplegable en la esquina superior derecha. También puedes consultar el **Panel de control de traducción** para seguir el progreso de GenAIScript.",
+  "تعرف على المزيد في [README](https://github.com/pelikhan/action-continuous-transl.A1DD573FA808E9BF73A6": "Aprende más en [README](https://github.com/pelikhan/action-continuous-translation)."
 }

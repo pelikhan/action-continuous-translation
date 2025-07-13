@@ -5,10 +5,10 @@ template: splash
 hero:
   tagline: Documentação traduzida automaticamente usando GitHub Actions e modelos
   image:
-    file: ../../../../assets/logo.png
+    file: ../../../../../assets/logo.png
   actions:
     - text: Começar
-      link: /action-continuous-translation/pt-br/ar/reference/
+      link: /action-continuous-translation/pt-br/ar/ar/reference/
       icon: right-arrow
     - text: Leia a postagem no blog
       link: https://microsoft.github.io/genaiscript/blog/continuous-translations/
@@ -17,9 +17,9 @@ hero:
 
 ---
 
-import { Card, CardGrid, Steps } from "@astrojs/starlight/components";
+import { Card, CardGrid } from "@astrojs/starlight/components";
 
-Este site é traduzido usando inteligência artificial. Verifique outros idiomas no menu suspenso no canto superior direito. Você também pode conferir o **Painel de Tradução** para acompanhar o progresso do GenAIScript.
+Este site é traduzido usando inteligência artificial. Verifique outros idiomas através do menu suspenso no canto superior direito. Você também pode consultar o **Painel de Controle de Tradução** para acompanhar o progresso do GenAIScript.
 
 ## Traduções impulsionadas por IA
 
@@ -62,19 +62,6 @@ Este site é traduzido usando inteligência artificial. Verifique outros idiomas
     Saiba mais no [README](https://github.com/pelikhan/action-continuous-translation).
   </Card>
 </CardGrid>
-
-## Como funciona?
-
-O fluxo de trabalho de tradução utiliza uma combinação de analisadores Markdown, manipulação de AST e inferência LLM para traduzir e validar seus arquivos de documentação de forma incremental.
-
-<Steps>
-  1. **📄 Análise** - Converter Markdown em AST (árvore de sintaxe abstrata).
-  2. **🔍 Análise** - Identificar o conteúdo que precisa ser traduzido em relação às traduções existentes.
-  3. **🤖 Tradução** - Usar inteligência artificial para produzir traduções de alta qualidade.
-  4. **✅ Verificação** - Garantir a qualidade da tradução e integrá-la ao documento.
-  5. **💾 Cache** - Armazenar as traduções para futuras atualizações incrementais.
-  6. **📝 Commit** - Fazer o commit das alterações automaticamente no seu repositório.
-</Steps>
 
 ## Recursos
 

@@ -1,0 +1,76 @@
+---
+title: Traduction continue
+description: Documentation traduite à l'aide de l'intelligence artificielle générale
+template: splash
+hero:
+  tagline: Documentation traduite automatiquement avec GitHub Actions et modèles
+  image:
+    file: ../../../../../assets/logo.png
+  actions:
+    - text: Commencer
+      link: /action-continuous-translation/fr/ar/ar/reference/
+      icon: right-arrow
+    - text: Lire l'article sur le blog
+      link: https://microsoft.github.io/genaiscript/blog/continuous-translations/
+      icon: external
+      variant: minimal
+
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+Ce site est traduit à l'aide de l'intelligence artificielle. Vérifiez les autres langues via le menu déroulant dans le coin supérieur droit. Vous pouvez également consulter le **tableau de bord des traductions** pour suivre les progrès de GenAIScript.
+
+## Traductions assistées par intelligence artificielle
+
+<CardGrid>
+  <Card title="Actions GitHub" icon="github">
+    Lorsque vous apportez des modifications à vos fichiers de documentation, le workflow de traduction démarre automatiquement pour exécuter la tâche de traduction.
+  </Card>
+
+  <Card title="Modèles GitHub" icon="seti:markdown">
+    Le workflow d'intelligence artificielle utilise des analyseurs Markdown et une inférence LLM pour traduire vos documents avec précision et de manière progressive.
+  </Card>
+</CardGrid>
+
+<Card title="Intelligence artificielle continue" icon="rocket">
+  Explorer l'automatisation soutenue par LLM dans la collaboration logicielle basée sur les plateformes
+
+  [https://githubnext.com/projects/continuous-ai/](https://githubnext.com/projects/continuous-ai/)
+</Card>
+
+## Étapes suivantes
+
+<CardGrid stagger>
+  <Card title="Ajouter le workflow" icon="pencil">
+    Ajoutez le workflow de traduction en informant votre agent...
+
+    ```
+    add the workflow for the pelikhan/action-continuous-translation action
+    ```
+  </Card>
+
+  <Card title="Configurer votre site" icon="setting">
+    Modifiez le workflow avec les informations d'Astro Starlight.
+  </Card>
+
+  <Card title="Traduisez !" icon="add-document">
+    Effectuez un commit et laissez le workflow faire le travail !
+  </Card>
+
+  <Card title="Lire la documentation" icon="open-book">
+    En savoir plus dans le [README](https://github.com/pelikhan/action-continuous-translation).
+  </Card>
+</CardGrid>
+
+## Fonctionnalités
+
+* Traductions assistées par intelligence artificielle pour vos documents.
+* Intégration transparente avec GitHub Actions.
+* Mises à jour progressives des traductions grâce à l'inférence LLM.
+* Utilise Remark et le traitement AST pour des traductions fiables.
+* Contrôle qualité avec LLM comme arbitre et vérifications des traducteurs.
+* Prend en charge les formats Markdown, GFM et MDX (dans une certaine mesure).
+* Intégration avec Astro Starlight
+
+Ce projet est construit avec [GenAIScript](https://microsoft.github.io/genaiscript).
