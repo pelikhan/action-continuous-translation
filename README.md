@@ -37,16 +37,23 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 
 ### 📝 Basic Settings
 
-| Parameter           | Description                                                     | Default        |
-| ------------------- | --------------------------------------------------------------- | -------------- |
-| `lang`              | Target language(s) for translation (ISO codes, comma-separated) | `fr`           |
-| `source`            | Source language (ISO code)                                      | `en`           |
-| `files`             | Files to translate (semicolon-separated)                        | `README.md`    |
-| `instructions`      | Custom translation instructions                                 | -              |
-| `instructions_file` | Path to file with translation instructions                      | -              |
-| `glossary_file`     | Path to file with glossary terms                                | -              |
-| `translations_dir`  | Folder to store translations                                    | `translations` |
+| Parameter           | Description                                                     | Default                                        |
+| ------------------- | --------------------------------------------------------------- | ---------------------------------------------- |
+| `lang`              | Target language(s) for translation (ISO codes, comma-separated) | `fr`                                           |
+| `source`            | Source language (ISO code)                                      | `en`                                           |
+| `files`             | Files to translate (semicolon-separated)                        | `README.md`                                    |
+| `instructions`      | Custom translation instructions                                 | -                                              |
+| `instructions_file` | Path to file with translation instructions                      | -                                              |
+| `glossary_file`     | Path to file with glossary terms                                | -                                              |
+| `translations_dir`  | Folder to store translations                                    | `translations`                                 |
 | `filename_template` | Jinja template to generate the translated filepath              | `{{dirname}}/{{basename}}.{{lang}}{{extname}}` |
+
+### Chunking & Limits
+
+| Parameter                | Description                                                              | Default |
+| ------------------------ | ------------------------------------------------------------------------ | ------- |
+| `max_translation_tokens` | Maximum available tokens for translation LLM call (to avoid rate limits) | `8000`  |
+| `max_validation_tokens`  | Maximum available tokens for validation LLM call (to avoid rate limits)  | `2000`  |
 
 ### 🌟 Astro Starlight Integration
 

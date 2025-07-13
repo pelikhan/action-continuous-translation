@@ -45,7 +45,7 @@ inputs:
   max_validation_tokens:
     description: Maximum number of tokens to process in a validation LLM call.
     required: false
-    default: 8000
+    default: 2000
   force:
     description: Force translation even if the file has already been translated.
     required: false
