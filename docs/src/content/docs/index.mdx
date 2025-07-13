@@ -16,7 +16,7 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid } from "@astrojs/starlight/components";
+import { Card, CardGrid, Steps } from "@astrojs/starlight/components";
 
 This website is translated using AI, check out the other languages via the dropdown in the upper right corner.
 You can also check out the **translation dashboard** to see the progress of GenAIScript.
@@ -64,6 +64,22 @@ add the workflow for the pelikhan/action-continuous-translation action
     [README](https://github.com/pelikhan/action-continuous-translation).
   </Card>
 </CardGrid>
+
+## How it works?
+
+The translation workflow uses a mix of Markdown parsers, AST manipulation
+and LLM inference to translate and validate your documentation files incrementally.
+
+<Steps>
+
+1. **📄 Parse** - Convert markdown to AST (Abstract Syntax Tree)
+2. **🔍 Analyze** - Identify content that needs translation vs. existing translations
+3. **🤖 Translate** - Use AI to generate high-quality translations
+4. **✅ Validate** - Ensure translation quality and inject into document
+5. **💾 Cache** - Save translations for future incremental updates
+6. **📝 Commit** - Automatically commit changes to your repository
+
+</Steps>
 
 ## Features
 

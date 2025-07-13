@@ -48,7 +48,7 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 | `translations_dir`  | Folder to store translations                                    | `translations`                                 |
 | `filename_template` | Jinja template to generate the translated filepath              | `{{dirname}}/{{basename}}.{{lang}}{{extname}}` |
 
-### Chunking & Limits
+### Limits
 
 | Parameter                | Description                                                              | Default |
 | ------------------------ | ------------------------------------------------------------------------ | ------- |
