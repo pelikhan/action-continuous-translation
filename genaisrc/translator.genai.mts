@@ -20,6 +20,7 @@ import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import type { FrontmatterWithTranslator } from "./src/types.mts";
 import { FrontmatterWithTranslatorSchema } from "./src/schemas.mts";
 import { resolveModels } from "./src/models.mts";
+import { prettyTokens } from "@genaiscript/core";
 
 script({
   title: "Automatic Markdown Translations using GenAI",
@@ -30,6 +31,7 @@ script({
     color: "yellow",
     icon: "globe",
   },
+  disableChatPreview: true,
   parameters: {
     lang: {
       type: "string",
@@ -76,6 +78,12 @@ script({
       type: "string",
       description: "A markdown file containing the glossary of the project",
     },
+    maxTranslationTokens: {
+      type: "number",
+      description:
+        "Maximum number of tokens to process in a translation LLM call.",
+      default: 2000,
+    },
     force: {
       type: "boolean",
       default: false,
@@ -114,6 +122,11 @@ const minTranslationsThreshold = 0.7;
 const nodeTypes = ["text", "paragraph", "heading", "yaml"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
+
+const hasMarker = (text: string) => {
+  return text.includes(MARKER_START) && text.includes(MARKER_END);
+};
+
 type NodeType = Text | Paragraph | Heading | Yaml;
 const FRONTMATTER_FIELDS = [
   "title",
@@ -164,13 +177,21 @@ export default async function main() {
     translationsDir?: string;
     glossaryFile?: string;
     filenameTemplate?: string;
+    maxTranslationTokens?: number;
   };
 
   output.heading(1, "Continuous Translation");
 
-  const { force, translationsDir, glossaryFile, filenameTemplate } = parameters;
+  const {
+    force,
+    translationsDir,
+    glossaryFile,
+    filenameTemplate,
+    maxTranslationTokens,
+  } = parameters;
   dbg(`translationsDir: %s`, translationsDir);
   if (filenameTemplate) output.itemValue(`filename template`, filenameTemplate);
+  output.itemValue(`max translation tokens`, maxTranslationTokens);
   let { instructions } = parameters;
   const source = parameters.source;
   const sourceInfo = await resolveModels(source);
@@ -277,7 +298,7 @@ export default async function main() {
           );
       };
 
-      const { visit, parse, stringify, inspect, SKIP } = await mdast({
+      const { visit, parse, stringify, inspect, chunk, SKIP } = await mdast({
         mdx: /\.mdx$/i.test(filename),
       });
       const hashNode = (node: Node | string) => {
@@ -536,6 +557,9 @@ export default async function main() {
           }
         });
 
+        const translatedChunks = chunk(translated, maxTranslationTokens);
+        output.itemValue(`chunks`, translatedChunks.length);
+
         dbgt(`translated\n%s`, inspect(translated.children));
         let attempts = 0;
         let lastLLmHashTodos = llmHashTodos.size + 1;
@@ -547,34 +571,56 @@ export default async function main() {
           attempts++;
           output.itemValue(`missing translations`, llmHashTodos.size);
           dbge(`todos: %o`, Array.from(llmHashTodos));
-          const contentMix = stringify(translated);
-          dbgc(`translatable content: %s`, contentMix);
+          for (let chunki = 0; chunki < translatedChunks.length; chunki++) {
+            const translatedChunk = translatedChunks[chunki];
+            dbge(`chunk %d: %s`, chunki, inspect(translatedChunk));
+            const contentMix = stringify(translatedChunk);
+            dbgc(`translatable content: %s`, contentMix);
+            if (!hasMarker(contentMix)) {
+              output.itemValue(`chunk ${chunki}`, `no marker detected`);
+              continue;
+            }
 
-          // run prompt to generate translations
-          output.item(`generating translations`);
-          const { error, fences, text, usage } = await runPrompt(
-            async (ctx) => {
-              const originalRef = ctx.def("ORIGINAL", file.content, {
-                lineNumbers: false,
-              });
-              const translatedRef = ctx.def("TRANSLATED", contentMix, {
-                lineNumbers: false,
-              });
-              const glossaryRef = glossary
-                ? ctx.def("GLOSSARY", glossary)
-                : undefined;
-              ctx.$`You are an expert at translating technical documentation into ${lang} (${to}).
+            // compute the translate part of the original document
+            const contentStart = translatedChunks
+              .slice(0, chunki)
+              .reduce((count, curr) => count + curr.length, 0);
+            const originalChunk = root.children.slice(
+              contentStart,
+              translatedChunk.length + contentStart
+            );
+            dbge(`content chunk start: %d`, contentStart);
+            const originalContent = stringify(originalChunk);
+            dbgc(`original chunk: %s`, originalChunk);
+
+            // run prompt to generate translations
+            output.itemValue(
+              `chunk ${chunki}`,
+              prettyTokens(await tokenizers.count(contentMix))
+            );
+            const { error, fences, text, usage } = await runPrompt(
+              async (ctx) => {
+                const originalRef = ctx.def("ORIGINAL", originalContent, {
+                  lineNumbers: false,
+                });
+                const translatedRef = ctx.def("TRANSLATED", contentMix, {
+                  lineNumbers: false,
+                });
+                const glossaryRef = glossary
+                  ? ctx.def("GLOSSARY", glossary)
+                  : undefined;
+                ctx.$`You are an expert at translating technical documentation into ${lang} (${to}).
 ## Task
 Your task is to translate a Markdown (GFM) document to ${lang} (${to}) while preserving the structure and formatting of the original document.
 You will receive the original document as a variable named ${originalRef} and the currently translated document as a variable named ${translatedRef}.`.role(
-                "system"
-              );
-              if (glossary)
-                ctx.$`## Glossary
-You also have a glossary ${glossaryRef} to maintain a consistent terminology accross all translations.`.role(
                   "system"
                 );
-              ctx.$`## Input Format
+                if (glossary)
+                  ctx.$`## Glossary
+You also have a glossary ${glossaryRef} to maintain a consistent terminology accross all translations.`.role(
+                    "system"
+                  );
+                ctx.$`## Input Format
 
 Each translatable text chunk that needs to be translated is be 
 enclosed with a unique identifier in the form  of \`┌node_identifier┐\` at the start and \`└node_identifier┘\` at the end of the node.
@@ -624,61 +670,66 @@ translated content of text enclosed in T003 here (only T003 content!)
 - If you are unsure about the translation, skip the translation.
 ${instructions || ""}
 ${instructionsFile || ""}`.role("system");
-            },
-            {
-              model: translationModel,
-              responseType: "text",
-              systemSafety: true,
-              system: [],
-              cache: true,
-              label: `translating ${filename} (${llmHashTodos.size} nodes)`,
-            }
-          );
-          logUsage("translate", translationModel, usage);
-
-          if (error) {
-            // are we out of tokens?
-            if (/429/.test(error.message)) {
-              output.error(`Rate limit exceeded: ${error.message}`);
-              cancel(`rate limit exceeded`);
-            }
-
-            output.error(`Error translating ${filename}: ${error.message}`);
-            break;
-          }
-
-          output.itemValue(`translations`, fences.length);
-
-          if (!fences.length) {
-            output.warn(`No translations found`);
-            output.fence(text, "markdown");
-            break;
-          }
-
-          // collect translations
-          for (const fence of fences) {
-            const llmHash = fence.language;
-            if (llmHashTodos.has(llmHash)) {
-              llmHashTodos.delete(llmHash);
-              const hash = llmHashes[llmHash];
-              dbg(`translation: %s - %s`, llmHash, hash);
-              let chunkTranslated = fence.content.replace(/\r?\n$/, "").trim();
-              const node = nodes[hash];
-              dbg(`original node: %O`, node);
-              if (node?.type === "text" && /\s$/.test(node.value)) {
-                // preserve trailing space if original text had it
-                dbg(`patch trailing space for %s`, hash);
-                chunkTranslated += " ";
+              },
+              {
+                model: translationModel,
+                responseType: "text",
+                systemSafety: true,
+                system: [],
+                cache: true,
+                label: `translating ${filename}#${chunki}`,
               }
-              chunkTranslated = chunkTranslated
-                .replace(/┌[A-Z]\d{3,5}┐/g, "")
-                .replace(/└[A-Z]\d{3,5}┘/g, "");
-              dbg(`content: %s`, chunkTranslated);
-              translationCache[hash] = chunkTranslated;
-            }
-          }
+            );
+            logUsage("translate", translationModel, usage);
 
-          lastLLmHashTodos = llmHashTodos.size;
+            if (error) {
+              // are we out of tokens?
+              if (/429/.test(error.message)) {
+                output.error(`Rate limit exceeded: ${error.message}`);
+                cancel(`rate limit exceeded`);
+              }
+
+              output.error(
+                `Error translating ${filename}#${chunki}: ${error.message}`
+              );
+              continue;
+            }
+
+            output.itemValue(`translations`, fences.length);
+
+            if (!fences.length) {
+              output.warn(`No translations found`);
+              output.fence(text, "markdown");
+              continue;
+            }
+
+            // collect translations
+            for (const fence of fences) {
+              const llmHash = fence.language;
+              if (llmHashTodos.has(llmHash)) {
+                llmHashTodos.delete(llmHash);
+                const hash = llmHashes[llmHash];
+                dbg(`translation: %s - %s`, llmHash, hash);
+                let chunkTranslated = fence.content
+                  .replace(/\r?\n$/, "")
+                  .trim();
+                const node = nodes[hash];
+                dbg(`original node: %O`, node);
+                if (node?.type === "text" && /\s$/.test(node.value)) {
+                  // preserve trailing space if original text had it
+                  dbg(`patch trailing space for %s`, hash);
+                  chunkTranslated += " ";
+                }
+                chunkTranslated = chunkTranslated
+                  .replace(/┌[A-Z]\d{3,5}┐/g, "")
+                  .replace(/└[A-Z]\d{3,5}┘/g, "");
+                dbg(`content: %s`, chunkTranslated);
+                translationCache[hash] = chunkTranslated;
+              }
+            }
+
+            lastLLmHashTodos = llmHashTodos.size;
+          } // chunk
         }
 
         // apply translations
