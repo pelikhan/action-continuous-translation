@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.1
+
+### Patch Changes
+
+- [`777cce6`](https://github.com/pelikhan/action-continuous-translation/commit/777cce61dbae16fc443e36e0b5a568d9a1186b5e) Thanks [@pelikhan](https://github.com/pelikhan)! - fine tuning validation prompt
+
 ## 0.2.0
 
 ### Minor Changes
