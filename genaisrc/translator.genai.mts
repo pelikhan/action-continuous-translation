@@ -571,13 +571,16 @@ export default async function main() {
           .filter(Boolean)
           .join("\n");
         const instructionTokens = await tokenizers.count(instructionPrompt);
-        const maxChunkTokens = Math.ceil(
+        const maxTranslationChunkTokens = Math.ceil(
           (maxTranslationTokens - glossaryTokens - instructionTokens - 200) / 3
         );
-        output.itemValue(`max chunk tokens`, prettyTokens(maxChunkTokens));
+        output.itemValue(
+          `max translation chunk tokens`,
+          prettyTokens(maxTranslationChunkTokens)
+        );
 
-        const translatedChunks = chunk(translated, maxChunkTokens);
-        output.itemValue(`chunks`, translatedChunks.length);
+        const translatedChunks = chunk(translated, maxTranslationChunkTokens);
+        output.itemValue(`translation chunks`, translatedChunks.length);
 
         dbgt(`translated\n%s`, inspect(translated.children));
         let attempts = 0;
@@ -609,8 +612,8 @@ export default async function main() {
               translatedChunk.length + contentStart
             );
             dbge(`content chunk start: %d`, contentStart);
-            const originalContent = stringify(originalChunk);
-            dbgc(`original chunk: %s`, originalChunk);
+            const originalChunkContent = stringify(originalChunk);
+            dbgc(`original chunk: %s`, originalChunkContent);
 
             // run prompt to generate translations
             output.itemValue(
@@ -619,7 +622,7 @@ export default async function main() {
             );
             const { error, fences, text, usage } = await runPrompt(
               async (ctx) => {
-                const originalRef = ctx.def("ORIGINAL", originalContent, {
+                const originalRef = ctx.def("ORIGINAL", originalChunkContent, {
                   lineNumbers: false,
                 });
                 const translatedRef = ctx.def("TRANSLATED", contentMix, {
@@ -989,57 +992,95 @@ ${instructionPrompt}`.role("system");
           }
         }
 
-        // judge quality is good enough
-        const validation = await classify(
-          (ctx) => {
-            const originalRef = ctx.def("ORIGINAL", content);
-            const translatedRef = ctx.def("TRANSLATED", contentTranslated);
-            ctx.$`
+        // chunk and classify
+        const maxValidationChunkTokens = Math.ceil(
+          (maxValidationTokens - 400) / 2
+        );
+        output.itemValue(
+          `max validation chunk tokens`,
+          prettyTokens(maxValidationChunkTokens)
+        );
+        const validationChunks = chunk(translated, maxValidationChunkTokens);
+        output.itemValue(`validation chunks`, validationChunks.length);
+
+        let validated = true;
+        for (let chunki = 0; chunki < validationChunks.length; chunki++) {
+          const validationChunk = validationChunks[chunki];
+          dbge(`validation chunk %d: %s`, chunki, inspect(validationChunk));
+          const validationChunkTranslated = stringify(validationChunk);
+
+          // compute the translate part of the original document
+          const contentStart = translatedChunks
+            .slice(0, chunki)
+            .reduce((count, curr) => count + curr.length, 0);
+          const originalChunk = root.children.slice(
+            contentStart,
+            validationChunks.length + contentStart
+          );
+          dbge(`content chunk start: %d`, contentStart);
+          const originalChunkContent = stringify(originalChunk);
+          dbgc(`original chunk: %s`, originalChunkContent);
+
+          // judge quality is good enough
+          const validation = await classify(
+            (ctx) => {
+              const originalRef = ctx.def("ORIGINAL", originalChunkContent);
+              const translatedRef = ctx.def(
+                "TRANSLATED",
+                validationChunkTranslated
+              );
+              ctx.$`
 You are an expert at judging the quality of translations. 
 Your task is to determine the quality of the translation of a Markdown document from ${sourceInfo.name} (${source}) to ${lang} (${to}).
 The original document is in ${originalRef}, and the translated document is provided in ${translatedRef}.
 `.role("system");
-          },
-          {
-            ok: `Translation is faithful to the original document and conveys the same meaning.`,
-            bad: `Translation is of low quality or has a different meaning from the original.`,
-          },
-          {
-            label: `judge translation ${to} ${basename(filename)}`,
-            explanations: true,
-            cache: true,
-            systemSafety: false,
-            system: ["system.safety_jailbreak"],
-            model: classifyModel,
+            },
+            {
+              ok: `Translation is faithful to the original document and conveys the same meaning.`,
+              bad: `Translation is of low quality or has a different meaning from the original.`,
+            },
+            {
+              label: `judge translation ${to} ${basename(filename)}`,
+              explanations: true,
+              cache: true,
+              systemSafety: false,
+              system: ["system.safety_jailbreak"],
+              model: classifyModel,
+            }
+          );
+          logUsage("validate", classifyModel, validation.usage);
+
+          // are we out of tokens?
+          if (/429/.test(validation.error)) {
+            output.error(`Rate limit exceeded: ${validation.error}`);
+            validated = false;
+            cancel(`rate limit exceeded`);
           }
-        );
-        logUsage("validate", classifyModel, validation.usage);
 
-        // are we out of tokens?
-        if (/429/.test(validation.error)) {
-          output.error(`Rate limit exceeded: ${validation.error}`);
-          cancel(`rate limit exceeded`);
-        }
-
-        output.resultItem(
-          validation.label === "ok",
-          `translation validation: ${validation.label}`
-        );
-        if (validation.label !== "ok") {
-          output.fence(validation.answer);
-          output.diff(content, contentTranslated);
-          continue;
+          output.resultItem(
+            validation.label === "ok",
+            `chunk translation validation: ${validation.label}`
+          );
+          if (validation.label !== "ok") {
+            output.fence(validation.answer);
+            output.diff(content, contentTranslated);
+            validated = false;
+            break;
+          }
         }
 
         // apply translations and save
+        output.resultItem(validated, `translation validated`);
         dbgc(`translated: %s`, contentTranslated);
-        dbg(`writing translation to %s`, translationFn);
 
-        await workspace.writeText(translationFn, contentTranslated);
-        await workspace.writeText(
-          translationCacheFilename,
-          JSON.stringify(translationCache, null, 2)
-        );
+        if (validated) {
+          dbg(`writing translation to %s`, translationFn);
+          await workspace.writeText(translationFn, contentTranslated);
+          await workspace.writeText(
+            translationCacheFilename,
+            JSON.stringify(translationCache, null, 2)
+          );
+        }
 
         output.resultItem(
           true,

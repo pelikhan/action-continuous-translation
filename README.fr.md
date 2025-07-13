@@ -57,18 +57,18 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 
 ### 🔧 Diagnostics et Débogage
 
-| Paramètre | Description                                                                                                                                                                                               | Valeur par défaut |
-| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| `force`   | Forcer la traduction même si elle est déjà réalisée                                                                                                                                                       | `false`           |
-| `debug`   | Activer le journal de débogage (\[en savoir plus]\(https\://microsoft.github.io/genaiscript/reference/scripts/logging/))[learn more](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
+| Paramètre | Description                                                                                                                                                                                                   | Valeur par défaut |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| `force`   | Forcer la traduction même si elle est déjà réalisée                                                                                                                                                           | `false`           |
+| `debug`   | Activer le journal de débogage (\[en savoir plus]\(https\://microsoft.github.io/genaiscript/reference/scripts/logging/))[en savoir plus](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
 
 ### 🤖 Configuration du Fournisseur d'IA
 
 #### GitHub Models (Recommandé)
 
-| Paramètre      | Description                                                                                                                                                                                                                                                                                                       | Valeur par défaut             |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `github_token` | Jeton GitHub avec autorisation \`models: read\` (\[guide de configuration]\(https\://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) `models: read` permission ([setup guide](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
+| Paramètre      | Description                                                                                                                                                                                                                                                                                                               | Valeur par défaut             |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `github_token` | Jeton GitHub avec autorisation \`models: read\` (\[guide de configuration]\(https\://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) `models: read`permission[guide de configuration](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions)) | `${{ secrets.GITHUB_TOKEN }}` |
 
 #### OpenAI
 
@@ -91,7 +91,7 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 
 | Paramètre     | Description                                                           | Valeur par défaut |
 | ------------- | --------------------------------------------------------------------- | ----------------- |
-| `model_alias` | Chaîne YAML-like de paires \`alias: modèleid\` `alias: modelid` pairs |                   |
+| `model_alias` | Chaîne YAML-like de paires \`alias: modèleid\` `alias: modelid`paires |                   |
 
 Consultez la documentation [Modèles](/action-continuous-translation/models/) pour plus de détails.
 
