@@ -6,8 +6,8 @@ sidebar:
 
 ---
 
-La acción personalizada utiliza [GitHub Models](https://github.com/models) para traducir archivos markdown en tu repositorio.
-Está diseñada para ser utilizada en un flujo de trabajo de [GitHub Actions](https://docs.github.com/en/actions) para traducir automáticamente archivos de documentación cuando se actualicen.
+La acción personalizada utiliza [Modelos de GitHub](https://github.com/models) para traducir archivos Markdown en tu repositorio.
+Está diseñada para usarse en un flujo de trabajo de [GitHub Actions](https://docs.github.com/en/actions) para traducir automáticamente los archivos de documentación cuando se actualicen.
 
 ```yaml title=".github/workflows/ct.yml"
 - uses: pelikhan/action-continuous-translation@v0
@@ -67,9 +67,9 @@ jobs:
 
 ## Parámetros
 
-La acción de GitHub `pelikhan/action-continuous-translation` admite los siguientes parámetros.
+La acción `pelikhan/action-continuous-translation` en GitHub admite los siguientes parámetros.
 Todos los parámetros son opcionales.
-Los valores predeterminados se muestran en la referencia a continuación.
+Los valores predeterminados se indican en la referencia a continuación.
 
 ```yaml
 with:
@@ -87,115 +87,101 @@ with:
   debug: false
 ```
 
-Consulta [Models](../../reference/models/) para más detalles sobre otros proveedores como OpenAI, Azure OpenAI, etc.
+Consulta [Modelos](../../reference/models/) para obtener más detalles sobre otros proveedores como OpenAI, Azure OpenAI, etc.
 
 ### `lang`
 
 **Tipo**: `string`\
-**Por defecto**: `fr`
+**Valor predeterminado**: `fr`
 
-Una lista de códigos ISO de los idiomas de destino separados por comas (`,`) a los cuales la documentación se traducirá desde el [idioma de origen](#source).
+Lista de códigos ISO de los idiomas de destino, separados por comas (`,`), a los que se deben traducir los documentos desde el [idioma fuente](#source).
 Consulta una lista de todos los idiomas compatibles [en el archivo `models.mts` del repositorio](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
 
 ### `source`
 
 **Tipo**: `string`\
-**Por defecto**: `en`
+**Valor predeterminado**: `en`
 
-El código ISO del idioma de origen en el que está escrito el contenido principal.
+Código ISO del idioma de origen en el que se ha escrito el contenido principal.
 
 ### `files`
 
 **Tipo**: `string`\
-**Por defecto**: `README.md`
+**Valor predeterminado**: `README.md`
 
-Una lista de archivos a procesar separados por comas.
+Lista de archivos que se procesarán, separados por comas.
 
 ### `instructions`
 
 **Tipo**: `string`
 
-Instrucciones adicionales para que utilice el LLM al traducir.
+Instrucciones adicionales para usar el modelo LLM durante la traducción.
 
 ### `instructions_file`
 
 **Tipo**: `string`
 
-Ruta a un archivo que contiene instrucciones adicionales para que utilice el LLM al traducir.
+Ruta a un archivo que contiene instrucciones adicionales para usar el modelo LLM durante la traducción.
 
 ### `glossary_file`
 
 **Tipo**: `string`
 
-Ruta a un archivo que contiene términos de glosario para usar al traducir.
+Ruta a un archivo que contiene un glosario de términos para usar durante la traducción.
 
 ### `translations_dir`
 
-**Tipo**: `string`
-**Por defecto**: `translations`
+**Tipo**: `string`\
+**Valor predeterminado**: `translations`
 
-Carpeta donde se almacenarán las traducciones.
-
-### `max_translation_tokens`
-
-**Tipo**: `entero`
-**Por defecto**: `8000`
-
-Número máximo de tokens que se pueden procesar en una llamada de traducción al LLM.
-
-### `max_validation_tokens`
-
-**Tipo**: `entero`
-**Por defecto**: `2000`
-
-Número máximo de tokens que se pueden procesar en una llamada de validación al LLM.
+El directorio donde se almacenarán las traducciones.
 
 ### `starlight_dir`
 
 **Tipo**: `string`
 
-Carpeta raíz de la documentación [Astro Starlight](../../reference/astro-starlight/).
-Debe definirse si se define la opción [`starlight_base`](#starlight_base).
+El directorio raíz para la documentación de [Astro Starlight](../../reference/astro-starlight/).
+Debe configurarse si se define la opción [`starlight_base`](#starlight_base).
 
 ### `starlight_base`
 
 **Tipo**: `string`
 
-Alias base para la documentación [Astro Starlight](../../reference/astro-starlight/).
-Si no defines la opción [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base), no establezcas esta opción.
+El alias base para la documentación de [Astro Starlight](../../reference/astro-starlight/).
+Si no has configurado la opción [Base de Astro](https://docs.astro.build/en/reference/configuration-reference/#base), no especifiques esta opción.
 
 ### `force`
 
 **Tipo**: `boolean`\
-**Por defecto**: `false`
+**Valor predeterminado**: `false`
 
 Forzar la traducción incluso si el archivo ya ha sido traducido.
 
 ### `debug`
 
 **Tipo**: `boolean`\
-**Por defecto**: `false`
+**Valor predeterminado**: `false`
 
 Habilitar el registro de depuración.
-Lee más detalles en la [documentación de registro de GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+Obtén más detalles en la [documentación de registro de GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
-### `model_alias`
+### Alias de modelo
 
 **Tipo**: `string`\
 **Ejemplo**: `translate: github:gpt-4o-mini`
 
-Un mapeo de nombres de modelos a sus alias como un objeto YAML. Esto se puede usar para especificar qué modelo utilizar para una traducción en particular.
+Asignación de nombres de modelos a sus alias como un objeto YAML. Esto se puede utilizar para definir el modelo a emplear en traducciones específicas.
 
 ### `github_token`
 
-**Tipo**: `string` (se recomienda secreto)\
+**Tipo**: `string` (se prefiere que sea un secreto)\
 **Ejemplo**: `${{ secrets.GITHUB_TOKEN }}`
 
-Tu [token de GitHub](https://github.com/settings/tokens) con al menos permiso de `models: read`.
+Tu token de GitHub [GitHub token](https://github.com/settings/tokens) con al menos permiso de `models: read`.
 
-Lee más detalles en la [documentación de permisos de GitHub Models de GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+Obtén más detalles en la [documentación de permisos de modelos de GitHub para GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
 
 ### Otros proveedores de LLM
 
-También puedes utilizar otros proveedores de LLM como OpenAI, Azure OpenAI, etc.
-Consulta [Models](../../reference/models/) para más detalles sobre otros proveedores.
+También puedes usar otros proveedores de LLM como OpenAI, Azure OpenAI, etc.
+Consulta [Modelos](../../reference/models/) para obtener más detalles sobre otros proveedores.

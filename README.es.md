@@ -48,6 +48,13 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 | `translations_dir`  | Carpeta para almacenar las traducciones                                | `translations`                                 |
 | `filename_template` | Plantilla Jinja para generar la ruta de archivo traducida              | `{{dirname}}/{{basename}}.{{lang}}{{extname}}` |
 
+### Segmentación en trozos y límites
+
+| Parámetro                | Descripción                                                                                                      | Por defecto |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------- | ----------- |
+| `max_translation_tokens` | Cantidad máxima de tokens disponibles para la llamada de traducción del modelo LLM (para evitar límites de tasa) | `8000`      |
+| `max_validation_tokens`  | Cantidad máxima de tokens disponibles para la llamada de validación del modelo LLM (para evitar límites de tasa) | `2000`      |
+
 ### 🌟 Integración con Astro Starlight
 
 | Parámetro        | Descripción                                         | Requerido           |

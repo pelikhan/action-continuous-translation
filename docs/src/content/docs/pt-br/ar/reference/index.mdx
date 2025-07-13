@@ -1,0 +1,187 @@
+---
+title: Referência
+description: Documentação de referência para a ação
+sidebar:
+  order: 8
+
+---
+
+A ação personalizada usa [Modelos do GitHub](https://github.com/models) para traduzir arquivos Markdown no seu repositório.
+Ela é projetada para ser usada em um fluxo de trabalho do [GitHub Actions](https://docs.github.com/en/actions) para traduzir automaticamente os arquivos de documentação ao serem atualizados.
+
+```yaml title=".github/workflows/ct.yml"
+- uses: pelikhan/action-continuous-translation@v0
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    lang: fr,es
+```
+
+## Instalação
+
+Você pode salvar este arquivo no diretório `.github/workflows/` como `ct.yml`:
+
+```yaml title=".github/workflows/ct.yml" wrap
+name: Continuous Translation
+on:
+  workflow_dispatch:
+  # translate when doc files are changed in main
+  push:
+    branches:
+      - main
+    paths: # update the file paths
+      - "README.md"
+      - "docs/src/content/docs/**"
+permissions:
+  contents: write
+  # allow the action to use the GitHub Models API
+  models: read
+concurrency:
+  # cancel in-progress jobs for the same workflow and ref
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  continuous_translation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # cache the LLM inference results
+      - uses: actions/cache@v4
+        with:
+          path: .genaiscript/cache/**
+          key: continuous-translation-${{ github.run_id }}
+          restore-keys: |
+            continuous-translation-
+      # this is the translation action
+      - uses: pelikhan/action-continuous-translation@v0
+        continue-on-error: true # don't stop if translation fails, we still need to store the cache
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          lang: fr,es
+      # commit the generated files
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "**.md* translations/**"
+          commit_message: "[cai] translated docs"
+          commit_user_name: "genaiscript"
+```
+
+## Parâmetros
+
+A ação `pelikhan/action-continuous-translation` do GitHub suporta os seguintes parâmetros.
+Todos os parâmetros são opcionais.
+Os valores padrão estão listados na referência abaixo.
+
+```yaml
+with:
+  lang: fr
+  source: en
+  files: README.md
+  instructions:
+  instructions_file:
+  glossary_file:
+  starlight_dir:
+  starlight_base:
+  force: false
+  model_alias: |
+    translate: github:gpt-4o-mini
+  debug: false
+```
+
+Consulte [modelos](../../reference/models/) para obter mais detalhes sobre outros provedores como OpenAI e Azure OpenAI, entre outros.
+
+### `lang`
+
+**Tipo**: `string`\
+**Padrão**: `fr`
+
+Uma lista dos códigos ISO dos idiomas de destino, separados por vírgulas (`,`), para os quais a documentação será traduzida a partir do [idioma de origem](#source).
+Confira a lista de todos os idiomas suportados [no arquivo `models.mts` no repositório](https://github.com/pelikhan/action-continuous-translation/blob/main/genaisrc/src/models.mts).
+
+### `source`
+
+**Tipo**: `string`\
+**Padrão**: `en`
+
+Código ISO para o idioma de origem no qual o conteúdo principal foi escrito.
+
+### `files`
+
+**Tipo**: `string`\
+**Padrão**: `README.md`
+
+Uma lista de arquivos a serem processados, separados por vírgulas.
+
+### `instructions`
+
+**Tipo**: `string`
+
+Instruções adicionais para usar LLM durante a tradução.
+
+### `instructions_file`
+
+**Tipo**: `string`
+
+Caminho para um arquivo contendo instruções adicionais para uso do LLM durante a tradução.
+
+### `glossary_file`
+
+**Tipo**: `string`
+
+Caminho para um arquivo contendo um glossário a ser usado durante a tradução.
+
+### `translations_dir`
+
+**Tipo**: `string`
+**Padrão**: `translations`
+
+O diretório onde as traduções serão armazenadas.
+
+### `starlight_dir`
+
+**Tipo**: `string`
+
+Diretório raiz da documentação do [Astro Starlight](../../reference/astro-starlight/).
+Deve ser configurado se a opção [`starlight_base`](#starlight_base) estiver definida.
+
+### `starlight_base`
+
+**Tipo**: `string`
+
+Alias base para a documentação do [Astro Starlight](../../reference/astro-starlight/).
+Se você não definiu a opção [base do Astro](https://docs.astro.build/en/reference/configuration-reference/#base), não configure esta opção.
+
+### `force`
+
+**Tipo**: `boolean`\
+**Padrão**: `false`
+
+Força a tradução mesmo que o arquivo já tenha sido traduzido.
+
+### `debug`
+
+**Tipo**: `boolean`\
+**Padrão**: `false`
+
+Ativa os logs de depuração.
+Leia mais detalhes na [documentação de logging do GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
+
+### Alias do modelo
+
+**Tipo**: `string`\
+**Exemplo**: `translate: github:gpt-4o-mini`
+
+Define os nomes dos modelos e seus aliases como um objeto YAML. Isso pode ser usado para especificar qual modelo será usado para uma tradução específica.
+
+### `github_token`
+
+**Tipo**: `string` (preferencialmente secreto)\
+**Exemplo**: `${{ secrets.GITHUB_TOKEN }}`
+
+Seu token do GitHub [GitHub token](https://github.com/settings/tokens) com pelo menos a permissão `models: read`.
+
+Leia mais detalhes na [documentação de permissões de modelos do GitHub para o GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
+
+### Outros provedores de LLM
+
+Você também pode usar outros provedores de LLM, como OpenAI e Azure OpenAI, entre outros.
+Consulte [modelos](../../reference/models/) para mais detalhes sobre outros provedores.

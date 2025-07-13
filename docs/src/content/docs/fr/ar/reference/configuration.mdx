@@ -1,0 +1,26 @@
+---
+title: Configuration
+description: Options de configuration pour le processus de traduction
+sidebar:
+  order: 30
+
+---
+
+import { Code } from "@astrojs/starlight/components";
+import types from "../../../../../../../genaisrc/src/types.mjs?raw";
+
+Les données de configuration frontmatter sont définies dans `types.ts`.
+Elles peuvent être ajoutées à la configuration frontmatter en tant qu'objet `translator`.
+
+```markdown
+---
+translator:
+  instructions: Use a friendly tone.
+---
+
+Lorem ipsum...
+```
+
+## Types
+
+<Code lang="ts" code={types} title="Types de configuration" />
