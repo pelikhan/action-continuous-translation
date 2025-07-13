@@ -57,7 +57,6 @@
   "Azure OpenAI API version": "Version API Azure OpenAI",
   "API credentials type": "Type des identifiants API",
   "Model Alias": "Alias de Modèles",
-  "A YAML-like string of": "Chaîne YAML-like de paires `alias: modèleid` ",
   "See the [Models](/action-continuous-translation/models/) documentation for more .82C2260EAB1D798EB76E": "Consultez la documentation [Modèles](/action-continuous-translation/models/) pour plus de détails.",
   "📤 Outputs": "📤 Résultats",
   "Output": "Résultat",
@@ -376,5 +375,9 @@
   "learn more": "en savoir plus",
   "permission (": "permission",
   "setup guide": "guide de configuration",
-  "pairs": "paires"
+  "pairs": "paires",
+  "Limits": "Limites",
+  "Maximum available tokens for translation LLM call (to avoid rate limits)": "Nombre maximal de jetons disponibles pour les appels LLM de traduction (pour éviter les limitations de taux)",
+  "Maximum available tokens for validation LLM call (to avoid rate limits)": "Nombre maximal de jetons disponibles pour les appels LLM de validation (pour éviter les limitations de taux)",
+  "A YAML-like string of": "Une chaîne au format YAML de paires `alias: modelid` "
 }
