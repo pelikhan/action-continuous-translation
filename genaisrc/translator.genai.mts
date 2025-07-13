@@ -88,7 +88,7 @@ script({
       type: "number",
       description:
         "Maximum number of tokens to process in a validation LLM call.",
-      default: 4000,
+      default: 2000,
     },
     force: {
       type: "boolean",
@@ -1010,12 +1010,12 @@ ${instructionPrompt}`.role("system");
           const validationChunkTranslated = stringify(validationChunk);
 
           // compute the translate part of the original document
-          const contentStart = translatedChunks
+          const contentStart = validationChunks
             .slice(0, chunki)
             .reduce((count, curr) => count + curr.length, 0);
           const originalChunk = root.children.slice(
             contentStart,
-            validationChunks.length + contentStart
+            validationChunk.length + contentStart
           );
           dbge(`content chunk start: %d`, contentStart);
           const originalChunkContent = stringify(originalChunk);
@@ -1031,8 +1031,17 @@ ${instructionPrompt}`.role("system");
               );
               ctx.$`
 You are an expert at judging the quality of translations. 
-Your task is to determine the quality of the translation of a Markdown document from ${sourceInfo.name} (${source}) to ${lang} (${to}).
+Your task is to determine the quality of the translation of a Markdown document from ${
+                sourceInfo.name
+              } (${source}) to ${lang} (${to}).
 The original document is in ${originalRef}, and the translated document is provided in ${translatedRef}.
+${
+  instructionPrompt
+    ? `The translator was given the following instructions: ${instructionPrompt}.`
+    : ""
+}
+If you label the transition as 'bad', provide a detailled list of specific sentences or sections that are not translated correctly, 
+and explain why they are incorrect.
 `.role("system");
             },
             {
@@ -1040,12 +1049,13 @@ The original document is in ${originalRef}, and the translated document is provi
               bad: `Translation is of low quality or has a different meaning from the original.`,
             },
             {
-              label: `judge translation ${to} ${basename(filename)}`,
+              label: `judge translation ${to} ${basename(filename)}#${chunki}`,
               explanations: true,
               cache: true,
               systemSafety: false,
               system: ["system.safety_jailbreak"],
               model: classifyModel,
+              maxTokens: 400
             }
           );
           logUsage("validate", classifyModel, validation.usage);
@@ -1063,7 +1073,9 @@ The original document is in ${originalRef}, and the translated document is provi
           );
           if (validation.label !== "ok") {
             output.fence(validation.answer);
+            output.startDetails(`translation diff`);
             output.diff(content, contentTranslated);
+            output.endDetails();
             validated = false;
             break;
           }
