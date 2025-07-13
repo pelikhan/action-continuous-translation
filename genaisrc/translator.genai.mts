@@ -88,7 +88,7 @@ script({
       type: "number",
       description:
         "Maximum number of tokens to process in a validation LLM call.",
-      default: 8000,
+      default: 4000,
     },
     force: {
       type: "boolean",
