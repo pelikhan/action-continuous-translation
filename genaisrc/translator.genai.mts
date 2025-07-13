@@ -82,7 +82,13 @@ script({
       type: "number",
       description:
         "Maximum number of tokens to process in a translation LLM call.",
-      default: 2000,
+      default: 8000,
+    },
+    maxValidationTokens: {
+      type: "number",
+      description:
+        "Maximum number of tokens to process in a validation LLM call.",
+      default: 8000,
     },
     force: {
       type: "boolean",
@@ -178,6 +184,7 @@ export default async function main() {
     glossaryFile?: string;
     filenameTemplate?: string;
     maxTranslationTokens?: number;
+    maxValidationTokens?: number;
   };
 
   output.heading(1, "Continuous Translation");
@@ -188,10 +195,12 @@ export default async function main() {
     glossaryFile,
     filenameTemplate,
     maxTranslationTokens,
+    maxValidationTokens,
   } = parameters;
   dbg(`translationsDir: %s`, translationsDir);
   if (filenameTemplate) output.itemValue(`filename template`, filenameTemplate);
   output.itemValue(`max translation tokens`, maxTranslationTokens);
+  output.itemValue(`max validation tokens`, maxValidationTokens);
   let { instructions } = parameters;
   const source = parameters.source;
   const sourceInfo = await resolveModels(source);
@@ -223,9 +232,10 @@ export default async function main() {
   const glossary = parameters.glossaryFile
     ? (await workspace.readText(parameters.glossaryFile))?.content
     : undefined;
+  const glossaryTokens = await tokenizers.count(glossary || "");
   if (glossaryFile) {
     output.itemValue(`glossary file`, glossaryFile);
-    output.itemValue(`glossary`, await tokenizers.count(glossary || ""));
+    output.itemValue(`glossary`, prettyTokens(glossaryTokens));
   }
   dbg(`glossary: %s`, glossary || "");
 
@@ -557,7 +567,16 @@ export default async function main() {
           }
         });
 
-        const translatedChunks = chunk(translated, maxTranslationTokens);
+        const instructionPrompt = [instructions, instructionsFile]
+          .filter(Boolean)
+          .join("\n");
+        const instructionTokens = await tokenizers.count(instructionPrompt);
+        const maxChunkTokens = Math.ceil(
+          (maxTranslationTokens - glossaryTokens - instructionTokens - 200) / 3
+        );
+        output.itemValue(`max chunk tokens`, prettyTokens(maxChunkTokens));
+
+        const translatedChunks = chunk(translated, maxChunkTokens);
         output.itemValue(`chunks`, translatedChunks.length);
 
         dbgt(`translated\n%s`, inspect(translated.children));
@@ -569,7 +588,7 @@ export default async function main() {
           attempts < maxPromptPerFile
         ) {
           attempts++;
-          output.itemValue(`missing translations`, llmHashTodos.size);
+          output.heading(4, `missing translations: ${llmHashTodos.size}`);
           dbge(`todos: %o`, Array.from(llmHashTodos));
           for (let chunki = 0; chunki < translatedChunks.length; chunki++) {
             const translatedChunk = translatedChunks[chunki];
@@ -668,8 +687,7 @@ translated content of text enclosed in T003 here (only T003 content!)
 - Always make sure that the URLs are not modified by the translation.
 - Translate each node individually, preserving the original meaning and context.
 - If you are unsure about the translation, skip the translation.
-${instructions || ""}
-${instructionsFile || ""}`.role("system");
+${instructionPrompt}`.role("system");
               },
               {
                 model: translationModel,
