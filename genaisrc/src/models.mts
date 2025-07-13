@@ -52,7 +52,7 @@ export interface LangConfiguration {
 
 const DEFAULT_MODELS = {
   translation: "github:openai/gpt-4o",
-  classify: "github:openai/gpt-4o",
+  classify: "github:openai/gpt-4.1-mini",
 } as Required<LangConfiguration["models"]>;
 
 const LANGS = Object.freeze({
