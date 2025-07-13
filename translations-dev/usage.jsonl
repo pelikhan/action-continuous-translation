@@ -27,3 +27,8 @@
 {"filename":"README.md","lang":"fr","tokens":1723,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-13T03:21:23.253Z","cost":0,"duration":16.52611699999943,"total":0,"prompt":0,"completion":0}
 {"filename":"README.md","lang":"fr","tokens":1723,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-13T03:21:23.367Z","cost":0,"duration":6.3383679999997184,"total":0,"prompt":0,"completion":0}
 {"filename":"README.md","lang":"fr","tokens":1723,"stage":"validate","model":"github:openai/gpt-4o","date":"2025-07-13T03:21:23.548Z","cost":0,"duration":8.42911499999991,"total":0,"prompt":0,"completion":0}
+{"filename":"test/long.md","lang":"fr","tokens":4687,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-13T03:23:51.723Z","cost":0.0331975,"duration":23067.830515,"total":7315,"prompt":5327,"completion":1988}
+{"filename":"test/long.md","lang":"fr","tokens":4687,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-13T03:24:13.965Z","cost":0.0293425,"duration":22142.974881,"total":6121,"prompt":4249,"completion":1872}
+{"filename":"test/long.md","lang":"fr","tokens":4687,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-13T03:24:32.113Z","cost":0.0267525,"duration":18063.845820000002,"total":5769,"prompt":4125,"completion":1644}
+{"filename":"test/long.md","lang":"fr","tokens":4687,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-13T03:24:41.906Z","cost":0.01604,"duration":9679.950223000007,"total":3614,"prompt":2680,"completion":934}
+{"filename":"test/long.md","lang":"fr","tokens":4687,"stage":"validate","model":"github:openai/gpt-4o","date":"2025-07-13T03:24:43.878Z","cost":0.027435,"duration":1450.4998869999981,"total":10881,"prompt":10850,"completion":31}
