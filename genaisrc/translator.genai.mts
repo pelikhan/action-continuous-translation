@@ -1030,16 +1030,18 @@ ${instructionPrompt}`.role("system");
                 validationChunkTranslated
               );
               ctx.$`
-You are an expert at judging the quality of translations. 
+You are an expert at judging the quality of translations of Markdown documents. 
 Your task is to determine the quality of the translation of a Markdown document from ${
                 sourceInfo.name
               } (${source}) to ${lang} (${to}).
 The original document is in ${originalRef}, and the translated document is provided in ${translatedRef}.
-${
-  instructionPrompt
-    ? `The translator was given the following instructions: ${instructionPrompt}.`
-    : ""
-}
+- The document uses GitHub Flavored Markdown (GFM) syntax.
+- Ignore formatting issues.
+- The translation should be faithful to the original document and convey the same meaning.
+- The code blocks should not be translated.
+- The GitHub Alerts ([!NOTE]) should not be translated.
+- Emojis are allowed.
+${instructionPrompt || ""}
 If you label the transition as 'bad', provide a detailled list of specific sentences or sections that are not translated correctly, 
 and explain why they are incorrect.
 `.role("system");
@@ -1055,7 +1057,7 @@ and explain why they are incorrect.
               systemSafety: false,
               system: ["system.safety_jailbreak"],
               model: classifyModel,
-              maxTokens: 400
+              maxTokens: 400,
             }
           );
           logUsage("validate", classifyModel, validation.usage);
