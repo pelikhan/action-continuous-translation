@@ -1,0 +1,59 @@
+---
+title: Diretrizes Personalizadas
+description: Diretrizes personalizadas para tradução
+sidebar:
+  order: 10
+
+---
+
+import { Code } from "@astrojs/starlight/components";
+import types from "../../../../../../../../genaisrc/src/types.mjs?raw";
+
+Você pode inserir diretrizes personalizadas para orientar o processo de tradução. Isso pode ser usado para adicionar instruções adicionais, glossários ou outras orientações para melhorar a qualidade geral da tradução.
+
+## Diretrizes Embutidas
+
+```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
+uses: pelikhan/action-continuous-translation@v0
+with:
+  instructions: Use a casual tone.
+```
+
+## Diretrizes de um Arquivo
+
+```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
+uses: pelikhan/action-continuous-translation@v0
+with:
+  instructions_file: ./instructions.txt
+```
+
+## Diretrizes no Frontmatter
+
+Você também pode especificar diretrizes de tradução diretamente no frontmatter de documentos individuais. Isso é útil quando documentos diferentes exigem uma abordagem de tradução específica.
+
+```markdown title="example.md"
+---
+title: "My Document"
+translator:
+  instructions: |
+    Use formal tone and preserve all technical terms in English.
+---
+
+# My Document Content
+
+This document will be translated using the instructions specified in the frontmatter.
+```
+
+Os tipos de `translator` são definidos em `types.ts`. Eles são removidos do frontmatter antes do início da tradução, portanto, não afetam o resultado final.
+
+<Code lang="ts" code={types} title="Tipos de Configuração" />
+
+## Ordem de Prioridade
+
+As diretrizes são aplicadas na seguinte ordem de prioridade:
+
+1. Parâmetro `instructions` (maior prioridade)
+2. Parâmetro `instructions_file`
+3. `translator.instructions` do frontmatter do documento (menor prioridade)
+
+Se várias abordagens forem usadas, apenas a de maior prioridade será aplicada.

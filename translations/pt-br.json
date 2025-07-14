@@ -473,5 +473,12 @@
   "أقصى عدد من الرموز (Tokens) التي يمكن معالجتها في مكالمة ترجمة باستخدام LLM.": "Número máximo de tokens que podem ser processados em uma chamada de tradução usando o LLM.",
   "أقصى عدد من الرموز (Tokens) التي يمكن معالجتها في مكالمة تحقق باستخدام LLM.": "Número máximo de tokens que podem ser processados em uma chamada de validação usando o LLM.",
   "يتم ترجمة هذا الموقع باستخدام الذكاء الاصطناعي، تحقق من اللغات الأخرى عبر القائم.DDC869C30FC16A18A410": "Este site é traduzido usando inteligência artificial. Verifique outros idiomas através do menu suspenso no canto superior direito. Você também pode consultar o **Painel de Controle de Tradução** para acompanhar o progresso do GenAIScript.",
-  "تعرف على المزيد في [README](https://github.com/pelikhan/action-continuous-transl.A1DD573FA808E9BF73A6": "Saiba mais no [README](https://github.com/pelikhan/action-continuous-translation)."
+  "تعرف على المزيد في [README](https://github.com/pelikhan/action-continuous-transl.A1DD573FA808E9BF73A6": "Saiba mais no [README](https://github.com/pelikhan/action-continuous-translation).",
+  "The `title` and `sidebar` entries in the [Starlight configuration](https://starl.36297D766BB6D1F6B3DC": "As entradas `title` e `sidebar` na [configuração do Starlight](https://starlight.astro.build/reference/configuration/) não são traduzidas automaticamente pela ação.\nRecomenda-se mover essas entradas para um arquivo JSON e importá-las em seu arquivo `astro.config.mjs`.",
+  "كيف يعمل؟": "Como funciona?",
+  "يستخدم سير عمل الترجمة مزيجًا من محللات Markdown، ومعالجة AST، واستدلال LLM لترج.8BB7E5532CCF1F72266C": "O fluxo de trabalho de tradução usa uma combinação de analisadores de Markdown, processamento de AST e inferência de LLM para traduzir e verificar seus arquivos de documentação de forma incremental.",
+  "**النوع**: `integer`\n**القيمة الافتراضية**: `8000`": "**Tipo**: `integer`\n**Padrão**: `8000`",
+  "**النوع**: `integer`\n**القيمة الافتراضية**: `2000`": "**Tipo**: `integer`\n**Padrão**: `2000`",
+  "يتم تعريف بيانات تكوين frontmatter في `types.ts`. يمكن إضافتها إلى تكوين frontma.A76182DA124196C17BE3": "Os dados de configuração do frontmatter são definidos em `types.ts`. Eles podem ser adicionados ao frontmatter como um objeto `translator`.",
+  "يُترجم هذا الموقع باستخدام الذكاء الاصطناعي. تحقق من اللغات الأخرى عبر القائمة ا.4BF21FECBD8D177DFCA2": "Este site é traduzido usando inteligência artificial. Verifique outros idiomas através do menu suspenso no canto superior direito. Você também pode conferir o **Painel de Tradução** para acompanhar o progresso do GenAIScript."
 }

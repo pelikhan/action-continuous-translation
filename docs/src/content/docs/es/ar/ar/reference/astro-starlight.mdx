@@ -1,0 +1,123 @@
+---
+title: Astro Starlight
+description: Configurar el sitio de documentación de Starlight
+sidebar:
+  order: 9
+
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Este procedimiento se puede usar para traducir contenido de sitios de documentación de [Astro Starlight](https://starlight.astro.build/). Requiere una configuración específica para Starlight como se detalla a continuación.
+
+<Steps>
+  1. Sigue la guía de Starlight para usar [una configuración base para el idioma](https://starlight.astro.build/guides/i18n/#use-a-root-locale).
+
+  2. Para habilitar el modo de Starlight, necesitas proporcionar la entrada `starlight_dir` en este procedimiento.
+
+     ```yaml title=".github/workflows/ct.yml" "starlight_dir: ./docs"
+     uses: pelikhan/action-continuous-translation@v0
+     with:
+       starlight_dir: ./docs
+     ```
+
+  3. Si también has configurado la opción \[Astro `base`] ([https://docs.astro.build/en/reference/configuration-reference/#base),](https://docs.astro.build/en/reference/configuration-reference/#base\)،)
+     debes proporcionar también la entrada `starlight_base`.
+
+     ```yaml title=".github/workflows/ct.yml" "starlight_base: astro_base_option"
+     uses: pelikhan/action-continuous-translation@v0
+     with:
+       starlight_dir: ./docs
+       starlight_base: astro_base_option
+     ```
+</Steps>
+
+## Entradas de Frontmatter admitidas
+
+Además de Markdown/MDX, admitimos ciertos metadatos específicos de frontmatter compatibles con Starlight:
+
+* [`title`](https://starlight.astro.build/reference/frontmatter/#title-required): El título de la página.
+* [`description`](https://starlight.astro.build/reference/frontmatter/#description): La descripción de la página.
+* [`head.content`](https://starlight.astro.build/reference/frontmatter/#head): Contenido de las etiquetas `<head>` para páginas específicas.
+* [`hero.tagline`](https://starlight.astro.build/reference/frontmatter/#hero): El eslogan de la sección principal.
+* [`hero.actions.text`](https://starlight.astro.build/reference/frontmatter/#hero): Texto del botón de acción en la sección principal.
+* [`banner.content`](https://starlight.astro.build/reference/frontmatter/#banner): Contenido del banner específico de la página.
+* [`prev` / `prev.label`](https://starlight.astro.build/reference/frontmatter/#prev): Texto del enlace a la página anterior.
+* [`next` / `next.label`](https://starlight.astro.build/reference/frontmatter/#next): Texto del enlace a la página siguiente.
+* [`sidebar.label`](https://starlight.astro.build/reference/frontmatter/#sidebar): Texto personalizado para la barra lateral (por defecto utiliza `title`).
+* [`sidebar.badge` / `sidebar.badge.text`](https://starlight.astro.build/reference/frontmatter/#badge): Texto de la insignia para la barra lateral.
+
+También admitimos entradas de frontmatter del [Starlight Blog](https://starlight-blog-docs.vercel.app/):
+
+* [`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt): Resumen del artículo del blog.
+
+## Título y barra lateral
+
+Las entradas `title` y `sidebar` en el frontmatter no se traducen automáticamente mediante este procedimiento. Se recomienda mover estas entradas a un archivo JSON e importarlas en el archivo `astro.config.mjs`.
+
+```ts title="astro.config.mjs" {2} /title(?=,)/
+// other imports
+import { title } from "./resources.json" assert { type: "json" };
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      title,
+    }),
+  ],
+});
+```
+
+Consulta la documentación específica sobre [traducción del título del sitio](https://starlight.astro.build/guides/i18n/#translate-the-site-title) y [documentación de la barra lateral](https://starlight.astro.build/guides/sidebar/) de Starlight para más detalles.
+
+## Notificación de contenido generado por IA
+
+Puedes informar a los usuarios de que la traducción se generó mediante IA añadiendo un aviso en el encabezado. Actualmente, Astro Starlight no admite de forma nativa la incorporación de notificaciones, por lo que se requiere hacer una sobrescritura de algunos componentes.
+
+* [Reemplaza](https://starlight.astro.build/guides/overriding-components/#how-to-override) los componentes `PageTitle` y `Hero` en tu archivo `astro.config.mjs`:
+
+  ```ts title="astro.config.mjs"
+  export default defineConfig({
+    integrations: [
+      starlight({
+        components: {
+          PageTitle: "./src/components/PageTitle.astro",
+          Hero: "./src/components/Hero.astro",
+        },
+      }),
+    ],
+  });
+  ```
+
+* Añade los componentes al directorio `src/components` desde [`docs/src/components` de este repositorio](https://github.com/pelikhan/action-continuous-translation/tree/main/docs/src/components).
+
+Siéntete libre de modificar la lógica en el archivo `AIGeneratedNotice.astro` para que cumpla con tus necesidades.
+
+## Validador de enlaces Astro
+
+Si usas el [validador de enlaces Astro](https://github.com/HiDeoo/starlight-links-validator), asegúrate de desactivar la opción `errorOnRelativeLinks` en tu archivo `astro.config.mjs`, ya que los enlaces relativos están asociados al idioma raíz.
+
+También puedes habilitar la opción `errorOnInconsistentLocale` para garantizar que todos los enlaces sean consistentes con el idioma actual.
+
+```js title="astro.config.mjs" "errorOnRelativeLinks: false"
+import starlightLinksValidator from "starlight-links-validator";
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      plugins: [
+        starlightLinksValidator({
+          errorOnRelativeLinks: false,
+          errorOnInconsistentLocale: true,
+        }),
+      ],
+    }),
+  ],
+});
+```
+
+## Panel de traducciones de Lunaria
+
+Puedes utilizar el [Panel de Traducciones de Lunaria](https://lunaria.dev/integrations/starlight/) para generar un tablero de estado de traducciones para tu sitio de Starlight.
+
+Prueba el panel de traducciones navegando al enlace **Panel de Traducciones** en la barra lateral de esta página.

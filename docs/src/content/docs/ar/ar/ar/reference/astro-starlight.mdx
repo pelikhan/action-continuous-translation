@@ -54,8 +54,8 @@ import { Steps } from "@astrojs/starlight/components";
 
 ## العنوان والشريط الجانبي
 
-إدخالات `title` و`sidebar` في [تكوين Starlight](https://starlight.astro.build/reference/configuration/) لا يتم ترجمتها تلقائيًا بواسطة الإجراء.
-يوصى بنقل تلك الإدخالات إلى ملف JSON واستيرادها في ملف `astro.config.mjs`.
+مدخلات `title` و`sidebar` في frontmatter لا يتم ترجمتها تلقائيًا بواسطة الإجراء.
+نوصي بنقل هذه المدخلات إلى ملف JSON واستيراده إلى ملف `astro.config.mjs` الخاص بك.
 
 ```ts title="astro.config.mjs" {2} /title(?=,)/
 // other imports
