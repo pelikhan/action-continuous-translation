@@ -379,5 +379,7 @@
   "Limits": "Limites",
   "Maximum available tokens for translation LLM call (to avoid rate limits)": "Nombre maximal de jetons disponibles pour les appels LLM de traduction (pour éviter les limitations de taux)",
   "Maximum available tokens for validation LLM call (to avoid rate limits)": "Nombre maximal de jetons disponibles pour les appels LLM de validation (pour éviter les limitations de taux)",
-  "A YAML-like string of": "Une chaîne au format YAML de paires `alias: modelid` "
+  "A YAML-like string of": "Une chaîne au format YAML de paires `alias: modelid` ",
+  "How it works?": "Comment ça fonctionne ?",
+  "The translation workflow uses a mix of Markdown parsers, AST manipulation\nand LL.A510B052BA32A23DD011": "Le flux de travail de traduction utilise un mélange d'analyseurs Markdown, de manipulation AST et d'inférence LLM pour traduire et valider vos fichiers de documentation de manière incrémentielle."
 }

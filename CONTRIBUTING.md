@@ -105,6 +105,34 @@ If you are working in a **branch**, you can run the following command to let the
 npm run genai:changeset
 ```
 
+## Dev commands
+
+You can use the following commands to run the action against itself:
+
+- translate the readme
+
+```sh
+npm run dev:readme
+```
+
+- translate the astro docs `index.mdx` file
+
+```sh
+npm run dev:astro
+```
+
+- translate the astro docs without root locale, only `index.mdx`
+
+```sh
+npm run dev:astro:root-no-base
+```
+
+- translate the entire docs
+
+```sh
+npx run translate
+```
+
 ## Showcase
 
 ### Sites
