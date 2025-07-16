@@ -1,5 +1,13 @@
 # action-continuous-translation
 
+## 0.2.2
+
+### Patch Changes
+
+- [`ddfc1b1`](https://github.com/pelikhan/action-continuous-translation/commit/ddfc1b170df651b6607d0c70dcd2c7beccb9bb74) Thanks [@pelikhan](https://github.com/pelikhan)! - support for multiple eval models
+
+- [`05338bf`](https://github.com/pelikhan/action-continuous-translation/commit/05338bfbb2397be60ec94d28ac36b39cff630a8d) Thanks [@pelikhan](https://github.com/pelikhan)! - fix nested folder issue
+
 ## 0.2.1
 
 ### Patch Changes
