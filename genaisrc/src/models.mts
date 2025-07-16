@@ -20,13 +20,13 @@ export async function resolveModels(lang: string): Promise<LangConfiguration> {
         res.alias = alias;
       }
     }
-    if (!res.models.classify) {
+    if (!res.models.validation) {
       const alias = "validation" + suffix;
       dbg(`resolve alias %s`, alias);
       const info = await host.resolveLanguageModel(alias);
       if (info?.provider) {
         dbg(`validate alias %s: %o`, alias, info);
-        res.models.classify = `${info.provider}:${info.model}`;
+        res.models.validation = [`${info.provider}:${info.model}`];
         res.alias = alias;
       }
     }
@@ -35,7 +35,8 @@ export async function resolveModels(lang: string): Promise<LangConfiguration> {
   // apply defaults if not found
   res.models.translation ??=
     config.models?.translation ?? DEFAULT_MODELS.translation;
-  res.models.classify ??= config.models?.classify ?? DEFAULT_MODELS.classify;
+  res.models.validation ??=
+    config.models?.validation ?? DEFAULT_MODELS.validation;
 
   dbg(`resolved: %s -> %O`, lang, res.models);
   return res;
@@ -46,13 +47,13 @@ export interface LangConfiguration {
   alias?: string;
   models?: {
     translation?: string;
-    classify?: string;
+    validation?: string[];
   };
 }
 
 const DEFAULT_MODELS = {
   translation: "github:openai/gpt-4o",
-  classify: "github:openai/gpt-4.1-mini",
+  validation: ["github:openai/gpt-4o-mini", "github:openai/gpt-4o"],
 } as Required<LangConfiguration["models"]>;
 
 const LANGS = Object.freeze({

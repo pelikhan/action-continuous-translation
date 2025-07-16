@@ -248,8 +248,12 @@ export default async function main() {
   const files = env.files
     .filter((f) => ignorer([f.filename]).length)
     // Filter files that match the ISO language code pattern in the filename
-    .filter(({ filename }) => !/\.[a-z]{2,2}(-[a-zA-Z]{2,3})?\.mdx?$/.test(filename))
-    .filter(({ filename }) => !/\/[a-z]{2,2}(-[a-zA-Z]{2,3})?\//.test(filename));
+    .filter(
+      ({ filename }) => !/\.[a-z]{2,2}(-[a-zA-Z]{2,3})?\.mdx?$/.test(filename)
+    )
+    .filter(
+      ({ filename }) => !/\/[a-z]{2,2}(-[a-zA-Z]{2,3})?\//.test(filename)
+    );
   if (!files.length) cancel("No files or not matching languages selected.");
 
   const fileTokens: Record<string, number> = {};
@@ -265,7 +269,7 @@ export default async function main() {
     const langInfo = await resolveModels(to);
     const lang = langInfo.name;
     const translationModel = langInfo.models.translation;
-    const classifyModel = langInfo.models.classify;
+    const validationModels = langInfo.models.validation;
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
 
     dbg(`Using translation model: %s`, translationModel);
@@ -276,7 +280,7 @@ export default async function main() {
     );
     dbg(`cache: %s`, translationCacheFilename);
     output.itemValue(`translation model`, translationModel);
-    output.itemValue(`validation model`, classifyModel);
+    output.itemValue(`validation models`, validationModels.join(", "));
     output.itemValue("cache", translationCacheFilename);
     // hash -> text translation
     const translationCache: Record<string, string> = force
@@ -1003,8 +1007,12 @@ ${instructionPrompt}`.role("system");
         const validationChunks = chunk(translated, maxValidationChunkTokens);
         output.itemValue(`validation chunks`, validationChunks.length);
 
-        let validated = true;
+        output.heading(4, "Validation");
+        output.itemValue(`models`, validationModels.join(", "));
+        output.itemValue(`chunks`, validationChunks.length);
+        let fileValidated = true;
         for (let chunki = 0; chunki < validationChunks.length; chunki++) {
+          output.heading(5, `Validation chunk ${chunki + 1}`);
           const validationChunk = validationChunks[chunki];
           dbge(`validation chunk %d: %s`, chunki, inspect(validationChunk));
           const validationChunkTranslated = stringify(validationChunk);
@@ -1021,73 +1029,92 @@ ${instructionPrompt}`.role("system");
           const originalChunkContent = stringify(originalChunk);
           dbgc(`original chunk: %s`, originalChunkContent);
 
-          // judge quality is good enough
-          const validation = await classify(
-            (ctx) => {
-              const originalRef = ctx.def("ORIGINAL", originalChunkContent);
-              const translatedRef = ctx.def(
-                "TRANSLATED",
-                validationChunkTranslated
-              );
-              ctx.$`
+          let chunkValidated = false;
+          for (const validationModel of validationModels) {
+            output.heading(6, validationModel);
+            // judge quality is good enough
+            const validation = await classify(
+              (ctx) => {
+                const originalRef = ctx.def("ORIGINAL", originalChunkContent);
+                const translatedRef = ctx.def(
+                  "TRANSLATED",
+                  validationChunkTranslated
+                );
+                ctx.$`
 You are an expert at judging the quality of translations of Markdown documents. 
 Your task is to determine the quality of the translation of a Markdown document from ${
-                sourceInfo.name
-              } (${source}) to ${lang} (${to}).
+                  sourceInfo.name
+                } (${source}) to ${lang} (${to}).
 The original document is in ${originalRef}, and the translated document is provided in ${translatedRef}.
 - The document uses GitHub Flavored Markdown (GFM) syntax.
-- Ignore formatting issues.
+- Ignore formatting or Markdown syntactic issues.
 - The translation should be faithful to the original document and convey the same meaning.
 - The code blocks should not be translated.
 - The GitHub Alerts ([!NOTE]) should not be translated.
 - Emojis are allowed.
+- Ignore file path changes as they have to be changed to match the translated file directory structure.
 ${instructionPrompt || ""}
 If you label the transition as 'bad', provide a detailled list of specific sentences or sections that are not translated correctly, 
 and explain why they are incorrect.
 `.role("system");
-            },
-            {
-              ok: `Translation is faithful to the original document and conveys the same meaning.`,
-              bad: `Translation is of low quality or has a different meaning from the original.`,
-            },
-            {
-              label: `judge translation ${to} ${basename(filename)}#${chunki}`,
-              explanations: true,
-              cache: true,
-              systemSafety: false,
-              system: ["system.safety_jailbreak"],
-              model: classifyModel,
-              maxTokens: 400,
+              },
+              {
+                ok: `Translation is good enough as a translation. It is faithful to the original document and conveys the same meaning. It does not have to be perfect.`,
+                bad: `Translation is of low quality or has a different meaning from the original.`,
+              },
+              {
+                label: `judge translation ${to} ${basename(
+                  filename
+                )}#${chunki}`,
+                explanations: true,
+                cache: true,
+                systemSafety: false,
+                system: ["system.safety_jailbreak"],
+                model: validationModel,
+                maxTokens: 400,
+              }
+            );
+            logUsage("validate", validationModel, validation.usage);
+
+            // are we out of tokens?
+            if (/429/.test(validation.error)) {
+              output.error(`Rate limit exceeded: ${validation.error}`);
+              chunkValidated = false;
+              cancel(`rate limit exceeded`);
             }
-          );
-          logUsage("validate", classifyModel, validation.usage);
 
-          // are we out of tokens?
-          if (/429/.test(validation.error)) {
-            output.error(`Rate limit exceeded: ${validation.error}`);
-            validated = false;
-            cancel(`rate limit exceeded`);
-          }
-
-          output.resultItem(
-            validation.label === "ok",
-            `chunk translation validation: ${validation.label}`
-          );
-          if (validation.label !== "ok") {
+            output.resultItem(
+              validation.label === "ok",
+              `chunk translation validation: ${validation.label}`
+            );
             output.fence(validation.answer);
-            output.startDetails(`translation diff`);
-            output.diff(content, contentTranslated);
-            output.endDetails();
-            validated = false;
-            break;
+            if (validation.label === "ok") {
+              dbg(`validated`);
+              chunkValidated = true;
+              break;
+            }
           }
+          if (!chunkValidated) {
+            output.startDetails(`translation diff`);
+            output.diff(originalChunkContent, validationChunkTranslated);
+            output.endDetails();
+          }
+          fileValidated = fileValidated && chunkValidated;
         }
 
-        // apply translations and save
-        output.resultItem(validated, `translation validated`);
+        output.heading(4, `Results`);
+        output.resultItem(
+          unresolvedTranslations.size === 0,
+          `translated texts: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`
+        );
+        output.resultItem(fileValidated, `validation`);
         dbgc(`translated: %s`, contentTranslated);
 
-        if (validated) {
+        if (!fileValidated) {
+          output.startDetails(`translation diff`);
+          output.diff(content, contentTranslated);
+          output.endDetails();
+        } else {
           dbg(`writing translation to %s`, translationFn);
           await workspace.writeText(translationFn, contentTranslated);
           await workspace.writeText(
@@ -1095,11 +1122,6 @@ and explain why they are incorrect.
             JSON.stringify(translationCache, null, 2)
           );
         }
-
-        output.resultItem(
-          true,
-          `translated chunks: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`
-        );
       } catch (error) {
         output.error(error);
         break;
