@@ -98,15 +98,17 @@ so it requires to override a few components.
 
 Feel free to modify the logic in `AIGeneratedNotice.astro` to fit your needs.
 
-## Astro Link Validator
+## Starlight Link Validator
 
-If you use the [Astro Link Validator](https://github.com/HiDeoo/starlight-links-validator),
-make sure to disable `errorOnRelativeLinks` option in your `astro.config.mjs` file
-as the localized links are relative to the root locale.
+If you use the [Starlight Link Validator](https://github.com/HiDeoo/starlight-links-validator),
+make sure to disable [`errorOnRelativeLinks`](https://starlight-links-validator.vercel.app/configuration#erroronrelativelinks) and
+[`errorOnInvalidHashes`](https://starlight-links-validator.vercel.app/configuration#erroroninvalidhashes) options in your `astro.config.mjs` file
+as the localized links are relative to the root locale and hashes do not get translated yet.
 
-You can also enable the `errorOnInconsistentLocale` option to ensure that all links are consistent with the current locale.
+You can also enable the [`errorOnInconsistentLocale`](https://starlight-links-validator.vercel.app/configuration#erroroninconsistentlocale)
+option to ensure that all links are consistent with the current locale.
 
-```js title="astro.config.mjs" "errorOnRelativeLinks: false"
+```js title="astro.config.mjs" {8-10}
 import starlightLinksValidator from "starlight-links-validator";
 
 export default defineConfig({
@@ -115,6 +117,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
+          errorOnInvalidHashes: false,
           errorOnInconsistentLocale: true,
         }),
       ],
