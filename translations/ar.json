@@ -538,5 +538,8 @@
   "**النوع**: `integer`\n**القيمة الافتراضية**: `8000`": "**النوع**: `integer`\n**القيمة الافتراضية**: `8000`",
   "**النوع**: `integer`\n**القيمة الافتراضية**: `2000`": "**النوع**: `integer`\n**القيمة الافتراضية**: `2000`",
   "يتم تعريف بيانات تكوين frontmatter في `types.ts`. يمكن إضافتها إلى تكوين frontma.A76182DA124196C17BE3": "تُعرَّف بيانات تكوين frontmatter في `types.ts`. يمكن إضافتها إلى تكوين frontmatter ككائن `translator`.",
-  "يُترجم هذا الموقع باستخدام الذكاء الاصطناعي. تحقق من اللغات الأخرى عبر القائمة ا.4BF21FECBD8D177DFCA2": "يُترجم هذا الموقع باستخدام الذكاء الاصطناعي. تحقق من اللغات الأخرى عبر القائمة المنسدلة في الزاوية العلوية اليمنى. يمكنك أيضًا الاطلاع على **لوحة معلومات الترجمة** لمتابعة تقدم GenAIScript."
+  "يُترجم هذا الموقع باستخدام الذكاء الاصطناعي. تحقق من اللغات الأخرى عبر القائمة ا.4BF21FECBD8D177DFCA2": "يُترجم هذا الموقع باستخدام الذكاء الاصطناعي. تحقق من اللغات الأخرى عبر القائمة المنسدلة في الزاوية العلوية اليمنى. يمكنك أيضًا الاطلاع على **لوحة معلومات الترجمة** لمتابعة تقدم GenAIScript.",
+  "Starlight Link Validator": "مدقق روابط Starlight",
+  "If you use the [Starlight Link Validator](https://github.com/HiDeoo/starlight-li.487C18B8970F45DD483D": "إذا كنت تستخدم [مدقق روابط Starlight](https://github.com/HiDeoo/starlight-links-validator)،\nتأكد من تعطيل خيارات [`errorOnRelativeLinks`](https://starlight-links-validator.vercel.app/configuration#erroronrelativelinks) و\n[`errorOnInvalidHashes`](https://starlight-links-validator.vercel.app/configuration#erroroninvalidhashes) في ملف `astro.config.mjs`\nحيث أن الروابط المترجمة تعتمد على إعداد الجذر للغة، والعلامات (hashes) لم يتم ترجمتها بعد.",
+  "You can also enable the [`errorOnInconsistentLocale`](https://starlight-links-va.480905A9F46EA58CC5B9": "يمكنك أيضًا تمكين خيار [`errorOnInconsistentLocale`](https://starlight-links-validator.vercel.app/configuration#erroroninconsistentlocale)\nلضمان توافق جميع الروابط مع اللغة الحالية."
 }

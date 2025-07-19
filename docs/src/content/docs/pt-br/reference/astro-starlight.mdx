@@ -94,13 +94,17 @@ Você pode informar aos seus usuários que a tradução foi gerada por IA ao adi
 
 Sinta-se à vontade para modificar a lógica no arquivo `AIGeneratedNotice.astro` para atender às suas necessidades.
 
-## Validador de Links Astro
+## Validador de Links do Starlight
 
-Se você usar o [Astro Link Validator](https://github.com/HiDeoo/starlight-links-validator), certifique-se de desativar a opção `errorOnRelativeLinks` no arquivo `astro.config.mjs`, pois os links localizados são relativos ao locale raiz.
+Se você usar o [Validador de Links do Starlight](https://github.com/HiDeoo/starlight-links-validator),
+certifique-se de desativar as opções [`errorOnRelativeLinks`](https://starlight-links-validator.vercel.app/configuration#erroronrelativelinks) e
+[`errorOnInvalidHashes`](https://starlight-links-validator.vercel.app/configuration#erroroninvalidhashes) no seu arquivo `astro.config.mjs`,
+já que os links localizados são relativos ao locale raiz e hashes ainda não são traduzidos.
 
-Você também pode habilitar a opção `errorOnInconsistentLocale` para garantir que todos os links estejam consistentes com o locale atual.
+Você também pode habilitar a opção [`errorOnInconsistentLocale`](https://starlight-links-validator.vercel.app/configuration#erroroninconsistentlocale)
+para garantir que todos os links sejam consistentes com o locale atual.
 
-```js title="astro.config.mjs" "errorOnRelativeLinks: false"
+```js title="astro.config.mjs" {8-10}
 import starlightLinksValidator from "starlight-links-validator";
 
 export default defineConfig({
@@ -109,6 +113,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
+          errorOnInvalidHashes: false,
           errorOnInconsistentLocale: true,
         }),
       ],

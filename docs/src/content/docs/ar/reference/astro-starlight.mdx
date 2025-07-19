@@ -97,15 +97,17 @@ export default defineConfig({
 
 لا تتردد في تعديل المنطق في ملف `AIGeneratedNotice.astro` ليتناسب مع احتياجاتك.
 
-## مدقق روابط Astro
+## مدقق روابط Starlight
 
-إذا كنت تستخدم [مدقق روابط Astro](https://github.com/HiDeoo/starlight-links-validator)،
-تأكد من إيقاف خيار `errorOnRelativeLinks` في ملف `astro.config.mjs` الخاص بك
-نظرًا لأن الروابط المحلية مرتبطة باللغة الجذرية.
+إذا كنت تستخدم [مدقق روابط Starlight](https://github.com/HiDeoo/starlight-links-validator)،
+تأكد من تعطيل خيارات [`errorOnRelativeLinks`](https://starlight-links-validator.vercel.app/configuration#erroronrelativelinks) و
+[`errorOnInvalidHashes`](https://starlight-links-validator.vercel.app/configuration#erroroninvalidhashes) في ملف `astro.config.mjs`
+حيث أن الروابط المترجمة تعتمد على إعداد الجذر للغة، والعلامات (hashes) لم يتم ترجمتها بعد.
 
-يمكنك أيضًا تفعيل خيار `errorOnInconsistentLocale` لضمان أن تكون جميع الروابط متوافقة مع اللغة الحالية.
+يمكنك أيضًا تمكين خيار [`errorOnInconsistentLocale`](https://starlight-links-validator.vercel.app/configuration#erroroninconsistentlocale)
+لضمان توافق جميع الروابط مع اللغة الحالية.
 
-```js title="astro.config.mjs" "errorOnRelativeLinks: false"
+```js title="astro.config.mjs" {8-10}
 import starlightLinksValidator from "starlight-links-validator";
 
 export default defineConfig({
@@ -114,6 +116,7 @@ export default defineConfig({
       plugins: [
         starlightLinksValidator({
           errorOnRelativeLinks: false,
+          errorOnInvalidHashes: false,
           errorOnInconsistentLocale: true,
         }),
       ],
