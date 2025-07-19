@@ -102,9 +102,8 @@ const localeStats = logs
       }
     >
   );
-const fileStats = logs
+const fileStats = logs.reverse()
   .filter(({ filename }) => !!filename)
-  .sort((l, r) => l.filename.localeCompare(r.filename))
   .reduce(
     (acc, log) => {
       if (!acc[log.filename]) {
