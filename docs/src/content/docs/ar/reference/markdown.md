@@ -9,20 +9,6 @@ sidebar:
 
 يوضح هذا المستند جميع البنى النحوية الرئيسية المتوفرة في Markdown.
 
-## جدول المحتويات
-
-* [الرؤوس](#headers)
-* [تنسيق النص](#text-formatting)
-* [القوائم](#lists)
-* [الروابط والصور](#links-and-images)
-* [الكود](#code)
-* [الجداول](#tables)
-* [الاقتباسات](#blockquotes)
-* [الفواصل الأفقية](#horizontal-rules)
-* [فواصل الأسطر](#line-breaks)
-* [عناصر HTML](#html-elements)
-* [المزايا المتقدمة](#advanced-features)
-
 ## الرؤوس
 
 # الرأس H1

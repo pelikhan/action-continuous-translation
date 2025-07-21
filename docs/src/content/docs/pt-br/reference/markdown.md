@@ -9,20 +9,6 @@ sidebar:
 
 Este documento demonstra todas as principais construções sintáticas disponíveis no Markdown.
 
-## Tabela de Conteúdos
-
-* [Cabeçalhos](#headers)
-* [Formatação de Texto](#text-formatting)
-* [Listas](#lists)
-* [Links e Imagens](#links-and-images)
-* [Código](#code)
-* [Tabelas](#tables)
-* [Citações](#blockquotes)
-* [Linhas Horizontais](#horizontal-rules)
-* [Quebras de Linha](#line-breaks)
-* [Elementos HTML](#html-elements)
-* [Recursos Avançados](#advanced-features)
-
 ## Cabeçalhos
 
 # Cabeçalho H1

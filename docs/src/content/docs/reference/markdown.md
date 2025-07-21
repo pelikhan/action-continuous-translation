@@ -8,20 +8,6 @@ sidebar:
 
 This document demonstrates all the major syntactic constructs available in Markdown.
 
-## Table of Contents
-
-- [Headers](#headers)
-- [Text Formatting](#text-formatting)
-- [Lists](#lists)
-- [Links and Images](#links-and-images)
-- [Code](#code)
-- [Tables](#tables)
-- [Blockquotes](#blockquotes)
-- [Horizontal Rules](#horizontal-rules)
-- [Line Breaks](#line-breaks)
-- [HTML Elements](#html-elements)
-- [Advanced Features](#advanced-features)
-
 ## Headers
 
 # H1 Header

@@ -9,19 +9,6 @@ sidebar:
 
 Este documento muestra todas las principales estructuras sintácticas disponibles en Markdown.
 
-## Tabla de Contenidos
-
-* [Encabezados](#headers)
-* [Formato de texto](#text-formatting)
-* [Listas](#lists)
-* [Enlaces e Imágenes](#links-and-images)
-* [Código](#code)
-* [Tablas](#tables)
-* [Citas](#blockquotes)
-* [Líneas Horizontales](#horizontal-rules)
-* [Saltos de Línea](#line-breaks)
-* [Elementos HTML](#html-elements)
-* [Características Avanzadas](#advanced-features)
 
 ## Encabezados
 

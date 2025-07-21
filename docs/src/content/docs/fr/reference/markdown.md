@@ -9,20 +9,6 @@ sidebar:
 
 Ce document présente toutes les principales constructions syntaxiques disponibles en Markdown.
 
-## Table des matières
-
-* [En-têtes](#headers)
-* [Mise en forme du texte](#text-formatting)
-* [Listes](#lists)
-* [Liens et images](#links-and-images)
-* [Code](#code)
-* [Tableaux](#tables)
-* [Blocs de citations](#blockquotes)
-* [Règles horizontales](#horizontal-rules)
-* [Sauts de ligne](#line-breaks)
-* [Éléments HTML](#html-elements)
-* [Fonctionnalités avancées](#advanced-features)
-
 ## En-têtes
 
 # En-tête H1

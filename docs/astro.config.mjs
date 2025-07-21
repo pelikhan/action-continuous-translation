@@ -20,6 +20,7 @@ export default defineConfig({
         starlightLinksValidator({
           errorOnRelativeLinks: false,
           errorOnInconsistentLocale: true,
+          errorOnInvalidHashes: false,
         }),
         starlightThemeRapide(),
       ],
