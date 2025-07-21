@@ -314,6 +314,7 @@ export default async function main() {
 
       const { visit, parse, stringify, inspect, chunk, SKIP } = await mdast({
         mdx: /\.mdx$/i.test(filename),
+        gfm: true,
       });
       const hashNode = (node: Node | string) => {
         if (typeof node === "object") {
@@ -460,7 +461,12 @@ export default async function main() {
                 llmHashes[llmHash] = nhash;
                 llmHashTodos.add(llmHash);
                 nTranslatable++;
-                node.children.unshift({
+                let insert = 0;
+                if ((node.children[0].type as any) === "githubAlertMarker") {
+                  dbga(`alert marker`);
+                  insert++;
+                }
+                node.children.splice(insert, 0, {
                   type: "text",
                   value: `┌${llmHash}┐`,
                 } as Text);
@@ -830,7 +836,14 @@ ${instructionPrompt}`.role("system");
                 try {
                   const newNodes = parse(translation)
                     .children as PhrasingContent[];
-                  node.children.splice(0, node.children.length, ...newNodes);
+                  let insert = 0;
+                  if ((node.children[0]?.type as any) === "githubAlertMarker")
+                    insert++;
+                  node.children.splice(
+                    insert,
+                    node.children.length - insert,
+                    ...newNodes
+                  );
                   return SKIP;
                 } catch (error) {
                   output.error(`error parsing paragraph translation`, error);
