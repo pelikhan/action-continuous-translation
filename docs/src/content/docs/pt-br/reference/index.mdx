@@ -136,6 +136,20 @@ Caminho para um arquivo contendo termos do glossário para serem usados durante 
 
 Pasta onde as traduções serão armazenadas.
 
+### `max_translation_tokens`
+
+**Tipo**: `integer`
+**Padrão**: `8000`
+
+Número máximo de tokens para processar em uma chamada de tradução do LLM.
+
+### `max_validation_tokens`
+
+**Tipo**: `integer`
+**Padrão**: `2000`
+
+Número máximo de tokens para processar em uma chamada de validação do LLM.
+
 ### `starlight_dir`
 
 **Tipo**: `string`
@@ -149,13 +163,6 @@ Deve ser definida se a opção [`starlight_base`](#starlight_base) for definida.
 
 Alias base para a documentação [Astro Starlight](../../reference/astro-starlight/).
 Se você não definir a [opção `base` do Astro](https://docs.astro.build/en/reference/configuration-reference/#base), não defina esta opção.
-
-### `force`
-
-**Tipo**: `boolean`\
-**Padrão**: `false`
-
-Força a tradução mesmo que o arquivo já tenha sido traduzido.
 
 ### `debug`
 

@@ -639,5 +639,10 @@
   "GitHub supports custom alerts in Markdown files, which can be used to highlight .0BDB2B001C8B7C8F51BC": "O GitHub suporta alertas personalizados em arquivos Markdown, que podem ser usados para destacar informações ou avisos importantes. Aqui estão alguns exemplos de como usá-los:",
   "Conclusion": "Conclusão",
   "This document covers most of the standard Markdown syntax. Some features like fo.BDC440A6955D3E0A47B5": "Este documento aborda a maior parte da sintaxe padrão do Markdown. Alguns recursos, como notas de rodapé, listas de definições, matemática e certos elementos HTML, podem não ser compatíveis com todos os processadores de Markdown, mas funcionam em muitas versões estendidas, como GitHub Flavored Markdown (GFM), CommonMark e outras.",
-  "**Note**: The exact rendering of these elements may vary depending on the Markdo.779BF71A89B264013F1A": "**Nota**: A renderização exata desses elementos pode variar dependendo do processador de Markdown utilizado."
+  "**Note**: The exact rendering of these elements may vary depending on the Markdo.779BF71A89B264013F1A": "**Nota**: A renderização exata desses elementos pode variar dependendo do processador de Markdown utilizado.",
+  "[!NOTE]\nUseful information that users should know, even when skimming content.": "Informação útil que os usuários devem saber, mesmo ao passar rapidamente pelo conteúdo.",
+  "[!TIP]\nHelpful advice for doing things better or more easily.": "Conselho útil para fazer as coisas de forma melhor ou mais fácil.",
+  "[!IMPORTANT]\nKey information users need to know to achieve their goal.": "Informação chave que os usuários precisam saber para alcançar seu objetivo.",
+  "[!WARNING]\nUrgent info that needs immediate user attention to avoid problems.": "Informação urgente que requer atenção imediata do usuário para evitar problemas.",
+  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "Aviso sobre riscos ou consequências negativas de certas ações."
 }

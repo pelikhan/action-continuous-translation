@@ -344,15 +344,20 @@ Use barras invertidas para escapar caracteres especiais:
 
 O GitHub suporta alertas personalizados em arquivos Markdown, que podem ser usados para destacar informações ou avisos importantes. Aqui estão alguns exemplos de como usá-los:
 
-> [!NOTE]Informações úteis que os usuários devem saber, mesmo ao apenas passar os olhos no conteúdo.
+> [!NOTE]
+> Informação útil que os usuários devem saber, mesmo ao passar rapidamente pelo conteúdo.
 
-> [!TIP]Conselhos úteis para fazer as coisas melhor ou mais facilmente.
+> [!TIP]
+> Conselho útil para fazer as coisas de forma melhor ou mais fácil.
 
-> [!IMPORTANT]Informações importantes que os usuários precisam saber para atingir seus objetivos.
+> [!IMPORTANT]
+> Informação chave que os usuários precisam saber para alcançar seu objetivo.
 
-> [!WARNING]Informações urgentes que precisam de atenção imediata do usuário para evitar problemas.
+> [!WARNING]
+> Informação urgente que requer atenção imediata do usuário para evitar problemas.
 
-> [!CAUTION]Adverte sobre riscos ou resultados negativos de certas ações.
+> [!CAUTION]
+> Aviso sobre riscos ou consequências negativas de certas ações.
 
 ## Conclusão
 

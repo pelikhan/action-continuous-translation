@@ -9,7 +9,6 @@ sidebar:
 
 Este documento muestra todas las principales estructuras sintácticas disponibles en Markdown.
 
-
 ## Encabezados
 
 # Encabezado H1
@@ -345,15 +344,20 @@ Usa barras invertidas para escapar caracteres especiales:
 
 GitHub admite alertas personalizadas en archivos Markdown, que se pueden usar para resaltar información importante o advertencias. A continuación, se muestran algunos ejemplos de cómo utilizarlas:
 
-> [!NOTE]Información útil que los usuarios deberían conocer, incluso al leer por encima el contenido.
+> [!NOTE]
+> Información útil que los usuarios deben conocer, incluso al hojear el contenido.
 
-> [!TIP]Consejos útiles para hacer las cosas mejor o con más facilidad.
+> [!TIP]
+> Consejos útiles para hacer las cosas mejor o más fácilmente.
 
-> [!IMPORTANT]Información clave que los usuarios necesitan saber para lograr su objetivo.
+> [!IMPORTANT]
+> Información clave que los usuarios necesitan saber para lograr su objetivo.
 
-> [!WARNING]Información urgente que necesita atención inmediata del usuario para evitar problemas.
+> [!WARNING]
+> Información urgente que necesita atención inmediata del usuario para evitar problemas.
 
-> [!CAUTION]Advierte sobre riesgos o posibles consecuencias negativas de ciertas acciones.
+> [!CAUTION]
+> Avisos sobre riesgos o resultados negativos de ciertas acciones.
 
 ## Conclusión
 

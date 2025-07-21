@@ -699,5 +699,10 @@
   "GitHub supports custom alerts in Markdown files, which can be used to highlight .0BDB2B001C8B7C8F51BC": "GitHub admite alertas personalizadas en archivos Markdown, que se pueden usar para resaltar información importante o advertencias. A continuación, se muestran algunos ejemplos de cómo utilizarlas:",
   "Conclusion": "Conclusión",
   "This document covers most of the standard Markdown syntax. Some features like fo.BDC440A6955D3E0A47B5": "Este documento cubre la mayor parte de la sintaxis estándar de Markdown. Algunas características, como las notas al pie, las listas de definiciones, las matemáticas y ciertos elementos HTML, pueden no ser compatibles con todos los procesadores de Markdown, pero funcionan en muchas versiones extendidas como GitHub Flavored Markdown (GFM), CommonMark, y otras.",
-  "**Note**: The exact rendering of these elements may vary depending on the Markdo.779BF71A89B264013F1A": "**Nota**: La representación exacta de estos elementos puede variar según el procesador de Markdown que se utilice."
+  "**Note**: The exact rendering of these elements may vary depending on the Markdo.779BF71A89B264013F1A": "**Nota**: La representación exacta de estos elementos puede variar según el procesador de Markdown que se utilice.",
+  "[!NOTE]\nUseful information that users should know, even when skimming content.": "Información útil que los usuarios deben conocer, incluso al hojear el contenido.",
+  "[!TIP]\nHelpful advice for doing things better or more easily.": "Consejos útiles para hacer las cosas mejor o más fácilmente.",
+  "[!IMPORTANT]\nKey information users need to know to achieve their goal.": "Información clave que los usuarios necesitan saber para lograr su objetivo.",
+  "[!WARNING]\nUrgent info that needs immediate user attention to avoid problems.": "Información urgente que necesita atención inmediata del usuario para evitar problemas.",
+  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "Avisos sobre riesgos o resultados negativos de ciertas acciones."
 }
