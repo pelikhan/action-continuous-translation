@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.3
+
+### Patch Changes
+
+- [`4aa9e9f`](https://github.com/pelikhan/action-continuous-translation/commit/4aa9e9f72384a1287233ee352ab60cfddc514d06) Thanks [@pelikhan](https://github.com/pelikhan)! - better support for github alerts
+
 ## 0.2.2
 
 ### Patch Changes
