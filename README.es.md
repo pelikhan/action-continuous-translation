@@ -66,7 +66,6 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 
 | Parámetro | Descripción                                                                                                         | Por defecto |
 | --------- | ------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `force`   | Forzar la traducción incluso si ya está traducido                                                                   | `false`     |
 | `debug`   | Habilitar registro de depuración[aprender más](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`     |
 
 ### 🤖 Configuración del Proveedor de IA

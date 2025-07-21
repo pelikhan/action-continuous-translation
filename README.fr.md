@@ -66,7 +66,6 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 
 | Paramètre | Description                                                                                                         | Valeur par défaut |
 | --------- | ------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| `force`   | Forcer la traduction même si elle est déjà effectuée                                                                | `false`           |
 | `debug`   | Activer le journal de débogage[en savoir plus](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
 
 ### 🤖 Configuration du fournisseur d'IA
