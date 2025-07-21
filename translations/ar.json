@@ -697,10 +697,5 @@
   "<sub>Subscript</sub> and <sup>Superscript</sup>": "<sub>النص المنخفض</sub> و <sup>النص المرتفع</sup>",
   "Here's a sentence with a footnote[^1].": "إليك جملة مع حاشية سفلية[^1].",
   "Another sentence with a footnote[^note].": "جملة أخرى مع حاشية سفلية[^note].",
-  "Inline math: $E = mc^2$": "رياضيات داخلية: $E = mc^2$",
-  "[!NOTE]\nUseful information that users should know, even when skimming content.": "معلومات مفيدة يجب أن يعرفها المستخدمون، حتى عند التمرير السريع للمحتوى.",
-  "[!TIP]\nHelpful advice for doing things better or more easily.": "نصيحة مفيدة للقيام بالأشياء بطريقة أفضل أو أسهل.",
-  "[!IMPORTANT]\nKey information users need to know to achieve their goal.": "معلومات رئيسية يحتاج المستخدمون إلى معرفتها لتحقيق هدفهم.",
-  "[!WARNING]\nUrgent info that needs immediate user attention to avoid problems.": "معلومات عاجلة تحتاج إلى انتباه المستخدم الفوري لتجنب المشاكل.",
-  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "ينصح بالمخاطر أو النتائج السلبية لبعض الإجراءات."
+  "Inline math: $E = mc^2$": "رياضيات داخلية: $E = mc^2$"
 }

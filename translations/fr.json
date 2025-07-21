@@ -295,7 +295,6 @@
   "Select the **Fork** button in the upper right-hand corner of the repository or s.EBE2841AA429D2A8C34A": "Sélectionnez le bouton **Fork** dans le coin supérieur droit du dépôt ou sélectionnez ce bouton :\n[![Fork](https://img.shields.io/badge/Fork-Repository-blue?style=flat-square)](https://github.com/microsoft/generative-ai-with-javascript/fork)",
   "Click the **Code** button in your forked repository, go to the **Codespaces** ta.C555C06CDE7A6DC4654C": "Cliquez sur le bouton **Code** dans votre dépôt forké, accédez à l'onglet **Codespaces** et choisissez **Créer un codespace**.",
   "This will create a preconfigured online environment for you. You'll then be able.28E13D8434B522FA24A3": "Cela créera un environnement en ligne préconfiguré pour vous. Vous pourrez ensuite utiliser [GitHub Models](https://github.com/marketplace/models) pour exécuter des exemples de code et interagir avec des modèles d'IA gratuitement, sans installation supplémentaire.",
-  "[!NOTE]": "[!NOTE]",
   "While GitHub Codespaces provides a quick and easy starting point you can also ru.C2E952038130176B5ECF": "Alors que GitHub Codespaces offre un point de départ rapide et facile, vous pouvez également exécuter les exemples de code [localement](/docs/setup/README.md#option-2--running-the-app-locally).",
   "Learn more about [GitHub Codespaces and GitHub Models concepts here](/docs/setup.27554930730A62ADF5B1": "En savoir plus sur les [concepts GitHub Codespaces et GitHub Models ici](/docs/setup/README.md).",
   "### Lesson description": "Description des leçons",
@@ -719,12 +718,12 @@
   ":smile: :heart: :thumbsup: :rocket: :computer:": "\\:smile: \\:heart: \\:thumbsup: \\:rocket: \\:computer:",
   "😀 😍 👍 🚀 💻": "😀 😍 👍 🚀 💻",
   "GitHub Alerts in Markdown": "Alertes GitHub dans Markdown",
-  "[!NOTE]\nUseful information that users should know, even when skimming content.": "Informations utiles que les utilisateurs doivent connaître, même en survolant le contenu.",
-  "[!TIP]\nHelpful advice for doing things better or more easily.": "Des conseils utiles pour faire les choses mieux ou plus facilement.",
-  "[!IMPORTANT]\nKey information users need to know to achieve their goal.": "Informations clés dont les utilisateurs ont besoin pour atteindre leur objectif.",
-  "[!WARNING]\nUrgent info that needs immediate user attention to avoid problems.": "Informations urgentes qui nécessitent une attention immédiate des utilisateurs pour éviter des problèmes.",
-  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "Avertit des risques ou des résultats négatifs de certaines actions.",
   "Conclusion": "Conclusion",
   "This document covers most of the standard Markdown syntax. Some features like fo.BDC440A6955D3E0A47B5": "Ce document couvre la majorité de la syntaxe standard de Markdown. Certaines fonctionnalités comme les notes de bas de page, les listes de définitions, les mathématiques et certains éléments HTML peuvent ne pas être prises en charge par tous les processeurs Markdown, mais elles fonctionnent dans de nombreuses versions étendues comme GitHub Flavored Markdown (GFM), CommonMark, et d'autres.",
-  "**Note**: The exact rendering of these elements may vary depending on the Markdo.779BF71A89B264013F1A": "**Remarque** : Le rendu exact de ces éléments peut varier en fonction du processeur Markdown utilisé."
+  "**Note**: The exact rendering of these elements may vary depending on the Markdo.779BF71A89B264013F1A": "**Remarque** : Le rendu exact de ces éléments peut varier en fonction du processeur Markdown utilisé.",
+  "[!NOTE]\nUseful information that users should know, even when skimming content.": "Informations utiles que les utilisateurs devraient connaître, même en parcourant rapidement le contenu.",
+  "[!TIP]\nHelpful advice for doing things better or more easily.": "Conseils utiles pour faire les choses de manière plus efficace ou plus simple.",
+  "[!IMPORTANT]\nKey information users need to know to achieve their goal.": "Informations clés que les utilisateurs doivent connaître pour atteindre leur objectif.",
+  "[!WARNING]\nUrgent info that needs immediate user attention to avoid problems.": "Informations urgentes nécessitant une attention immédiate de l'utilisateur pour éviter des problèmes.",
+  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "Conseille sur les risques ou les conséquences négatives de certaines actions."
 }
