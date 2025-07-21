@@ -66,7 +66,6 @@ This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to
 
 | Parameter | Description                                                                                             | Default |
 | --------- | ------------------------------------------------------------------------------------------------------- | ------- |
-| `force`   | Force translation even if already translated                                                            | `false` |
 | `debug`   | Enable debug logging ([learn more](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false` |
 
 ### 🤖 AI Provider Configuration

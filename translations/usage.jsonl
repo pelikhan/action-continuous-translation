@@ -1709,3 +1709,7 @@
 {"filename":"test/alerts.md","lang":"fr","tokens":120,"stage":"validate","model":"github:openai/gpt-4o","date":"2025-07-21T19:10:50.130Z","cost":0,"duration":7.141569999999774,"total":0,"prompt":0,"completion":0}
 {"filename":"test/alerts.md","lang":"fr","tokens":120,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-21T19:11:05.943Z","cost":0.0034775,"duration":2792.8730720000003,"total":956,"prompt":811,"completion":145}
 {"filename":"test/alerts.md","lang":"fr","tokens":120,"stage":"validate","model":"github:openai/gpt-4o-mini","date":"2025-07-21T19:11:06.834Z","cost":0.00013035,"duration":804.6612700000005,"total":755,"prompt":717,"completion":38}
+{"filename":"test/alerts.md","lang":"fr","tokens":120,"stage":"translate","model":"github:openai/gpt-4o","date":"2025-07-21T19:25:10.921Z","cost":0.003035,"duration":4929.198056,"total":908,"prompt":806,"completion":102}
+{"filename":"test/alerts.md","lang":"fr","tokens":120,"stage":"validate","model":"github:openai/gpt-4o-mini","date":"2025-07-21T19:25:12.612Z","cost":0.0001239,"duration":1614.1925969999993,"total":745,"prompt":718,"completion":27}
+{"filename":"test/alerts.md","lang":"fr","tokens":120,"stage":"validate","model":"github:openai/gpt-4o-mini","date":"2025-07-21T19:25:46.816Z","cost":0,"duration":11.91913999999997,"total":0,"prompt":0,"completion":0}
+{"filename":"test/alerts.md","lang":"fr","tokens":120,"stage":"validate","model":"github:openai/gpt-4o-mini","date":"2025-07-21T19:28:41.150Z","cost":0,"duration":15.712598000000071,"total":0,"prompt":0,"completion":0}

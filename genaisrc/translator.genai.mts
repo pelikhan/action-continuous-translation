@@ -90,12 +90,6 @@ script({
         "Maximum number of tokens to process in a validation LLM call.",
       default: 2000,
     },
-    force: {
-      type: "boolean",
-      default: false,
-      description:
-        "Force translation even if the file has already been translated.",
-    },
   },
   tests: [
     {
@@ -175,7 +169,6 @@ export default async function main() {
   const parameters = vars as {
     lang?: string;
     source?: string;
-    force?: boolean;
     starlightDir?: string;
     starlightBase?: string;
     instructions?: string;
@@ -190,7 +183,6 @@ export default async function main() {
   output.heading(1, "Continuous Translation");
 
   const {
-    force,
     translationsDir,
     glossaryFile,
     filenameTemplate,
@@ -283,10 +275,11 @@ export default async function main() {
     output.itemValue(`validation models`, validationModels.join(", "));
     output.itemValue("cache", translationCacheFilename);
     // hash -> text translation
-    const translationCache: Record<string, string> = force
-      ? {}
-      : (await workspace.readJSON(translationCacheFilename)) || {};
+    const translationCache: Record<string, string> = await workspace.readJSON(
+      translationCacheFilename
+    );
     dbgc(`translation cache: %O`, translationCache);
+    const originalTranslationCache = structuredClone(translationCache);
 
     for (const file of files) {
       const { filename } = file;
@@ -960,7 +953,7 @@ ${instructionPrompt}`.role("system");
         }
 
         if (content === contentTranslated) {
-          output.warn(
+          output.note(
             `Unable to translate anything, skipping file. Original content length: ${content.length}, translated length: ${contentTranslated.length}`
           );
           continue;
@@ -1007,6 +1000,14 @@ ${instructionPrompt}`.role("system");
               }
             );
           }
+        }
+
+        if (
+          JSON.stringify(translationCache) ===
+          JSON.stringify(originalTranslationCache)
+        ) {
+          output.note(`no new translations found, skipping file.`);
+          continue;
         }
 
         // chunk and classify

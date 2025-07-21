@@ -46,10 +46,6 @@ inputs:
     description: Maximum number of tokens to process in a validation LLM call.
     required: false
     default: 2000
-  force:
-    description: Force translation even if the file has already been translated.
-    required: false
-    default: false
   files:
     description: Files to process, separated by semi columns (;). .md,.mdx
     required: false
