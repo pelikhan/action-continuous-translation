@@ -275,9 +275,8 @@ export default async function main() {
     output.itemValue(`validation models`, validationModels.join(", "));
     output.itemValue("cache", translationCacheFilename);
     // hash -> text translation
-    const translationCache: Record<string, string> = await workspace.readJSON(
-      translationCacheFilename
-    );
+    const translationCache: Record<string, string> =
+      (await workspace.readJSON(translationCacheFilename)) || {};
     dbgc(`translation cache: %O`, translationCache);
     const originalTranslationCache = structuredClone(translationCache);
 
@@ -455,7 +454,7 @@ export default async function main() {
                 llmHashTodos.add(llmHash);
                 nTranslatable++;
                 let insert = 0;
-                if ((node.children[0].type as any) === "githubAlertMarker") {
+                if ((node.children?.[0]?.type as any) === "githubAlertMarker") {
                   dbga(`alert marker`);
                   insert++;
                 }
@@ -830,7 +829,7 @@ ${instructionPrompt}`.role("system");
                   const newNodes = parse(translation)
                     .children as PhrasingContent[];
                   let insert = 0;
-                  if ((node.children[0]?.type as any) === "githubAlertMarker")
+                  if ((node.children?.[0]?.type as any) === "githubAlertMarker")
                     insert++;
                   node.children.splice(
                     insert,
