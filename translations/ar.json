@@ -541,5 +541,141 @@
   "يُترجم هذا الموقع باستخدام الذكاء الاصطناعي. تحقق من اللغات الأخرى عبر القائمة ا.4BF21FECBD8D177DFCA2": "يُترجم هذا الموقع باستخدام الذكاء الاصطناعي. تحقق من اللغات الأخرى عبر القائمة المنسدلة في الزاوية العلوية اليمنى. يمكنك أيضًا الاطلاع على **لوحة معلومات الترجمة** لمتابعة تقدم GenAIScript.",
   "Starlight Link Validator": "مدقق روابط Starlight",
   "If you use the [Starlight Link Validator](https://github.com/HiDeoo/starlight-li.487C18B8970F45DD483D": "إذا كنت تستخدم [مدقق روابط Starlight](https://github.com/HiDeoo/starlight-links-validator)،\nتأكد من تعطيل خيارات [`errorOnRelativeLinks`](https://starlight-links-validator.vercel.app/configuration#erroronrelativelinks) و\n[`errorOnInvalidHashes`](https://starlight-links-validator.vercel.app/configuration#erroroninvalidhashes) في ملف `astro.config.mjs`\nحيث أن الروابط المترجمة تعتمد على إعداد الجذر للغة، والعلامات (hashes) لم يتم ترجمتها بعد.",
-  "You can also enable the [`errorOnInconsistentLocale`](https://starlight-links-va.480905A9F46EA58CC5B9": "يمكنك أيضًا تمكين خيار [`errorOnInconsistentLocale`](https://starlight-links-validator.vercel.app/configuration#erroroninconsistentlocale)\nلضمان توافق جميع الروابط مع اللغة الحالية."
+  "You can also enable the [`errorOnInconsistentLocale`](https://starlight-links-va.480905A9F46EA58CC5B9": "يمكنك أيضًا تمكين خيار [`errorOnInconsistentLocale`](https://starlight-links-validator.vercel.app/configuration#erroroninconsistentlocale)\nلضمان توافق جميع الروابط مع اللغة الحالية.",
+  "Markdown sample": "عينة Markdown",
+  "Comprehensive Markdown Syntax Guide": "دليل شامل لنحو Markdown",
+  "This document demonstrates all the major syntactic constructs available in Markd.407C7CF45CA2C631A4F3": "يوضح هذا المستند جميع البنى النحوية الرئيسية المتوفرة في Markdown.",
+  "Table of Contents": "جدول المحتويات",
+  "Headers": "الرؤوس",
+  "Text Formatting": "تنسيق النص",
+  "Lists": "القوائم",
+  "Links and Images": "الروابط والصور",
+  "Code": "الكود",
+  "Tables": "الجداول",
+  "Blockquotes": "الاقتباسات",
+  "Horizontal Rules": "الفواصل الأفقية",
+  "Line Breaks": "فواصل الأسطر",
+  "HTML Elements": "عناصر HTML",
+  "Advanced Features": "المزايا المتقدمة",
+  "H1 Header": "الرأس H1",
+  "H2 Header": "الرأس H2",
+  "H3 Header": "الرأس H3",
+  "H4 Header": "الرأس H4",
+  "H5 Header": "الرأس H5",
+  "H6 Header": "الرأس H6",
+  "Alternative H1": "بديل H1",
+  "Alternative H2": "بديل H2",
+  "Strikethrough text": "نص مشطوب",
+  "Unordered Lists": "القوائم غير المرتبة",
+  "Item 1": "العنصر 1",
+  "Item 2": "العنصر 2",
+  "Nested item 2.1": "العنصر المتداخل 2.1",
+  "Nested item 2.2": "العنصر المتداخل 2.2",
+  "Deeply nested item 2.2.1": "العنصر المتداخل بعمق 2.2.1",
+  "Item 3": "العنصر 3",
+  "Alternative syntax:": "صيغة بديلة:",
+  "Item A": "العنصر أ",
+  "Item B": "العنصر ب",
+  "Nested item B.1": "العنصر المتداخل ب.1",
+  "Nested item B.2": "العنصر المتداخل ب.2",
+  "Another alternative:": "صيغة أخرى:",
+  "Item X": "العنصر س",
+  "Item Y": "العنصر ص",
+  "Nested item Y.1": "العنصر المتداخل ص.1",
+  "Ordered Lists": "القوائم المرتبة",
+  "First item": "العنصر الأول",
+  "Second item": "العنصر الثاني",
+  "Nested numbered item": "عنصر مرقم متداخل",
+  "Another nested item": "عنصر متداخل آخر",
+  "Deeply nested item": "عنصر متداخل بعمق",
+  "Third item": "العنصر الثالث",
+  "Alternative numbering:": "ترقيم بديل:",
+  "Item one": "العنصر واحد",
+  "Item two (auto-numbered)": "العنصر اثنين (مرقم تلقائيًا)",
+  "Item three (auto-numbered)": "العنصر ثلاثة (مرقم تلقائيًا)",
+  "Mixed Lists": "قوائم مختلطة",
+  "Ordered item": "عنصر مرتب",
+  "Unordered nested item": "عنصر متداخل غير مرتب",
+  "Another unordered nested item": "عنصر متداخل غير مرتب آخر",
+  "Another ordered item": "عنصر مرتب آخر",
+  "Nested ordered item": "عنصر مرتب متداخل",
+  "Another nested ordered item": "عنصر مرتب متداخل آخر",
+  "Task Lists": "قوائم المهام",
+  "Completed task": "مهمة مكتملة",
+  "Incomplete task": "مهمة غير مكتملة",
+  "Another completed task": "مهمة مكتملة أخرى",
+  "Nested completed task": "مهمة متداخلة مكتملة",
+  "Nested incomplete task": "مهمة متداخلة غير مكتملة",
+  "Links": "الروابط",
+  "Simple link": "رابط بسيط",
+  "Link with title": "رابط مع عنوان",
+  "Reference link": "رابط مرجعي",
+  "Another reference link": "رابط مرجعي آخر",
+  "Case-insensitive reference link": "رابط مرجعي حساس لحالة الحروف",
+  "Images": "الصور",
+  "Reference Definitions": "تعريفات مرجعية",
+  "Inline Code": "الكود داخل النص",
+  "Code Blocks": "كتل الكود",
+  "Indented code block (4 spaces):\nTODO: fix this parse issue": "كتلة كود تحوي 4 مسافات:\nTODO: أصلح هذه المشكلة",
+  "Column 1": "العمود 1",
+  "Column 2": "العمود 2",
+  "Column 3": "العمود 3",
+  "Row 1": "الصف 1",
+  "Data": "البيانات",
+  "More data": "المزيد من البيانات",
+  "Row 2": "الصف 2",
+  "Info": "المعلومات",
+  "Details": "التفاصيل",
+  "Table with Alignment": "جدول بمحاذاة",
+  "Left Aligned": "محاذاة لليسار",
+  "Center Aligned": "محاذاة للوسط",
+  "Right Aligned": "محاذاة لليمين",
+  "Left": "يسار",
+  "Center": "وسط",
+  "Right": "يمين",
+  "Text": "النص",
+  "More": "المزيد",
+  "Here": "هنا",
+  "Simple Table": "جدول بسيط",
+  "First Header": "العنوان الأول",
+  "Second Header": "العنوان الثاني",
+  "Content cell 1": "خلية المحتوى 1",
+  "Content cell 2": "خلية المحتوى 2",
+  "Content cell 3": "خلية المحتوى 3",
+  "Content cell 4": "خلية المحتوى 4",
+  "This is a simple blockquote.": "هذا اقتباس بسيط.",
+  "This is a blockquote\nthat spans multiple lines.": "هذا اقتباس\nيمتد على عدة أسطر.",
+  "Nested blockquotes:": "اقتباسات متداخلة:",
+  "This is a nested blockquote.": "هذا اقتباس متداخل.",
+  "And this is deeply nested.": "وهذا اقتباس متداخل بعمق.",
+  "Blockquote with other elements": "اقتباس مع عناصر أخرى",
+  "List item in blockquote": "عنصر قائمة داخل الاقتباس",
+  "Another item": "عنصر آخر",
+  "This is the third line.": "هذا هو السطر الثالث.",
+  "This is the fourth line (empty line creates paragraph break).": "هذا هو السطر الرابع (السطر الفارغ ينشئ فاصل فقرة).",
+  "This content is hidden by default and can be expanded.": "يتم إخفاء هذا المحتوى افتراضيًا ويمكن توسيعه.",
+  "List item": "عنصر قائمة",
+  "Footnotes": "الحواشي السفلية",
+  "This is the first footnote.": "هذه هي الحاشية السفلية الأولى.",
+  "This is a named footnote with more details.": "هذه حاشية مسماة تحتوي على المزيد من التفاصيل.",
+  "Definition Lists": "قوائم التعريف",
+  "Term 1\n: Definition for term 1": "المصطلح 1\n: تعريف للمصطلح 1",
+  "Term 2\n: Definition for term 2\n: Another definition for term 2": "المصطلح 2\n: تعريف للمصطلح 2\n: تعريف آخر للمصطلح 2",
+  "Abbreviations": "الاختصارات",
+  "\\_[HTML]: Hyper Text Markup Language\n\\_[CSS]: Cascading Style Sheets": "\\_\\[HTML]: لغة توصيف النص التشعبي\n\\_\\[CSS]: أوراق الأنماط المتتالية",
+  "HTML and CSS are important web technologies.": "HTML وCSS هما تقنيات ويب مهمة.",
+  "Mathematics (if supported)": "الرياضيات (في حال كانت مدعومة)",
+  "Block math:": "رياضيات الكتلة:",
+  "Escape Characters": "أحرف الهروب",
+  "Use backslashes to escape special characters:": "استخدم الشرطة المائلة العكسية للهروب من الأحرف الخاصة:",
+  "*Not italic*\n\\#Not a header\n\\[Not a link]\n\\`Not code`": "\\*ليس مائلًا\\*\n\\#ليس عنوانًا\n\\[ليس رابطًا]\n\\`ليس كودًا\\`",
+  "Comments": "التعليقات",
+  "Emojis": "الإيموجي",
+  ":smile: :heart: :thumbsup: :rocket: :computer:": "\\:ابتسامة: \\:قلب: \\:إبهام للأعلى: \\:صاروخ: \\:كمبيوتر:",
+  "😀 😍 👍 🚀 💻": "😀 😍 👍 🚀 💻",
+  "GitHub Alerts in Markdown": "تنبيهات GitHub في Markdown",
+  "GitHub supports custom alerts in Markdown files, which can be used to highlight .0BDB2B001C8B7C8F51BC": "يدعم GitHub تنبيهات مخصصة في ملفات Markdown، والتي يمكن استخدامها لتسليط الضوء على المعلومات الهامة أو التحذيرات. فيما يلي أمثلة عن كيفية استخدامها:",
+  "Conclusion": "الخاتمة",
+  "This document covers most of the standard Markdown syntax. Some features like fo.BDC440A6955D3E0A47B5": "يغطي هذا المستند معظم قواعد صياغة Markdown القياسية. بعض الميزات مثل الحواشي السفلية وقوائم التعريف والرياضيات وبعض عناصر HTML قد لا تكون مدعومة في جميع معالجات Markdown، لكنها تعمل في العديد من الإصدارات الموسعة مثل GitHub Flavored Markdown (GFM) وCommonMark وغيرها.",
+  "**Note**: The exact rendering of these elements may vary depending on the Markdo.779BF71A89B264013F1A": "**ملاحظة**: قد يختلف العرض الدقيق لهذه العناصر اعتمادًا على معالج Markdown المستخدم."
 }
