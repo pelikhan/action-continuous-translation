@@ -389,5 +389,9 @@
   "This ![image](https://bing.com/favicon.ico) in the text should be translated.": "Ce ![image](https://bing.com/favicon.ico) dans le texte doit être traduit.",
   "![This is an image link](https://bing.com/favicon.ico)": "Ceci est un lien image",
   "CSV": "valeurs séparées par des virgules (CSV)",
-  "A wikipedia link, [CSV](https://en.wikipedia.org/wiki/Comma-separated_values), i.C9EAA72C2BC28C12CC8C": "Un lien Wikipédia, [valeurs séparées par des virgules (CSV)](https://en.wikipedia.org/wiki/Comma-separated_values), dans un paragraphe."
+  "A wikipedia link, [CSV](https://en.wikipedia.org/wiki/Comma-separated_values), i.C9EAA72C2BC28C12CC8C": "Un lien Wikipédia, [valeurs séparées par des virgules (CSV)](https://en.wikipedia.org/wiki/Comma-separated_values), dans un paragraphe.",
+  "![Alt text](https://via.placeholder.com/150x100 \"Image title\")": "Texte alternatif",
+  "![Alt Text](path/to/image.jpg)": "Alt Text",
+  "We should not try to translate emojis in the text.": "Nous ne devrions pas essayer de traduire les emojis dans le texte.",
+  "Or just characters.": "Ou juste les caractères."
 }

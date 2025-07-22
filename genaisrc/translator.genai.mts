@@ -1,4 +1,5 @@
 import { hash } from "crypto";
+import emojiRegex from "emoji-regex-xs";
 import { classify } from "@genaiscript/runtime";
 import { mdast } from "@genaiscript/plugin-mdast";
 import "mdast-util-mdx";
@@ -104,7 +105,9 @@ script({
 });
 
 const IGNORE_RX = /^\s*[0-9-"'`=+\/~_.,:;<>\]\[{}\(\)…\s]+\s*$/;
-const isTranslatable = (text: string) => !IGNORE_RX.test(text) && !isUri(text);
+const EMOJI_RX = emojiRegex();
+const isTranslatable = (text: string) =>
+  !IGNORE_RX.test(text) && !isUri(text) && !!text.replaceAll(EMOJI_RX, "");
 const hasTranslatableTextChildren = (
   node: Parent // list of links with untranslatable text
 ) =>
@@ -868,6 +871,11 @@ ${instructionPrompt}`.role("system");
               }
             } else if (node.type === "text" && !isTranslatable(node.value)) {
               // ignore
+            } else if (
+              (node.type === "paragraph" || node.type === "heading") &&
+              !hasTranslatableTextChildren(node)
+            ) {
+              // ignore paragraphs with no translatable text
             } else unresolvedTranslations.add(nhash);
           }
         });
