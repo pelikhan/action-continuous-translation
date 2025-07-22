@@ -841,33 +841,32 @@ ${instructionPrompt}`.role("system");
                 node.alt = translation;
                 node.url = patchFn(node.url);
               } else if (node.type === "paragraph" || node.type === "heading") {
-                dbgo(`%s: %s -> %s`, node.type, nhash, translation);
-                try {
-                  const newNodes = parse(translation)
-                    .children as PhrasingContent[];
-                  let insert = 0;
-                  if ((node.children?.[0]?.type as any) === "githubAlertMarker")
-                    insert++;
-                  node.children.splice(
-                    insert,
-                    node.children.length - insert,
-                    ...newNodes
-                  );
-                  return SKIP;
-                } catch (error) {
-                  output.error(`error parsing paragraph translation`, error);
-                  output.fence(node, "json");
-                  output.fence(translation);
+                if (hasTranslatableTextChildren(node)) {
+                  dbgo(`%s: %s -> %s`, node.type, nhash, translation);
+                  try {
+                    const newNodes = parse(translation)
+                      .children as PhrasingContent[];
+                    let insert = 0;
+                    if (
+                      (node.children?.[0]?.type as any) === "githubAlertMarker"
+                    )
+                      insert++;
+                    node.children.splice(
+                      insert,
+                      node.children.length - insert,
+                      ...newNodes
+                    );
+                    return SKIP;
+                  } catch (error) {
+                    output.error(`error parsing paragraph translation`, error);
+                    output.fence(node, "json");
+                    output.fence(translation);
+                  }
+                } else {
+                  dbg(`untranslated node type: %s`, node.type);
                 }
-              } else {
-                dbg(`untranslated node type: %s`, node.type);
               }
             } else if (node.type === "text" && !isTranslatable(node.value)) {
-              // ignore
-            } else if (
-              (node.type === "paragraph" || node.type === "heading") &&
-              !hasTranslatableTextChildren(node)
-            ) {
               // ignore
             } else unresolvedTranslations.add(nhash);
           }
