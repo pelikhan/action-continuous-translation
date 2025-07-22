@@ -381,5 +381,11 @@
   "Maximum available tokens for validation LLM call (to avoid rate limits)": "Nombre maximal de jetons disponibles pour les appels LLM de validation (pour éviter les limitations de taux)",
   "A YAML-like string of": "Une chaîne au format YAML de paires `alias: modelid` ",
   "How it works?": "Comment ça fonctionne ?",
-  "The translation workflow uses a mix of Markdown parsers, AST manipulation\nand LL.A510B052BA32A23DD011": "Le flux de travail de traduction utilise un mélange d'analyseurs Markdown, de manipulation AST et d'inférence LLM pour traduire et valider vos fichiers de documentation de manière incrémentielle."
+  "The translation workflow uses a mix of Markdown parsers, AST manipulation\nand LL.A510B052BA32A23DD011": "Le flux de travail de traduction utilise un mélange d'analyseurs Markdown, de manipulation AST et d'inférence LLM pour traduire et valider vos fichiers de documentation de manière incrémentielle.",
+  "this is a link": "ceci est un lien",
+  "this is a link with a title": "ceci est un lien avec un titre",
+  "this is a link with a title and a space": "ceci est un lien avec un titre et un espace",
+  "![This is an image link](https://bing.com/favicon.ico)": "Ceci est un lien d'image",
+  "\\[this is a link with a title and a description]\\(<https://bing.com> \"Bing\" \"Thi.F4DCB660E4A46C53502F": "\\[ceci est un lien avec un titre et une description]\\(<https://bing.com> \"Bing\" \"This is a description\")",
+  "\\[this is a link with a title and a description and a long description]\\(<https:.A4A1DFD58205F5C4BCC7": "\\[ceci est un lien avec un titre, une description et une longue description]\\(<https://bing.com> \"Bing\" \"This is a description\" \"This is a long description that should be wrapped in the output. It can contain multiple lines and should be formatted correctly in the final output.\")"
 }

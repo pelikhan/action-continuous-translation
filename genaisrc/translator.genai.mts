@@ -119,7 +119,7 @@ const HASH_TEXT_LENGTH = 80;
 const HASH_LENGTH = 20;
 const maxPromptPerFile = 5;
 const minTranslationsThreshold = 0.7;
-const nodeTypes = ["text", "paragraph", "heading", "yaml"];
+const nodeTypes = ["text", "paragraph", "heading", "yaml", "image"];
 const MARKER_START = "┌";
 const MARKER_END = "└";
 
@@ -415,6 +415,7 @@ export default async function main() {
             dbgo(`%s`, nhash);
             nTranslatable++;
             if (node.type === "text") node.value = translation;
+            else if (node.type === "image") node.alt = translation;
             else if (node.type === "heading" || node.type === "paragraph") {
               dbgo(`%s: %s -> %s`, node.type, nhash, translation);
               try {
@@ -442,6 +443,18 @@ export default async function main() {
                 llmHashTodos.add(llmHash);
                 nTranslatable++;
                 node.value = `┌${llmHash}┐${node.value}└${llmHash}┘`;
+              }
+            } else if (node.type === "image") {
+              if (node.alt) {
+                dbga(`image alt: %s`, nhash);
+                // compress long hash into LLM friendly short hash
+                const llmHash = `T${Object.keys(llmHashes)
+                  .length.toString()
+                  .padStart(3, "0")}`;
+                llmHashes[llmHash] = nhash;
+                llmHashTodos.add(llmHash);
+                nTranslatable++;
+                node.alt = `┌${llmHash}┐${node.alt}└${llmHash}┘`;
               }
             } else if (node.type === "paragraph" || node.type === "heading") {
               // some paragraphs only contain links, with white spaces
@@ -823,6 +836,10 @@ ${instructionPrompt}`.role("system");
               if (node.type === "text") {
                 dbgo(`%s -> %s`, nhash, translation);
                 node.value = translation;
+              } else if (node.type === "image") {
+                dbgo(`%s: %s -> %s`, node.type, nhash, translation);
+                node.alt = translation;
+                node.url = patchFn(node.url);
               } else if (node.type === "paragraph" || node.type === "heading") {
                 dbgo(`%s: %s -> %s`, node.type, nhash, translation);
                 try {
