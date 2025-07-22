@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.6
+
+### Patch Changes
+
+- [`c4766da`](https://github.com/pelikhan/action-continuous-translation/commit/c4766dabf551e1c63385c0f8e435970d57170b8f) Thanks [@pelikhan](https://github.com/pelikhan)! - prompt to minimize url changes
+
 ## 0.2.5
 
 ### Patch Changes
