@@ -393,5 +393,7 @@
   "![Alt text](https://via.placeholder.com/150x100 \"Image title\")": "Texte alternatif",
   "![Alt Text](path/to/image.jpg)": "Alt Text",
   "We should not try to translate emojis in the text.": "Nous ne devrions pas essayer de traduire les emojis dans le texte.",
-  "Or just characters.": "Ou juste les caractères."
+  "Or just characters.": "Ou juste les caractères.",
+  "![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)": "Action GitHub",
+  "![Documentation](https://img.shields.io/badge/📖-Documentation-green)": "Documentation"
 }

@@ -251,6 +251,17 @@ export default async function main() {
     );
   if (!files.length) cancel("No files or not matching languages selected.");
 
+  const stats: {
+    filename: string;
+    tokens: number;
+    cost: number;
+    todos?: number;
+    missing?: number;
+    chunks?: number;
+    translated?: number;
+    validated?: boolean;
+    error?: string;
+  }[] = [];
   const fileTokens: Record<string, number> = {};
   for (const file of files) {
     const tokens = await tokenizers.count(file.content);
@@ -286,6 +297,13 @@ export default async function main() {
     for (const file of files) {
       const { filename } = file;
       output.heading(3, `${filename}`);
+
+      const fileStat: (typeof stats)[0] = {
+        filename,
+        tokens: fileTokens[filename] || 0,
+        cost: 0,
+      };
+      stats.push(fileStat);
 
       const logUsage = async (
         stage: "translate" | "validate",
@@ -600,6 +618,9 @@ export default async function main() {
         const translatedChunks = chunk(translated, maxTranslationChunkTokens);
         output.itemValue(`translation chunks`, translatedChunks.length);
 
+        fileStat.todos = llmHashTodos.size;
+        fileStat.chunks = translatedChunks.length;
+
         dbgt(`translated\n%s`, inspect(translated.children));
         let attempts = 0;
         let lastLLmHashTodos = llmHashTodos.size + 1;
@@ -720,8 +741,9 @@ ${instructionPrompt}`.role("system");
               }
             );
             logUsage("translate", translationModel, usage);
-
+            fileStat.cost += usage?.cost || 0;
             if (error) {
+              fileStat.error = error.message;
               // are we out of tokens?
               if (/429/.test(error.message)) {
                 output.error(`Rate limit exceeded: ${error.message}`);
@@ -929,6 +951,7 @@ ${instructionPrompt}`.role("system");
           });
         }
 
+        fileStat.missing = unresolvedTranslations.size;
         if (unresolvedTranslations.size) {
           output.itemValue(
             `unresolved translations`,
@@ -965,6 +988,7 @@ ${instructionPrompt}`.role("system");
           unresolvedTranslations.size > 5 &&
           translationRatio < minTranslationsThreshold
         ) {
+          fileStat.error = "not enough translations";
           output.warn(
             `not enough translations (${(translationRatio * 100).toFixed(
               1
@@ -985,6 +1009,7 @@ ${instructionPrompt}`.role("system");
         try {
           parse(contentTranslated);
         } catch (error) {
+          fileStat.error = "invalid markdown";
           output.error(`Translated content is not valid Markdown`, error);
           output.diff(contentTranslated, content);
           continue;
@@ -1010,6 +1035,7 @@ ${instructionPrompt}`.role("system");
             Array.from(translatedLinks)
           );
           if (diffLinks.length) {
+            fileStat.error = "links changed";
             output.warn(`some links have changed`);
             output.diff(
               {
@@ -1112,6 +1138,7 @@ and explain why they are incorrect.
               }
             );
             logUsage("validate", validationModel, validation.usage);
+            fileStat.cost += validation.usage?.cost || 0;
 
             // are we out of tokens?
             if (/429/.test(validation.error)) {
@@ -1140,6 +1167,7 @@ and explain why they are incorrect.
         }
 
         output.heading(4, `Results`);
+        fileStat.translated = nTranslatable;
         output.resultItem(
           unresolvedTranslations.size === 0,
           `translated texts: ${nTranslatable}, untranslated: ${unresolvedTranslations.size}`
@@ -1147,6 +1175,7 @@ and explain why they are incorrect.
         output.resultItem(fileValidated, `validation`);
         dbgc(`translated: %s`, contentTranslated);
 
+        fileStat.validated = fileValidated;
         if (!fileValidated) {
           output.startDetails(`translation diff`);
           output.diff(content, contentTranslated);
@@ -1165,4 +1194,7 @@ and explain why they are incorrect.
       }
     }
   }
+
+  output.heading(3, `Summary`);
+  output.table(stats);
 }
