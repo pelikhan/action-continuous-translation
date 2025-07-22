@@ -932,6 +932,10 @@ ${instructionPrompt}`.role("system");
           `translation success ratio`,
           `${(translationRatio * 100).toFixed(1)}%`
         );
+        await workspace.writeText(
+          translationCacheFilename,
+          JSON.stringify(translationCache, null, 2)
+        );
 
         if (
           unresolvedTranslations.size > 5 &&
@@ -943,11 +947,6 @@ ${instructionPrompt}`.role("system");
             )}% < ${minTranslationsThreshold * 100}%), try to translate more.`
           );
           output.detailsFenced(`translated`, contentTranslated, "markdown");
-          // Save cache even if translation is incomplete
-          await workspace.writeText(
-            translationCacheFilename,
-            JSON.stringify(translationCache, null, 2)
-          );
           continue;
         }
 
@@ -1005,11 +1004,13 @@ ${instructionPrompt}`.role("system");
           JSON.stringify(translationCache) ===
           JSON.stringify(originalTranslationCache)
         ) {
-          output.note(`no new translations found, skipping file.`);
+          output.note(`no new translations found, skipping validation.`);
+          await workspace.writeText(translationFn, contentTranslated);
           continue;
         }
 
         // chunk and classify
+        let fileValidated = true;
         const maxValidationChunkTokens = Math.ceil(
           (maxValidationTokens - 400) / 2
         );
@@ -1023,7 +1024,6 @@ ${instructionPrompt}`.role("system");
         output.heading(4, "Validation");
         output.itemValue(`models`, validationModels.join(", "));
         output.itemValue(`chunks`, validationChunks.length);
-        let fileValidated = true;
         for (let chunki = 0; chunki < validationChunks.length; chunki++) {
           output.heading(5, `Validation chunk ${chunki + 1}`);
           const validationChunk = validationChunks[chunki];
