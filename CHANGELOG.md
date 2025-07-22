@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.5
+
+### Patch Changes
+
+- [`33e6a85`](https://github.com/pelikhan/action-continuous-translation/commit/33e6a851e6abe6d880c96159050eb9ed106652c6) Thanks [@pelikhan](https://github.com/pelikhan)! - fix solo image handling
+
 ## 0.2.4
 
 ### Patch Changes
