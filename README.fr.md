@@ -1,11 +1,11 @@
-# 🌍 Continuous Translation
+# 🌍 Traduction Continue
 
 > **Traduisez automatiquement votre documentation markdown à l'aide de l'IA** - alimenté par [GitHub Actions](https://github.com/actions) et [GitHub Models](https://github.com/models) avec support intégré pour [Astro Starlight](https://starlight.astro.build/) !
 
 [![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)](https://github.com/marketplace/actions/continuous-translation)
 [![Documentation](https://img.shields.io/badge/📖-Documentation-green)](https://pelikhan.github.io/action-continuous-translation/)
 
-## ✨ Features
+## ✨ Fonctionnalités
 
 * 🚀 **Traduction incrémentielle** - Traduisez uniquement le contenu modifié, économisant ainsi du temps et des coûts API
 * 🎯 **Analyse AST intelligente** - Préserve la structure et le formatage du markdown
@@ -16,13 +16,13 @@
 * ⚡ **Natif avec GitHub Actions** - Intégration fluide avec votre pipeline CI/CD
 * 🤖 **Alimenté par l'IA** - Exploitez GitHub Models pour des traductions fluides et de haute qualité
 
-## 📚 Resources
+## 📚 Ressources
 
 * 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet d'installation et référence API (également traduit par cette action - voir [tableau de bord de traduction](https://pelikhan.github.io/action-continuous-translation/dashboard/))
 * ✍️ [**Article de Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Exploration approfondie de la technologie
 * 🌐 **Traductions** : [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
-## 🔧 How It Works
+## 🔧 Comment ça fonctionne
 
 Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pour analyser intelligemment et traduire vos documents markdown. Voici comment cela fonctionne en coulisses :
 
@@ -35,7 +35,7 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 
 ## ⚙️ Configuration
 
-### 📝 Basic Settings
+### 📝 Paramètres de base
 
 | Paramètre           | Description                                                                 | Valeur par défaut                              |
 | ------------------- | --------------------------------------------------------------------------- | ---------------------------------------------- |
@@ -55,22 +55,22 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 | `max_translation_tokens` | Nombre maximal de jetons disponibles pour l'appel LLM de traduction (pour éviter les limites de taux) | `8000`            |
 | `max_validation_tokens`  | Nombre maximal de jetons disponibles pour l'appel LLM de validation (pour éviter les limites de taux) | `2000`            |
 
-### 🌟 Astro Starlight Integration
+### 🌟 Intégration Astro Starlight
 
 | Paramètre        | Description                                        | Requis                    |
 | ---------------- | -------------------------------------------------- | ------------------------- |
 | `starlight_dir`  | Dossier racine de la documentation Astro Starlight | Uniquement pour Starlight |
 | `starlight_base` | Alias de base pour la documentation Starlight      | Optionnel                 |
 
-### 🔧 Diagnostics & Debugging
+### 🔧 Diagnostics & Débogage
 
 | Paramètre | Description                                                                                                         | Valeur par défaut |
 | --------- | ------------------------------------------------------------------------------------------------------------------- | ----------------- |
 | `debug`   | Activer le journal de débogage[en savoir plus](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`           |
 
-### 🤖 AI Provider Configuration
+### 🤖 Configuration du fournisseur d'IA
 
-#### GitHub Models (Recommended)
+#### Modèles GitHub (recommandé)
 
 | Paramètre      | Description                                                                                                                                                                                          | Valeur par défaut             |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
@@ -93,7 +93,7 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 | `azure_openai_api_version`     | Version de l'API Azure OpenAI                                      | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
 | `azure_openai_api_credentials` | Type de credentials API                                            | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
 
-#### Model Alias
+#### Alias Modèle
 
 | Paramètre     | Description                                                          | Valeur par défaut |
 | ------------- | -------------------------------------------------------------------- | ----------------- |
@@ -101,15 +101,15 @@ Cette action utilise [GenAIScript](https://microsoft.github.io/genaiscript/) pou
 
 Voir la documentation des [modèles](/action-continuous-translation/models/) pour plus de détails.
 
-## 📤 Outputs
+## 📤 Sorties
 
 | Sortie | Description                    |
 | ------ | ------------------------------ |
 | `text` | Texte généré par la traduction |
 
-## 🚀 Quick Start
+## 🚀 Démarrage rapide
 
-### Simple Setup
+### Configuration Simple
 
 Ajoutez cette étape à votre workflow GitHub Actions pour traduire votre README en français et en espagnol :
 
@@ -120,7 +120,7 @@ with:
   lang: fr,es
 ```
 
-### Complete Workflow Example
+### Exemple de Workflow Complet
 
 Enregistrez ce fichier dans votre répertoire `.github/workflows/` sous le nom `continuous-translation.yml` :
 
@@ -164,6 +164,6 @@ jobs:
 
 <div align="center">
 
-**Made with ❤️ using [GenAIScript](https://microsoft.github.io/genaiscript/)**
+**Fait avec ❤️ grâce à [GenAIScript](https://microsoft.github.io/genaiscript/)**
 
 </div>
