@@ -121,7 +121,7 @@ Você também pode criar links para [arquivos locais](./README.md).
 
 ### Imagens
 
-![Alt text](https://via.placeholder.com/150x100 "Image title")
+![Texto alternativo](https://via.placeholder.com/150x100 "Image title")
 
 ![Reference image][img1]
 
@@ -183,7 +183,7 @@ done
 }
 ```
 
-Bloco de código indentado (4 espaços):\
+Bloco de código indentado (4 espaços): &#x20;
 TODO: corrigir esse problema de análise
 
 ## Tabelas
@@ -297,11 +297,11 @@ Outra frase com uma nota de rodapé\[^note].
 
 ### Listas de Definições
 
-Termo 1\
+Termo 1 &#x20;
 : Definição para o termo 1
 
-Termo 2\
-: Definição para o termo 2\
+Termo 2 &#x20;
+: Definição para o termo 2 &#x20;
 : Outra definição para o termo 2
 
 ### Abreviações

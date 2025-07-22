@@ -121,7 +121,7 @@ Vous pouvez également créer un lien vers [des fichiers locaux](./README.md).
 
 ### Images
 
-![Alt text](https://via.placeholder.com/150x100 "Image title")
+![Texte alternatif](https://via.placeholder.com/150x100 "Image title")
 
 ![Reference image][img1]
 
@@ -183,7 +183,7 @@ done
 }
 ```
 
-Bloc de code indenté (4 espaces) :\
+Bloc de code indenté (4 espaces) : &#x20;
 TODO : corriger ce problème d’analyse
 
 ## Tableaux
@@ -212,7 +212,7 @@ TODO : corriger ce problème d’analyse
 
 > Ceci est un simple bloc de citation.
 
-> Ceci est un bloc de citation\
+> Ceci est un bloc de citation &#x20;
 > qui s’étend sur plusieurs lignes.
 
 > Blocs de citations imbriqués :
@@ -298,11 +298,11 @@ Une autre phrase avec une note de bas de page\[^note].
 
 ### Listes de définitions
 
-Terme 1\
+Terme 1 &#x20;
 : Définition pour le terme 1
 
-Terme 2\
-: Définition pour le terme 2\
+Terme 2 &#x20;
+: Définition pour le terme 2 &#x20;
 : Une autre définition pour le terme 2
 
 ### Abréviations
@@ -345,15 +345,20 @@ Utilisez des barres obliques inverses pour échapper les caractères spéciaux :
 
 GitHub prend en charge des alertes personnalisées dans les fichiers Markdown, qui peuvent être utilisées pour mettre en évidence des informations importantes ou des avertissements. Voici quelques exemples de leur utilisation :
 
-> [!NOTE]Informations utiles que les utilisateurs doivent connaître, même en survolant le contenu.
+> [!NOTE]
+> Informations utiles que les utilisateurs devraient connaître, même en parcourant rapidement le contenu.
 
-> [!TIP]Des conseils utiles pour faire les choses mieux ou plus facilement.
+> [!TIP]
+> Conseils utiles pour faire les choses de manière plus efficace ou plus simple.
 
-> [!IMPORTANT]Informations clés dont les utilisateurs ont besoin pour atteindre leur objectif.
+> [!IMPORTANT]
+> Informations clés que les utilisateurs doivent connaître pour atteindre leur objectif.
 
-> [!WARNING]Informations urgentes qui nécessitent une attention immédiate des utilisateurs pour éviter des problèmes.
+> [!WARNING]
+> Informations urgentes nécessitant une attention immédiate de l'utilisateur pour éviter des problèmes.
 
-> [!CAUTION]Avertit des risques ou des résultats négatifs de certaines actions.
+> [!CAUTION]
+> Conseille sur les risques ou les conséquences négatives de certaines actions.
 
 ## Conclusion
 

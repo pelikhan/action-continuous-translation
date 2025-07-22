@@ -725,5 +725,6 @@
   "[!TIP]\nHelpful advice for doing things better or more easily.": "Conseils utiles pour faire les choses de manière plus efficace ou plus simple.",
   "[!IMPORTANT]\nKey information users need to know to achieve their goal.": "Informations clés que les utilisateurs doivent connaître pour atteindre leur objectif.",
   "[!WARNING]\nUrgent info that needs immediate user attention to avoid problems.": "Informations urgentes nécessitant une attention immédiate de l'utilisateur pour éviter des problèmes.",
-  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "Conseille sur les risques ou les conséquences négatives de certaines actions."
+  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "Conseille sur les risques ou les conséquences négatives de certaines actions.",
+  "![Alt text](https://via.placeholder.com/150x100 \"Image title\")": "Texte alternatif"
 }

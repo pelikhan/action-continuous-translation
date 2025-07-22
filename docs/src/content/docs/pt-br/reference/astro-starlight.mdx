@@ -32,7 +32,7 @@ Esta ação pode ser usada para traduzir o conteúdo de um site de documentaçã
      ```
 </Steps>
 
-## Entradas Frontmatter Suportadas
+## Supported Frontmatter entries
 
 Além do Markdown/MDX, oferecemos suporte a alguns dos metadados frontmatter possíveis que o Starlight suporta:
 
@@ -51,7 +51,7 @@ Também oferecemos suporte às entradas frontmatter do [Starlight Blog](https://
 
 * [`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt): O resumo do post do blog.
 
-## Título e Barra Lateral
+## Title and Sidebar
 
 As entradas `title` e `sidebar` na [configuração do Starlight](https://starlight.astro.build/reference/configuration/) não são traduzidas automaticamente pela ação.
 Recomenda-se mover essas entradas para um arquivo JSON e importá-las em seu arquivo `astro.config.mjs`.
@@ -71,7 +71,7 @@ export default defineConfig({
 
 Siga a documentação específica de [título](https://starlight.astro.build/guides/i18n/#translate-the-site-title) e [barra lateral](https://starlight.astro.build/guides/sidebar/) do Starlight para mais detalhes.
 
-## Aviso de Conteúdo de IA
+## AI Content Notice
 
 Você pode informar aos seus usuários que a tradução foi gerada por IA ao adicionar um aviso no título. No momento, o Astro Starlight não oferece suporte a um recurso embutido para adicionar avisos, sendo necessário sobrescrever alguns componentes.
 
@@ -122,7 +122,7 @@ export default defineConfig({
 });
 ```
 
-## Painel de Tradução Lunaria
+## Lunaria Translation Dashboard
 
 Você pode usar o [Painel de Tradução Lunaria](https://lunaria.dev/integrations/starlight/) para gerar
 um painel de status de tradução para o seu site Starlight.

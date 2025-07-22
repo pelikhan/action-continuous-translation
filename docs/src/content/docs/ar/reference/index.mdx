@@ -16,7 +16,7 @@ sidebar:
     lang: fr,es
 ```
 
-## التثبيت
+## Installation
 
 يمكنك حفظ هذا الملف في دليل `.github/workflows/` الخاص بك كـ `ct.yml`:
 
@@ -65,7 +65,7 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## المعلمات
+## Parameters
 
 يدعم إجراء `pelikhan/action-continuous-translation` في GitHub المعلمات التالية.
 جميع المعلمات اختيارية.
@@ -172,7 +172,7 @@ with:
 تمكين تسجيل التصحيح.
 اقرأ المزيد من التفاصيل في [وثائق تسجيل GenAIScript](https://microsoft.github.io/genaiscript/reference/scripts/logging/).
 
-### الاسم المستعار للنموذج
+### `model_alias`
 
 **النوع**: `string`\
 **المثال**: `translate: github:gpt-4o-mini`
@@ -188,7 +188,7 @@ with:
 
 اقرأ المزيد من التفاصيل في [وثائق أذونات نماذج GitHub الخاصة بـ GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
 
-### مزودي LLM الآخرين
+### Other LLM providers
 
 يمكنك أيضًا استخدام مزودي LLM الآخرين مثل OpenAI وAzure OpenAI وما إلى ذلك.
 راجع [النماذج](../../reference/models/) للحصول على مزيد من التفاصيل حول الموفرين الآخرين.

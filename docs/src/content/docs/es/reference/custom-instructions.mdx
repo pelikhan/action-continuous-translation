@@ -13,7 +13,7 @@ Puedes inyectar instrucciones personalizadas para la tarea de traducción.
 Esto se puede usar para insertar instrucciones adicionales, un glosario u otra orientación para mejorar
 la calidad general de la traducción.
 
-## Instrucciones en línea
+## Inline instructions
 
 ```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
 uses: pelikhan/action-continuous-translation@v0
@@ -21,7 +21,7 @@ with:
   instructions: Use a casual tone.
 ```
 
-## Instrucciones desde un archivo
+## Instructions from a file
 
 ```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
 uses: pelikhan/action-continuous-translation@v0
@@ -29,7 +29,7 @@ with:
   instructions_file: ./instructions.txt
 ```
 
-## Instrucciones en el frontmatter
+## Instructions in frontmatter
 
 También puedes especificar instrucciones de traducción directamente en el frontmatter de documentos individuales.
 Esto es útil cuando diferentes documentos requieren enfoques de traducción específicos.
@@ -52,7 +52,7 @@ Se elimina del frontmatter antes de que comience la traducción, por lo que no a
 
 <Code lang="ts" code={types} title="Tipos de Configuración" />
 
-## Orden de Prioridad
+## Priority Order
 
 Las instrucciones se aplican en el siguiente orden de prioridad:
 

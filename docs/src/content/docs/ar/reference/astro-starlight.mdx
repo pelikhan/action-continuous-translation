@@ -33,7 +33,7 @@ import { Steps } from "@astrojs/starlight/components";
      ```
 </Steps>
 
-## مدخلات Frontmatter المدعومة
+## Supported Frontmatter entries
 
 بالإضافة إلى Markdown/MDX، ندعم بعض البيانات الوصفية الممكنة لـ frontmatter التي يدعمها Starlight:
 
@@ -52,7 +52,7 @@ import { Steps } from "@astrojs/starlight/components";
 
 * [`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt): ملخص منشور المدونة.
 
-## العنوان والشريط الجانبي
+## Title and Sidebar
 
 إدخالات `title` و`sidebar` في [تكوين Starlight](https://starlight.astro.build/reference/configuration/) لا يتم ترجمتها تلقائيًا بواسطة الإجراء.
 يوصى بنقل تلك الإدخالات إلى ملف JSON واستيرادها في ملف `astro.config.mjs`.
@@ -72,10 +72,10 @@ export default defineConfig({
 
 اتبع وثائق [العنوان](https://starlight.astro.build/guides/i18n/#translate-the-site-title) المحددة و[وثائق الشريط الجانبي](https://starlight.astro.build/guides/sidebar/) من Starlight للحصول على مزيد من التفاصيل.
 
-## إشعار محتوى الذكاء الاصطناعي
+## AI Content Notice
 
-يمكنك إعلام المستخدمين بأن الترجمة قد تم إنشاؤها بواسطة الذكاء الاصطناعي من خلال
-إضافة إشعار في العنوان. في الوقت الحالي، لا يدعم Astro Starlight ميزة مضمنة لإضافة الإشعارات
+يمكنك إعلام المستخدمين بأن الترجمة قد تم إنشاؤها بواسطة الذكاء الاصطناعي من خلال&#x20;
+إضافة إشعار في العنوان. في الوقت الحالي، لا يدعم Astro Starlight ميزة مضمنة لإضافة الإشعارات&#x20;
 لذلك يتطلب تجاوز بعض المكونات.
 
 * [تجاوز](https://starlight.astro.build/guides/overriding-components/#how-to-override) مكوني `PageTitle` و`Hero` في ملف `astro.config.mjs` الخاص بك:
@@ -125,7 +125,7 @@ export default defineConfig({
 });
 ```
 
-## لوحة معلومات ترجمة Lunaria
+## Lunaria Translation Dashboard
 
 يمكنك استخدام [لوحة معلومات ترجمة Lunaria](https://lunaria.dev/integrations/starlight/) لإنشاء
 لوحة معلومات حالة الترجمة لموقع Starlight الخاص بك.

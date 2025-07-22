@@ -702,5 +702,6 @@
   "[!TIP]\nHelpful advice for doing things better or more easily.": "نصائح مفيدة للقيام بالأشياء بشكل أفضل أو أكثر سهولة.",
   "[!IMPORTANT]\nKey information users need to know to achieve their goal.": "معلومات أساسية يجب على المستخدمين معرفتها لتحقيق هدفهم.",
   "[!WARNING]\nUrgent info that needs immediate user attention to avoid problems.": "معلومات عاجلة تتطلب اهتمام المستخدم الفوري لتجنب المشاكل.",
-  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "إرشادات حول المخاطر أو النتائج السلبية لبعض الإجراءات."
+  "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "إرشادات حول المخاطر أو النتائج السلبية لبعض الإجراءات.",
+  "![Alt text](https://via.placeholder.com/150x100 \"Image title\")": "النص البديل"
 }

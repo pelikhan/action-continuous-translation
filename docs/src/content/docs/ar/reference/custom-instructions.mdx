@@ -11,7 +11,7 @@ import types from "../../../../../../genaisrc/src/types.mjs?raw";
 
 يمكنك إدخال إرشادات مخصصة لتحفيز عملية الترجمة. يمكن استخدام هذا لإضافة تعليمات إضافية أو مسرد أو توجيهات أخرى لتحسين جودة الترجمة بشكل عام.
 
-## تعليمات مضمنة
+## Inline instructions
 
 ```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
 uses: pelikhan/action-continuous-translation@v0
@@ -19,7 +19,7 @@ with:
   instructions: Use a casual tone.
 ```
 
-## تعليمات من ملف
+## Instructions from a file
 
 ```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
 uses: pelikhan/action-continuous-translation@v0
@@ -27,7 +27,7 @@ with:
   instructions_file: ./instructions.txt
 ```
 
-## تعليمات في المقدمة
+## Instructions in frontmatter
 
 يمكنك أيضًا تحديد تعليمات الترجمة مباشرة في مقدمة المستندات الفردية. يكون هذا مفيدًا عندما تتطلب المستندات المختلفة نهجًا ترجمياً محددًا.
 
@@ -48,7 +48,7 @@ This document will be translated using the instructions specified in the frontma
 
 <Code lang="ts" code={types} title="أنواع التكوين" />
 
-## ترتيب الأولوية
+## Priority Order
 
 تُطبق التعليمات حسب ترتيب الأولوية التالي:
 

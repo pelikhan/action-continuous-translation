@@ -121,7 +121,7 @@ También puedes enlazar a [archivos locales](./README.md).
 
 ### Imágenes
 
-![Alt text](https://via.placeholder.com/150x100 "Image title")
+![Texto alternativo](https://via.placeholder.com/150x100 "Image title")
 
 ![Reference image][img1]
 

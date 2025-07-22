@@ -11,7 +11,7 @@ import types from "../../../../../../genaisrc/src/types.mjs?raw";
 
 Vous pouvez injecter des instructions personnalisées pour la tâche de traduction. Cela peut être utilisé pour insérer des instructions supplémentaires, un glossaire ou d'autres orientations afin d'améliorer la qualité globale de la traduction.
 
-## Instructions en ligne
+## Inline instructions
 
 ```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
 uses: pelikhan/action-continuous-translation@v0
@@ -19,7 +19,7 @@ with:
   instructions: Use a casual tone.
 ```
 
-## Instructions à partir d'un fichier
+## Instructions from a file
 
 ```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
 uses: pelikhan/action-continuous-translation@v0
@@ -27,7 +27,7 @@ with:
   instructions_file: ./instructions.txt
 ```
 
-## Instructions dans le frontmatter
+## Instructions in frontmatter
 
 Vous pouvez également spécifier des instructions de traduction directement dans le frontmatter des documents individuels. Cela est utile lorsque différents documents nécessitent des approches de traduction spécifiques.
 
@@ -48,7 +48,7 @@ Les types de `translator` sont définis dans `types.ts`. Ils sont supprimés du 
 
 <Code lang="ts" code={types} title="Types de configuration" />
 
-## Ordre de priorité
+## Priority Order
 
 Les instructions sont appliquées dans l'ordre de priorité suivant :
 

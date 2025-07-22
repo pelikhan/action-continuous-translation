@@ -11,7 +11,7 @@ import types from "../../../../../../genaisrc/src/types.mjs?raw";
 
 Você pode inserir instruções de prompt personalizadas para a tarefa de tradução. Isso pode ser usado para adicionar instruções adicionais, glossários ou outras orientações para melhorar a qualidade geral da tradução.
 
-## Instruções embutidas
+## Inline instructions
 
 ```yaml title=".github/workflows/ct.yml" "instructions: Use a casual tone."
 uses: pelikhan/action-continuous-translation@v0
@@ -19,7 +19,7 @@ with:
   instructions: Use a casual tone.
 ```
 
-## Instruções a partir de um arquivo
+## Instructions from a file
 
 ```yaml title=".github/workflows/ct.yml" "instructions_file: ./instructions.txt"
 uses: pelikhan/action-continuous-translation@v0
@@ -27,7 +27,7 @@ with:
   instructions_file: ./instructions.txt
 ```
 
-## Instruções no frontmatter
+## Instructions in frontmatter
 
 Você também pode especificar instruções de tradução diretamente no frontmatter de documentos individuais. Isso é útil quando documentos diferentes exigem abordagens de tradução específicas.
 
@@ -48,7 +48,7 @@ Os tipos `translator` são definidos em `types.ts`. Eles são removidos do front
 
 <Code lang="ts" code={types} title="Tipos de Configuração" />
 
-## Ordem de Prioridade
+## Priority Order
 
 As instruções são aplicadas na seguinte ordem de prioridade:
 

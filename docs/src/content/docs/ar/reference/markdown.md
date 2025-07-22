@@ -121,7 +121,7 @@ sidebar:
 
 ### الصور
 
-![Alt text](https://via.placeholder.com/150x100 "Image title")
+![النص البديل](https://via.placeholder.com/150x100 "Image title")
 
 ![Reference image][img1]
 

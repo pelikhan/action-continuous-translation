@@ -31,7 +31,7 @@ Cette action peut être utilisée pour traduire le contenu d'un site de document
      ```
 </Steps>
 
-## Entrées Frontmatter prises en charge
+## Supported Frontmatter entries
 
 En plus des fichiers Markdown/MDX, nous prenons en charge certaines des métadonnées frontmatter possibles supportées par Starlight :
 
@@ -50,7 +50,7 @@ Nous soutenons également des entrées frontmatter provenant de [Starlight Blog]
 
 * [`excerpt`](https://starlight-blog-docs.vercel.app/guides/frontmatter/#excerpt) : L'extrait de l'article de blog.
 
-## Titre et barre latérale
+## Title and Sidebar
 
 Les entrées `title` et `sidebar` dans la [configuration Starlight](https://starlight.astro.build/reference/configuration/) ne sont pas automatiquement traduites par l'action.
 Il est recommandé de déplacer ces entrées dans un fichier JSON et de les importer dans votre fichier `astro.config.mjs`.
@@ -70,7 +70,7 @@ export default defineConfig({
 
 Consultez la documentation spécifique pour le [titre](https://starlight.astro.build/guides/i18n/#translate-the-site-title) et la [barre latérale](https://starlight.astro.build/guides/sidebar/) de Starlight pour plus de détails.
 
-## Avis concernant le contenu généré par IA
+## AI Content Notice
 
 Vous pouvez informer vos utilisateurs que la traduction a été générée par GenAI en ajoutant un avis dans le titre. À l'heure actuelle, Astro Starlight ne prend pas en charge une fonctionnalité intégrée pour ajouter des avis, il est donc nécessaire de remplacer certains composants.
 
@@ -121,7 +121,7 @@ export default defineConfig({
 });
 ```
 
-## Tableau de bord de traduction Lunaria
+## Lunaria Translation Dashboard
 
 Vous pouvez utiliser le [Tableau de bord de traduction Lunaria](https://lunaria.dev/integrations/starlight/) pour générer un tableau de bord du statut de traduction pour votre site Starlight.
 
