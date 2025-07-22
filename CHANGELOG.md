@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.4
+
+### Patch Changes
+
+- [`83d3a27`](https://github.com/pelikhan/action-continuous-translation/commit/83d3a27987221783fa668a40de87013f09dfd4c1) Thanks [@pelikhan](https://github.com/pelikhan)! - handle image alt
+
 ## 0.2.3
 
 ### Patch Changes
