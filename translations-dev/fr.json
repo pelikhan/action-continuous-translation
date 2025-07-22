@@ -387,5 +387,7 @@
   "this is a link with a title and a space": "ceci est un lien avec un titre et un espace",
   "![This is an image](https://bing.com/favicon.ico)": "Ceci est une image",
   "This ![image](https://bing.com/favicon.ico) in the text should be translated.": "Ce ![image](https://bing.com/favicon.ico) dans le texte doit être traduit.",
-  "![This is an image link](https://bing.com/favicon.ico)": "Ceci est un lien image"
+  "![This is an image link](https://bing.com/favicon.ico)": "Ceci est un lien image",
+  "CSV": "valeurs séparées par des virgules (CSV)",
+  "A wikipedia link, [CSV](https://en.wikipedia.org/wiki/Comma-separated_values), i.C9EAA72C2BC28C12CC8C": "Un lien Wikipédia, [valeurs séparées par des virgules (CSV)](https://en.wikipedia.org/wiki/Comma-separated_values), dans un paragraphe."
 }

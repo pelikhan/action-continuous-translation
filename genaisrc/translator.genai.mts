@@ -702,7 +702,7 @@ translated content of text enclosed in T003 here (only T003 content!)
 - As much as possible, maintain the original formatting and structure of the document.
 - Do not translate inline code blocks, code blocks, or any other code-related content.
 - Use ' instead of ’
-- Always make sure that the URLs are not modified by the translation.
+- Always make sure that the URLs are not modified by the translation. Do not try to translate URLs, even if there is a better localized version, keep the original URL.
 - Translate each node individually, preserving the original meaning and context.
 - If you are unsure about the translation, skip the translation.
 ${instructionPrompt}`.role("system");
