@@ -1,5 +1,13 @@
 # action-continuous-translation
 
+## 0.2.7
+
+### Patch Changes
+
+- [`5a0eb5a`](https://github.com/pelikhan/action-continuous-translation/commit/5a0eb5af5c5bd1a9ac4e09ee3d3b9df3e5714a8f) Thanks [@pelikhan](https://github.com/pelikhan)! - ignore emojis when translating
+
+- [`4e3c0e0`](https://github.com/pelikhan/action-continuous-translation/commit/4e3c0e01a6b2d9b446bc0b6919c966f9fab0c150) Thanks [@pelikhan](https://github.com/pelikhan)! - add file translation summary
+
 ## 0.2.6
 
 ### Patch Changes
