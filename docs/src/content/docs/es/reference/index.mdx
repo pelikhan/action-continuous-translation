@@ -16,7 +16,7 @@ Está diseñada para ser utilizada en un flujo de trabajo de [GitHub Actions](ht
     lang: fr,es
 ```
 
-## Instalación
+## Installation
 
 Puedes guardar este archivo en tu directorio `.github/workflows/` como `ct.yml`:
 
@@ -65,7 +65,7 @@ jobs:
           commit_user_name: "genaiscript"
 ```
 
-## Parámetros
+## Parameters
 
 La acción de GitHub `pelikhan/action-continuous-translation` admite los siguientes parámetros.
 Todos los parámetros son opcionales.
@@ -164,13 +164,6 @@ Debe definirse si se define la opción [`starlight_base`](#starlight_base).
 Alias base para la documentación [Astro Starlight](../../reference/astro-starlight/).
 Si no defines la opción [Astro `base`](https://docs.astro.build/en/reference/configuration-reference/#base), no establezcas esta opción.
 
-### `force`
-
-**Tipo**: `boolean`\
-**Por defecto**: `false`
-
-Forzar la traducción incluso si el archivo ya ha sido traducido.
-
 ### `debug`
 
 **Tipo**: `boolean`\
@@ -195,7 +188,7 @@ Tu [token de GitHub](https://github.com/settings/tokens) con al menos permiso de
 
 Lee más detalles en la [documentación de permisos de GitHub Models de GenAIScript](https://microsoft.github.io/genaiscript/reference/github-actions/#github-models-permissions).
 
-### Otros proveedores de LLM
+### Other LLM providers
 
 También puedes utilizar otros proveedores de LLM como OpenAI, Azure OpenAI, etc.
 Consulta [Models](../../reference/models/) para más detalles sobre otros proveedores.
