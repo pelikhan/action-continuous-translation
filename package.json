@@ -37,6 +37,7 @@
     "dev:links": "genaiscript run translator test/links.md -x glossaryFile=./glossary.md -x instructionsFile=./instructions.md -x lang=fr -x translationsDir=translations-dev",
     "dev:image": "genaiscript run translator test/image.md -x glossaryFile=./glossary.md -x instructionsFile=./instructions.md -x lang=fr -x translationsDir=translations-dev",
     "dev:emojis": "genaiscript run translator test/emojis.md -x glossaryFile=./glossary.md -x instructionsFile=./instructions.md -x lang=fr -x translationsDir=translations-dev",
+    "dev:rust-comments": "genaiscript run rust-comments test/sample.rs --no-run-trace",
     "dev:astro": "genaiscript run translator \"docs/src/content/docs/index.mdx\" --no-run-trace -x starlightDir=docs starlightBase=action-continuous-translation -x translationsDir=translations-dev",
     "dev:astro:root-no-base": "genaiscript run translator \"test/root-no-base/src/content/**/*\" -x \"lang=fr\" --no-run-trace -x starlightDir=test/root-no-base -x translationsDir=translations-dev",
     "dev:js": "genaiscript run translator \"test/generative-ai-with-javascript/*.md\" --ignore-git-ignore -x \"lang=fr\" --no-run-trace -x \"translationsDir=translations/js\"",
