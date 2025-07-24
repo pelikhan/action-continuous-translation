@@ -13,6 +13,7 @@
 - 📚 **Astro Starlight Ready** - Built-in support for documentation sites
 - 🌐 **Multi-language Support** - Translate to multiple languages simultaneously
 - 🔍 **Quality Validation** - Automatic validation of translation quality
+- 📝 **C++ Comment Generation** - Generate documentation comments for C++ code using AI
 - ⚡ **GitHub Actions Native** - Seamless integration with your CI/CD pipeline
 - 🤖 **AI-Powered** - Leverage GitHub Models for seamless high-quality translations
 
@@ -26,10 +27,10 @@
 
 This action leverages [GenAIScript](https://microsoft.github.io/genaiscript/) to intelligently analyze and translate your markdown documents. Here's the magic behind the scenes:
 
-1. **📄 Parse** - Convert markdown to AST (Abstract Syntax Tree)
-2. **🔍 Analyze** - Identify content that needs translation vs. existing translations
-3. **🤖 Translate** - Use AI to generate high-quality translations
-4. **✅ Validate** - Ensure translation quality and inject into document
+1. **📄 Parse** - Convert markdown to AST (Abstract Syntax Tree) or analyze C++ code structure
+2. **🔍 Analyze** - Identify content that needs translation or code that needs documentation
+3. **🤖 Translate/Generate** - Use AI to generate high-quality translations or documentation comments
+4. **✅ Validate** - Ensure translation quality and inject into documents/code
 5. **💾 Cache** - Save translations for future incremental updates
 6. **📝 Commit** - Automatically commit changes to your repository
 
@@ -160,6 +161,51 @@ jobs:
           file_pattern: "**.md* translations/**"
           commit_message: "[cai] translated docs"
           commit_user_name: "genaiscript"
+```
+
+## 📝 C++ Comment Generation
+
+This action also includes a powerful C++ comment generator that automatically creates documentation comments for your C++ code using AI.
+
+### Quick Start for C++ Comments
+
+Add this to your workflow to generate Doxygen-style comments for C++ files:
+
+```yaml
+- uses: pelikhan/action-continuous-translation@v0
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    files: "src/**/*.cpp;src/**/*.h"
+    script: cpp-comment-generator
+```
+
+### C++ Comment Generation Features
+
+- 🎯 **Smart Code Analysis** - Identifies classes, functions, methods, constructors, and destructors
+- 📖 **Multiple Comment Styles** - Supports Doxygen, Javadoc, and block comment formats
+- 🔒 **Privacy Control** - Configurable option to include or exclude private members
+- 🔄 **Overwrite Protection** - Option to preserve existing comments or replace them
+- ⚡ **Dry Run Mode** - Preview changes before applying them
+
+### C++ Comment Parameters
+
+| Parameter         | Description                                      | Default   |
+| ----------------- | ------------------------------------------------ | --------- |
+| `commentStyle`    | Comment style: `doxygen`, `javadoc`, or `block` | `doxygen` |
+| `includePrivate`  | Generate comments for private members            | `false`   |
+| `overwrite`       | Overwrite existing comments                      | `false`   |
+| `dryRun`         | Preview changes without applying them            | `false`   |
+
+### Usage Examples
+
+Generate comments for all C++ files with dry run:
+```bash
+npm run genai:cpp-comments-simple -- -x dryRun=true
+```
+
+Generate comments with custom style:
+```bash
+npm run genai:cpp-comments -- -x commentStyle=javadoc -x includePrivate=true
 ```
 
 <div align="center">
