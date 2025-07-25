@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.10
+
+### Patch Changes
+
+- [`ba96ee3`](https://github.com/pelikhan/action-continuous-translation/commit/ba96ee371231b5a18361d205d28a4abee38b6b9a) Thanks [@pelikhan](https://github.com/pelikhan)! - upgrade genaiscript
+
 ## 0.2.9
 
 ### Patch Changes
