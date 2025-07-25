@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.11
+
+### Patch Changes
+
+- [`3916d3f`](https://github.com/pelikhan/action-continuous-translation/commit/3916d3f8a24068a9308e44165e57182488ec4dcc) Thanks [@pelikhan](https://github.com/pelikhan)! - handle 403
+
 ## 0.2.10
 
 ### Patch Changes
