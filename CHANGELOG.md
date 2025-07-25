@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.8
+
+### Patch Changes
+
+- [`7768cc7`](https://github.com/pelikhan/action-continuous-translation/commit/7768cc728f47797888f447435226dc3ee7a708e2) Thanks [@pelikhan](https://github.com/pelikhan)! - ensure v\* releases
+
 ## 0.2.7
 
 ### Patch Changes
