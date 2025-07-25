@@ -1,5 +1,11 @@
 # action-continuous-translation
 
+## 0.2.9
+
+### Patch Changes
+
+- [`40032d4`](https://github.com/pelikhan/action-continuous-translation/commit/40032d48c95b311e986b28bac545926fc3530ea4) Thanks [@pelikhan](https://github.com/pelikhan)! - tweak release script
+
 ## 0.2.8
 
 ### Patch Changes
