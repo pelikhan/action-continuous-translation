@@ -1,11 +1,11 @@
-# 🌍 Continuous Translation
+# 🌍 Traducción Continua
 
 > **Traduce automáticamente tu documentación en markdown utilizando IA** - impulsado por [GitHub Actions](https://github.com/actions) y [GitHub Models](https://github.com/models) con soporte integrado para [Astro Starlight](https://starlight.astro.build/)!
 
 [![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)](https://github.com/marketplace/actions/continuous-translation)
-[![Documentation](https://img.shields.io/badge/📖-Documentation-green)](https://pelikhan.github.io/action-continuous-translation/)
+[![Documentación](https://img.shields.io/badge/📖-Documentación-green)](https://pelikhan.github.io/action-continuous-translation/)
 
-## ✨ Features
+## ✨ Funciones
 
 * 🚀 **Traducción Incremental** - Sólo traduce el contenido modificado, ahorrando tiempo y costos de API
 * 🎯 **Análisis AST Inteligente** - Preserva la estructura y el formato del markdown
@@ -16,13 +16,13 @@
 * ⚡ **Nativo en GitHub Actions** - Integración fluida con tu tubería CI/CD
 * 🤖 **Impulsado por IA** - Aprovecha GitHub Models para traducciones fluidas y de alta calidad
 
-## 📚 Resources
+## 📚 Recursos
 
 * 📖 [**Documentación**](https://pelikhan.github.io/action-continuous-translation/) - Guía completa de configuración y referencia de API (también traducida por esta acción - ve el [tablero de traducción](https://pelikhan.github.io/action-continuous-translation/dashboard/))
 * ✍️ [**Publicación del Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Análisis profundo de la tecnología
 * 🌐 **Traducciones**: [Inglés](./README.md) | [Francés](./README.fr.md) | [Español](./README.es.md) | [Portugués (Brasil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
-## 🔧 How It Works
+## 🔧 Cómo Funciona
 
 Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) para analizar y traducir inteligentemente tus documentos en markdown. Aquí está la magia detrás de escena:
 
@@ -33,9 +33,9 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 5. **💾 Caché** - Guarda las traducciones para futuras actualizaciones incrementales
 6. **📝 Commit** - Realiza commits automáticos de los cambios en tu repositorio
 
-## ⚙️ Configuration
+## ⚙️ Configuración
 
-### 📝 Basic Settings
+### 📝 Configuración Básica
 
 | Parámetro           | Descripción                                                            | Por defecto                                    |
 | ------------------- | ---------------------------------------------------------------------- | ---------------------------------------------- |
@@ -55,22 +55,22 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 | `max_translation_tokens` | Cantidad máxima de tokens disponibles para la llamada de traducción del modelo LLM (para evitar límites de tasa) | `8000`      |
 | `max_validation_tokens`  | Cantidad máxima de tokens disponibles para la llamada de validación del modelo LLM (para evitar límites de tasa) | `2000`      |
 
-### 🌟 Astro Starlight Integration
+### 🌟 Integración con Astro Starlight
 
 | Parámetro        | Descripción                                         | Requerido           |
 | ---------------- | --------------------------------------------------- | ------------------- |
 | `starlight_dir`  | Carpeta raíz de la documentación de Astro Starlight | Sólo para Starlight |
 | `starlight_base` | Alias base para la documentación de Starlight       | Opcional            |
 
-### 🔧 Diagnostics & Debugging
+### 🔧 Diagnósticos y Depuración
 
 | Parámetro | Descripción                                                                                                         | Por defecto |
 | --------- | ------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `debug`   | Habilitar registro de depuración[aprender más](https://microsoft.github.io/genaiscript/reference/scripts/logging/)) | `false`     |
 
-### 🤖 AI Provider Configuration
+### 🤖 Configuración del Proveedor de IA
 
-#### GitHub Models (Recommended)
+#### Modelos de GitHub (Recomendado)
 
 | Parámetro      | Descripción                                                                                                                                                                                    | Por defecto                   |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
@@ -93,7 +93,7 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 | `azure_openai_api_version`     | Versión de la API de Azure OpenAI                                   | `${{ env.AZURE_OPENAI_API_VERSION }}`     |
 | `azure_openai_api_credentials` | Tipo de credenciales de API                                         | `${{ env.AZURE_OPENAI_API_CREDENTIALS }}` |
 
-#### Model Alias
+#### Alias de Modelo
 
 | Parámetro     | Descripción                                        | Por defecto |
 | ------------- | -------------------------------------------------- | ----------- |
@@ -101,15 +101,15 @@ Esta acción utiliza [GenAIScript](https://microsoft.github.io/genaiscript/) par
 
 Consulta la documentación de [Modelos](/action-continuous-translation/models/) para más detalles.
 
-## 📤 Outputs
+## 📤 Salidas
 
 | Salida | Descripción                                 |
 | ------ | ------------------------------------------- |
 | `text` | El texto generado como salida de traducción |
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
-### Simple Setup
+### Configuración Sencilla
 
 Agrega este paso a tu flujo de trabajo de GitHub Actions para traducir tu README a francés y español:
 
@@ -120,7 +120,7 @@ with:
   lang: fr,es
 ```
 
-### Complete Workflow Example
+### Ejemplo Completo de Flujo de Trabajo
 
 Guarda este archivo en tu directorio `.github/workflows/` como `continuous-translation.yml`:
 
@@ -164,6 +164,6 @@ jobs:
 
 <div align="center">
 
-**Made with ❤️ using [GenAIScript](https://microsoft.github.io/genaiscript/)**
+**Hecho con ❤️ usando [GenAIScript](https://microsoft.github.io/genaiscript/)**
 
 </div>
