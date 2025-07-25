@@ -21,6 +21,11 @@ if [ -z "$CHANGELOG_CONTENT" ]; then
 fi
 echo "changelog content: $CHANGELOG_CONTENT"
 
+if [[ "$NEW_VERSION" != v* ]]; then
+  NEW_VERSION="v$NEW_VERSION"
+  echo "prepended v: $NEW_VERSION"
+fi
+
 # Calculate major version for tagging
 MAJOR=$(echo "$NEW_VERSION" | cut -d. -f1)
 echo "major: $MAJOR"
