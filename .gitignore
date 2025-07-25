@@ -10,6 +10,8 @@ test/*.*.md
 .augment/rules/ruler_augment_instructions.md.bak
 .clinerules
 .clinerules.bak
+.codex/config.toml
+.codex/config.toml.bak
 .cursor/mcp.json.bak
 .cursor/rules/ruler_cursor_instructions.mdc
 .cursor/rules/ruler_cursor_instructions.mdc.bak
@@ -41,6 +43,8 @@ CLAUDE.md.bak
 GEMINI.md
 GEMINI.md.bak
 claude_desktop_config.json.bak
+opencode.json
+opencode.json.bak
 ruler_aider_instructions.md
 ruler_aider_instructions.md.bak
 # END Ruler Generated Files
