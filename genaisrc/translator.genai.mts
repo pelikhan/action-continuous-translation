@@ -279,6 +279,20 @@ export default async function main() {
     output.heading(2, `Translating Markdown files to ${lang} (${to})`);
 
     dbg(`Using translation model: %s`, translationModel);
+
+    // before getting started, check llm connection
+    const resCheck = await runPrompt("Respond with 'echo'", {
+      model: translationModel,
+      cache: false,
+      maxTokens: 5,
+    });
+    if (resCheck?.error) {
+      output.error(
+        `Error connecting to translation model ${translationModel}: ${resCheck.error.message}`
+      );
+      continue;
+    }
+
     // Build safe filename for translation cache
     const translationCacheFilename = join(
       translationsDir,
@@ -748,6 +762,14 @@ ${instructionPrompt}`.role("system");
               if (/429/.test(error.message)) {
                 output.error(`Rate limit exceeded: ${error.message}`);
                 cancel(`rate limit exceeded`);
+              }
+
+              // somehow invalid configuration
+              if (/403/.test(error.message)) {
+                output.error(
+                  `Not allowed to access model, might be out of credits: ${error.message}`
+                );
+                cancel(`not allowed to access model`);
               }
 
               output.error(
