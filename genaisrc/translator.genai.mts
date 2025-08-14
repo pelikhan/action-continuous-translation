@@ -832,12 +832,21 @@ ${instructionPrompt}`.role("system");
                 if (Array.isArray(data?.hero?.actions)) {
                   data.hero.actions.forEach((action) => {
                     if (typeof action.link === "string") {
-                      action.link = patchFn(
-                        action.link.replace(
+                      if (starlightBase) {
+                        // With base: convert to relative path and patch
+                        action.link = patchFn(
+                          action.link.replace(
+                            starlightBaseRx,
+                            `/${starlightBase}/${to.toLowerCase()}/`
+                          )
+                        );
+                      } else {
+                        // Root locale without base: keep absolute and add language prefix
+                        action.link = action.link.replace(
                           starlightBaseRx,
-                          `/${starlightBase || ""}/${to.toLowerCase()}/`
-                        )
-                      );
+                          `/${to.toLowerCase()}/`
+                        );
+                      }
                       dbgo(`yaml hero action link: %s`, action.link);
                     }
                     if (typeof action.text === "string") {
@@ -965,10 +974,16 @@ ${instructionPrompt}`.role("system");
         if (starlight) {
           visit(translated, "link", (node) => {
             if (starlightBaseRx.test(node.url)) {
-              node.url = patchFn(
-                node.url.replace(starlightBaseRx, "../"),
-                true
-              );
+              if (starlightBase) {
+                // With base: convert to relative path and patch
+                node.url = patchFn(
+                  node.url.replace(starlightBaseRx, "../"),
+                  true
+                );
+              } else {
+                // Root locale without base: keep absolute and add language prefix
+                node.url = node.url.replace(starlightBaseRx, `/${to.toLowerCase()}/`);
+              }
             }
           });
         }
