@@ -705,5 +705,7 @@
   "[!IMPORTANT]\nKey information users need to know to achieve their goal.": "Información clave que los usuarios necesitan saber para lograr su objetivo.",
   "[!WARNING]\nUrgent info that needs immediate user attention to avoid problems.": "Información urgente que necesita atención inmediata del usuario para evitar problemas.",
   "[!CAUTION]\nAdvises about risks or negative outcomes of certain actions.": "Avisos sobre riesgos o resultados negativos de ciertas acciones.",
-  "![Alt text](https://via.placeholder.com/150x100 \"Image title\")": "Texto alternativo"
+  "![Alt text](https://via.placeholder.com/150x100 \"Image title\")": "Texto alternativo",
+  "When you commit changes to your documentation files, the translation workflow au.1E86ADA9C08E4234DFCE": "Cuando haces commit de cambios en tus archivos de documentación, el flujo de trabajo de traducción inicia automáticamente un trabajo de traducción.",
+  "The AI workflow uses Markdown parsers and LLM inference to precisely and increme.D8BEFA7E9137827D19EE": "El flujo de trabajo de IA utiliza analizadores de Markdown e inferencia LLM para traducir tu documentación de manera precisa e incremental."
 }
