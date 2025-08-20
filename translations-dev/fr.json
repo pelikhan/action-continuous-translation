@@ -395,5 +395,13 @@
   "We should not try to translate emojis in the text.": "Nous ne devrions pas essayer de traduire les emojis dans le texte.",
   "Or just characters.": "Ou juste les caractères.",
   "![GitHub Action](https://img.shields.io/badge/GitHub-Action-blue?logo=github)": "Action GitHub",
-  "![Documentation](https://img.shields.io/badge/📖-Documentation-green)": "Documentation"
+  "![Documentation](https://img.shields.io/badge/📖-Documentation-green)": "Documentation",
+  "Welcome to Starlight": "Bienvenue sur Starlight",
+  "Get started building your docs site with Starlight.": "Commencez à construire votre site de documentation avec Starlight.",
+  "![Example Image](../../assets/houston.webp)": "Image d'exemple",
+  "Example Guide": "Guide d'exemple",
+  "A guide in my new Starlight docs site.": "Un guide dans mon nouveau site de documentation Starlight.",
+  "![Example Image](../../../assets/houston.webp)": "Image d'exemple",
+  "Example Reference": "Référence d'exemple",
+  "A reference page in my new Starlight docs site.": "Une page de référence dans mon nouveau site de documentation Starlight."
 }
