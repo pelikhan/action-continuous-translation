@@ -965,10 +965,25 @@ ${instructionPrompt}`.role("system");
         if (starlight) {
           visit(translated, "link", (node) => {
             if (starlightBaseRx.test(node.url)) {
-              node.url = patchFn(
-                node.url.replace(starlightBaseRx, "../"),
-                true
-              );
+              // For absolute URLs (starting with /), calculate direct path from translation dir to project root
+              const translationDir = dirname(translationFn);
+              
+              // Extract the project root from starlightDir (remove "/src/content/docs")
+              const projectRoot = starlightDir.replace("/src/content/docs", "");
+              
+              // Calculate relative path from translation directory to project root
+              const relativeToProjectRoot = relative(translationDir, projectRoot);
+              
+              // Remove the leading slash/base and join with relative path to root
+              const pathWithoutBase = node.url.replace(starlightBaseRx, "");
+              let result = join(relativeToProjectRoot, pathWithoutBase);
+              
+              // Add trailing slash if original was a directory
+              if (node.url.endsWith("/") && !result.endsWith("/")) {
+                result += "/";
+              }
+              
+              node.url = result;
             }
           });
         }
