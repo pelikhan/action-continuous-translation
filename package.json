@@ -28,6 +28,8 @@
     "genai": "genaiscript run",
     "genai:changeset": "genaiscript run changeset --no-run-trace --no-output-trace",
     "test": "npm run typecheck",
+    "test:unit": "npx genaiscript run translator-utils.test translator-models.test translator-frontmatter.test translator-markdown.test --no-run-trace",
+    "test:unit:summary": "npx genaiscript run run-all-tests --no-run-trace",
     "test:genai": "genaiscript test translator",
     "test:build": "cd docs && npm run build && cd ../test/root-no-base && npm run build",
     "dev": "genaiscript run translator",
