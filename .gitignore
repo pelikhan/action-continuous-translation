@@ -56,3 +56,7 @@ claude_desktop_config.json
 .cursor/mcp.json
 .mcp.json
 test/generative-ai-with-javascript/
+
+# Test build artifacts
+test/*/dist/
+test/*/.astro/
