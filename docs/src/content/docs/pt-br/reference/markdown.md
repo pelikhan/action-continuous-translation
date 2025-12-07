@@ -2,7 +2,6 @@
 title: Exemplo de Markdown
 sidebar:
   order: 100
-
 ---
 
 # Guia Completo de Sintaxe Markdown
@@ -32,41 +31,41 @@ Este documento demonstra todas as principais construções sintáticas disponív
 **Texto em negrito usando asteriscos**\
 **Texto em negrito usando sublinhados**
 
-*Texto em itálico usando asteriscos*\
-*Texto em itálico usando sublinhados*
+_Texto em itálico usando asteriscos_\
+_Texto em itálico usando sublinhados_
 
-***Texto em negrito e itálico usando asteriscos***\
-***Texto em negrito e itálico usando sublinhados***
+**_Texto em negrito e itálico usando asteriscos_**\
+**_Texto em negrito e itálico usando sublinhados_**
 
 ~~Texto com tachado~~
 
 `Inline code`
 
-Texto normal com **negrito**, *itálico* e `código` misturados.
+Texto normal com **negrito**, _itálico_ e `código` misturados.
 
 ## Listas
 
 ### Listas não ordenadas
 
-* Item 1
-* Item 2
-  * Subitem 2.1
-  * Subitem 2.2
-    * Subitem profundamente aninhado 2.2.1
-* Item 3
+- Item 1
+- Item 2
+  - Subitem 2.1
+  - Subitem 2.2
+    - Subitem profundamente aninhado 2.2.1
+- Item 3
 
 Sintaxe alternativa:
 
-* Item A
-* Item B
-  * Subitem B.1
-  * Subitem B.2
+- Item A
+- Item B
+  - Subitem B.1
+  - Subitem B.2
 
 Outra alternativa:
 
-* Item X
-* Item Y
-  * Subitem Y.1
+- Item X
+- Item Y
+  - Subitem Y.1
 
 ### Listas ordenadas
 
@@ -86,19 +85,19 @@ Numeração alternativa:
 ### Listas mistas
 
 1. Item ordenado
-   * Item não ordenado aninhado
-   * Outro item não ordenado aninhado
+   - Item não ordenado aninhado
+   - Outro item não ordenado aninhado
 2. Outro item ordenado
    1. Item ordenado aninhado
    2. Outro item ordenado aninhado
 
 ### Listas de tarefas
 
-* [x] Tarefa concluída
-* [ ] Tarefa incompleta
-* [x] Outra tarefa concluída
-  * [x] Tarefa concluída aninhada
-  * [ ] Tarefa incompleta aninhada
+- [x] Tarefa concluída
+- [ ] Tarefa incompleta
+- [x] Outra tarefa concluída
+  - [x] Tarefa concluída aninhada
+  - [ ] Tarefa incompleta aninhada
 
 ## Links e Imagens
 
@@ -128,9 +127,7 @@ Você também pode criar links para [arquivos locais](./README.md).
 ### Definições de referência
 
 [ref1]: https://www.reference1.com "Reference 1 Title"
-
 [ref2]: https://www.reference2.com
-
 [img1]: https://via.placeholder.com/200x150 "Reference Image"
 
 ## Código
@@ -198,8 +195,8 @@ TODO: corrigir esse problema de análise
 | Alinhado à Esquerda | Alinhado ao Centro | Alinhado à Direita |
 | :------------------ | :----------------: | -----------------: |
 | Esquerda            |       Centro       |            Direita |
-| Texto               |        Texto       |              Texto |
-| Mais                |        Dados       |               Aqui |
+| Texto               |       Texto        |              Texto |
+| Mais                |       Dados        |               Aqui |
 
 ### Tabela Simples
 
@@ -222,24 +219,24 @@ TODO: corrigir esse problema de análise
 
 > ### Citação com outros elementos
 >
-> * Item de lista em citação
-> * Outro item
+> - Item de lista em citação
+> - Outro item
 >
 > **Texto em negrito** em uma citação com `código inline`.
 
 ## Linhas Horizontais
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
 ## Quebras de Linha
 
@@ -274,8 +271,8 @@ Você pode usar <em>tags HTML</em> no Markdown.
 
 Este conteúdo está oculto por padrão e pode ser expandido.
 
-* Item da lista
-* Outro item
+- Item da lista
+- Outro item
 
 ```javascript
 console.log("Code in details");
@@ -292,7 +289,6 @@ Aqui está uma frase com uma nota de rodapé\[^1].
 Outra frase com uma nota de rodapé\[^note].
 
 [^1]: Esta é a primeira nota de rodapé.
-
 [^note]: Esta é uma nota de rodapé nomeada com mais detalhes.
 
 ### Listas de Definições
@@ -338,7 +334,7 @@ Use barras invertidas para escapar caracteres especiais:
 
 😀 😍 👍 🚀 💻
 
-***
+---
 
 ## Alertas do GitHub no Markdown
 

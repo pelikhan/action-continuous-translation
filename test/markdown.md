@@ -7,34 +7,37 @@ This document demonstrates all the major syntactic constructs available in Markd
 ## Headers
 
 # H1 Header
+
 ## H2 Header
+
 ### H3 Header
+
 #### H4 Header
+
 ##### H5 Header
+
 ###### H6 Header
 
-Alternative H1
-==============
+# Alternative H1
 
-Alternative H2
---------------
+## Alternative H2
 
 ## Text Formatting
 
 **Bold text using asterisks**
-__Bold text using underscores__
+**Bold text using underscores**
 
-*Italic text using asterisks*
+_Italic text using asterisks_
 _Italic text using underscores_
 
-***Bold and italic using asterisks***
-___Bold and italic using underscores___
+**_Bold and italic using asterisks_**
+**_Bold and italic using underscores_**
 
 ~~Strikethrough text~~
 
 `Inline code`
 
-Regular text with **bold**, *italic*, and `code` mixed together.
+Regular text with **bold**, _italic_, and `code` mixed together.
 
 ## Lists
 
@@ -48,15 +51,17 @@ Regular text with **bold**, *italic*, and `code` mixed together.
 - Item 3
 
 Alternative syntax:
-* Item A
-* Item B
-  * Nested item B.1
-  * Nested item B.2
+
+- Item A
+- Item B
+  - Nested item B.1
+  - Nested item B.2
 
 Another alternative:
-+ Item X
-+ Item Y
-  + Nested item Y.1
+
+- Item X
+- Item Y
+  - Nested item Y.1
 
 ### Ordered Lists
 
@@ -68,6 +73,7 @@ Another alternative:
 3. Third item
 
 Alternative numbering:
+
 1. Item one
 1. Item two (auto-numbered)
 1. Item three (auto-numbered)
@@ -135,7 +141,7 @@ Simple code block without syntax highlighting
 ```javascript
 // JavaScript code block
 function greet(name) {
-    console.log(`Hello, ${name}!`);
+  console.log(`Hello, ${name}!`);
 }
 
 greet("World");
@@ -162,37 +168,38 @@ done
 
 ```json
 {
-    "name": "Sample JSON",
-    "version": "1.0.0",
-    "dependencies": {
-        "express": "^4.18.0"
-    }
+  "name": "Sample JSON",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.18.0"
+  }
 }
 ```
 
 Indented code block (4 spaces):
 TODO: fix this parse issue
+
 ## Tables
 
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Row 1    | Data     | More data|
-| Row 2    | Info     | Details  |
+| Column 1 | Column 2 | Column 3  |
+| -------- | -------- | --------- |
+| Row 1    | Data     | More data |
+| Row 2    | Info     | Details   |
 
 ### Table with Alignment
 
 | Left Aligned | Center Aligned | Right Aligned |
-|:-------------|:--------------:|--------------:|
-| Left         | Center         | Right         |
-| Text         | Text           | Text          |
-| More         | Data           | Here          |
+| :----------- | :------------: | ------------: |
+| Left         |     Center     |         Right |
+| Text         |      Text      |          Text |
+| More         |      Data      |          Here |
 
 ### Simple Table
 
-First Header | Second Header
------------- | -------------
-Content cell 1 | Content cell 2
-Content cell 3 | Content cell 4
+| First Header   | Second Header  |
+| -------------- | -------------- |
+| Content cell 1 | Content cell 2 |
+| Content cell 3 | Content cell 4 |
 
 ## Blockquotes
 
@@ -204,29 +211,29 @@ Content cell 3 | Content cell 4
 > Nested blockquotes:
 >
 > > This is a nested blockquote.
-> > 
+> >
 > > > And this is deeply nested.
 
 > ### Blockquote with other elements
-> 
+>
 > - List item in blockquote
 > - Another item
-> 
+>
 > **Bold text** in blockquote with `inline code`.
 
 ## Horizontal Rules
 
 ---
 
-***
+---
 
-___
+---
 
-- - -
+---
 
-* * *
+---
 
-_ _ _
+---
 
 ## Line Breaks
 
@@ -284,16 +291,16 @@ Another sentence with a footnote[^note].
 ### Definition Lists
 
 Term 1
-:   Definition for term 1
+: Definition for term 1
 
 Term 2
-:   Definition for term 2
-:   Another definition for term 2
+: Definition for term 2
+: Another definition for term 2
 
 ### Abbreviations
 
-*[HTML]: Hyper Text Markup Language
-*[CSS]: Cascading Style Sheets
+_[HTML]: Hyper Text Markup Language
+_[CSS]: Cascading Style Sheets
 
 HTML and CSS are important web technologies.
 
@@ -302,6 +309,7 @@ HTML and CSS are important web technologies.
 Inline math: $E = mc^2$
 
 Block math:
+
 $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 $$

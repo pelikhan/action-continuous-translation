@@ -7,20 +7,20 @@
 
 ## ✨ Features
 
-* 🚀 **Traduction incrémentielle** - Traduisez uniquement le contenu modifié, économisant ainsi du temps et des coûts API
-* 🎯 **Analyse AST intelligente** - Préserve la structure et le formatage du markdown
-* 🔄 **Gestion du Cache** - Mise en cache intelligente pour éviter les traductions redondantes
-* 📚 **Prêt pour Astro Starlight** - Support intégré pour les sites de documentation
-* 🌐 **Support Multilingue** - Traduisez simultanément dans plusieurs langues
-* 🔍 **Validation de Qualité** - Validation automatique de la qualité de la traduction
-* ⚡ **Natif avec GitHub Actions** - Intégration fluide avec votre pipeline CI/CD
-* 🤖 **Alimenté par l'IA** - Exploitez GitHub Models pour des traductions fluides et de haute qualité
+- 🚀 **Traduction incrémentielle** - Traduisez uniquement le contenu modifié, économisant ainsi du temps et des coûts API
+- 🎯 **Analyse AST intelligente** - Préserve la structure et le formatage du markdown
+- 🔄 **Gestion du Cache** - Mise en cache intelligente pour éviter les traductions redondantes
+- 📚 **Prêt pour Astro Starlight** - Support intégré pour les sites de documentation
+- 🌐 **Support Multilingue** - Traduisez simultanément dans plusieurs langues
+- 🔍 **Validation de Qualité** - Validation automatique de la qualité de la traduction
+- ⚡ **Natif avec GitHub Actions** - Intégration fluide avec votre pipeline CI/CD
+- 🤖 **Alimenté par l'IA** - Exploitez GitHub Models pour des traductions fluides et de haute qualité
 
 ## 📚 Resources
 
-* 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet d'installation et référence API (également traduit par cette action - voir [tableau de bord de traduction](https://pelikhan.github.io/action-continuous-translation/dashboard/))
-* ✍️ [**Article de Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Exploration approfondie de la technologie
-* 🌐 **Traductions** : [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
+- 📖 [**Documentation**](https://pelikhan.github.io/action-continuous-translation/) - Guide complet d'installation et référence API (également traduit par cette action - voir [tableau de bord de traduction](https://pelikhan.github.io/action-continuous-translation/dashboard/))
+- ✍️ [**Article de Blog**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - Exploration approfondie de la technologie
+- 🌐 **Traductions** : [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
 ## 🔧 How It Works
 

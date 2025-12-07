@@ -11,9 +11,7 @@
         "terminal.integrated.profiles.linux": {
           "ash": {
             "path": "/bin/ash",
-            "args": [
-              "-l"
-            ]
+            "args": ["-l"]
           }
         }
       },

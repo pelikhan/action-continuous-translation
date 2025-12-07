@@ -7,20 +7,20 @@
 
 ## ✨ Features
 
-* 🚀 **الترجمة التدريجية** - تُترجم فقط المحتوى الذي تم تغييره، مما يوفر الوقت وتكاليف واجهة برمجة التطبيقات.
-* 🎯 **تحليل AST الذكي** - يحافظ على هيكل وتنسيق Markdown.
-* 🔄 **إدارة التخزين المؤقت** - تخزين مؤقت ذكي لتجنب الترجمة المتكررة.
-* 📚 **جاهز لـ Astro Starlight** - دعم مدمج لمواقع الوثائق.
-* 🌐 **دعم متعدد اللغات** - الترجمة إلى عدة لغات في وقت واحد.
-* 🔍 **التحقق من الجودة** - التحقق التلقائي من جودة الترجمة.
-* ⚡ **متكامل مع GitHub Actions** - تكامل سلس مع خط أنابيب CI/CD الخاص بك.
-* 🤖 **مدعوم بالذكاء الاصطناعي** - استفد من GitHub Models للحصول على ترجمات عالية الجودة وسلسة.
+- 🚀 **الترجمة التدريجية** - تُترجم فقط المحتوى الذي تم تغييره، مما يوفر الوقت وتكاليف واجهة برمجة التطبيقات.
+- 🎯 **تحليل AST الذكي** - يحافظ على هيكل وتنسيق Markdown.
+- 🔄 **إدارة التخزين المؤقت** - تخزين مؤقت ذكي لتجنب الترجمة المتكررة.
+- 📚 **جاهز لـ Astro Starlight** - دعم مدمج لمواقع الوثائق.
+- 🌐 **دعم متعدد اللغات** - الترجمة إلى عدة لغات في وقت واحد.
+- 🔍 **التحقق من الجودة** - التحقق التلقائي من جودة الترجمة.
+- ⚡ **متكامل مع GitHub Actions** - تكامل سلس مع خط أنابيب CI/CD الخاص بك.
+- 🤖 **مدعوم بالذكاء الاصطناعي** - استفد من GitHub Models للحصول على ترجمات عالية الجودة وسلسة.
 
 ## 📚 Resources
 
-* 📖 [**الوثائق**](https://pelikhan.github.io/action-continuous-translation/) - دليل الإعداد الكامل ومرجع واجهة برمجة التطبيقات (تمت ترجمته أيضًا بواسطة هذا الإجراء - انظر [لوحة تحكم الترجمة](https://pelikhan.github.io/action-continuous-translation/dashboard/))
-* ✍️ [**المقالة**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - تحليل معمق للتكنولوجيا.
-* 🌐 **الترجمات**: [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
+- 📖 [**الوثائق**](https://pelikhan.github.io/action-continuous-translation/) - دليل الإعداد الكامل ومرجع واجهة برمجة التطبيقات (تمت ترجمته أيضًا بواسطة هذا الإجراء - انظر [لوحة تحكم الترجمة](https://pelikhan.github.io/action-continuous-translation/dashboard/))
+- ✍️ [**المقالة**](https://microsoft.github.io/genaiscript/blog/continuous-translations/) - تحليل معمق للتكنولوجيا.
+- 🌐 **الترجمات**: [English](./README.md) | [Français](./README.fr.md) | [Español](./README.es.md) | [Portuguese (Brazil)](./README.pt-br.md) | [العربية](./README.ar.md)
 
 ## 🔧 How It Works
 

@@ -2,7 +2,6 @@
 title: Muestra de Markdown
 sidebar:
   order: 100
-
 ---
 
 # Guía Completa de la Sintaxis de Markdown
@@ -32,41 +31,41 @@ Este documento muestra todas las principales estructuras sintácticas disponible
 **Texto en negrita usando asteriscos**
 **Texto en negrita usando guiones bajos**
 
-*Texto en cursiva usando asteriscos*
-*Texto en cursiva usando guiones bajos*
+_Texto en cursiva usando asteriscos_
+_Texto en cursiva usando guiones bajos_
 
-***Texto en negrita y cursiva usando asteriscos***
-***Texto en negrita y cursiva usando guiones bajos***
+**_Texto en negrita y cursiva usando asteriscos_**
+**_Texto en negrita y cursiva usando guiones bajos_**
 
 ~~Texto tachado~~
 
 `Inline code`
 
-Texto regular con **negrita**, *cursiva* y `código` mezclados.
+Texto regular con **negrita**, _cursiva_ y `código` mezclados.
 
 ## Listas
 
 ### Listas Desordenadas
 
-* Elemento 1
-* Elemento 2
-  * Elemento anidado 2.1
-  * Elemento anidado 2.2
-    * Elemento profundamente anidado 2.2.1
-* Elemento 3
+- Elemento 1
+- Elemento 2
+  - Elemento anidado 2.1
+  - Elemento anidado 2.2
+    - Elemento profundamente anidado 2.2.1
+- Elemento 3
 
 Sintaxis alternativa:
 
-* Elemento A
-* Elemento B
-  * Elemento anidado B.1
-  * Elemento anidado B.2
+- Elemento A
+- Elemento B
+  - Elemento anidado B.1
+  - Elemento anidado B.2
 
 Otra alternativa:
 
-* Elemento X
-* Elemento Y
-  * Elemento anidado Y.1
+- Elemento X
+- Elemento Y
+  - Elemento anidado Y.1
 
 ### Listas Ordenadas
 
@@ -86,19 +85,19 @@ Numeración alternativa:
 ### Listas Mixtas
 
 1. Elemento ordenado
-   * Elemento anidado desordenado
-   * Otro elemento anidado desordenado
+   - Elemento anidado desordenado
+   - Otro elemento anidado desordenado
 2. Otro elemento ordenado
    1. Elemento ordenado anidado
    2. Otro elemento ordenado anidado
 
 ### Listas de Tareas
 
-* [x] Tarea completada
-* [ ] Tarea incompleta
-* [x] Otra tarea completada
-  * [x] Tarea anidada completada
-  * [ ] Tarea anidada incompleta
+- [x] Tarea completada
+- [ ] Tarea incompleta
+- [x] Otra tarea completada
+  - [x] Tarea anidada completada
+  - [ ] Tarea anidada incompleta
 
 ## Enlaces e Imágenes
 
@@ -128,9 +127,7 @@ También puedes enlazar a [archivos locales](./README.md).
 ### Definiciones de Referencia
 
 [ref1]: https://www.reference1.com "Reference 1 Title"
-
 [ref2]: https://www.reference2.com
-
 [img1]: https://via.placeholder.com/200x150 "Reference Image"
 
 ## Código
@@ -198,8 +195,8 @@ TODO: arreglar este problema de análisis
 | Alineado a la Izquierda | Centrado | Alineado a la Derecha |
 | :---------------------- | :------: | --------------------: |
 | Izquierda               |  Centro  |               Derecha |
-| Texto                   |   Texto  |                 Texto |
-| Más                     |   Datos  |                  Aquí |
+| Texto                   |  Texto   |                 Texto |
+| Más                     |  Datos   |                  Aquí |
 
 ### Tabla Sencilla
 
@@ -222,24 +219,24 @@ TODO: arreglar este problema de análisis
 
 > ### Cita con otros elementos
 >
-> * Elemento de lista en una cita
-> * Otro elemento
+> - Elemento de lista en una cita
+> - Otro elemento
 >
 > **Texto en negrita** en una cita con `código inline`.
 
 ## Líneas Horizontales
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
 ## Saltos de Línea
 
@@ -274,8 +271,8 @@ Puedes usar <em>etiquetas HTML</em> en Markdown.
 
 Este contenido está oculto por defecto y puede expandirse.
 
-* Elemento de lista
-* Otro elemento
+- Elemento de lista
+- Otro elemento
 
 ```javascript
 console.log("Code in details");
@@ -292,7 +289,6 @@ Aquí hay una oración con una nota al pie\[^1].
 Otra oración con una nota al pie\[^nota].
 
 [^1]: Esta es la primera nota al pie.
-
 [^note]: Esta es una nota al pie con más detalles.
 
 ### Listas de Definiciones
@@ -338,7 +334,7 @@ Usa barras invertidas para escapar caracteres especiales:
 
 😀 😍 👍 🚀 💻
 
-***
+---
 
 ## Alertas de GitHub en Markdown
 

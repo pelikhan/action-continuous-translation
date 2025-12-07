@@ -4,11 +4,11 @@ This document summarizes the testing results for all combinations of root/base c
 
 ## Configuration Matrix
 
-| Configuration | Location | defaultLocale | site | base | Status |
-|---------------|----------|---------------|------|------|--------|
-| **root + base** | `docs/` | `"root"` | ✅ | `"/action-continuous-translation"` | ✅ Working |
-| **root, no base** | `test/root-no-base/` | `"root"` | ❌ | ❌ | ✅ Working |
-| **no root + base** | `test/no-root-base/` | `"en"` | ✅ | `"/my-docs-base"` | ✅ Working |
+| Configuration      | Location             | defaultLocale | site | base                               | Status     |
+| ------------------ | -------------------- | ------------- | ---- | ---------------------------------- | ---------- |
+| **root + base**    | `docs/`              | `"root"`      | ✅   | `"/action-continuous-translation"` | ✅ Working |
+| **root, no base**  | `test/root-no-base/` | `"root"`      | ❌   | ❌                                 | ✅ Working |
+| **no root + base** | `test/no-root-base/` | `"en"`        | ✅   | `"/my-docs-base"`                  | ✅ Working |
 
 ## Build Test Results
 
@@ -26,19 +26,22 @@ $ npm run test:build
 The generated HTML files demonstrate proper link patching:
 
 ### docs/ (root + base)
+
 - **Base path**: `/action-continuous-translation/`
-- **Example links**: 
+- **Example links**:
   - Site root: `href="/action-continuous-translation/"`
   - Assets: `href="/action-continuous-translation/_astro/..."`
   - Pages: `href="/action-continuous-translation/reference/astro-starlight/"`
 
 ### test/root-no-base/ (root, no base)
+
 - **Base path**: `/` (root level)
 - **Example links**:
   - Site root: `href="/"`
   - Pages: Direct path without base
 
 ### test/no-root-base/ (no root + base)
+
 - **Base path**: `/my-docs-base/`
 - **Locale paths**: `/en/`, `/fr/`
 - **Example links**:
@@ -60,6 +63,7 @@ Added comprehensive test support:
 ## Translator Script Compatibility
 
 The translator script properly handles all configurations:
+
 - Detects `starlightBase` parameter for base path handling
 - Applies appropriate link patching based on configuration
 - Processes files correctly for each locale structure
@@ -67,8 +71,9 @@ The translator script properly handles all configurations:
 ## Test Coverage Summary
 
 ✅ **Complete coverage achieved** for all requested combinations:
+
 - ✅ root, base
-- ✅ no root, base  
+- ✅ no root, base
 - ✅ root, no base
 
 All configurations build successfully and generate properly structured links according to their respective settings.

@@ -7,8 +7,8 @@ permissions:
   contents: read
   models: read
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.issue.number }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.issue.number }}
+  cancel-in-progress: true
 jobs:
   add_reaction:
     runs-on: ubuntu-latest

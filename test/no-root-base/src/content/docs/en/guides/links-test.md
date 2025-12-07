@@ -12,7 +12,7 @@ This page contains various types of links to test the link patching functionalit
 These links should be properly patched by the translator:
 
 - [Example Guide](/my-docs-base/en/guides/example/)
-- [Reference Page](/my-docs-base/en/reference/example/) 
+- [Reference Page](/my-docs-base/en/reference/example/)
 - [Home Page](/my-docs-base/en/)
 
 ## External Links

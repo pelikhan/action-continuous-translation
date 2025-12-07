@@ -19,34 +19,37 @@ This document demonstrates all the major syntactic constructs available in Markd
 ## Headers
 
 # H1 Header
+
 ## H2 Header
+
 ### H3 Header
+
 #### H4 Header
+
 ##### H5 Header
+
 ###### H6 Header
 
-Alternative H1
-==============
+# Alternative H1
 
-Alternative H2
---------------
+## Alternative H2
 
 ## Text Formatting
 
 **Bold text using asterisks**
-__Bold text using underscores__
+**Bold text using underscores**
 
-*Italic text using asterisks*
+_Italic text using asterisks_
 _Italic text using underscores_
 
-***Bold and italic using asterisks***
-___Bold and italic using underscores___
+**_Bold and italic using asterisks_**
+**_Bold and italic using underscores_**
 
 ~~Strikethrough text~~
 
 `Inline code`
 
-Regular text with **bold**, *italic*, and `code` mixed together.
+Regular text with **bold**, _italic_, and `code` mixed together.
 
 ## Lists
 
@@ -60,15 +63,17 @@ Regular text with **bold**, *italic*, and `code` mixed together.
 - Item 3
 
 Alternative syntax:
-* Item A
-* Item B
-  * Nested item B.1
-  * Nested item B.2
+
+- Item A
+- Item B
+  - Nested item B.1
+  - Nested item B.2
 
 Another alternative:
-+ Item X
-+ Item Y
-  + Nested item Y.1
+
+- Item X
+- Item Y
+  - Nested item Y.1
 
 ### Ordered Lists
 
@@ -80,6 +85,7 @@ Another alternative:
 3. Third item
 
 Alternative numbering:
+
 1. Item one
 1. Item two (auto-numbered)
 1. Item three (auto-numbered)
@@ -147,7 +153,7 @@ Simple code block without syntax highlighting
 ```javascript
 // JavaScript code block
 function greet(name) {
-    console.log(`Hello, ${name}!`);
+  console.log(`Hello, ${name}!`);
 }
 
 greet("World");
@@ -174,37 +180,38 @@ done
 
 ```json
 {
-    "name": "Sample JSON",
-    "version": "1.0.0",
-    "dependencies": {
-        "express": "^4.18.0"
-    }
+  "name": "Sample JSON",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.18.0"
+  }
 }
 ```
 
 Indented code block (4 spaces):
 TODO: fix this parse issue
+
 ## Tables
 
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Row 1    | Data     | More data|
-| Row 2    | Info     | Details  |
+| Column 1 | Column 2 | Column 3  |
+| -------- | -------- | --------- |
+| Row 1    | Data     | More data |
+| Row 2    | Info     | Details   |
 
 ### Table with Alignment
 
 | Left Aligned | Center Aligned | Right Aligned |
-|:-------------|:--------------:|--------------:|
-| Left         | Center         | Right         |
-| Text         | Text           | Text          |
-| More         | Data           | Here          |
+| :----------- | :------------: | ------------: |
+| Left         |     Center     |         Right |
+| Text         |      Text      |          Text |
+| More         |      Data      |          Here |
 
 ### Simple Table
 
-First Header | Second Header
------------- | -------------
-Content cell 1 | Content cell 2
-Content cell 3 | Content cell 4
+| First Header   | Second Header  |
+| -------------- | -------------- |
+| Content cell 1 | Content cell 2 |
+| Content cell 3 | Content cell 4 |
 
 ## Blockquotes
 
@@ -216,29 +223,29 @@ Content cell 3 | Content cell 4
 > Nested blockquotes:
 >
 > > This is a nested blockquote.
-> > 
+> >
 > > > And this is deeply nested.
 
 > ### Blockquote with other elements
-> 
+>
 > - List item in blockquote
 > - Another item
-> 
+>
 > **Bold text** in blockquote with `inline code`.
 
 ## Horizontal Rules
 
 ---
 
-***
+---
 
-___
+---
 
-- - -
+---
 
-* * *
+---
 
-_ _ _
+---
 
 ## Line Breaks
 
@@ -296,16 +303,16 @@ Another sentence with a footnote[^note].
 ### Definition Lists
 
 Term 1
-:   Definition for term 1
+: Definition for term 1
 
 Term 2
-:   Definition for term 2
-:   Another definition for term 2
+: Definition for term 2
+: Another definition for term 2
 
 ### Abbreviations
 
-*[HTML]: Hyper Text Markup Language
-*[CSS]: Cascading Style Sheets
+_[HTML]: Hyper Text Markup Language
+_[CSS]: Cascading Style Sheets
 
 HTML and CSS are important web technologies.
 
@@ -314,6 +321,7 @@ HTML and CSS are important web technologies.
 Inline math: $E = mc^2$
 
 Block math:
+
 $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 $$
@@ -348,7 +356,7 @@ This document covers most of the standard Markdown syntax. Some features like fo
 <think>
 Alright, so the user has asked me to continue generating a markdown document that showcases all its features in detail. They previously requested an extensive document with at least 4000 tokens and mixed various markdown elements like headers, lists, images, code blocks, etc.
 
-Now, their latest query specifies two main points: each paragraph should be only two sentences long, and they want the use of GFM (GitHub Flavored Markdown). Additionally, they emphasized making the document chatty and generating a lot of text. 
+Now, their latest query specifies two main points: each paragraph should be only two sentences long, and they want the use of GFM (GitHub Flavored Markdown). Additionally, they emphasized making the document chatty and generating a lot of text.
 
 Hmm, first thing I notice is that the user wants concise paragraphs but with rich formatting. Two sentences per paragraph will make it feel more chatty as each sentence can be expanded slightly without being too lengthy.
 
@@ -365,8 +373,6 @@ I think the key here is to maintain clarity while squeezing in all these feature
 Lastly, I need to remember to use GFM syntax correctly, ensuring compatibility across different rendering engines so that the document displays properly everywhere.
 </think>
 
-
-
 # A Chatty Markdown Document: Exploring Features One Paragraph at a Time
 
 This is an extensive guide showcasing the power and versatility of Markdown. Each paragraph will be just two sentences long to keep it chatty and engaging.
@@ -374,16 +380,17 @@ This is an extensive guide showcasing the power and versatility of Markdown. Eac
 ---
 
 ## Table of Contents
+
 Welcome to this incredible journey through the world of Markdown! In this document, you'll find everything from basic syntax to advanced formatting techniques. Whether you're new to Markdown or a seasoned pro, there's something here for everyone. Let's dive in!
 
 ---
 
 ### Basic Text Formatting: Emphasize and Highlight
 
-Markdown allows you to make text **bold** by surrounding it with double asterisks: `**text**`. Similarly, you can make text *italic* using underscores: `_italic_`. You can even combine these for emphasis levels! For example:
+Markdown allows you to make text **bold** by surrounding it with double asterisks: `**text**`. Similarly, you can make text _italic_ using underscores: `_italic_`. You can even combine these for emphasis levels! For example:
 
 - **Bold:** `**This is bold.**`
-- *Italic:* `_This is italic._`
+- _Italic:_ `_This is italic._`
 - Striking Through: `__Struck text__`
 
 Here's how to change the case of your text:
@@ -398,12 +405,15 @@ Here's how to change the case of your text:
 Markdown headers come in three main flavors: H1, H2, and H3. Use them to organize your content into logical sections.
 
 #### Level 1 Header
+
 This is a **Level 1 Header**. It's the largest heading you can create.
 
 #### Level 2 Header
+
 This is a **Level 2 Header**, slightly smaller than an H1 header but still quite prominent.
 
 #### Level 3 Header
+
 Finally, this is a **Level 3 Header**. It’s the smallest and most specific type of heading.
 
 ---
@@ -413,10 +423,12 @@ Finally, this is a **Level 3 Header**. It’s the smallest and most specific typ
 Bullet points are a great way to add emphasis or highlight key points in your text. Markdown supports two types: inline bullets (for quick notes) and block bullets (for more detailed points).
 
 #### Inline Bullet Example
+
 - This is an inline bullet point.
   - Here's another one.
 
 #### Block Bullet Example
+
 • This is a block bullet point.
 ★ Another style for variety.
 
@@ -427,11 +439,13 @@ Bullet points are a great way to add emphasis or highlight key points in your te
 Lists are powerful tools for organizing information. Markdown makes it easy to create both numbered and unordered lists.
 
 #### Numbered Lists
+
 1. First item in the list.
 2. Second item, with more details.
 3. Third item that continues the flow.
 
 #### Unordered Lists
+
 - Item one
 - Item two with bullet points
 - Item three for variety
@@ -443,13 +457,15 @@ Lists are powerful tools for organizing information. Markdown makes it easy to c
 Including images, tables, and other multimedia elements can make your Markdown document stand out.
 
 #### Embedding Images
+
 ![Alt Text](path/to/image.jpg)
 
 An example image placeholder: ![Alt Text](https://via.placeholder.com/200x200)
 
 #### Adding Tables for Clarity
-| Column 1 | Column 2 |
-|----------|---------|
+
+| Column 1    | Column 2    |
+| ----------- | ----------- |
 | Row 1 Col 1 | Row 1 Col 2 |
 | Row 2 Col 1 | Row 2 Col 2 |
 
@@ -460,13 +476,16 @@ An example image placeholder: ![Alt Text](https://via.placeholder.com/200x200)
 Go beyond basic bold and italic text to create more dynamic content.
 
 #### Emphasizing Multiple Times
+
 - **Higher Emphasis:** `**text**`
-- *Even Higher:* `_italic_`
+- _Even Higher:_ `_italic_`
 
 This can be used to convey varying degrees of importance or intensity.
 
 #### Spacing and Line Breaks for Readability
+
 Here's a multi-line paragraph with intentional spacing:
+
 ```
 This is the first line.
 This is the second line, continuing below.
@@ -480,7 +499,7 @@ It continues on subsequent lines seamlessly.
 Enrich your text with quotes or citations to add depth and context.
 
 > "Insight is the highest form of wisdom." — Confucius
-Note: This statement can be cited as (Confucius, 2023).
+> Note: This statement can be cited as (Confucius, 2023).
 
 ---
 
@@ -525,15 +544,13 @@ I should ensure each section is detailed enough that the document feels comprehe
 Finally, wrapping up with a conclusion that summarizes the key points covered in the document will give readers a clear takeaway on what Markdown can offer.
 </think>
 
-
-
 # A Comprehensive Guide to Markdown: Exploring All Its Features
 
 Markdown is a lightweight markup language designed to format plain text into styled text for easy reading. It was created by John Gruber in 2004 and has since become a standard tool for writing notes, creating documentation, and authoring content on platforms like GitHub, Reddit, and Stack Overflow. With its simplicity and versatility, Markdown allows users to emphasize important points, structure their content into sections, and include various elements such as links, images, tables, and more.
 
 ## Basic Structure of a Markdown Document
 
-A typical Markdown document starts with a header or title, followed by sections divided using headings (e.g., #), paragraphs, lists, and other formatted elements. The syntax is intuitive and relies on the use of symbols like asterisks (*), hyphens (-), colons (:), underscores (_), and brackets ([]). The structure ensures that the content is organized and visually appealing.
+A typical Markdown document starts with a header or title, followed by sections divided using headings (e.g., #), paragraphs, lists, and other formatted elements. The syntax is intuitive and relies on the use of symbols like asterisks (\*), hyphens (-), colons (:), underscores (\_), and brackets ([]). The structure ensures that the content is organized and visually appealing.
 
 ### Headings
 
@@ -544,8 +561,10 @@ Markdown uses headings to create a hierarchy of text. Headings are defined by a 
 - **Level 3:** Three hyphens: `###`, and so on.
 
 For example:
+
 ```markdown
 # Introduction to Markdown
+
 ## Understanding Basic Syntax
 ```
 
@@ -554,13 +573,18 @@ For example:
 Code blocks are used to display code snippets with syntax highlighting. They can be inline or block-level. Block-level code blocks are indented, making them stand out from the surrounding text.
 
 To create a block-level code block in Markdown:
+
 1. Indent each line of the code by four spaces.
 2. Place backticks (`) at the beginning and end of each line.
 
 For example:
+
 ```markdown
+
 ```
+
 print("Hello World")
+
 ```
 
 ### Lists
@@ -585,17 +609,18 @@ Emphasis can be added to text using asterisks (*) or underscores (_). The same s
 
 - **Italic:** One asterisk at each end.
   - *italic*
-  
+
 - **Bold:** Double asterisks at each end.
   ``**
   Bold
-  ```
+```
 
 ### Links
 
 Links are used to reference external URLs. They can be embedded within text or stand-alone elements. The syntax for links is straightforward, with square brackets enclosing the title and parentheses surrounding the URL.
 
 For example:
+
 ```
 [Visit GitHub](https://github.com)
 ```
@@ -605,6 +630,7 @@ For example:
 Images can be inserted into Markdown by using placeholders followed by their URLs. Optional alt text should be included to ensure accessibility when images aren't clickable or viewable in certain environments.
 
 For instance:
+
 ```
 ![Alt Text](https://via.placeholder.com/300x200)
 ```
@@ -614,6 +640,7 @@ For instance:
 Tables are used to organize data and information into rows and columns. They consist of headers separated by pipes (|) with hyphens (-) creating the top border, and vertical bars separating each column.
 
 Example:
+
 ```
 | Header1 | Header2 |
 |---------|---------|
@@ -626,16 +653,18 @@ Example:
 Definitions provide clear explanations of terms or concepts. They are created using colons (:) followed by a space, then the term and its description in parentheses.
 
 For example:
+
 ```
 Term: This is an explanation.
 ```
 
 ### Emphasis with Asterisks
 
-Emphasis can also be achieved using asterisks (*) without the need for italics or bold formatting. However, this should be used sparingly to avoid confusion.
+Emphasis can also be achieved using asterisks (\*) without the need for italics or bold formatting. However, this should be used sparingly to avoid confusion.
 
-- *Italic*
+- _Italic_
 - **Bold** (Note: The double asterisk must span both sides of the text)
+
 ```
 ***Emphasized***
 ```
@@ -645,6 +674,7 @@ Emphasis can also be achieved using asterisks (*) without the need for italics o
 Footnotes are optional comments that appear at the bottom of a page or document. They can add context, attribution, or additional information to the text.
 
 For example:
+
 ```
 This is a footnote.\n\n
 Here's another footnote with more details.\
@@ -656,6 +686,7 @@ Here's another footnote with more details.\
 Blockquotes are used to denote quotations or creative writing by indenting both sides of the quote. They are created using double curly braces (```).
 
 Example:
+
 ```lang
 Sample text.
 This is a blockquote.
@@ -667,6 +698,7 @@ Another line inside the blockquote.
 Definitions can be expanded to include more detailed explanations, making them suitable for educational purposes or complex technical discussions.
 
 For example:
+
 ```
 Definition: A term that explains this concept.
 
@@ -695,6 +727,7 @@ Markdown also supports other features such as:
 - **Regex** patterns for matching and manipulating text.
 
 Example of Regex:
+
 ```
 This is a *regex* example: `^\d+$`.
 ```

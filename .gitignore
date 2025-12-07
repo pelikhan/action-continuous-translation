@@ -60,3 +60,11 @@ test/generative-ai-with-javascript/
 # Test build artifacts
 test/*/dist/
 test/*/.astro/
+
+# Documentation build artifacts
+docs/dist/
+docs/.astro/
+
+# Translation logs
+translations/log.json
+translations-dev/

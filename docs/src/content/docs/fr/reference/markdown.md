@@ -2,7 +2,6 @@
 title: Exemple de Markdown
 sidebar:
   order: 100
-
 ---
 
 # Guide complet de la syntaxe Markdown
@@ -32,41 +31,41 @@ Ce document présente toutes les principales constructions syntaxiques disponibl
 **Texte en gras avec des astérisques**\
 **Texte en gras avec des soulignements**
 
-*Texte en italique avec des astérisques*\
-*Texte en italique avec des soulignements*
+_Texte en italique avec des astérisques_\
+_Texte en italique avec des soulignements_
 
-***Texte en gras et italique avec des astérisques***\
-***Texte en gras et italique avec des soulignements***
+**_Texte en gras et italique avec des astérisques_**\
+**_Texte en gras et italique avec des soulignements_**
 
 ~~Texte barré~~
 
 `Inline code`
 
-Texte normal avec **gras**, *italique*, et `code` mélangés.
+Texte normal avec **gras**, _italique_, et `code` mélangés.
 
 ## Listes
 
 ### Listes non ordonnées
 
-* Élément 1
-* Élément 2
-  * Élément imbriqué 2.1
-  * Élément imbriqué 2.2
-    * Élément profondément imbriqué 2.2.1
-* Élément 3
+- Élément 1
+- Élément 2
+  - Élément imbriqué 2.1
+  - Élément imbriqué 2.2
+    - Élément profondément imbriqué 2.2.1
+- Élément 3
 
 Syntaxe alternative :
 
-* Élément A
-* Élément B
-  * Élément imbriqué B.1
-  * Élément imbriqué B.2
+- Élément A
+- Élément B
+  - Élément imbriqué B.1
+  - Élément imbriqué B.2
 
 Autre alternative :
 
-* Élément X
-* Élément Y
-  * Élément imbriqué Y.1
+- Élément X
+- Élément Y
+  - Élément imbriqué Y.1
 
 ### Listes ordonnées
 
@@ -86,19 +85,19 @@ Numérotation alternative :
 ### Listes mixtes
 
 1. Élément ordonné
-   * Élément imbriqué non ordonné
-   * Un autre élément imbriqué non ordonné
+   - Élément imbriqué non ordonné
+   - Un autre élément imbriqué non ordonné
 2. Un autre élément ordonné
    1. Élément ordonné imbriqué
    2. Un autre élément ordonné imbriqué
 
 ### Listes de tâches
 
-* [x] Tâche terminée
-* [ ] Tâche incomplète
-* [x] Une autre tâche terminée
-  * [x] Tâche imbriquée terminée
-  * [ ] Tâche imbriquée incomplète
+- [x] Tâche terminée
+- [ ] Tâche incomplète
+- [x] Une autre tâche terminée
+  - [x] Tâche imbriquée terminée
+  - [ ] Tâche imbriquée incomplète
 
 ## Liens et images
 
@@ -128,9 +127,7 @@ Vous pouvez également créer un lien vers [des fichiers locaux](./README.md).
 ### Définitions de référence
 
 [ref1]: https://www.reference1.com "Reference 1 Title"
-
 [ref2]: https://www.reference2.com
-
 [img1]: https://via.placeholder.com/200x150 "Reference Image"
 
 ## Code
@@ -198,8 +195,8 @@ TODO : corriger ce problème d’analyse
 | Aligné à gauche | Aligné au centre | Aligné à droite |
 | :-------------- | :--------------: | --------------: |
 | Gauche          |      Centre      |          Droite |
-| Texte           |       Texte      |           Texte |
-| Plus            |      Données     |             Ici |
+| Texte           |      Texte       |           Texte |
+| Plus            |     Données      |             Ici |
 
 ### Tableau simple
 
@@ -223,24 +220,24 @@ TODO : corriger ce problème d’analyse
 
 > ### Bloc de citation avec d'autres éléments
 >
-> * Élément de liste dans le bloc de citation
-> * Un autre élément
+> - Élément de liste dans le bloc de citation
+> - Un autre élément
 >
 > **Texte en gras** dans le bloc de citation avec `code inline`.
 
 ## Règles horizontales
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
-***
+---
 
 ## Sauts de ligne
 
@@ -275,8 +272,8 @@ Vous pouvez utiliser <em>des balises HTML</em> dans Markdown.
 
 Ce contenu est masqué par défaut et peut être développé.
 
-* Élément de liste
-* Un autre élément
+- Élément de liste
+- Un autre élément
 
 ```javascript
 console.log("Code in details");
@@ -293,7 +290,6 @@ Voici une phrase avec une note de bas de page\[^1].
 Une autre phrase avec une note de bas de page\[^note].
 
 [^1]: Ceci est la première note de bas de page.
-
 [^note]: Ceci est une note de bas de page nommée avec plus de détails.
 
 ### Listes de définitions
@@ -339,7 +335,7 @@ Utilisez des barres obliques inverses pour échapper les caractères spéciaux :
 
 😀 😍 👍 🚀 💻
 
-***
+---
 
 ## Alertes GitHub dans Markdown
 

@@ -8,7 +8,8 @@ inputs:
     required: false
     default: fr
   source:
-    description: The ISO code of the source language for translation. Defaults to
+    description:
+      The ISO code of the source language for translation. Defaults to
       'en' (English).
     required: false
     default: en
@@ -64,7 +65,8 @@ inputs:
     description: OpenAI API base URL
     required: false
   azure_openai_api_endpoint:
-    description: Azure OpenAI endpoint. In the Azure Portal, open your Azure OpenAI
+    description:
+      Azure OpenAI endpoint. In the Azure Portal, open your Azure OpenAI
       resource, Keys and Endpoints, copy Endpoint.
     required: false
   azure_openai_api_key:
@@ -79,7 +81,8 @@ inputs:
     description: Azure OpenAI API version.
     required: false
   azure_openai_api_credentials:
-    description: Azure OpenAI API credentials type. Leave as 'default' unless you
+    description:
+      Azure OpenAI API credentials type. Leave as 'default' unless you
       have a special Azure setup.
     required: false
   azure_ai_inference_api_key:
