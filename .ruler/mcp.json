@@ -3,10 +3,10 @@
     "safeoutputs": {
       "container": "node:lts-alpine",
       "entrypoint": "node",
-      "entrypointArgs": ["myscript", "--flag1", "--flag2"],
+      "entrypointArgs": ["/tmp/gh-aw/safeoutputs/mcp-server.cjs"],
       "mounts": [
-        "/opt/gh-aw/",
-        "/tmp/gh-aw/"
+        "/opt/gh-aw/:/opt/gh-aw/",
+        "/tmp/gh-aw/:/tmp/gh-aw/"
       ],
       "env": {}
     }
