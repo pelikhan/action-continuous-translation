@@ -1,4 +1,14 @@
 {
   "mcpServers": {
+    "safeoutputs": {
+      "container": "node:lts-alpine",
+      "entrypoint": "node",
+      "entrypointArgs": ["myscript", "--flag1", "--flag2"],
+      "mounts": [
+        "/opt/gh-aw/",
+        "/tmp/gh-aw/"
+      ],
+      "env": {}
+    }
   }
 }
