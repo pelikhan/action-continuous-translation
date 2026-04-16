@@ -18,6 +18,8 @@ jobs:
   describe_pull_request:
     needs: add_reaction
     runs-on: ubuntu-latest
+    env:
+      OTEL_SPAN_COLLECTION: gh-aw.agent.agent
     steps:
       - uses: actions/checkout@v4
       # do not run setup or any code
