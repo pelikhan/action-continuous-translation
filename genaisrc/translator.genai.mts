@@ -158,6 +158,13 @@ const isUri = (str: string): URL => {
 };
 
 export default async function main() {
+  // GitHub Action inputs are INPUT_*-prefixed; providers read unprefixed env vars (OPENAI_*, AZURE_*, ...).
+  for (const [key, value] of Object.entries(process.env)) {
+    if (key.startsWith("INPUT_") && value !== undefined) {
+      const name = key.slice("INPUT_".length)
+      if (name && process.env[name] === undefined) process.env[name] = value
+    }
+  }
   const { output, vars } = env;
   const dbg = host.logger(`ct`);
   const dbgn = host.logger(`ct:node`);
