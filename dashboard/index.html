@@ -1,0 +1,725 @@
+
+		<!doctype html>
+		<html dir="ltr" lang="en">
+			<head>
+				<!-- Built-in/custom meta tags -->
+				
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+	<title>Action Continuous Translation Status</title>
+	<meta name="description" content="Translation progress tracker for the Action Continuous Translation site. See how much has been translated by our GenAIScript!" />
+	
+	<meta property="og:title" content="Action Continuous Translation Status" />
+	<meta property="og:type" content="website" />
+	
+	<meta property="og:description" content="Translation progress tracker for the Action Continuous Translation site. See how much has been translated by our GenAIScript!" />
+	<link rel="icon" href="https://pelikhan.github.io/action-continuous-translation/favicon.svg" type="image/svg+xml" /> 
+
+				<!-- Additional head tags -->
+				
+				<!-- Built-in styles -->
+				
+	<style>
+		:root {
+			/** Fonts */
+			--ln-font-fallback: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif,
+				Apple Color Emoji, Segoe UI Emoji;
+			--ln-font-body: system-ui, var(--ln-font-fallback);
+			--ln-font-mono: 'IBM Plex Mono', Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',
+				'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono',
+				'Nimbus Mono L', Monaco, 'Courier New', Courier, monospace;
+
+			/* Light theme colors */
+			--ln-color-white: #f9fafb;
+			--ln-color-gray-1: #f3f4f6;
+			--ln-color-gray-2: #e5e7eb;
+			--ln-color-gray-3: #d1d5db;
+			--ln-color-gray-4: #9ca3af;
+			--ln-color-gray-5: #6b7280;
+			--ln-color-gray-6: #4b5563;
+			--ln-color-gray-7: #374151;
+			--ln-color-black: #030712;
+			--ln-color-blue: #3b82f6;
+			--ln-color-orange: #f97316;
+			--ln-color-purple: #a855f7;
+
+			/** Contextual colors */
+			--ln-color-background: var(--ln-color-white);
+			--ln-color-link: var(--ln-color-blue);
+			--ln-color-done: var(--ln-color-purple);
+			--ln-color-outdated: var(--ln-color-orange);
+			--ln-color-missing: var(--ln-color-black);
+			--ln-color-table-border: var(--ln-color-gray-3);
+			--ln-color-table-background: var(--ln-color-gray-1);
+		}
+
+		@media (prefers-color-scheme: dark) {
+			:root {
+				/* Dark theme colors */
+				--ln-color-white: #030712;
+				--ln-color-gray-1: #374151;
+				--ln-color-gray-2: #4b5563;
+				--ln-color-gray-3: #6b7280;
+				--ln-color-gray-4: #9ca3af;
+				--ln-color-gray-5: #d1d5db;
+				--ln-color-gray-6: #e5e7eb;
+				--ln-color-gray-7: #f3f4f6;
+				--ln-color-black: #f9fafb;
+				--ln-color-blue: #60a5fa;
+				--ln-color-orange: #fb923c;
+				--ln-color-purple: #c084fc;
+			}
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+		}
+
+		html {
+			background: var(--ln-color-background);
+			scrollbar-gutter: stable;
+		}
+
+		body {
+			color: var(--ln-color-black);
+			display: flex;
+			flex-direction: column;
+			font-family: var(--ln-font-body);
+			font-size: 16px;
+			line-height: 1.5;
+			margin-block: 2rem;
+			margin-inline: 1rem;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin-bottom: 1rem;
+			font-weight: bold;
+			line-height: 1.3;
+		}
+
+		h1,
+		h2 {
+			max-width: 40ch;
+		}
+
+		h1 {
+			font-size: 2.25rem;
+			font-weight: 900;
+		}
+
+		h2 {
+			font-size: 1.875rem;
+			margin-top: 4rem;
+		}
+
+		h3,
+		h4 {
+			margin-top: 3rem;
+		}
+
+		h5,
+		h6 {
+			margin-top: 2rem;
+		}
+
+		main {
+			max-width: 80ch;
+			margin-inline: auto;
+		}
+
+		.limit-to-viewport {
+			max-width: calc(100vw - 2rem);
+		}
+
+		p + p {
+			margin-top: 1.25rem;
+		}
+
+		a {
+			color: var(--ln-color-link);
+			text-decoration: none;
+		}
+
+		h2 a {
+			color: inherit;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		ul {
+			font-size: 0.875rem;
+		}
+
+		.progress-details {
+			margin-bottom: 1.25rem;
+		}
+
+		details summary {
+			cursor: pointer;
+			user-select: none;
+		}
+
+		details summary:hover strong,
+		details summary:hover::marker {
+			color: var(--ln-color-gray-5);
+		}
+
+		details p {
+			margin-top: 1.2rem;
+		}
+
+		details h3 {
+			margin-top: 1.2rem;
+			font-size: 0.8rem;
+		}
+
+		details h4 {
+			margin-top: 1rem;
+			font-size: 0.8rem;
+		}
+
+		details > :last-child {
+			margin-bottom: 1rem;
+		}
+
+		.create-button {
+			padding: 0.1em 0.5em;
+			font-weight: bold;
+			font-size: 0.75rem;
+		}
+
+		.status-by-file {
+			margin-bottom: 1rem;
+			border-collapse: collapse;
+			border: 1px solid var(--ln-color-table-border);
+			font-size: 0.8125rem;
+			column-gap: 64px;
+		}
+
+		.status-by-file tr:first-of-type td {
+			padding-top: 0.5rem;
+		}
+
+		.status-by-file tr:last-of-type td {
+			padding-bottom: 0.5rem;
+		}
+
+		.status-by-file tr td:first-of-type {
+			padding-inline: 1rem;
+		}
+
+		.status-by-file th {
+			border-bottom: 1px solid var(--ln-color-table-border);
+			background: var(--ln-color-table-background);
+			position: sticky;
+			top: -1px;
+			white-space: nowrap;
+			padding-inline: 0.3rem;
+		}
+
+		.status-by-file th,
+		.status-by-file td {
+			padding-block: 0.2rem;
+		}
+
+		.status-by-file tbody tr:hover td {
+			background: var(--ln-color-table-background);
+		}
+
+		.status-by-file th:first-of-type,
+		.status-by-file td:first-of-type {
+			text-align: left;
+			padding-inline-start: 1rem;
+		}
+
+		.status-by-file th:last-of-type,
+		.status-by-file td:last-of-type {
+			text-align: center;
+			padding-inline-end: 1rem;
+		}
+
+		.status-by-file td:not(:first-of-type) {
+			min-width: 2rem;
+			text-align: center;
+			cursor: default;
+		}
+
+		.status-by-file td:not(:first-of-type) a {
+			text-decoration: none;
+		}
+
+		.progress-summary {
+			font-size: 0.8125rem;
+		}
+
+		.progress-bar {
+			display: flex;
+			flex-direction: row;
+			margin-top: 0.5rem;
+		}
+
+		.progress-bar div:first-of-type {
+			border-radius: 36px 0px 0px 36px;
+		}
+
+		.progress-bar div:last-of-type {
+			border-radius: 0px 36px 36px 0px;
+		}
+
+		.done-bar,
+		.outdated-bar,
+		.missing-bar {
+			width: 1rem;
+			height: 1rem;
+		}
+
+		.done-bar {
+			background-color: var(--ln-color-done);
+		}
+
+		.outdated-bar {
+			background-color: var(--ln-color-outdated);
+		}
+
+		.missing-bar {
+			background-color: var(--ln-color-missing);
+		}
+
+		.capitalize {
+			text-transform: capitalize;
+		}
+	</style>
+
+				<!-- Custom styles -->
+				<style>
+							:root {
+  --theme-accent: hsl(234, 100%, 87%);
+  --theme-bg: hsl(223, 13%, 10%);
+  --theme-table-header: hsl(222, 13%, 16%);
+  --theme-table-hover: hsl(222, 13%, 16%);
+  --theme-text: hsl(228, 8%, 77%);
+  --theme-text-bright: hsl(0, 0%, 100%);
+  --overlay-blurple: hsla(255, 60%, 60%, 0.2);
+
+  --ln-color-background: linear-gradient(215deg, var(--overlay-blurple), transparent 40%),
+    radial-gradient(var(--overlay-blurple), transparent 40%) no-repeat -60vw -40vh / 105vw 200vh,
+    radial-gradient(var(--overlay-blurple), transparent 65%) no-repeat 50% calc(100% + 20rem) / 60rem 30rem, var(--theme-bg);
+  --ln-color-link: var(--theme-accent);
+  --ln-color-black: var(--theme-text);
+  --ln-color-done: var(--ln-color-blue);
+  --ln-color-outdated: #ea580c;
+  --ln-color-missing: var(--theme-text-bright);
+  --ln-color-table-background: var(--theme-table-header);
+  --ln-color-table-border: var(--theme-table-header);
+
+  color-scheme: dark;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--theme-text-bright);
+}
+
+p a {
+  text-decoration: underline;
+}
+
+.create-button {
+  background-color: hsl(213deg 89% 64% / 20%);
+  border-radius: 0.5em;
+}
+
+sup {
+  display: flex;
+  justify-content: center;
+}
+
+						</style>
+			</head>
+			<body>
+				<!-- Built-in/custom body content -->
+				
+		<main>
+			<div class="limit-to-viewport">
+				
+				<h1>Action Continuous Translation Status</h1>
+				
+				
+		<h2 id="by-locale">
+			<a href="#by-locale">Translation progress by locale</a>
+		</h2>
+		
+		<details class="progress-details">
+			<summary>
+				<strong
+					>Arabic (ar)</strong
+				>
+				<br />
+				<span class="progress-summary"
+					>8 done, 0 outdated, 0 missing</span
+				>
+				<br />
+				
+		<div class="progress-bar" aria-hidden="true">
+			<div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div> 
+			
+		</div>
+	
+			</summary>
+			
+			
+			<p>This translation is complete, amazing job! 🎉</p>
+		</details>
+	
+		<details class="progress-details">
+			<summary>
+				<strong
+					>French (fr)</strong
+				>
+				<br />
+				<span class="progress-summary"
+					>7 done, 1 outdated, 0 missing</span
+				>
+				<br />
+				
+		<div class="progress-bar" aria-hidden="true">
+			<div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div> <div class="outdated-bar"></div><div class="outdated-bar"></div><div class="outdated-bar"></div>
+			
+		</div>
+	
+			</summary>
+			
+		<h3 class="capitalize">outdated</h3>
+		<ul>
+			
+					<li>
+						 
+		<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/index.mdx">index.mdx</a>
+		(<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/index.mdx">outdated translation</a>,
+				  <a href="https://github.com/pelikhan/action-continuous-translation/commits/main/docs/src/content/docs/index.mdx?since=2025-07-22T05:40:59.000Z">source change history</a>)
+	 
+					</li>
+				
+		</ul>
+	
+			
+			
+		</details>
+	
+		<details class="progress-details">
+			<summary>
+				<strong
+					>Spanish (es)</strong
+				>
+				<br />
+				<span class="progress-summary"
+					>8 done, 0 outdated, 0 missing</span
+				>
+				<br />
+				
+		<div class="progress-bar" aria-hidden="true">
+			<div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div> 
+			
+		</div>
+	
+			</summary>
+			
+			
+			<p>This translation is complete, amazing job! 🎉</p>
+		</details>
+	
+		<details class="progress-details">
+			<summary>
+				<strong
+					>Portuguese (Brazil) (pt-br)</strong
+				>
+				<br />
+				<span class="progress-summary"
+					>8 done, 0 outdated, 0 missing</span
+				>
+				<br />
+				
+		<div class="progress-bar" aria-hidden="true">
+			<div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div><div class="done-bar"></div> 
+			
+		</div>
+	
+			</summary>
+			
+			
+			<p>This translation is complete, amazing job! 🎉</p>
+		</details>
+	
+	
+				
+			</div>
+			
+		<h2 id="by-file">
+			<a href="#by-file">Translation status by file</a>
+		</h2>
+		<table class="status-by-file">
+			<thead>
+				<tr>
+					<th>File</th><th>ar</th><th>fr</th><th>es</th><th>pt-br</th>
+				</tr>
+			</thead>
+			
+		<tbody>
+			
+				<tr>
+					<td><a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/index.mdx">index.mdx</a></td>
+						
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/ar/index.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/index.mdx" title="outdated">
+				<span aria-hidden="true">🔄</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/es/index.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/pt-br/index.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+					</td>
+				</tr>
+				<tr>
+					<td><a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/reference/astro-starlight.mdx">reference/astro-starlight.mdx</a></td>
+						
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/ar/reference/astro-starlight.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/reference/astro-starlight.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/es/reference/astro-starlight.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/pt-br/reference/astro-starlight.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+					</td>
+				</tr>
+				<tr>
+					<td><a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/reference/custom-instructions.mdx">reference/custom-instructions.mdx</a></td>
+						
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/ar/reference/custom-instructions.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/reference/custom-instructions.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/es/reference/custom-instructions.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/pt-br/reference/custom-instructions.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+					</td>
+				</tr>
+				<tr>
+					<td><a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/reference/index.mdx">reference/index.mdx</a></td>
+						
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/ar/reference/index.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/reference/index.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/es/reference/index.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/pt-br/reference/index.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+					</td>
+				</tr>
+				<tr>
+					<td><a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/reference/markdown.md">reference/markdown.md</a></td>
+						
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/ar/reference/markdown.md" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/reference/markdown.md" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/es/reference/markdown.md" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/pt-br/reference/markdown.md" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+					</td>
+				</tr>
+				<tr>
+					<td><a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/reference/models.mdx">reference/models.mdx</a></td>
+						
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/ar/reference/models.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/reference/models.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/es/reference/models.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/pt-br/reference/models.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+					</td>
+				</tr>
+				<tr>
+					<td><a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/resources/showcase.mdx">resources/showcase.mdx</a></td>
+						
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/ar/resources/showcase.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/resources/showcase.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/es/resources/showcase.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/pt-br/resources/showcase.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+					</td>
+				</tr>
+				<tr>
+					<td><a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/resources/usage.mdx">resources/usage.mdx</a></td>
+						
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/ar/resources/usage.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/fr/resources/usage.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/es/resources/usage.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+		<td>
+			<a href="https://github.com/pelikhan/action-continuous-translation/blob/main/docs/src/content/docs/pt-br/resources/usage.mdx" title="done">
+				<span aria-hidden="true">✔</span>
+		  </a>
+		</td>
+	
+					</td>
+				</tr>
+		</tbody>
+	
+		</table>
+		<sup class="capitalize"
+			>❌ missing &nbsp; 🔄 outdated &nbsp; ✔ done
+		</sup>
+	
+			
+		</main>
+	
+			</body>
+		</html>
+	
